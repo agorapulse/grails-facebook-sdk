@@ -1,0 +1,18 @@
+# GRAILS files
+/web-app/WEB-INF/classes
+/web-app/WEB-INF/lib
+/web-app/WEB-INF/grails-app
+/web-app/WEB-INF/spring
+/test/classes
+/test/reports
+/staging
+/target
+
+# IDE files
+.classpath
+.project
+.settings
+/*.launch
+/*.tmproj
+/target-eclipse
+stacktrace.log
