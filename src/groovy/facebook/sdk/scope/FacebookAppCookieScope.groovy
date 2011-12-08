@@ -23,7 +23,7 @@ class FacebookAppCookieScope extends FacebookAppScope {
 	
 	Cookie getCookie() {
 		Cookie appCookie
-		for (Cookie cookie: request.getCurrentRequest().getCookies()) {
+		for (Cookie cookie in request.getCurrentRequest().getCookies()) {
 			if (cookie.name == getAppCookieName()) {
 				appCookie = cookie
 				break

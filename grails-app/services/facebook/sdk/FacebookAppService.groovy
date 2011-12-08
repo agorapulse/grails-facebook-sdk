@@ -1,23 +1,23 @@
 package facebook.sdk
 
-import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
-import static java.net.HttpURLConnection.HTTP_FORBIDDEN;
-import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR;
-import static java.net.HttpURLConnection.HTTP_OK;
-import static java.net.HttpURLConnection.HTTP_UNAUTHORIZED;
-import static java.util.logging.Level.INFO;
+import static java.net.HttpURLConnection.HTTP_BAD_REQUEST
+import static java.net.HttpURLConnection.HTTP_FORBIDDEN
+import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR
+import static java.net.HttpURLConnection.HTTP_OK
+import static java.net.HttpURLConnection.HTTP_UNAUTHORIZED
+import static java.util.logging.Level.INFO
 
 import com.restfb.DefaultFacebookClient
 import com.restfb.DefaultWebRequestor
-import com.restfb.DefaultFacebookClient.DefaultGraphFacebookExceptionMapper;
-import com.restfb.DefaultFacebookClient.Requestor;
+import com.restfb.DefaultFacebookClient.DefaultGraphFacebookExceptionMapper
+import com.restfb.DefaultFacebookClient.Requestor
 import com.restfb.WebRequestor.Response
 import com.restfb.exception.FacebookGraphException
-import com.restfb.exception.FacebookJsonMappingException;
-import com.restfb.exception.FacebookNetworkException;
-import com.restfb.exception.FacebookResponseStatusException;
-import com.restfb.json.JsonException;
-import com.restfb.json.JsonObject;
+import com.restfb.exception.FacebookJsonMappingException
+import com.restfb.exception.FacebookNetworkException
+import com.restfb.exception.FacebookResponseStatusException
+import com.restfb.json.JsonException
+import com.restfb.json.JsonObject
 import com.restfb.types.User
 import facebook.sdk.scope.*
 import facebook.sdk.util.*
@@ -207,41 +207,41 @@ class FacebookAppService implements InitializingBean {
 	* @hint Determines the connected user by first examining any signed requests, then considering an authorization code, and then falling back to any persistent store storing the user.
 	*/
 	public long getUserId() {
-	  if (!facebookAppRequestScope.hasData('user_id')) {
-		  long userId = 0
-		  if (request.params['logged_out']) {
-			  invalidateUser()
-		  } else {
-			  // If a signed request is supplied, then it solely determines who the user is.
-			  Map signedRequestData = getSignedRequestData()
-			  if (signedRequestData) {
-				  if (signedRequestData['user_id']) {
+	  	if (!facebookAppRequestScope.hasData('user_id')) {
+			long userId = 0
+		  	if (request.params['logged_out']) {
+				invalidateUser()
+			} else {
+				// If a signed request is supplied, then it solely determines who the user is.
+				Map signedRequestData = getSignedRequestData()
+				if (signedRequestData) {
+				  	if (signedRequestData['user_id']) {
 					  userId = signedRequestData['user_id'].toLong()
 					  facebookAppPersistentScope.setData('user_id', userId)
-				  } else {
+					} else {
 					  // If the signed request didn't present a user id, then invalidate all entries in any persistent store.
 					  invalidateUser()
-				  }
-			  } else {
-				  userId = facebookAppPersistentScope.getData('user_id', 0)
-				  // Use access_token to fetch user id if we have a user access_token, or if the cached access token has changed.
-				  String accessToken = getAccessToken()
-				  if (accessToken && accessToken != getApplicationAccessToken() && !(userId > 0 && accessToken == facebookAppPersistentScope.getData('access_token'))) {
-					  DefaultFacebookClient facebookClient = new DefaultFacebookClient(accessToken)
-					  User user = DefaultFacebookClient.fetchObject('me', User.class, Parameter.with('fields', 'id'))
-					  if (user?.id) {
+					}
+				} else {
+				  	userId = facebookAppPersistentScope.getData('user_id', 0)
+				  	// Use access_token to fetch user id if we have a user access_token, or if the cached access token has changed.
+				  	String accessToken = getAccessToken()
+				  	if (accessToken && accessToken != getApplicationAccessToken() && !(userId > 0 && accessToken == facebookAppPersistentScope.getData('access_token'))) {
+					  	DefaultFacebookClient facebookClient = new DefaultFacebookClient(accessToken)
+					  	User user = DefaultFacebookClient.fetchObject('me', User.class, Parameter.with('fields', 'id'))
+					  	if (user?.id) {
 						  userId = user.id
 						  facebookAppPersistentScope.setData('user_id', userId)
-					  } else {
+					  	} else {
 						  invalidateUser()
-					  }
-				  }
-			  }
-		  }
-		  facebookAppRequestScope.setData('user_id', userId)
-	  }
-	  return facebookAppRequestScope.getData('user_id') ?: 0
-  }
+					 	 }
+				  	}
+			  	}
+		  	}
+			facebookAppRequestScope.setData('user_id', userId)
+	  	}
+	  	return facebookAppRequestScope.getData('user_id') ?: 0
+  	}
 	
 	// PRIVATE
 	

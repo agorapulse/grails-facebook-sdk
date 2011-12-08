@@ -5,7 +5,7 @@
 			appId   : "${appId}",
 			<g:if test="${channelUrl}">channelUrl  : "${channelUrl}",  // Custom channel URL</g:if>
 			cookie  : <g:if test="${cookieEnabled}">true</g:if><g:else>false</g:else>, // enable cookies to allow the server to access the session
-			<g:if test="${oauthEnabled}">oauth : true, // enables OAuth 2.0</g:if>
+			oauth : true, // enables OAuth 2.0
 			status  : <g:if test="${statusEnabled}">true</g:if><g:else>false</g:else>, // check login status
 			xfbml   : <g:if test="${xfbmlEnabled}">true</g:if><g:else>false</g:else> // parse XFBML
 		});
