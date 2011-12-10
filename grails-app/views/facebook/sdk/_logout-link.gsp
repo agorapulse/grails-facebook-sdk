@@ -3,16 +3,16 @@
 		FB.getLoginStatus(function(response) {
 			if (response.authResponse) {
 		    	FB.logout(function(response) {
-					<g:if test="${returnUrl}">
-						window.location.href = "${returnUrl}";
+					<g:if test="${nextURL}">
+						window.location.href = "${nextURL}";
 					</g:if>
 					<g:else>
 						window.location.reload();
 					</g:else>
 				});
 		  	} else {
-		  		<g:if test="${returnUrl}">
-					window.location.href = "${returnUrl}";
+		  		<g:if test="${nextURL}">
+					window.location.href = "${nextURL}";
 				</g:if>
 				<g:else>
 					window.location.reload();

@@ -28,7 +28,7 @@ import org.springframework.web.context.request.RequestContextHolder
 
 class FacebookAppService implements InitializingBean {
 	
-	final static List DROP_QUERY_PARAMS = ['code','logged_out','state','signed_request']
+	final static List DROP_QUERY_PARAMS = ['code','state','signed_request']
 	final static String VERSION = '3.1.1'
 	
 	boolean transactional = false
@@ -144,7 +144,7 @@ class FacebookAppService implements InitializingBean {
 	*/
     String getLogoutURL(Map parameters = [:]) {
 		if (!request.params['access_token']) parameters['access_token'] = getUserAccessToken()
-		if (!request.params['next']) parameters['next'] = getCurrentUrl('logged_out=1')
+		if (!request.params['next']) parameters['next'] = getCurrentUrl()
 		return getUrl("logout.php", parameters)
     }
 	
@@ -209,33 +209,29 @@ class FacebookAppService implements InitializingBean {
 	public long getUserId() {
 	  	if (!facebookAppRequestScope.hasData('user_id')) {
 			long userId = 0
-		  	if (request.params['logged_out']) {
-				invalidateUser()
-			} else {
-				// If a signed request is supplied, then it solely determines who the user is.
-				Map signedRequestData = getSignedRequestData()
-				if (signedRequestData) {
-				  	if (signedRequestData['user_id']) {
-					  userId = signedRequestData['user_id'].toLong()
-					  facebookAppPersistentScope.setData('user_id', userId)
-					} else {
-					  // If the signed request didn't present a user id, then invalidate all entries in any persistent store.
-					  invalidateUser()
-					}
+	  		// If a signed request is supplied, then it solely determines who the user is.
+			Map signedRequestData = getSignedRequestData()
+			if (signedRequestData) {
+			  	if (signedRequestData['user_id']) {
+				  userId = signedRequestData['user_id'].toLong()
+				  facebookAppPersistentScope.setData('user_id', userId)
 				} else {
-				  	userId = facebookAppPersistentScope.getData('user_id', 0)
-				  	// Use access_token to fetch user id if we have a user access_token, or if the cached access token has changed.
-				  	String accessToken = getAccessToken()
-				  	if (accessToken && accessToken != getApplicationAccessToken() && !(userId > 0 && accessToken == facebookAppPersistentScope.getData('access_token'))) {
-					  	DefaultFacebookClient facebookClient = new DefaultFacebookClient(accessToken)
-					  	User user = DefaultFacebookClient.fetchObject('me', User.class, Parameter.with('fields', 'id'))
-					  	if (user?.id) {
-						  userId = user.id
-						  facebookAppPersistentScope.setData('user_id', userId)
-					  	} else {
-						  invalidateUser()
-					 	 }
-				  	}
+				  // If the signed request didn't present a user id, then invalidate all entries in any persistent store.
+				  invalidateUser()
+				}
+			} else {
+			  	userId = facebookAppPersistentScope.getData('user_id', 0)
+			  	// Use access_token to fetch user id if we have a user access_token, or if the cached access token has changed.
+			  	String accessToken = getAccessToken()
+			  	if (accessToken && accessToken != getApplicationAccessToken() && !(userId > 0 && accessToken == facebookAppPersistentScope.getData('access_token'))) {
+				  	DefaultFacebookClient facebookClient = new DefaultFacebookClient(accessToken)
+				  	User user = DefaultFacebookClient.fetchObject('me', User.class, Parameter.with('fields', 'id'))
+				  	if (user?.id) {
+					  userId = user.id
+					  facebookAppPersistentScope.setData('user_id', userId)
+				  	} else {
+					  invalidateUser()
+				 	 }
 			  	}
 		  	}
 			facebookAppRequestScope.setData('user_id', userId)

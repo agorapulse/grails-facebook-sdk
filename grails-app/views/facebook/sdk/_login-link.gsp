@@ -3,16 +3,16 @@
 		FB.login(function(response) {
 			if (response.authResponse) {
 				// user is logged
-				<g:if test="${returnUrl}">
-					window.location.href = "${returnUrl}";
+				<g:if test="${returnURL}">
+					window.location.href = "${returnURL}";
 				</g:if>
 				<g:else>
 					window.location.reload();
 				</g:else>
-			<g:if test="${cancelUrl}">
+			<g:if test="${cancelURL}">
 			} else {
 				// user cancelled login
-				window.location.href = "${cancelUrl}";
+				window.location.href = "${cancelURL}";
 			</g:if>
 			}
 		}, {scope:"${appPermissions}"});
