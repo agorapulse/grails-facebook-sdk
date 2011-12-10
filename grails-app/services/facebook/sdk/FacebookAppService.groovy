@@ -28,8 +28,8 @@ import org.springframework.web.context.request.RequestContextHolder
 
 class FacebookAppService implements InitializingBean {
 	
-	final static List DROP_QUERY_PARAMS = ['code','state','signed_request']
-	final static String VERSION = '3.1.1'
+	final static List DROP_QUERY_PARAMS = ["code","state","signed_request"]
+	final static String VERSION = "3.1.1"
 	
 	boolean transactional = false
 	
@@ -43,10 +43,10 @@ class FacebookAppService implements InitializingBean {
 	
 	void afterPropertiesSet() {
 		if (!grailsApplication.config.facebook.appId) {
-			throw new Exception('facebook.appId not defined in the Config.groovy')
+			throw new Exception("facebook.appId not defined in the Config.groovy")
 		}
 		if (!grailsApplication.config.facebook.appSecret) {
-			throw new Exception('facebook.appSecret not defined in the Config.groovy')
+			throw new Exception("facebook.appSecret not defined in the Config.groovy")
 		}
 		this.appId = grailsApplication.config.facebook.appId
 		this.appPermissions = grailsApplication.config.facebook.appPermissions
@@ -63,8 +63,8 @@ class FacebookAppService implements InitializingBean {
 	* @hint
 	*/
 	void invalidateUser() {
-		facebookAppRequestScope.deleteData('access_token')
-		facebookAppRequestScope.deleteData('user_id')
+		facebookAppRequestScope.deleteData("access_token")
+		facebookAppRequestScope.deleteData("user_id")
 		if (facebookAppCookieScope.hasCookie()) {
 			facebookAppCookieScope.deleteCookie()
 		}
@@ -75,18 +75,18 @@ class FacebookAppService implements InitializingBean {
 	
 	/*
 	* @description Get OAuth accessToken
-	* @hint Determines the access token that should be used for API calls. The first time this is called, accessToken is set equal to either a valid user access token, or it's set to the application access token if a valid user access token wasn't available. Subsequent calls return whatever the first call returned.
+	* @hint Determines the access token that should be used for API calls. The first time this is called, accessToken is set equal to either a valid user access token, or it"s set to the application access token if a valid user access token wasn"t available. Subsequent calls return whatever the first call returned.
 	*/
 	public String getAccessToken() {
-		if (!facebookAppRequestScope.hasData('access_token')) {
+		if (!facebookAppRequestScope.hasData("access_token")) {
 			String accessToken = getUserAccessToken()
-			if (accessToken == '') {
+			if (!accessToken) {
 				// No user access token, establish access token to be the application access token, in case we navigate to the /oauth/access_token endpoint, where SOME access token is required.
 				accessToken = getApplicationAccessToken()
 			}
-			facebookAppRequestScope.setData('access_token', accessToken)
+			facebookAppRequestScope.setData("access_token", accessToken)
 		}
-		return facebookAppRequestScope.getData('access_token')
+		return facebookAppRequestScope.getData("access_token")
 	}
 	
 	/*
@@ -94,11 +94,11 @@ class FacebookAppService implements InitializingBean {
 	* @hint
 	*/
 	public String getApplicationAccessToken(Boolean apiEnabled = false) {
-		String accessToken = ''
+		String accessToken = ""
 		if (apiEnabled) {
 			accessToken = callOAuthAppAccessTokenService()
 		} else {
-			accessToken = this.appId + '|' + this.appSecret
+			accessToken = this.appId + "|" + this.appSecret
 		}
 		return accessToken
 	}
@@ -113,12 +113,12 @@ class FacebookAppService implements InitializingBean {
 	   */
     String getLoginStatusURL(Map parameters = [:]) {
 	   String currentUrl = getCurrentUrl()
-	   if (!request.params['api_key']) parameters['api_key'] = this.appId
-	   if (!request.params['no_session']) parameters['no_session'] = currentUrl
-	   if (!request.params['no_user']) parameters['no_user'] = currentUrl
-	   if (!request.params['ok_session']) parameters['ok_session'] = currentUrl
-	   if (!request.params['session_version']) parameters['session_version'] =3
-	   return getUrl('extern/login_status.php', parameters)
+	   if (!request.params["api_key"]) parameters["api_key"] = this.appId
+	   if (!request.params["no_session"]) parameters["no_session"] = currentUrl
+	   if (!request.params["no_user"]) parameters["no_user"] = currentUrl
+	   if (!request.params["ok_session"]) parameters["ok_session"] = currentUrl
+	   if (!request.params["session_version"]) parameters["session_version"] =3
+	   return getUrl("extern/login_status.php", parameters)
     }
    
    /*
@@ -130,10 +130,10 @@ class FacebookAppService implements InitializingBean {
 	*/
     String getLoginURL(Map parameters = [:]) {
 	   establishCSRFStateToken()
-	   if (!request.params['client_id']) parameters['client_id'] = this.appId
-	   if (!request.params['redirect_uri']) parameters['redirect_uri'] = getCurrentUrl()
-	   if (!request.params['state']) parameters['state'] = getCSRFStateToken()
-	   return getUrl('dialog/oauth', parameters)
+	   if (!parameters["client_id"]) parameters["client_id"] = this.appId
+	   if (!parameters["redirect_uri"]) parameters["redirect_uri"] = getCurrentUrl()
+	   if (!parameters["state"]) parameters["state"] = getCSRFStateToken()
+	   return getUrl("dialog/oauth", parameters)
     }
    
    /*
@@ -143,56 +143,56 @@ class FacebookAppService implements InitializingBean {
 	   * - next: the url to go to after a successful logout
 	*/
     String getLogoutURL(Map parameters = [:]) {
-		if (!request.params['access_token']) parameters['access_token'] = getUserAccessToken()
-		if (!request.params['next']) parameters['next'] = getCurrentUrl()
+		if (!parameters["access_token"]) parameters["access_token"] = getUserAccessToken()
+		if (!parameters["next"]) parameters["next"] = getCurrentUrl()
 		return getUrl("logout.php", parameters)
     }
 	
 	/*
 	* @description Get user OAuth accessToken
-	* @hint Determines and returns the user access token, first using the signed request if present, and then falling back on the authorization code if present.  The intent is to return a valid user access token, or '' if one is determined to not be available.
+	* @hint Determines and returns the user access token, first using the signed request if present, and then falling back on the authorization code if present.  The intent is to return a valid user access token, or " if one is determined to not be available.
 	*/
 	public String getUserAccessToken() {
-		String accessToken = ''
-		// First, consider a signed request if it's supplied. if there is a signed request, then it alone determines the access token.
+		String accessToken = ""
+		// First, consider a signed request if it"s supplied. if there is a signed request, then it alone determines the access token.
 		Map signedRequest = getSignedRequestData()
 		if (signedRequest) {
-			if (signedRequest['oauth_token']) {
+			if (signedRequest["oauth_token"]) {
 				// apps.facebook.com hands the access_token in the signed_request
-				accessToken = signedRequest['oauth_token']
-				facebookAppPersistentScope.setData('access_token', accessToken)
-			} else if (signedRequest['code']) {
+				accessToken = signedRequest["oauth_token"]
+				facebookAppPersistentScope.setData("access_token", accessToken)
+			} else if (signedRequest["code"]) {
 				// Facebook Javascript SDK puts an authorization code in signed request
-				if (signedRequest['code'] == facebookAppPersistentScope.getData('code')) {
-					accessToken = facebookAppPersistentScope.getData('access_token')
+				if (signedRequest["code"] == facebookAppPersistentScope.getData("code")) {
+					accessToken = facebookAppPersistentScope.getData("access_token")
 				} else {
-					accessToken = getAccessTokenFromCode(signedRequest['code'], '')
+					accessToken = getAccessTokenFromCode(signedRequest["code"], "")
 					if (accessToken) {
-						facebookAppPersistentScope.setData('code', signedRequest['code'])
-						facebookAppPersistentScope.setData('access_token', accessToken)
+						facebookAppPersistentScope.setData("code", signedRequest["code"])
+						facebookAppPersistentScope.setData("access_token", accessToken)
 					}
 				}
 			}
 			
 			if (!accessToken) {
-				// Signed request states there's no access token, so anything stored should be invalidated.
+				// Signed request states there"s no access token, so anything stored should be invalidated.
 				invalidateUser()
 			}
 		} else {
 			// Falling back on the authorization code if present
 			String code = getAuthorizationCode()
-			if (code && code != facebookAppPersistentScope.getData('code')) {
+			if (code && code != facebookAppPersistentScope.getData("code")) {
 				accessToken = getAccessTokenFromCode(code)
 				if (accessToken) {
-					facebookAppPersistentScope.setData('code', code)
-					facebookAppPersistentScope.setData('access_token', accessToken)
+					facebookAppPersistentScope.setData("code", code)
+					facebookAppPersistentScope.setData("access_token", accessToken)
 				} else {
 					// Code was bogus, so everything based on it should be invalidated.
 					invalidateUser()
 				}
 			} else {
-				// Falling back on persistent store, knowing nothing explicit (signed request, authorization code, etc.) was present to shadow it (or we saw a code in URL/FORM scope, but it's the same as what's in the persistent store)
-				accessToken = facebookAppPersistentScope.getData('access_token')
+				// Falling back on persistent store, knowing nothing explicit (signed request, authorization code, etc.) was present to shadow it (or we saw a code in URL/FORM scope, but it"s the same as what"s in the persistent store)
+				accessToken = facebookAppPersistentScope.getData("access_token")
 				if (!accessToken) {
 					// Invalid session, so everything based on it should be invalidated.
 					invalidateUser()
@@ -207,42 +207,42 @@ class FacebookAppService implements InitializingBean {
 	* @hint Determines the connected user by first examining any signed requests, then considering an authorization code, and then falling back to any persistent store storing the user.
 	*/
 	public long getUserId() {
-	  	if (!facebookAppRequestScope.hasData('user_id')) {
+	  	if (!facebookAppRequestScope.hasData("user_id")) {
 			long userId = 0
 	  		// If a signed request is supplied, then it solely determines who the user is.
 			Map signedRequestData = getSignedRequestData()
 			if (signedRequestData) {
-			  	if (signedRequestData['user_id']) {
-				  userId = signedRequestData['user_id'].toLong()
-				  facebookAppPersistentScope.setData('user_id', userId)
+			  	if (signedRequestData["user_id"]) {
+				  userId = signedRequestData["user_id"].toLong()
+				  facebookAppPersistentScope.setData("user_id", userId)
 				} else {
-				  // If the signed request didn't present a user id, then invalidate all entries in any persistent store.
+				  // If the signed request didn"t present a user id, then invalidate all entries in any persistent store.
 				  invalidateUser()
 				}
 			} else {
-			  	userId = facebookAppPersistentScope.getData('user_id', 0)
+			  	userId = facebookAppPersistentScope.getData("user_id", 0)
 			  	// Use access_token to fetch user id if we have a user access_token, or if the cached access token has changed.
 			  	String accessToken = getAccessToken()
-			  	if (accessToken && accessToken != getApplicationAccessToken() && !(userId > 0 && accessToken == facebookAppPersistentScope.getData('access_token'))) {
+			  	if (accessToken && accessToken != getApplicationAccessToken() && !(userId > 0 && accessToken == facebookAppPersistentScope.getData("access_token"))) {
 				  	DefaultFacebookClient facebookClient = new DefaultFacebookClient(accessToken)
-				  	User user = DefaultFacebookClient.fetchObject('me', User.class, Parameter.with('fields', 'id'))
+				  	User user = DefaultFacebookClient.fetchObject("me", User.class, Parameter.with("fields", "id"))
 				  	if (user?.id) {
 					  userId = user.id
-					  facebookAppPersistentScope.setData('user_id', userId)
+					  facebookAppPersistentScope.setData("user_id", userId)
 				  	} else {
 					  invalidateUser()
 				 	 }
 			  	}
 		  	}
-			facebookAppRequestScope.setData('user_id', userId)
+			facebookAppRequestScope.setData("user_id", userId)
 	  	}
-	  	return facebookAppRequestScope.getData('user_id') ?: 0
+	  	return facebookAppRequestScope.getData("user_id") ?: 0
   	}
 	
 	// PRIVATE
 	
-	private String callOAuthAccessTokenService(String code = '', String grantType = '', String redirectUri = '') {
-		String accessToken = ''
+	private String callOAuthAccessTokenService(String code = "", String grantType = "", String redirectUri = "") {
+		String accessToken = ""
 		String url = "https://graph.facebook.com/oauth/access_token?client_id=${this.appId}&client_secret=${this.appSecret}"
 		if (code) {
 			url += "&code=${code}"
@@ -254,9 +254,9 @@ class FacebookAppService implements InitializingBean {
 		
 		String result = makeRequest(url)
 		  
-		result.tokenize('&').each {
-			List keyValue = it.tokenize('=')
-			if (keyValue[0] == 'access_token') {
+		result.tokenize("&").each {
+			List keyValue = it.tokenize("=")
+			if (keyValue[0] == "access_token") {
 				return accessToken = keyValue[1]
 			}
 		}
@@ -264,11 +264,11 @@ class FacebookAppService implements InitializingBean {
 	}
 	
 	private String callOAuthAppAccessTokenService() {
-		return callOAuthAccessTokenService('client_credentials');
+		return callOAuthAccessTokenService("client_credentials");
 	}
 	
-	private String callOAuthUserAccessTokenService(String code = '', String redirectUri = '') {
-		return callOAuthAccessTokenService(code, '', redirectUri);
+	private String callOAuthUserAccessTokenService(String code = "", String redirectUri = "") {
+		return callOAuthAccessTokenService(code, "", redirectUri);
 	}
 	
 	private void establishCSRFStateToken() {
@@ -280,8 +280,8 @@ class FacebookAppService implements InitializingBean {
 	}
 	
 	
-	private String getAccessTokenFromCode(String code, String redirectUri = '') {
-		String accessToken = ''
+	private String getAccessTokenFromCode(String code, String redirectUri = "") {
+		String accessToken = ""
 		if (code) {
 			try {
 				accessToken = callOAuthUserAccessTokenService(code, redirectUri)
@@ -296,14 +296,14 @@ class FacebookAppService implements InitializingBean {
 	}
 	
 	private String getAuthorizationCode() {
-		String code = ''
-		if (request.params['code'] && request.params['state']) {
+		String code = ""
+		if (request.params["code"] && request.params["state"]) {
 			String stateToken = getCSRFStateToken()
-			if (stateToken != "" && stateToken == request.params['state']) {
+			if (stateToken != "" && stateToken == request.params["state"]) {
 				// CSRF state token has done its job, so delete it
-				facebookAppRequestScope.deleteData('state')
-				facebookAppPersistentScope.deleteData('state')
-				code = request.params['code']
+				facebookAppRequestScope.deleteData("state")
+				facebookAppPersistentScope.deleteData("state")
+				code = request.params["code"]
 			} else {
 				// Ignore (CSRF state token does not match one provided)
 			}
@@ -312,24 +312,24 @@ class FacebookAppService implements InitializingBean {
 	}
 	
 	private String getCSRFStateToken() {
-		if (!facebookAppRequestScope.hasData('state')) {
-			facebookAppRequestScope.setData('state', facebookAppPersistentScope.getData('state'))
+		if (!facebookAppRequestScope.hasData("state")) {
+			facebookAppRequestScope.setData("state", facebookAppPersistentScope.getData("state"))
 		}
-		return facebookAppRequestScope.getData('state')
+		return facebookAppRequestScope.getData("state")
 	}
 	
-	private String getCurrentUrl(String queryString = '') {
+	private String getCurrentUrl(String queryString = "") {
 		String currentUrl = request.getCurrentRequest().getRequestURL().toString()
 		String currentQueryString = request.getCurrentRequest().getQueryString()
 		if (currentQueryString) {
 			List keyValue
-			List keyValues = currentQueryString.tokenize('&')
+			List keyValues = currentQueryString.tokenize("&")
 			if (keyValues) {
 				keyValues.each {
-					keyValue = it.tokenize('=')
+					keyValue = it.tokenize("=")
 					if (!DROP_QUERY_PARAMS.contains(keyValue[0])) {
 						if (!queryString) {
-							queryString += '&'
+							queryString += "&"
 						}
 						queryString += it
 					}
@@ -337,7 +337,7 @@ class FacebookAppService implements InitializingBean {
 			}	
 		}
 		if (queryString) {
-			currentUrl += '?' + queryString
+			currentUrl += "?" + queryString
 		}
 		if (request.getCurrentRequest().getHeader("X-Forwarded-Proto")) {
 			// Detect forwarded protocol (for example from EC2 Load Balancer)
@@ -348,22 +348,22 @@ class FacebookAppService implements InitializingBean {
 	}
 	
 	private Map getSignedRequestData() {
-		if (!facebookAppRequestScope.hasData('signed_request')) {
-			if (request.params['signed_request']) {
+		if (!facebookAppRequestScope.hasData("signed_request")) {
+			if (request.params["signed_request"]) {
 				// apps.facebook.com (default iframe page)
-				facebookAppRequestScope.setData('signed_request', SecurityUtils.parseSignedRequest(request.params.signed_request, this.appSecret))
+				facebookAppRequestScope.setData("signed_request", SecurityUtils.parseSignedRequest(request.params.signed_request, this.appSecret))
 			} else if (facebookAppCookieScope.hasCookie()) {
 				// Cookie created by Facebook Connect Javascript SDK
-				facebookAppRequestScope.setData('signed_request', SecurityUtils.parseSignedRequest(facebookAppCookieScope.getData(), this.appSecret))
+				facebookAppRequestScope.setData("signed_request", SecurityUtils.parseSignedRequest(facebookAppCookieScope.getData(), this.appSecret))
 			}
 		}
-		return facebookAppRequestScope.getData('signed_request') ?: [:]
+		return facebookAppRequestScope.getData("signed_request") ?: [:]
 	}
 	
-	private String getUrl(path = '', parameters = [:]) {
+	private String getUrl(path = "", parameters = [:]) {
 	   String url = "https://www.facebook.com/"
 	   if (path) {
-		   if (path[0] == '/') {
+		   if (path[0] == "/") {
 			   path = path.substring(1)
 		   }
 		   url += path
