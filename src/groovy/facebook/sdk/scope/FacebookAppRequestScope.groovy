@@ -4,10 +4,6 @@ class FacebookAppRequestScope extends FacebookAppScope {
 	
 	final static List REQUEST_KEYS = ['access_token','code','state','user_id','signed_request']
 	
-	FacebookAppRequestScope(long appId) {
-		super(appId)
-	}
-	
 	/**
 	* Uses HTTP request attributes scope to cache data during the duration of the request.
 	*/

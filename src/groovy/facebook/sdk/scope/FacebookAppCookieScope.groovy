@@ -9,10 +9,6 @@ import javax.servlet.http.Cookie
 
 class FacebookAppCookieScope extends FacebookAppScope {
 	
-	FacebookAppCookieScope(long appId) {
-		super(appId)
-	}
-	
 	void deleteCookie() {
 		Cookie cookie = getCookie()
 		if (cookie) {

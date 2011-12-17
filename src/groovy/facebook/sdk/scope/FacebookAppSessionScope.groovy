@@ -8,10 +8,6 @@ class FacebookAppSessionScope extends FacebookAppScope {
 	
 	final static List PERSISTENT_KEYS = ['access_token','code','state','user_id']
 	
-	FacebookAppSessionScope(long appId) {
-		super(appId)
-	}
-	
 	void deleteData(String key) {
 		if (!PERSISTENT_KEYS.contains(key)) {
 			throw new Exception('Unsupported key passed to deleteData')

@@ -11,10 +11,6 @@ class FacebookAppScope {
 		return RequestContextHolder.getRequestAttributes()
 	}
 	
-	FacebookAppScope(long appId) {
-		this.appId = appId
-	}
-	
 	private String getKeyVariableName(String key) {
 		if (!this.appId) {
 			throw new Exception('AppId must be defined')

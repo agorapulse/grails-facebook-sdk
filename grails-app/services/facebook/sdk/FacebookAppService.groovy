@@ -27,6 +27,7 @@ import org.springframework.beans.factory.InitializingBean
 import org.springframework.web.context.request.RequestContextHolder
 
 class FacebookAppService implements InitializingBean {
+	// Implements InitializinBean to get afterPropertiesSet executed once Spring context is loaded
 	
 	final static List DROP_QUERY_PARAMS = ["code","state","signed_request"]
 	final static String VERSION = "3.1.1"
@@ -36,24 +37,24 @@ class FacebookAppService implements InitializingBean {
 	long appId = 0
 	String appPermissions = ""
 	String appSecret = ""
-	def grailsApplication
 	FacebookAppCookieScope facebookAppCookieScope
-	def facebookAppPersistentScope // Any persistentScope class with the following methods : deleteData, deleteAllData, getData, isEnabled, setData */
+	def facebookAppPersistentScope // Any persistentScope class with the following methods : deleteData, deleteAllData, getData, isEnabled, setData
 	FacebookAppRequestScope facebookAppRequestScope
+	def grailsApplication
 	
 	void afterPropertiesSet() {
-		if (!grailsApplication.config.facebook.appId) {
-			throw new Exception("facebook.appId not defined in the Config.groovy")
+		if (!grailsApplication.config.facebook.sdk.app.id) {
+			throw new Exception("facebook.sdk.app.id not defined in the Config.groovy")
 		}
-		if (!grailsApplication.config.facebook.appSecret) {
-			throw new Exception("facebook.appSecret not defined in the Config.groovy")
+		if (!grailsApplication.config.facebook.sdk.app.secret) {
+			throw new Exception("facebook.sdk.app.secret not defined in the Config.groovy")
 		}
-		this.appId = grailsApplication.config.facebook.appId
-		this.appPermissions = grailsApplication.config.facebook.appPermissions
-		this.appSecret = grailsApplication.config.facebook.appSecret
+		this.appId = grailsApplication.config.facebook.sdk.app.id
+		this.appPermissions = grailsApplication.config.facebook.sdk.app.permissions
+		this.appSecret = grailsApplication.config.facebook.sdk.app.secret
 		
 	}
-	
+
 	GrailsWebRequest getRequest() {
 		return RequestContextHolder.getRequestAttributes()
 	}
