@@ -36,30 +36,33 @@ It uses RestFB java library under the cover : http://restfb.com/.
 	}
 
 	def doWithSpring = {
-		/*facebookAppService(FacebookAppService) {
-			appId  = application.config.facebook?.sdk?.app?.id
-			appSecret  = application.config.facebook?.sdk?.app?.secret
-			appPermissions = application.config.facebook?.sdk?.app?.permissions
+		facebookAppService(FacebookAppService) {
 			facebookAppCookieScope = ref("facebookAppCookieScope")
 			facebookAppRequestScope = ref("facebookAppRequestScope")
 			facebookAppPersistentScope = ref("facebookAppPersistentScope")
-		}*/
-
-		facebookAppCookieScope(FacebookAppCookieScope) {
-			appId = application.config.facebook?.sdk?.app?.id
 		}
-		facebookAppRequestScope(FacebookAppRequestScope) {
-			appId = application.config.facebook?.sdk?.app?.id
-		}
-		facebookAppPersistentScope(FacebookAppSessionScope) {
-			appId = application.config.facebook?.sdk?.app?.id
-		}
+		facebookAppCookieScope(FacebookAppCookieScope)
+		facebookAppRequestScope(FacebookAppRequestScope)
+		facebookAppPersistentScope(FacebookAppSessionScope)
 	}
 
 	def doWithDynamicMethods = { ctx ->
 	}
 
 	def doWithApplicationContext = { applicationContext ->
+		def facebookAppService = applicationContext.getBean("facebookAppService")
+		facebookAppService.appId  = application.config.facebook?.sdk?.app?.id
+		facebookAppService.appSecret  = application.config.facebook?.sdk?.app?.secret
+		facebookAppService.appPermissions = application.config.facebook?.sdk?.app?.permissions
+
+		def facebookAppCookieScope = applicationContext.getBean("facebookAppCookieScope")
+		facebookAppCookieScope.appId = application.config.facebook?.sdk?.app?.id
+
+		def facebookAppRequestScope = applicationContext.getBean("facebookAppRequestScope")
+		facebookAppRequestScope.appId = application.config.facebook?.sdk?.app?.id
+
+		def facebookAppPersistentScope = applicationContext.getBean("facebookAppPersistentScope")
+		facebookAppPersistentScope.appId = application.config.facebook?.sdk?.app?.id
 	}
 
 	def onChange = { event ->

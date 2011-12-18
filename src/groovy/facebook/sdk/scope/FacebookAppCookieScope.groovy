@@ -1,6 +1,5 @@
 package facebook.sdk.scope
 
-import facebook.sdk.util.SecurityUtils
 import javax.servlet.http.Cookie
 
 /**

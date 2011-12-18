@@ -19,41 +19,25 @@ import com.restfb.exception.FacebookResponseStatusException
 import com.restfb.json.JsonException
 import com.restfb.json.JsonObject
 import com.restfb.types.User
-import facebook.sdk.scope.*
 import facebook.sdk.util.*
 
 import org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequest
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.web.context.request.RequestContextHolder
 
-class FacebookAppService implements InitializingBean {
-	// Implements InitializinBean to get afterPropertiesSet executed once Spring context is loaded
+class FacebookAppService {
 	
 	final static List DROP_QUERY_PARAMS = ["code","state","signed_request"]
 	final static String VERSION = "3.1.1"
 	
 	boolean transactional = false
 	
-	long appId = 0
-	String appPermissions = ""
-	String appSecret = ""
-	FacebookAppCookieScope facebookAppCookieScope
+	def appId = 0
+	def appPermissions = ""
+	def appSecret = ""
+	def facebookAppCookieScope
 	def facebookAppPersistentScope // Any persistentScope class with the following methods : deleteData, deleteAllData, getData, isEnabled, setData
-	FacebookAppRequestScope facebookAppRequestScope
-	def grailsApplication
-	
-	void afterPropertiesSet() {
-		if (!grailsApplication.config.facebook.sdk.app.id) {
-			throw new Exception("facebook.sdk.app.id not defined in the Config.groovy")
-		}
-		if (!grailsApplication.config.facebook.sdk.app.secret) {
-			throw new Exception("facebook.sdk.app.secret not defined in the Config.groovy")
-		}
-		this.appId = grailsApplication.config.facebook.sdk.app.id
-		this.appPermissions = grailsApplication.config.facebook.sdk.app.permissions
-		this.appSecret = grailsApplication.config.facebook.sdk.app.secret
-		
-	}
+	def facebookAppRequestScope
 
 	GrailsWebRequest getRequest() {
 		return RequestContextHolder.getRequestAttributes()

@@ -5,7 +5,7 @@ import org.springframework.web.context.request.RequestContextHolder
 
 class FacebookAppScope {
 	
-	long appId = 0
+	def appId = 0
 	
 	GrailsWebRequest getRequest() {
 		return RequestContextHolder.getRequestAttributes()
