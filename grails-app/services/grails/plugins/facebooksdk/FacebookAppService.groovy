@@ -1,4 +1,4 @@
-package facebook.sdk
+package grails.plugins.facebooksdk
 
 import static java.net.HttpURLConnection.HTTP_BAD_REQUEST
 import static java.net.HttpURLConnection.HTTP_FORBIDDEN
@@ -19,7 +19,7 @@ import com.restfb.exception.FacebookResponseStatusException
 import com.restfb.json.JsonException
 import com.restfb.json.JsonObject
 import com.restfb.types.User
-import facebook.sdk.util.*
+import grails.plugins.facebooksdk.util.*
 
 import org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequest
 import org.springframework.beans.factory.InitializingBean

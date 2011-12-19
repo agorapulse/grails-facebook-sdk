@@ -1,7 +1,7 @@
-import facebook.sdk.FacebookAppService
-import facebook.sdk.scope.FacebookAppCookieScope
-import facebook.sdk.scope.FacebookAppRequestScope
-import facebook.sdk.scope.FacebookAppSessionScope
+import grails.plugins.facebooksdk.FacebookAppService
+import grails.plugins.facebooksdk.scope.FacebookAppCookieScope
+import grails.plugins.facebooksdk.scope.FacebookAppRequestScope
+import grails.plugins.facebooksdk.scope.FacebookAppSessionScope
 
 class FacebookSdkGrailsPlugin {
 	
@@ -12,7 +12,10 @@ class FacebookSdkGrailsPlugin {
 	//def observe                  = ['services', 'controllers']
 	//def watchedResources         = ["grails-app/services/**/*Service.groovy", "grails-app/controllers/**/*Controller.groovy"]
 	def pluginExcludes = [
-		"grails-app/views/error.gsp"
+		"grails-app/controllers/*",
+		"grails-app/views/app/*",
+		"grails-app/views/error.gsp",
+		"grails-app/views/website/*",
 	]
 
 	def title = "Facebook SDK Plugin" // Headline display name of the plugin

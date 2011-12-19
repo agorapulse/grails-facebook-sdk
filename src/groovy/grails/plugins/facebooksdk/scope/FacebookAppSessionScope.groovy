@@ -1,4 +1,4 @@
-package facebook.sdk.scope
+package grails.plugins.facebooksdk.scope
 
 /**
 * Uses HTTP request session attributes scope to provide a primitive persistent store, but another subclass of FacebookApp --one that you implement-- might use a database, memcache, or an in-memory cache.

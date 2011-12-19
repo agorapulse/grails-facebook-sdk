@@ -1,4 +1,4 @@
-package facebook.sdk.scope
+package grails.plugins.facebooksdk.scope
 
 class FacebookAppRequestScope extends FacebookAppScope {
 	

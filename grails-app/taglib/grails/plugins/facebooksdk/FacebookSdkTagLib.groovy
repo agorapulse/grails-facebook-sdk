@@ -1,6 +1,6 @@
-package facebook.sdk
+package grails.plugins.facebooksdk
 
-class FacebookTagLib {
+class FacebookSdkTagLib {
 	
 	static namespace = 'facebook'
 	
@@ -23,7 +23,7 @@ class FacebookTagLib {
 		attrs.each { key, value ->
 			model[key] = value	
 		}
-		out << render(template:"/facebook/sdk/connect-js", model:model, plugin:"facebook-sdk")
+		out << render(template:"/facebook-sdk/connect-js", model:model, plugin:"facebook-sdk")
 	}
 	
 	/**
@@ -40,7 +40,7 @@ class FacebookTagLib {
 		attrs.each { key, value ->
 			model[key] = value
 		}
-		out << render(template:"/facebook/sdk/login-link", model:model, plugin:"facebook-sdk")
+		out << render(template:"/facebook-sdk/login-link", model:model, plugin:"facebook-sdk")
 	}
 	
 	/**
@@ -55,7 +55,7 @@ class FacebookTagLib {
 		attrs.each { key, value ->
 			model[key] = value
 		}
-		out << render(template:"/facebook/sdk/logout-link", model:model, plugin:"facebook-sdk")
+		out << render(template:"/facebook-sdk/logout-link", model:model, plugin:"facebook-sdk")
 	}
 
 }
