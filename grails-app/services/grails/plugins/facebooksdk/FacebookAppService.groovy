@@ -95,47 +95,47 @@ class FacebookAppService {
 	* - ok_session: the URL to go to if a session is found
 	* - no_session: the URL to go to if the user is not connected
 	* - no_user: the URL to go to if the user is not signed into facebook
-	   */
-    String getLoginStatusURL(Map parameters = [:]) {
-	   String currentUrl = getCurrentUrl()
-	   if (!request.params["api_key"]) parameters["api_key"] = this.appId
-	   if (!request.params["no_session"]) parameters["no_session"] = currentUrl
-	   if (!request.params["no_user"]) parameters["no_user"] = currentUrl
-	   if (!request.params["ok_session"]) parameters["ok_session"] = currentUrl
-	   if (!request.params["session_version"]) parameters["session_version"] =3
-	   return getUrl("extern/login_status.php", parameters)
-    }
-   
-   /*
+		 */
+	String getLoginStatusURL(Map parameters = [:]) {
+		String currentUrl = getCurrentUrl()
+		if (!request.params["api_key"]) parameters["api_key"] = this.appId
+		if (!request.params["no_session"]) parameters["no_session"] = currentUrl
+		if (!request.params["no_user"]) parameters["no_user"] = currentUrl
+		if (!request.params["ok_session"]) parameters["ok_session"] = currentUrl
+		if (!request.params["session_version"]) parameters["session_version"] =3
+		return getUrl("extern/login_status.php", parameters)
+	}
+	 
+	 /*
 	* @description Get a Login URL for use with redirects.
 	* @hint By default, full page redirect is assumed. If you are using the generated URL with a window.open() call in JavaScript, you can pass in display=popup as part of the parameters.
 	* Available parameters:
-	   * - redirect_uri: the url to go to after a successful login
-	   * - scope: comma separated list of requested extended perms
+		 * - redirect_uri: the url to go to after a successful login
+		 * - scope: comma separated list of requested extended perms
 	*/
-    String getLoginURL(Map parameters = [:]) {
-	   establishCSRFStateToken()
-	   if (!parameters["client_id"]) parameters["client_id"] = this.appId
-	   if (!parameters["redirect_uri"]) parameters["redirect_uri"] = getCurrentUrl()
-	   if (!parameters["state"]) parameters["state"] = getCSRFStateToken()
-	   return getUrl("dialog/oauth", parameters)
-    }
-   
-   /*
+	String getLoginURL(Map parameters = [:]) {
+		establishCSRFStateToken()
+		if (!parameters["client_id"]) parameters["client_id"] = this.appId
+		if (!parameters["redirect_uri"]) parameters["redirect_uri"] = getCurrentUrl()
+		if (!parameters["state"]) parameters["state"] = getCSRFStateToken()
+		return getUrl("dialog/oauth", parameters)
+	}
+	 
+	 /*
 	* @description Get a Logout URL suitable for use with redirects.
 	* @hint
 	* Available parameters:
-	   * - next: the url to go to after a successful logout
+		 * - next: the url to go to after a successful logout
 	*/
-    String getLogoutURL(Map parameters = [:]) {
+	String getLogoutURL(Map parameters = [:]) {
 		if (!parameters["access_token"]) parameters["access_token"] = getUserAccessToken()
 		if (!parameters["next"]) parameters["next"] = getCurrentUrl()
 		return getUrl("logout.php", parameters)
-    }
+	}
 	
 	/*
 	* @description Get user OAuth accessToken
-	* @hint Determines and returns the user access token, first using the signed request if present, and then falling back on the authorization code if present.  The intent is to return a valid user access token, or " if one is determined to not be available.
+	* @hint Determines and returns the user access token, first using the signed request if present, and then falling back on the authorization code if present.	The intent is to return a valid user access token, or " if one is determined to not be available.
 	*/
 	public String getUserAccessToken() {
 		String accessToken = ""
@@ -191,38 +191,38 @@ class FacebookAppService {
 	* @description Get the UID of the connected user, or 0 if the Facebook user is not connected.
 	* @hint Determines the connected user by first examining any signed requests, then considering an authorization code, and then falling back to any persistent store storing the user.
 	*/
-	public long getUserId() {
-	  	if (!facebookAppRequestScope.hasData("user_id")) {
-			long userId = 0
-	  		// If a signed request is supplied, then it solely determines who the user is.
+	public Long getUserId() {
+		if (!facebookAppRequestScope.hasData("user_id")) {
+			Long userId = 0
+			// If a signed request is supplied, then it solely determines who the user is.
 			Map signedRequestData = getSignedRequestData()
 			if (signedRequestData) {
-			  	if (signedRequestData["user_id"]) {
-				  userId = signedRequestData["user_id"].toLong()
-				  facebookAppPersistentScope.setData("user_id", userId)
+				if (signedRequestData["user_id"]) {
+					userId = signedRequestData["user_id"].toLong()
+					facebookAppPersistentScope.setData("user_id", userId)
 				} else {
-				  // If the signed request didn"t present a user id, then invalidate all entries in any persistent store.
-				  invalidateUser()
+					// If the signed request didn"t present a user id, then invalidate all entries in any persistent store.
+					invalidateUser()
 				}
 			} else {
-			  	userId = facebookAppPersistentScope.getData("user_id", 0)
-			  	// Use access_token to fetch user id if we have a user access_token, or if the cached access token has changed.
-			  	String accessToken = getAccessToken()
-			  	if (accessToken && accessToken != getApplicationAccessToken() && !(userId > 0 && accessToken == facebookAppPersistentScope.getData("access_token"))) {
-				  	DefaultFacebookClient facebookClient = new DefaultFacebookClient(accessToken)
-				  	User user = DefaultFacebookClient.fetchObject("me", User.class, Parameter.with("fields", "id"))
-				  	if (user?.id) {
-					  userId = user.id
-					  facebookAppPersistentScope.setData("user_id", userId)
-				  	} else {
-					  invalidateUser()
-				 	 }
-			  	}
-		  	}
+				userId = facebookAppPersistentScope.getData("user_id", 0)
+				// Use access_token to fetch user id if we have a user access_token, or if the cached access token has changed.
+				String accessToken = getAccessToken()
+				if (accessToken && accessToken != getApplicationAccessToken() && !(userId > 0 && accessToken == facebookAppPersistentScope.getData("access_token"))) {
+					DefaultFacebookClient facebookClient = new DefaultFacebookClient(accessToken)
+					User user = DefaultFacebookClient.fetchObject("me", User.class, Parameter.with("fields", "id"))
+					if (user?.id) {
+						userId = user.id
+						facebookAppPersistentScope.setData("user_id", userId)
+					} else {
+						invalidateUser()
+				 	}
+				}
+			}
 			facebookAppRequestScope.setData("user_id", userId)
-	  	}
-	  	return facebookAppRequestScope.getData("user_id") ?: 0
-  	}
+		}
+		return facebookAppRequestScope.getData("user_id") ?: 0
+	}
 	
 	// PRIVATE
 	
@@ -238,7 +238,7 @@ class FacebookAppService {
 		url += "&redirect_uri=${redirectUri.encodeAsURL()}"
 		
 		String result = makeRequest(url)
-		  
+			
 		result.tokenize("&").each {
 			List keyValue = it.tokenize("=")
 			if (keyValue[0] == "access_token") {
@@ -346,17 +346,17 @@ class FacebookAppService {
 	}
 	
 	private String getUrl(path = "", parameters = [:]) {
-	   String url = "https://www.facebook.com/"
-	   if (path) {
-		   if (path[0] == "/") {
-			   path = path.substring(1)
-		   }
-		   url += path
-	   }
-	   if (parameters) {
-		   url += "?" + StringUtils.serializeQueryString(parameters)
-	   }
-	   return url
+		 String url = "https://www.facebook.com/"
+		 if (path) {
+			 if (path[0] == "/") {
+				 path = path.substring(1)
+			 }
+			 url += path
+		 }
+		 if (parameters) {
+			 url += "?" + StringUtils.serializeQueryString(parameters)
+		 }
+		 return url
 	}
 	
 	private String makeRequest(String url) {
@@ -376,19 +376,19 @@ class FacebookAppService {
 		if (HTTP_OK != response.getStatusCode() && HTTP_BAD_REQUEST != response.getStatusCode()
 			&& HTTP_UNAUTHORIZED != response.getStatusCode() && HTTP_INTERNAL_ERROR != response.getStatusCode()
 			&& HTTP_FORBIDDEN != response.getStatusCode())
-		  throw new FacebookNetworkException("Facebook request failed", response.getStatusCode());
-		  
+			throw new FacebookNetworkException("Facebook request failed", response.getStatusCode());
+			
 		// If the response contained an error code, throw an exception.
 		if (response.body.startsWith("{")) {
 			try {
-			  JsonObject errorObject = new JsonObject(response.body);
+				JsonObject errorObject = new JsonObject(response.body);
 		
-			  if (errorObject == null || !errorObject.has(DefaultFacebookClient.ERROR_ATTRIBUTE_NAME))
+				if (errorObject == null || !errorObject.has(DefaultFacebookClient.ERROR_ATTRIBUTE_NAME))
 				return;
 		
-			  JsonObject innerErrorObject = errorObject.getJsonObject(DefaultFacebookClient.ERROR_ATTRIBUTE_NAME);
+				JsonObject innerErrorObject = errorObject.getJsonObject(DefaultFacebookClient.ERROR_ATTRIBUTE_NAME);
 		
-			  	throw new DefaultGraphFacebookExceptionMapper().exceptionForTypeAndMessage(null, innerErrorObject.getString(DefaultFacebookClient.ERROR_TYPE_ATTRIBUTE_NAME), innerErrorObject.getString(DefaultFacebookClient.ERROR_MESSAGE_ATTRIBUTE_NAME));
+				throw new DefaultGraphFacebookExceptionMapper().exceptionForTypeAndMessage(null, innerErrorObject.getString(DefaultFacebookClient.ERROR_TYPE_ATTRIBUTE_NAME), innerErrorObject.getString(DefaultFacebookClient.ERROR_MESSAGE_ATTRIBUTE_NAME));
 			} catch (JsonException e) {
 				throw new FacebookJsonMappingException("Unable to process the Facebook API response", e);
 			}
@@ -397,9 +397,9 @@ class FacebookAppService {
 		// If there was no response error information and this was a 500 or 401
 		// error, something weird happened on Facebook's end. Bail.
 		if (HTTP_INTERNAL_ERROR == response.getStatusCode() || HTTP_UNAUTHORIZED == response.getStatusCode())
-		  throw new FacebookNetworkException("Facebook request failed", response.getStatusCode());
+			throw new FacebookNetworkException("Facebook request failed", response.getStatusCode());
 	
 		return response.body;
-	  }
+		}
 
 }

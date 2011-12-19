@@ -24,7 +24,6 @@ grails.project.dependency.resolution = {
 	}
 	dependencies {
 		// specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
-		
 		compile 'com.restfb:restfb:1.6.9'
 		compile 'commons-codec:commons-codec:1.5'
 		// runtime 'mysql:mysql-connector-java:5.1.5'
@@ -35,7 +34,8 @@ grails.project.dependency.resolution = {
 			  ":release:1.0.0.RC3") {
 			export = false
 		}
-		runtime ":twitter-bootstrap:1.4.0.13"
-		runtime ":resources:1.1.5"
+		// Twitter bootstrap and resources plugins (only for development)
+		provided ":twitter-bootstrap:1.4.0.13",
+				 ":resources:1.1.5"
 	}
 }

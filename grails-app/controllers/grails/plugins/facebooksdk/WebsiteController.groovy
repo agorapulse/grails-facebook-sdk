@@ -16,8 +16,7 @@ class WebsiteController {
 	}
 
     def index() {
-    	log.debug("TESTTTTT")
-		// See if there is a user from a cookie or session
+    	// See if there is a user from a cookie or session
 		DefaultFacebookClient facebookClient = new DefaultFacebookClient()
 		User user
 		List userFriends = []
