@@ -7,7 +7,7 @@ class UrlMappings {
 			}
 		}
 
-		"/"(action:"welcome", controller:"website")
+		"/"(controller:"website")
 		"500"(view:"/error")
 	}
 }
