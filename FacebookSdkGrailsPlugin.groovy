@@ -12,10 +12,13 @@ class FacebookSdkGrailsPlugin {
 	//def observe                  = ['services', 'controllers']
 	//def watchedResources         = ["grails-app/services/**/*Service.groovy", "grails-app/controllers/**/*Controller.groovy"]
 	def pluginExcludes = [
-		"grails-app/controllers/*",
+		"grails-app/controllers/**",
+		"grails-app/i18n/**",
 		"grails-app/views/app/*",
 		"grails-app/views/error.gsp",
+		"grails-app/views/layouts/*",
 		"grails-app/views/website/*",
+		"web-app/**",
 	]
 
 	def title = "Facebook SDK Plugin" // Headline display name of the plugin
@@ -32,7 +35,7 @@ It uses RestFB java library under the cover : http://restfb.com/.
 	def license                  = "APACHE"
 	def organization             = [  name: "Affinitiz", url: "http://github.com/affinitiz" ]
 	def developers               = [[ name: "Benoit HEDIARD", email: "hediard@affinitiz.com" ]]
-	def scm                      = [  url: "https://github.com/affinitiz/grails-facebook-sdk" ]
+	def scm                      = [  url: "https://github.com/affinitiz/facebook-grails-sdk" ]
 	//def issueManagement          = [  system: "JIRA", url: "http://jira.grails.org/browse/FBSDK" ]
 
 	def doWithWebDescriptor = { xml ->

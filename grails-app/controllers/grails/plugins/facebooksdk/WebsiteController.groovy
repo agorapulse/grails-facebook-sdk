@@ -12,11 +12,11 @@ class WebsiteController {
 	def beforeInterceptor =  {
 		request.appId = facebookAppService.appId
 		request.appPermissions = facebookAppService.appPermissions
-		request.userId = facebookAppService.getUserId()
+		request.userId = facebookAppService.userId
 	}
 
-    def index() {
-    	// See if there is a user from a cookie or session
+	def index() {
+		// See if there is a user from a cookie or session
 		DefaultFacebookClient facebookClient = new DefaultFacebookClient()
 		User user
 		List userFriends = []
@@ -56,4 +56,6 @@ class WebsiteController {
 		session.invalidate()
 		redirect(action:"index")
 	}
+
+	def welcome() {}
 }

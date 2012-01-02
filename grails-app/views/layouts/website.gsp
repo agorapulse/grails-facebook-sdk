@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
-	<title><g:layoutTitle default="Grails SDK Demo" /></title>
+	<title><g:layoutTitle default="Grails SDK Example" /></title>
 	<%-- <link rel="stylesheet" type="text/css" href="${resource(dir:'css',file:'website.css')}" /> --%>
 	<g:layoutHead />
 	<r:require modules="bootstrap"/>
@@ -67,27 +67,26 @@
   </head>
 
 <body>
-
 	<div class="topbar">
 		<div class="fill">
 			<div class="container">
-				<a class="brand" href="#">Grails Facebook SDK</a>
+				<a class="brand" href="#">Facebook Grails SDK</a>
 				<ul class="nav">
-					<g:if test="${!controllerName}"><li class="active"></g:if><g:else><li></g:else><a href="${createLink(uri:'/')}">Home</a></li>
-					<g:if test="${controllerName=='website'}"><li class="active"></g:if><g:else><li></g:else><a href="${createLink(uri:'/website')}">Website</a></li>
-					<g:if test="${controllerName=='app'}"><li class="active"></g:if><g:else><li></g:else><a href="${createLink(uri:'/app')}">App</a></li>
+					<g:if test="${!controllerName}"><li class="active"></g:if><g:else><li></g:else><a href="${createLink(uri:'/')}">Welcome</a></li>
+					<g:if test="${controllerName=='website'}"><li class="active"></g:if><g:else><li></g:else><a href="${createLink(uri:'/website')}">Example</a></li>
 		 		</ul>
 			</div>
 		</div>
 	</div>
 
 	<div class="container">
-		<g:layoutBody />
+		<div class="content">
+			<g:layoutBody />
+		</div>
 		<footer>
 			<a href="http://github.com/affinitiz/facebook-grails-sdk">Facebook Grails SDK</a> - Version <g:meta name="app.version" /> (Built with Grails <g:meta name="app.grails.version" />) - Open source project by <a href="http://affinitiz.com">Affinitiz</a> - 
 				<a href="http://www.apache.org/licenses/LICENSE-2.0">Licensed under the Apache License, Version 2.0</a><br />
 		</footer>
-
 	</div> <!-- /container -->
 	<r:layoutResources />
 </body>

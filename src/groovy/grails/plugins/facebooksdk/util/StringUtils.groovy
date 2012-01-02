@@ -1,6 +1,6 @@
 package grails.plugins.facebooksdk.util
 
-import java.util.Map;
+import java.util.Map
 
 class StringUtils {
 

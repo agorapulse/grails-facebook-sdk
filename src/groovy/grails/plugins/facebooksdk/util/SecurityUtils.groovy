@@ -4,20 +4,19 @@ import grails.converters.JSON
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 import org.apache.commons.codec.binary.Base64
-import org.apache.commons.logging.LogFactory
 
 class SecurityUtils {
 	
-	private static def log = LogFactory.getLog(this)
-
 	static String base64UrlDecode(String base64Value) {
-		byte[] decoded = Base64.decodeBase64(base64Value.getBytes())
+		Integer modulo = base64Value.length() % 4
+		if (modulo) (4 - modulo).times { base64Value += "=" }
+		byte[] decoded = Base64.decodeBase64(base64Value.getBytes("ISO-8859-1"))
 		String decodedString = new String(decoded)
 		return decodedString
 	}
-   
-   static String base64UrlEncode(String value) {
-	   	byte[] encoded = Base64.encodeBase64(value.getBytes())
+
+	static String base64UrlEncode(String value) {
+		byte[] encoded = Base64.encodeBase64(value.getBytes("ISO-8859-1"))
 		String encodedString = new String(encoded)
 		return encodedString
 	}

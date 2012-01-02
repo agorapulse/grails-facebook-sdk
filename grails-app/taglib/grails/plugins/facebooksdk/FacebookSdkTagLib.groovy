@@ -18,7 +18,7 @@ class FacebookSdkTagLib {
 	*/
 	def connectJS = { attrs, body ->
 		if (!attrs.containsKey("cookieEnabled")) attrs.cookieEnabled = true
-		if (!attrs.localeCode) attrs.localeCode = 'en_US'
+		if (!attrs.localeCode) attrs.localeCode = Locale.getDefault()
 		Map model = [body:body()]
 		attrs.each { key, value ->
 			model[key] = value	

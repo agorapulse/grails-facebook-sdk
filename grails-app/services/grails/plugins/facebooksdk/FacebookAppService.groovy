@@ -38,11 +38,11 @@ class FacebookAppService {
 	def facebookAppCookieScope
 	def facebookAppPersistentScope // Any persistentScope class with the following methods : deleteData, deleteAllData, getData, isEnabled, setData
 	def facebookAppRequestScope
-
+	
 	GrailsWebRequest getRequest() {
 		return RequestContextHolder.getRequestAttributes()
 	}
-	
+
 	/*
 	* @description Invalidate current user (persistent data and cookie)
 	* @hint
@@ -62,7 +62,7 @@ class FacebookAppService {
 	* @description Get OAuth accessToken
 	* @hint Determines the access token that should be used for API calls. The first time this is called, accessToken is set equal to either a valid user access token, or it"s set to the application access token if a valid user access token wasn"t available. Subsequent calls return whatever the first call returned.
 	*/
-	public String getAccessToken() {
+	String getAccessToken() {
 		if (!facebookAppRequestScope.hasData("access_token")) {
 			String accessToken = getUserAccessToken()
 			if (!accessToken) {
@@ -78,7 +78,7 @@ class FacebookAppService {
 	* @description Get application OAuth accessToken
 	* @hint
 	*/
-	public String getApplicationAccessToken(Boolean apiEnabled = false) {
+	String getApplicationAccessToken(Boolean apiEnabled = false) {
 		String accessToken = ""
 		if (apiEnabled) {
 			accessToken = callOAuthAppAccessTokenService()
@@ -97,13 +97,12 @@ class FacebookAppService {
 	* - no_user: the URL to go to if the user is not signed into facebook
 		 */
 	String getLoginStatusURL(Map parameters = [:]) {
-		String currentUrl = getCurrentUrl()
 		if (!request.params["api_key"]) parameters["api_key"] = this.appId
-		if (!request.params["no_session"]) parameters["no_session"] = currentUrl
-		if (!request.params["no_user"]) parameters["no_user"] = currentUrl
-		if (!request.params["ok_session"]) parameters["ok_session"] = currentUrl
+		if (!request.params["no_session"]) parameters["no_session"] = getCurrentURL()
+		if (!request.params["no_user"]) parameters["no_user"] = getCurrentURL()
+		if (!request.params["ok_session"]) parameters["ok_session"] = getCurrentURL()
 		if (!request.params["session_version"]) parameters["session_version"] =3
-		return getUrl("extern/login_status.php", parameters)
+		return getURL("extern/login_status.php", parameters)
 	}
 	 
 	 /*
@@ -116,9 +115,9 @@ class FacebookAppService {
 	String getLoginURL(Map parameters = [:]) {
 		establishCSRFStateToken()
 		if (!parameters["client_id"]) parameters["client_id"] = this.appId
-		if (!parameters["redirect_uri"]) parameters["redirect_uri"] = getCurrentUrl()
+		if (!parameters["redirect_uri"]) parameters["redirect_uri"] = getCurrentURL()
 		if (!parameters["state"]) parameters["state"] = getCSRFStateToken()
-		return getUrl("dialog/oauth", parameters)
+		return getURL("dialog/oauth", parameters)
 	}
 	 
 	 /*
@@ -129,15 +128,15 @@ class FacebookAppService {
 	*/
 	String getLogoutURL(Map parameters = [:]) {
 		if (!parameters["access_token"]) parameters["access_token"] = getUserAccessToken()
-		if (!parameters["next"]) parameters["next"] = getCurrentUrl()
-		return getUrl("logout.php", parameters)
+		if (!parameters["next"]) parameters["next"] = getCurrentURL()
+		return getURL("logout.php", parameters)
 	}
 	
 	/*
 	* @description Get user OAuth accessToken
 	* @hint Determines and returns the user access token, first using the signed request if present, and then falling back on the authorization code if present.	The intent is to return a valid user access token, or " if one is determined to not be available.
 	*/
-	public String getUserAccessToken() {
+	String getUserAccessToken() {
 		String accessToken = ""
 		// First, consider a signed request if it"s supplied. if there is a signed request, then it alone determines the access token.
 		Map signedRequest = getSignedRequestData()
@@ -191,7 +190,7 @@ class FacebookAppService {
 	* @description Get the UID of the connected user, or 0 if the Facebook user is not connected.
 	* @hint Determines the connected user by first examining any signed requests, then considering an authorization code, and then falling back to any persistent store storing the user.
 	*/
-	public Long getUserId() {
+	Long getUserId() {
 		if (!facebookAppRequestScope.hasData("user_id")) {
 			Long userId = 0
 			// If a signed request is supplied, then it solely determines who the user is.
@@ -264,7 +263,6 @@ class FacebookAppService {
 		}
 	}
 	
-	
 	private String getAccessTokenFromCode(String code, String redirectUri = "") {
 		String accessToken = ""
 		if (code) {
@@ -303,8 +301,8 @@ class FacebookAppService {
 		return facebookAppRequestScope.getData("state")
 	}
 	
-	private String getCurrentUrl(String queryString = "") {
-		String currentUrl = request.getCurrentRequest().getRequestURL().toString()
+	private String getCurrentURL(String queryString = "") {
+		String currentURL = request.getCurrentRequest().getRequestURL().toString()
 		String currentQueryString = request.getCurrentRequest().getQueryString()
 		if (currentQueryString) {
 			List keyValue
@@ -322,14 +320,14 @@ class FacebookAppService {
 			}	
 		}
 		if (queryString) {
-			currentUrl += "?" + queryString
+			currentURL += "?" + queryString
 		}
 		if (request.getCurrentRequest().getHeader("X-Forwarded-Proto")) {
 			// Detect forwarded protocol (for example from EC2 Load Balancer)
-			URL url = new URL(currentUrl)
-			currentUrl.replace(url.getProtocol(), request.getCurrentRequest().getHeader("X-Forwarded-Proto"))
+			URL url = new URL(currentURL)
+			currentURL.replace(url.getProtocol(), request.getCurrentRequest().getHeader("X-Forwarded-Proto"))
 		}
-		return currentUrl
+		return currentURL
 	}
 	
 	private Map getSignedRequestData() {
@@ -345,7 +343,7 @@ class FacebookAppService {
 		return facebookAppRequestScope.getData("signed_request") ?: [:]
 	}
 	
-	private String getUrl(path = "", parameters = [:]) {
+	private String getURL(path = "", parameters = [:]) {
 		 String url = "https://www.facebook.com/"
 		 if (path) {
 			 if (path[0] == "/") {
@@ -400,6 +398,5 @@ class FacebookAppService {
 			throw new FacebookNetworkException("Facebook request failed", response.getStatusCode());
 	
 		return response.body;
-		}
-
+	}
 }
