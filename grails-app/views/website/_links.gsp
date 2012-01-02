@@ -3,6 +3,5 @@
 	<ul>
 		<li><a href="https://github.com/benorama/facebook-grails-sdk">Repository</a></li>
 		<li><a href="https://github.com/benorama/facebook-grails-sdk/issues">Issues</a></li>
-		<li><a href="https://github.com/benorama/facebook-grails-sdk/wiki">Wiki</a></li>
 	</ul>
 </div>
