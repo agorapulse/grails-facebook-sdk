@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+<html xmlns:fb="http://ogp.me/ns/fb#">
 <head>
-	<title><g:layoutTitle default="Grails SDK Example" /></title>
-	<%-- <link rel="stylesheet" type="text/css" href="${resource(dir:'css',file:'website.css')}" /> --%>
+	<title><g:layoutTitle default="Facebook Grails SDK Website Example" /></title>
 	<g:layoutHead />
 	<r:require modules="bootstrap"/>
 	<r:layoutResources />

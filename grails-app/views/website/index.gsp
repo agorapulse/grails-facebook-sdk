@@ -9,9 +9,9 @@
 		<g:else>
 			<!--
 			  We use the Facebook JavaScript SDK to provide a richer user experience. For more info,
-			  look here: http://github.com/facebook/connect-js
+			  look here: http://github.com/facebook/facebook-js-sdk
 			-->
-			<facebook:connectJS appId="${appId}" />
+			<facebook:initJS appId="${appId}" />
 			
 			<h2>Authentication</h2>
 			<g:if test="${user}">

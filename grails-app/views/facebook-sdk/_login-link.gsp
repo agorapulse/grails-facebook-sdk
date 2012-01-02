@@ -1,5 +1,5 @@
 <script type="text/javascript">
-	function FacebookSDK_login() {
+	function FBGrailsSDK_login() {
 		FB.login(function(response) {
 			if (response.authResponse) {
 				// user is logged
@@ -18,4 +18,4 @@
 		}, {scope:"${appPermissions}"});
 	}
 </script>
-<a <g:if test="${elementId}">id="${elementId}"</g:if> <g:if test="${elementClass}">class="${elementClass}"</g:if> href="#" onclick="FacebookSDK_login();">${body}</a>
+<a <g:if test="${elementId}">id="${elementId}"</g:if> <g:if test="${elementClass}">class="${elementClass}"</g:if> href="#" onclick="FBGrailsSDK_login();">${body}</a>

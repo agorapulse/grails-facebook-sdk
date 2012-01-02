@@ -56,33 +56,29 @@ It uses RestFB java library under the cover : http://restfb.com/.
 	}
 
 	def doWithApplicationContext = { applicationContext ->
-		def facebookAppService = applicationContext.getBean("facebookAppService")
-		facebookAppService.appId  = application.config.facebook?.sdk?.app?.id
-		facebookAppService.appSecret  = application.config.facebook?.sdk?.app?.secret
-		facebookAppService.appPermissions = application.config.facebook?.sdk?.app?.permissions
-
-		def facebookAppCookieScope = applicationContext.getBean("facebookAppCookieScope")
-		facebookAppCookieScope.appId = application.config.facebook?.sdk?.app?.id
-
-		def facebookAppRequestScope = applicationContext.getBean("facebookAppRequestScope")
-		facebookAppRequestScope.appId = application.config.facebook?.sdk?.app?.id
-
-		def facebookAppPersistentScope = applicationContext.getBean("facebookAppPersistentScope")
-		facebookAppPersistentScope.appId = application.config.facebook?.sdk?.app?.id
+		if (application.config.facebook?.sdk?.app) {
+			def facebookAppService = applicationContext.getBean("facebookAppService")
+			facebookAppService.appId  = application.config.facebook.sdk.app.id
+			facebookAppService.appSecret  = application.config.facebook.sdk.app.secret
+			facebookAppService.appPermissions = application.config.facebook.sdk.app.permissions
+			facebookAppCookieScope.appId = application.config.facebook.sdk.app.id
+			facebookAppRequestScope.appId = application.config.facebook.sdk.app.id
+			facebookAppPersistentScope.appId = application.config.facebook.sdk.app.id
+		} 
 	}
 
 	def onChange = { event ->
 	}
 
 	def onConfigChange = { event ->
-		def facebookAppCookieScope = event.ctx.getBean("facebookAppCookieScope")
-		facebookAppCookieScope.appId = application.config.facebook?.sdk?.app?.id
-
-		def facebookAppRequestScope = event.ctx.getBean("facebookAppRequestScope")
-		facebookAppRequestScope.appId = application.config.facebook?.sdk?.app?.id
-
-		def facebookAppSessionScope = event.ctx.getBean("facebookAppSessionScope")
-		facebookAppSessionScope.appId = application.config.facebook?.sdk?.app?.id
+		if (application.config.facebook?.sdk?.app) {
+			def facebookAppCookieScope = event.ctx.getBean("facebookAppCookieScope")
+			def facebookAppRequestScope = event.ctx.getBean("facebookAppRequestScope")
+			def facebookAppSessionScope = event.ctx.getBean("facebookAppSessionScope")
+			facebookAppCookieScope.appId = application.config.facebook.sdk.app.id
+			facebookAppRequestScope.appId = application.config.facebook.sdk.app.id
+			facebookAppSessionScope.appId = application.config.facebook.sdk.app.id
+		}
 	}
 
 	def onShutdown = { event ->

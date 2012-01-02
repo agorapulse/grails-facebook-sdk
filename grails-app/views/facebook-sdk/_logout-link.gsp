@@ -1,5 +1,5 @@
 <script type="text/javascript">
-	function FBSDK_logout() {
+	function FBGrailsSDK_logout() {
 		FB.getLoginStatus(function(response) {
 			if (response.authResponse) {
 		    	FB.logout(function(response) {
@@ -21,4 +21,4 @@
 		});
 	}
 </script>
-<a <g:if test="${elementId}">id="${elementId}"</g:if> <g:if test="${elementClass}">class="${elementClass}"</g:if> href="#" onclick="FBSDK_logout();">${body}</a>
+<a <g:if test="${elementId}">id="${elementId}"</g:if> <g:if test="${elementClass}">class="${elementClass}"</g:if> href="#" onclick="FBGrailsSDK_logout();">${body}</a>

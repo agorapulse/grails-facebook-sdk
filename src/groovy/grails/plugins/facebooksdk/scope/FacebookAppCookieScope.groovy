@@ -43,9 +43,7 @@ class FacebookAppCookieScope extends FacebookAppScope {
 	// PRIVATE
 
 	private String getAppCookieName(String appId) {
-		if (!this.appId) {
-			throw new Exception("AppId must be defined")
-		}
+		assert this.appId, "Facebook appId must be defined"
 		return "fbsr_${this.appId}"
 	}
 	

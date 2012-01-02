@@ -12,9 +12,7 @@ class FacebookAppScope {
 	}
 	
 	private String getKeyVariableName(String key) {
-		if (!this.appId) {
-			throw new Exception('AppId must be defined')
-		}
+		assert this.appId, "Facebook appId must be defined"
 		return "fb_${this.appId}_${key}"
 	}
 	

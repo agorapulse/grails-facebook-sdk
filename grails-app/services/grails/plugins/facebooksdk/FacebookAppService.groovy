@@ -32,9 +32,9 @@ class FacebookAppService {
 	
 	boolean transactional = false
 	
-	def appId = 0
-	def appPermissions = ""
-	def appSecret = ""
+	Long appId = 0
+	String appPermissions = ""
+	String appSecret = ""
 	def facebookAppCookieScope
 	def facebookAppPersistentScope // Any persistentScope class with the following methods : deleteData, deleteAllData, getData, isEnabled, setData
 	def facebookAppRequestScope

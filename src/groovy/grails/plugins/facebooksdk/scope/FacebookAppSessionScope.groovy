@@ -9,9 +9,7 @@ class FacebookAppSessionScope extends FacebookAppScope {
 	final static List PERSISTENT_KEYS = ['access_token','code','state','user_id']
 	
 	void deleteData(String key) {
-		if (!PERSISTENT_KEYS.contains(key)) {
-			throw new Exception('Unsupported key passed to deleteData')
-		}
+		assert PERSISTENT_KEYS.contains(key), "Unsupported key passed to deleteData"
 		request.session.removeAttribute(getKeyVariableName(key))
 	}
  
@@ -22,9 +20,7 @@ class FacebookAppSessionScope extends FacebookAppScope {
 	}
 	
 	def getData(String key, defaultValue = "") {
-		if (!PERSISTENT_KEYS.contains(key)) {
-			throw new Exception('Unsupported key passed to getData')
-		}
+		assert PERSISTENT_KEYS.contains(key), "Unsupported key passed to getData"
 		return request.session.getAttribute(getKeyVariableName(key)) ?: defaultValue
 	}
 	
@@ -37,9 +33,7 @@ class FacebookAppSessionScope extends FacebookAppScope {
 	}
 		
 	void setData(String key, value) {
-		if (!PERSISTENT_KEYS.contains(key)) {
-			throw new Exception('Unsupported key passed to setData')
-		}
+		assert PERSISTENT_KEYS.contains(key), "Unsupported key passed to setData"
 		request.session.setAttribute(getKeyVariableName(key), value)
 	}
 	

@@ -12,7 +12,9 @@ class AppController {
 	def beforeInterceptor =  {
 		request.appId = facebookAppService.appId
 		request.appPermissions = facebookAppService.appPermissions
-		request.userId = facebookAppService.userId
+		if (request.appId) {
+			request.userId = facebookAppService.userId
+		}
 	}
 
 	def index() {

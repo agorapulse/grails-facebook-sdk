@@ -1,5 +1,5 @@
 <div class="page-header">
-	<h1>Facebook App Example</h1>
+	<h1>App Example <small>running on Facebook.com</small></h1>
 </div>
 <div class="row">
 	<div class="span12">
@@ -9,9 +9,9 @@
 		<g:else>
 			<!--
 			  We use the Facebook JavaScript SDK to provide a richer user experience. For more info,
-			  look here: http://github.com/facebook/connect-js
+			  look here: http://github.com/facebook/facebook-js-sdk
 			-->
-			<facebook:connectJS appId="${appId}" />
+			<facebook:initJS appId="${appId}" />
 			
 			<g:if test="${!user}">
 				<h2>Authentication</h2>

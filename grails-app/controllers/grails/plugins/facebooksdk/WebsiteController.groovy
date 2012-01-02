@@ -12,7 +12,9 @@ class WebsiteController {
 	def beforeInterceptor =  {
 		request.appId = facebookAppService.appId
 		request.appPermissions = facebookAppService.appPermissions
-		request.userId = facebookAppService.userId
+		if (request.appId) {
+			request.userId = facebookAppService.userId
+		}
 	}
 
 	def index() {
@@ -36,10 +38,12 @@ class WebsiteController {
 		// Login or logout url will be needed depending on current user state.
 		String logoutURL
 		String loginURL
-		if (user) {
-			logoutURL = facebookAppService.getLogoutURL(next:createLink(action:"logout"))
-		} else {
-			loginURL = facebookAppService.getLoginURL(scope:request.appPermissions)
+		if (request.appId) {
+			if (user) {
+				logoutURL = facebookAppService.getLogoutURL(next:createLink(action:"logout"))
+			} else {
+				loginURL = facebookAppService.getLoginURL(scope:request.appPermissions)
+			}
 		}
 		
 		// This call will always work since we are fetching public data.

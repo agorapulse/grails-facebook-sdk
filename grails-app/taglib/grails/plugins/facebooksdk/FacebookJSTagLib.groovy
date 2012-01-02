@@ -1,6 +1,6 @@
 package grails.plugins.facebooksdk
 
-class FacebookSdkTagLib {
+class FacebookJSTagLib {
 	
 	static namespace = 'facebook'
 	
@@ -8,22 +8,21 @@ class FacebookSdkTagLib {
 	* Initialize Facebook JS SDK
 	*
 	* @attr appId REQUIRED
-	* @attr autoGrowthEnabled
+	* @attr autoGrowth (Default to false)
 	* @attr channelUrl
-	* @attr	cookieEnabled Default to true
-	* @attr localeCode
-	* @attr sizeEnabled
-	* @attr statusEnabled
-	* @attr	xfbmlEnabled
+	* @attr	cookie (Default to true)
+	* @attr locale (Default to server locale)
+	* @attr status (Default to false)
+	* @attr	xfbml (Default to false)
 	*/
-	def connectJS = { attrs, body ->
-		if (!attrs.containsKey("cookieEnabled")) attrs.cookieEnabled = true
-		if (!attrs.localeCode) attrs.localeCode = Locale.getDefault()
+	def initJS = { attrs, body ->
+		if (!attrs.containsKey("cookie")) attrs.cookie = true
+		if (!attrs.locale) attrs.locale = Locale.getDefault()
 		Map model = [body:body()]
 		attrs.each { key, value ->
 			model[key] = value	
 		}
-		out << render(template:"/facebook-sdk/connect-js", model:model, plugin:"facebook-sdk")
+		out << render(template:"/facebook-sdk/init-js", model:model, plugin:"facebook-sdk")
 	}
 	
 	/**

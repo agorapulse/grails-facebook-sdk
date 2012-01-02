@@ -40,6 +40,6 @@ grails.views.gsp.encoding="UTF-8"
 grails.plugins.twitterbootstrap.fixtaglib = true
 
 // Facebook sdk plugin 
-facebook.sdk.app.id = 242034339191134
-facebook.sdk.app.permissions = "publish_stream"
-facebook.sdk.app.secret = "fa2cbd14c910dfefeb96793f70f51578"
+//facebook.sdk.app.id = 
+//facebook.sdk.app.permissions = "publish_stream"
+//facebook.sdk.app.secret =
