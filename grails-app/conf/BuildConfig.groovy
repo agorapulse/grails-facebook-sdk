@@ -25,7 +25,6 @@ grails.project.dependency.resolution = {
 	dependencies {
 		// specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
 		compile 'com.restfb:restfb:1.6.9'
-		compile 'commons-codec:commons-codec:1.5'
 		// runtime 'mysql:mysql-connector-java:5.1.5'
 	}
 

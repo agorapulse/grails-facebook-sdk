@@ -19,7 +19,14 @@ import com.restfb.exception.FacebookResponseStatusException
 import com.restfb.json.JsonException
 import com.restfb.json.JsonObject
 import com.restfb.types.User
-import grails.plugins.facebooksdk.util.*
+
+import grails.converters.JSON
+
+import javax.crypto.Mac
+import javax.crypto.spec.SecretKeySpec
+import javax.servlet.http.Cookie
+
+import org.apache.commons.codec.binary.Base64
 
 import org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequest
 import org.springframework.beans.factory.InitializingBean
@@ -334,10 +341,10 @@ class FacebookAppService {
 		if (!facebookAppRequestScope.hasData("signed_request")) {
 			if (request.params["signed_request"]) {
 				// apps.facebook.com (default iframe page)
-				facebookAppRequestScope.setData("signed_request", SecurityUtils.parseSignedRequest(request.params.signed_request, this.appSecret))
+				facebookAppRequestScope.setData("signed_request", parseSignedRequest(request.params.signed_request, this.appSecret))
 			} else if (facebookAppCookieScope.hasCookie()) {
 				// Cookie created by Facebook Connect Javascript SDK
-				facebookAppRequestScope.setData("signed_request", SecurityUtils.parseSignedRequest(facebookAppCookieScope.getData(), this.appSecret))
+				facebookAppRequestScope.setData("signed_request", parseSignedRequest(facebookAppCookieScope.getData(), this.appSecret))
 			}
 		}
 		return facebookAppRequestScope.getData("signed_request") ?: [:]
@@ -352,7 +359,7 @@ class FacebookAppService {
 			 url += path
 		 }
 		 if (parameters) {
-			 url += "?" + StringUtils.serializeQueryString(parameters)
+			 url += "?" + serializeQueryString(parameters)
 		 }
 		 return url
 	}
@@ -399,4 +406,162 @@ class FacebookAppService {
 	
 		return response.body;
 	}
+
+	private Map parseSignedRequest(String signedRequest, String appSecret) {
+		String encodedParameters = signedRequest.trim().tokenize(".")[-1].replace('_', '/').replace('-', '+')
+		String encodedSignature = signedRequest.trim().tokenize(".")[0].replace('_', '/').replace('-', '+')
+		
+		// Validate signature
+		Mac hmacSha256 = Mac.getInstance("HmacSHA256")
+		hmacSha256.init(new SecretKeySpec(appSecret.bytes, "HmacSHA256"))
+		byte[] expectedSignature = hmacSha256.doFinal(encodedParameters.bytes)
+		assert expectedSignature == encodedSignature.decodeBase64(), "Invalid signed request"
+
+		// Decode parameters
+		Map parameters = JSON.parse(new String(encodedParameters.decodeBase64()))
+		assert parameters["algorithm"] == "HMAC-SHA256", "Unknown algorithm. Expected HMAC-SHA256"
+
+		return parameters
+	}
+
+	private String serializeQueryString(Map parameters, Boolean urlEncoded = true) {
+		if (urlEncoded) {
+			return parameters.collect {key, value -> key.toLowerCase().encodeAsURL() + '=' + value.encodeAsURL() }.join('&')
+		} else {
+			return parameters.collect {key, value -> key.toLowerCase().encodeAsURL() + '=' + value }.join('&')
+		}
+	}
+
+}
+
+/**
+* Base scope
+*/
+class FacebookAppScope {
+	
+	def appId = 0
+	
+	GrailsWebRequest getRequest() {
+		return RequestContextHolder.getRequestAttributes()
+	}
+	
+	private String getKeyVariableName(String key) {
+		assert this.appId, "Facebook appId must be defined"
+		return "fb_${this.appId}_${key}"
+	}
+	
+}
+
+/**
+* Signed request cookie (set by Facebook Javascript SDK)
+*/
+class FacebookAppCookieScope extends FacebookAppScope {
+	
+	void deleteCookie() {
+		Cookie cookie = getCookie()
+		if (cookie) {
+			cookie.setMaxAge(0)
+			request.getCurrentResponse().addCookie(cookie)
+		}
+	}
+	
+	Cookie getCookie() {
+		Cookie appCookie
+		for (Cookie cookie in request.getCurrentRequest().getCookies()) {
+			if (cookie.name == getAppCookieName()) {
+				appCookie = cookie
+				break
+			}
+		}
+		return appCookie
+	}
+	
+	String getData() {
+		Cookie cookie = getCookie()
+		if (cookie) {
+			return cookie.value
+		} else {
+			return [:]
+		}
+	}
+	
+	Boolean hasCookie() {
+		return getCookie() ? true : false
+	}
+	
+	// PRIVATE
+
+	private String getAppCookieName(String appId) {
+		assert this.appId, "Facebook appId must be defined"
+		return "fbsr_${this.appId}"
+	}
+	
+}
+
+/**
+* Uses HTTP request attributes scope to cache data during the duration of the request.
+*/
+class FacebookAppRequestScope extends FacebookAppScope {
+	
+	final static List REQUEST_KEYS = ['access_token','code','state','user_id','signed_request']
+	
+	Boolean deleteData(String key) {
+		assert REQUEST_KEYS.contains(key), "Unsupported key passed to deleteData"
+		return request.getCurrentRequest().removeAttribute(getKeyVariableName(key))
+	}
+	
+	def getData(String key, defaultValue = '') {
+		assert REQUEST_KEYS.contains(key), "Unsupported key passed to getData"
+		return request.getCurrentRequest().getAttribute(getKeyVariableName(key)) ?: defaultValue
+	}
+ 
+	Boolean hasData(String key) {
+		request.getCurrentRequest().getAttribute(getKeyVariableName(key)) ? true : false
+	}
+		
+	void setData(String key, value) {
+		assert REQUEST_KEYS.contains(key), "Unsupported key passed to setData"
+		request.getCurrentRequest().setAttribute(getKeyVariableName(key), value)
+	}
+	
+}
+
+
+/**
+* Uses HTTP request session attributes scope to provide a primitive persistent store, but another subclass of FacebookApp --one that you implement-- might use a database, memcache, or an in-memory cache.
+*/
+
+class FacebookAppSessionScope extends FacebookAppScope {
+	
+	final static List PERSISTENT_KEYS = ['access_token','code','state','user_id']
+	
+	void deleteData(String key) {
+		assert PERSISTENT_KEYS.contains(key), "Unsupported key passed to deleteData"
+		request.session.removeAttribute(getKeyVariableName(key))
+	}
+ 
+	void deleteAllData() {
+		PERSISTENT_KEYS.each {key ->
+			deleteData(key)
+		}
+	}
+	
+	def getData(String key, defaultValue = "") {
+		assert PERSISTENT_KEYS.contains(key), "Unsupported key passed to getData"
+		return request.session.getAttribute(getKeyVariableName(key)) ?: defaultValue
+	}
+	
+	Boolean hasData(String key) {
+		return request.session.getAttribute(getKeyVariableName(key)) ? true : false
+	}
+	
+	Boolean isEnabled() {
+		return true
+	}
+		
+	void setData(String key, value) {
+		assert PERSISTENT_KEYS.contains(key), "Unsupported key passed to setData"
+		request.session.setAttribute(getKeyVariableName(key), value)
+	}
+	
 }
