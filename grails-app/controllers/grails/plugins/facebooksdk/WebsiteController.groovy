@@ -47,10 +47,10 @@ class WebsiteController {
 		}
 		
 		// This call will always work since we are fetching public data.
-		User naitik = facebookClient.fetchObject("naitik", User)
+		User benorama = facebookClient.fetchObject("benorama", User)
 		return 	[loginURL:loginURL,
 				logoutURL:logoutURL,
-				naitik:naitik,
+				benorama:benorama,
 				user:user,
 				userFriends:userFriends]
 	}

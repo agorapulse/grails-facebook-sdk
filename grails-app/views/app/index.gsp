@@ -38,8 +38,8 @@
 		<h2>Public data</h2>
 		<h3>Profile pic + name</h3>
 		<p>
-			<img src="https://graph.facebook.com/naitik/picture">
-			${naitik?.name}
+			<img src="https://graph.facebook.com/benorama/picture">
+			${benorama?.name}
 		</p>
 	</div>
 </div>

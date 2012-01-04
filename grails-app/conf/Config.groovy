@@ -42,4 +42,4 @@ grails.plugins.twitterbootstrap.fixtaglib = true
 // Facebook sdk plugin 
 //facebook.sdk.app.id = 
 //facebook.sdk.app.permissions = "publish_stream"
-//facebook.sdk.app.secret =
+//facebook.sdk.app.secret = 

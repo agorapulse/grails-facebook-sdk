@@ -36,8 +36,8 @@ class AppController {
 		}
 		
 		// This call will always work since we are fetching public data.
-		User naitik = facebookClient.fetchObject("naitik", User)
-		return 	[naitik:naitik,
+		User benorama = facebookClient.fetchObject("benorama", User)
+		return 	[benorama:benorama,
 				user:user,
 				userFriends:userFriends]
 	}

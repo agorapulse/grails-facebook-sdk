@@ -2,6 +2,7 @@ package grails.plugins.facebooksdk
 
 import com.restfb.batch.BatchRequest
 import com.restfb.batch.BatchRequest.BatchRequestBuilder
+import com.restfb.BinaryAttachment
 import com.restfb.Connection
 import com.restfb.DefaultFacebookClient
 import com.restfb.DefaultJsonMapper
@@ -17,35 +18,37 @@ class FacebookGraphClient extends DefaultFacebookClient {
 		super(accessToken)
 	}
 
-	boolean deleteObject(String objectId) {
-		return super.deleteObject(objectId)
+	boolean deleteObject(String object) {
+		return super.deleteObject(object)
 	}
 
-	List fetchConnection(String objectId, String connectionType, Map parameters = [:]) {
-		Connection connection = super.fetchConnection("${objectId}/${connectionType}", JsonObject, buildVariableArgs(parameters))
-		return (connection && connection.data) ? JSON.parse(connection.data.toString()) : []
+	List fetchConnection(String connection, Map parameters = [:]) {
+		Connection result = super.fetchConnection(connection, JsonObject, buildVariableArgs(parameters))
+		return (result && result.data) ? JSON.parse(result.data.toString()) : []
 	}
 
-	List fetchTypedConnection(String objectId, String connectionType, Class objectType, Map parameters = [:]) {
-		Connection connection = super.fetchConnection("${objectId}/${connectionType}", buildObjectClass(objectType), buildVariableArgs(parameters))
-		return (connection && connection.data) ? new ArrayList(connection.data) : []
+	def fetchObject(String object, Map parameters = [:]) {
+		String result = makeRequest(object, buildVariableArgs(parameters))
+		if (result.startsWith("{")) {
+			return JSON.parse(result)
+		} else if (result.find("=")) {
+			Map resultMap = [:]
+			result.tokenize("&").each {
+				resultMap[it.tokenize("=")[0]] = it.tokenize("=")[1]
+			}
+			return resultMap
+		} else {
+			return result
+		}
 	}
 
-	def fetchObject(String objectId, Map parameters = [:]) {
-		return fetchTypedObject(objectId, JsonObject, parameters)
-	}
-
-	def fetchTypedObject(String objectId, Class objectType, Map parameters = [:]) {
-		return super.fetchObject(objectId, buildObjectClass(objectType), buildVariableArgs(parameters))
-	}
-
-	Map fetchObjects(List objectIds, Map parameters = [:], int batchSize = 20) {
+	Map fetchObjects(List ids, Map parameters = [:], int batchSize = 20) {
 		List batchIds = []
 		JsonObject jsonObject
 		Map objects = [:]
-		objectIds.each { batchId ->
+		ids.each { batchId ->
 			batchIds << batchId
-			if (batchIds.size() == batchSize || batchId == objectIds[-1]) {
+			if (batchIds.size() == batchSize || batchId == ids[-1]) {
 				jsonObject = super.fetchObjects(batchIds, JsonObject, buildVariableArgs(parameters))
 				objects += JSON.parse(jsonObject.toString())
 				batchIds = []
@@ -54,26 +57,13 @@ class FacebookGraphClient extends DefaultFacebookClient {
 		return objects
 	}
 
-	Map fetchTypedObjects(List objectIds, Class objectType, Map parameters = [:], int batchSize = 20) {
-		List batchIds = []
-		JsonObject jsonObject
-		JsonMapper jsonMapper = new DefaultJsonMapper()
-		Map objects = [:]
-		objectIds.each { batchId ->
-			batchIds << batchId
-			if (batchIds.size() == batchSize || batchId == objectIds[-1]) {
-				jsonObject = super.fetchObjects(batchIds, JsonObject, buildVariableArgs(parameters))
-				objectIds.each { id ->
-					objects[id] = jsonMapper.toJavaObject(jsonObject.getString(id), objectType.superclass)
-				}
-				batchIds = []
-			}
+	def publish(String connection, Map parameters = [:], String filePath = "") {
+		if (filePath) {
+			File file = new File(filePath)
+			return super.publish(connection, JsonObject, BinaryAttachment.with(file.name, new FileInputStream(file)), buildVariableArgs(parameters))
+		} else {
+			return super.publish(connection, JsonObject, buildVariableArgs(parameters))	
 		}
-		return objects
-	}
-
-	def publish() {
-		// TODO
 	}
 
 	List executeBatch(List requests, int batchSize = 20) {
@@ -106,15 +96,19 @@ class FacebookGraphClient extends DefaultFacebookClient {
 		return JSON.parse(result.toString())
 	}
 
-	// PRIVATE
-
-	private Class buildObjectClass(Class objectClass) {
-		if (objectClass.name.startsWith("com.restfb.")) {
-			return objectClass
-		} else {
-			return objectClass.superclass
-		}
+	String makeRequest(String endPoint, Map parameters = [:]) {
+		return super.makeRequest(endPoint, false, false, null, buildVariableArgs(parameters))
 	}
+
+	String makePostRequest(String endPoint, Map parameters = [:]) {
+		return super.makeRequest(endPoint, true, false, null, buildVariableArgs(parameters))
+	}
+
+	String makeDeleteRequest(String endPoint, Map parameters = [:]) {
+		return super.makeRequest(endPoint, false, true, null, buildVariableArgs(parameters))
+	}
+
+	// PRIVATE
 
 	private Parameter[] buildVariableArgs(Map parameters) {
 		Parameter[] variableArgs = new Parameter[parameters.size()]
