@@ -37,6 +37,10 @@ class FacebookGraphClient extends DefaultFacebookClient {
 				resultMap[it.tokenize("=")[0]] = it.tokenize("=")[1]
 			}
 			return resultMap
+		} else if (result == "false") {
+			return false
+		} else if (result == "true") {
+			return true
 		} else {
 			return result
 		}
