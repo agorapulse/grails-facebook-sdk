@@ -56,17 +56,17 @@ It uses RestFB java library under the cover : http://restfb.com/.
 	}
 
 	def doWithApplicationContext = { applicationContext ->
-		if (application.config.facebook?.sdk?.app) {
+		if (application.config.grails.plugins.facebooksdk) {
 			def facebookAppService = applicationContext.getBean("facebookAppService")
-			facebookAppService.appId  = application.config.facebook.sdk.app.id
-			facebookAppService.appSecret  = application.config.facebook.sdk.app.secret
-			facebookAppService.appPermissions = application.config.facebook.sdk.app.permissions
+			facebookAppService.appId  = application.config.grails.plugins.facebooksdk.appId
+			facebookAppService.appSecret  = application.config.grails.plugins.facebooksdk.appSecret
+			facebookAppService.appPermissions = application.config.grails.plugins.facebooksdk.appPermissions
 			def facebookAppCookieScope = applicationContext.getBean("facebookAppCookieScope")
-			facebookAppCookieScope.appId = application.config.facebook.sdk.app.id
+			facebookAppCookieScope.appId = application.config.grails.plugins.facebooksdk.appId
 			def facebookAppRequestScope = applicationContext.getBean("facebookAppRequestScope")
-			facebookAppRequestScope.appId = application.config.facebook.sdk.app.id
+			facebookAppRequestScope.appId = application.config.grails.plugins.facebooksdk.appId
 			def facebookAppPersistentScope = applicationContext.getBean("facebookAppPersistentScope")
-			facebookAppPersistentScope.appId = application.config.facebook.sdk.app.id
+			facebookAppPersistentScope.appId = application.config.grails.plugins.facebooksdk.appId
 		} 
 	}
 
@@ -74,13 +74,17 @@ It uses RestFB java library under the cover : http://restfb.com/.
 	}
 
 	def onConfigChange = { event ->
-		if (application.config.facebook?.sdk?.app) {
-			def facebookAppCookieScope = event.ctx.getBean("facebookAppCookieScope")
-			facebookAppCookieScope.appId = application.config.facebook.sdk.app.id
-			def facebookAppRequestScope = event.ctx.getBean("facebookAppRequestScope")
-			facebookAppRequestScope.appId = application.config.facebook.sdk.app.id
-			def facebookAppPersistentScope = event.ctx.getBean("facebookAppPersistentScope")
-			facebookAppPersistentScope.appId = application.config.facebook.sdk.app.id
+		if (application.config.grails.plugins.facebooksdk) {
+			def facebookAppService = applicationContext.getBean("facebookAppService")
+			facebookAppService.appId  = application.config.grails.plugins.facebooksdk.appId
+			facebookAppService.appSecret  = application.config.grails.plugins.facebooksdk.appSecret
+			facebookAppService.appPermissions = application.config.grails.plugins.facebooksdk.appPermissions
+			def facebookAppCookieScope = applicationContext.getBean("facebookAppCookieScope")
+			facebookAppCookieScope.appId = application.config.grails.plugins.facebooksdk.appId
+			def facebookAppRequestScope = applicationContext.getBean("facebookAppRequestScope")
+			facebookAppRequestScope.appId = application.config.grails.plugins.facebooksdk.appId
+			def facebookAppPersistentScope = applicationContext.getBean("facebookAppPersistentScope")
+			facebookAppPersistentScope.appId = application.config.grails.plugins.facebooksdk.appId
 		}
 	}
 

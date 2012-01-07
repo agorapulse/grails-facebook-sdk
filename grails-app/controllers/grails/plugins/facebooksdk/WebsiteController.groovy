@@ -1,9 +1,6 @@
 package grails.plugins.facebooksdk
 
-import com.restfb.Connection
-import com.restfb.DefaultFacebookClient
-import com.restfb.Parameter
-import com.restfb.types.User
+import com.restfb.exception.FacebookOAuthException
 
 class WebsiteController {
 	
@@ -17,21 +14,20 @@ class WebsiteController {
 		}
 	}
 
-	def index() {
+	def index = {
 		// See if there is a user from a cookie or session
-		DefaultFacebookClient facebookClient = new DefaultFacebookClient()
-		User user
+		FacebookGraphClient facebookGraphClient = new FacebookGraphClient()
+		def user
 		List userFriends = []
 		if (request.userId) {
 			try {
 				String userAccessToken = facebookAppService.getUserAccessToken()
-				facebookClient = new DefaultFacebookClient(userAccessToken)
-				user = facebookClient.fetchObject(request.userId.toString(), User)
-				Connection userFriendsConnection = facebookClient.fetchConnection("${request.userId}/friends", User, Parameter.with("limit", 10))
-				userFriends = userFriendsConnection ? userFriendsConnection.data : []
-			} catch (Exception exception) {
+				facebookGraphClient = new FacebookGraphClient(userAccessToken)
+				user = facebookGraphClient.fetchObject(request.userId.toString())
+				userFriends = facebookGraphClient.fetchConnection("${request.userId}/friends", [limit:10])
+			} catch (FacebookOAuthException exception) {
 				// Usually an invalid session (OAuthInvalidTokenException), for example if the user logged out from facebook.com
-				facebookClient = new DefaultFacebookClient();
+				facebookGraphClient = new FacebookGraphClient()
 			}
 		}
 		
@@ -47,7 +43,7 @@ class WebsiteController {
 		}
 		
 		// This call will always work since we are fetching public data.
-		User benorama = facebookClient.fetchObject("benorama", User)
+		def benorama = facebookGraphClient.fetchObject("benorama")
 		return 	[loginURL:loginURL,
 				logoutURL:logoutURL,
 				benorama:benorama,
@@ -55,11 +51,11 @@ class WebsiteController {
 				userFriends:userFriends]
 	}
 
-	def logout() {
+	def logout = {
 		facebookAppService.invalidateUser()
 		session.invalidate()
 		redirect(action:"index")
 	}
 
-	def welcome() {}
+	def welcome = {}
 }

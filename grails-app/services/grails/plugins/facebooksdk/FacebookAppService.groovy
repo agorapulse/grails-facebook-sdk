@@ -11,6 +11,8 @@ import org.apache.commons.codec.binary.Base64
 import org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequest
 import org.springframework.web.context.request.RequestContextHolder
 
+import com.restfb.exception.FacebookOAuthException
+
 class FacebookAppService {
 	
 	final static List DROP_QUERY_PARAMS = ["code","state","signed_request"]
@@ -235,7 +237,7 @@ class FacebookAppService {
 								redirect_uri:redirectUri.encodeAsURL()]
 				def result = facebookGraphClient.fetchObject("oauth/access_token", parameters)
 				if (result["access_token"]) accessToken = result["access_token"]
-			} catch (Exception exception) {
+			} catch (FacebookOAuthException exception) {
 				if (exception.message.find("Code was invalid or expired")) {
 					invalidateUser()
 				}
@@ -254,8 +256,6 @@ class FacebookAppService {
 				facebookAppRequestScope.deleteData("state")
 				facebookAppPersistentScope.deleteData("state")
 				code = request.params["code"]
-			} else {
-				// Ignore (CSRF state token does not match one provided)
 			}
 		}
 		return code
@@ -408,7 +408,7 @@ class FacebookAppCookieScope extends FacebookAppScope {
 	
 	// PRIVATE
 
-	private String getAppCookieName(String appId) {
+	private String getAppCookieName() {
 		assert this.appId, "Facebook appId must be defined"
 		return "fbsr_${this.appId}"
 	}

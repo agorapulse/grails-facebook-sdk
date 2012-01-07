@@ -7,7 +7,7 @@ log4j = {
 				environments {
 						production {
 								rollingFile name: "myAppender", maxFileSize: 1024,
-														file: "/var/tmp/logs/grails-facebook-examples.log"
+														file: "/var/tmp/logs/grails-facebook-sdk.log"
 						}
 				}
 		}
@@ -33,13 +33,11 @@ log4j = {
 			}
 		}
 }
-grails.views.default.codec="none" // none, html, base64
-grails.views.gsp.encoding="UTF-8"
 
 // Twitter bootstrap plugin
 grails.plugins.twitterbootstrap.fixtaglib = true
 
-// Facebook sdk plugin 
-//facebook.sdk.app.id = 
-//facebook.sdk.app.permissions = "publish_stream"
-//facebook.sdk.app.secret = 
+// Facebook sdk plugin
+grails.plugins.facebooksdk.appId = 242034339191134
+grails.plugins.facebooksdk.appPermissions = "publish_stream"
+grails.plugins.facebooksdk.appSecret = "fa2cbd14c910dfefeb96793f70f51578"

@@ -16,3 +16,5 @@
 /*.tmproj
 /target-eclipse
 stacktrace.log
+
+CodeNarcReport.html

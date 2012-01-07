@@ -5,15 +5,13 @@ import com.restfb.batch.BatchRequest.BatchRequestBuilder
 import com.restfb.BinaryAttachment
 import com.restfb.Connection
 import com.restfb.DefaultFacebookClient
-import com.restfb.DefaultJsonMapper
 import com.restfb.Parameter
-import com.restfb.JsonMapper
 import com.restfb.json.JsonObject
 
 import grails.converters.JSON
 
 class FacebookGraphClient extends DefaultFacebookClient {
-
+	
 	FacebookGraphClient(String accessToken = "") {
 		super(accessToken)
 	}
@@ -51,7 +49,7 @@ class FacebookGraphClient extends DefaultFacebookClient {
 		JsonObject jsonObject
 		Map objects = [:]
 		ids.each { batchId ->
-			batchIds << batchId
+			batchIds << batchId.toString()
 			if (batchIds.size() == batchSize || batchId == ids[-1]) {
 				jsonObject = super.fetchObjects(batchIds, JsonObject, buildVariableArgs(parameters))
 				objects += JSON.parse(jsonObject.toString())
