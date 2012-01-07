@@ -12,7 +12,7 @@ It uses RestFB java library under the cover : http://restfb.com/.
     <resource>grails.plugins.facebooksdk.AppController</resource>
     <resource>grails.plugins.facebooksdk.WebsiteController</resource>
     <resource>grails.plugins.facebooksdk.FacebookAppService</resource>
-    <resource>grails.plugins.facebooksdk.FacebookSdkTagLib</resource>
+    <resource>grails.plugins.facebooksdk.FacebookJSTagLib</resource>
   </resources>
   <repositories>
     <repository name='grailsCentral' url='http://plugins.grails.org' />
@@ -24,13 +24,12 @@ It uses RestFB java library under the cover : http://restfb.com/.
   <dependencies>
     <compile>
       <dependency group='com.restfb' name='restfb' version='1.6.9' />
-      <dependency group='commons-codec' name='commons-codec' version='1.5' />
     </compile>
   </dependencies>
   <plugins>
     <provided>
-      <plugin group='org.grails.plugins' name='twitter-bootstrap' version='1.4.0.13' />
-      <plugin group='org.grails.plugins' name='resources' version='1.1.5' />
+      <plugin group='org.grails.plugins' name='codenarc' version='0.16.1' />
+      <plugin group='org.grails.plugins' name='twitter-bootstrap' version='1.4.0.14' />
     </provided>
   </plugins>
   <runtimePluginRequirements />

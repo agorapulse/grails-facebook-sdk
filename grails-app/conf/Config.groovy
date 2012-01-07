@@ -34,6 +34,19 @@ log4j = {
 		}
 }
 
+grails.resources.modules = {
+	app {
+		dependsOn 'bootstrap'
+		resource url:'/css/app.css'
+	}
+	website {
+		dependsOn 'bootstrap'
+		resource url:'/css/website.css'
+	}
+}
+
+
+
 // Twitter bootstrap plugin
 grails.plugins.twitterbootstrap.fixtaglib = true
 
