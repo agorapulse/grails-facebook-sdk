@@ -10,12 +10,11 @@ This project contains the open source **Facebook Grails SDK Plugin** that allows
 This plugin is a port to [Grails 2.0](http://grails.org) of the official [Facebook PHP SDK V3.1.1](http://github.com/facebook/facebook-php-sdk).
 It supports the latest *OAuth2.0 authentication* (required since October 1st 2011).
 
-**Facebook Grails SDK Plugin** provides 2 artefacts :
+**Facebook Grails SDK Plugin** provides :
 
 * **FacebookAppService** - A service to build [apps on Facebook.com](http://developers.facebook.com/docs/guides/canvas/) and [websites with the Facebook Platform](http://developers.facebook.com/docs/guides/web).
 * **FacebookJSTagLib** - A collection of tags to easily integrate [Facebook JS SDK](http://developers.facebook.com/docs/reference/javascript/) in your GSPs.
-
-Under the cover, it uses the excellent [RestDB java library](http://restfb.com/) version 1.6.9 (released October 21 2011) for all the _Facebook Graph API_ calls.
+* **FacebookGraphClient** - A client to call [Facebook Graph API](http://developers.facebook.com/docs/reference/api/), which is a wrapper around the rock solid [RestFB java library](http://restfb.com/) version 1.6.9.
 
 
 # Getting started
@@ -40,9 +39,9 @@ Configure your Facebook app as below:
 **3- Add your Facebook app parameters to _grails-app/conf/Config.groovy_.**
 
 ```groovy
-facebook.sdk.app.id = {APP_ID}
-facebook.sdk.app.permissions = {APP_PERMISSIONS}
-facebook.sdk.app.secret = {APP_SECRET}
+grails.plugins.facebooksdk.appId = {APP_ID}
+grails.plugins.facebooksdk.appPermissions = {APP_PERMISSIONS}
+grails.plugins.facebooksdk.appSecret = {APP_SECRET}
 ```
 
 **4-Run the app from the project root.** 
@@ -65,6 +64,25 @@ Run the install-plugin script from your project root.
 grails install-plugin facebook-sdk
 ```
 
+But since Grails 1.3.x, it is recommanded to declare the plugin dependency in the BuildConfig.groovvy file, as shown here:
+
+```groovy
+grails.project.dependency.resolution = {
+    inherits("global") { }
+    log "info"
+    repositories {
+        //your repositories
+    }
+    dependencies {
+        //your regular dependencies
+    }
+    plugins {
+        //here go your plugin dependencies
+        runtime ':facebook-sdk:0.1.1'
+    }
+}
+```
+
 **WARNING: since, this plugin is not yet released on Grails.org, you have to manually package and install the plugin...**
 
 
@@ -75,9 +93,9 @@ Create a Facebook app on [Facebook Developers](https://developers.facebook.com/a
 Add your Facebook app parameters to your _grails-app/conf/Config.groovy_:
 
 ```groovy
-facebook.sdk.app.id = {APP_ID}
-facebook.sdk.app.permissions = {APP_PERMISSIONS}
-facebook.sdk.app.secret = {APP_SECRET}
+grails.plugins.facebooksdk.appId = {APP_ID}
+grails.plugins.facebooksdk.appPermissions = {APP_PERMISSIONS}
+grails.plugins.facebooksdk.appSecret = {APP_SECRET}
 ```
 
 
@@ -137,29 +155,154 @@ You might also use a global _Filter_.
 
 ## Graph API
 
-Since *RestFB* java libray comes bundled with the plugin, you can use it to make _Facebook Graph API_ calls.
+To perform Facebook Graph API call, use the _FacebookGraphClient_ without access token for public data or with an access token for private data.
+_FacebookGraphClient_ is a thin groovy wrapper around the rock solid [RestFB java library](http://restfb.com/).
+It will return JSON-based graph objects.
 
+To play with the API, you might use the grails console from your project root.
 ```groovy
-import com.restfb.Connection
-import com.restfb.DefaultFacebookClient
-import com.restfb.Parameter
-import com.restfb.types.User
-
-def userId = facebookAppService.userId
-if (userId) {
-  try {
-    DefaultFacebookClient facebookClient = new DefaultFacebookClient(facebookAppService.userAccessToken)
-    User user = facebookClient.fetchObject(userId.toString(), User)
-    Connection userFriendsConnection = facebookClient.fetchConnection("${userId}/friends", User, Parameter.with("limit", 10))
-    List userFriends = userFriendsConnection ? userFriendsConnection.data : []
-  } catch (Exception exception) {
-    // Something went wrong...
-  }
-}
+grails console
 ```
 
-For more information, see [RestFB documentation](http://restfb.com).
+**Initialization**
+```groovy
+import grails.plugins.facebooksdk.FacebookGraphClient
+// For public data
+def facebookClient = new FacebookGraphClient()
+// For private data (access token required)
+def userAccessToken = facebookAppService.getUserAccessToken()
+def facebookClient = new FacebookGraphClient(userAccessToken)
+```
 
+**Fetching Single Objects**
+```groovy
+def user = facebookClient.fetchObject("me") // Requires a user access token
+def page = facebookClient.fetchObject("cocacola")
+println "User name: " + user.name
+println "Page likes: " + page.likes
+```
+
+**Fetching Multiple Objects in One Call**
+```groovy
+def fetchObjectsResults = facebookClient.fetchObjects(["me", "cocacola"])
+println "User name: " + fetchObjectsResults["me"].name
+println "Page likes: " + fetchObjectsResults["cocacola"].likes
+```
+
+**Fetching Connections**
+```groovy
+def myFriends = facebookClient.fetchConnection("me/friends")
+def myFeed = facebookClient.fetchConnection("me/feed")
+println "Count of my friends: " + myFriends.size()
+println "First item in my feed: " + myFeed[0]
+```
+
+**Searching**
+```groovy
+// Searching is just a special case of fetching Connections -
+// all you have to do is pass along a few extra parameters.
+def publicSearch = facebookClient.fetchConnection("search", [q:"watermelon", type:"post"])
+println "Public search: " + publicSearch[0].message
+// Targeted search
+def targetedSearch = facebookClient.fetchConnection("me/home", [q:"Mark", type:"user"])
+println "Posts on my wall by friends named Mark: " + targetedSearch.size()
+```
+
+**Fetching Insights**
+```groovy
+// Fetching Insights data is as simple as fetching a Connection
+def insights = facebookClient.fetchConnection("PAGE_ID/insights")
+for (insight in insights) println insight.name
+```
+
+**Executing FQL Queries**
+```groovy
+String query = "SELECT uid, name FROM user WHERE uid=220439 or uid=7901103"
+def users = facebookClient.executeQuery(query)
+println "Users: " + users
+```
+
+**Executing Multiple FQL Queries in One Call**
+```groovy
+Map queries = [users:"SELECT uid, name FROM user WHERE uid=220439 OR uid=7901103", likers:"SELECT user_id FROM like WHERE object_id=122788341354"]
+multiqueryResults = facebookClient.executeMultiquery(queries)
+println "Users: " + multiqueryResults.users
+println "People who liked: " + multiqueryResults.likers
+```
+
+**Metadata/Introspection**
+```groovy
+// You can specify metadata=1 for many calls, not just this one.
+// See the Facebook Graph API documentation for more details. 
+def userWithMetadata = facebookClient.fetchObject("me", [metadata:1])
+println "User connections  " + userWithMetadata.metadata.connections
+```
+
+**Passing Parameters**
+```groovy
+// You can pass along any parameters you'd like to the Facebook endpoint.
+Date oneWeekAgo = new Date() - 7
+def filteredFeed = facebookClient.fetchConnection("me/feed", [limit:3, until:"yesterday", since:oneWeekAgo])
+println "Filtered feed count: " + filteredFeed.size()
+```
+
+**Selecting Specific Fields**
+```groovy
+def user = facebookClient.fetchObject("me", [fields:"id, name"])
+println "User name: " + user.name
+```
+
+**Publishing a Message and Event**
+```groovy
+// Publishing a simple message.
+def publishMessageResponse = facebookClient.publish("me/feed", [message:"RestFB test"])
+println "Published message ID: " + publishMessageResponse.id
+
+// Publishing an event
+Date tomorrow = new Date() + 1
+Date twoDaysFromNow = new Date() + 2
+def publishEventResponse = facebookClient.publish("me/events", [name:"Party", start_time:tomorrow, end_time:twoDaysFromNow])
+println "Published event ID: " + publishEventResponse.id
+```
+
+**Publishing a Photo or a Video**
+```groovy
+// Publishing an image to a photo album is easy!
+// Just specify the image you'd like to upload and RestFB will handle it from there.
+def publishPhotoResponse = facebookClient.publishFile("me/photos", [message, "Test cat"], "/cat.png")
+println "Published photo ID: " + publishPhotoResponse.id
+// Publishing a video works the same way.
+facebookClient.publish("me/videos", [message, "Test cat"], "/cat.mov")
+```
+
+**Deleting**
+```groovy
+Boolean deleted = facebookClient.deleteObject("some object ID")
+out.println("Deleted object? " + deleted)
+```
+
+**Using the Batch Request API**
+```groovy
+List batchResponses = facebookClient.executeBatch(["me", "m83music/feed"]);
+// Responses are ordered to match up with their corresponding requests.
+println "Me object " + batchResponses[0]
+println "M83 feed " + batchResponses[1]
+```
+
+**Error Handling**
+
+All _FacebookClient_ methods may throw _com.restfb.exception.FacebookException_, which is an unchecked exception as of RestFB 1.6.
+
+These are the _FacebookException_ subclasses that you may catch:
+
+* _FacebookJsonMappingException_
+* _FacebookNetworkException_ 
+* _FacebookGraphException_ 
+* _FacebookOAuthException_ 
+* _FacebookQueryParseException_ 
+* _FacebookResponseStatusException_ 
+
+For more info, check [RestFB java library](http://restfb.com/) documentation.
 
 # Facebook JS Taglib usage
 

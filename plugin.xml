@@ -1,4 +1,4 @@
-<plugin name='facebook-sdk' version='0.1' grailsVersion='2.0 &gt; *'>
+<plugin name='facebook-sdk' version='0.1' grailsVersion='2.0.0 &gt; *'>
   <author>Benoit Hediard</author>
   <authorEmail>hediard@affinitiz.com</authorEmail>
   <title>Facebook SDK Plugin</title>
@@ -20,17 +20,22 @@ It uses RestFB java library under the cover : http://restfb.com/.
     <repository name='http://repo.grails.org/grails/core' url='http://repo.grails.org/grails/core/' />
     <repository name='grailsCore' url='http://svn.codehaus.org/grails/trunk/grails-plugins' />
     <repository name='mavenCentral' url='http://repo1.maven.org/maven2/' />
+    <repository name='https://repository.sonatype.org/content/repositories/central' url='https://repository.sonatype.org/content/repositories/central/' />
   </repositories>
-  <dependencies>
-    <compile>
-      <dependency group='com.restfb' name='restfb' version='1.6.9' />
-    </compile>
-  </dependencies>
+  <dependencies />
   <plugins>
-    <provided>
-      <plugin group='org.grails.plugins' name='codenarc' version='0.16.1' />
+    <runtime>
+      <plugin group='org.grails.plugins' name='zipped-resources' version='1.0' />
+      <plugin group='org.grails.plugins' name='hibernate' version='2.0.0' />
+      <plugin group='org.grails.plugins' name='cache-headers' version='1.1.5' />
+      <plugin group='org.grails.plugins' name='jquery' version='1.7.1' />
+      <plugin group='org.grails.plugins' name='yui-minify-resources' version='0.1.4' />
+      <plugin group='org.grails.plugins' name='cached-resources' version='1.0' />
       <plugin group='org.grails.plugins' name='twitter-bootstrap' version='1.4.0.14' />
-    </provided>
+    </runtime>
+    <build>
+      <plugin group='org.grails.plugins' name='tomcat' version='2.0.0' />
+    </build>
   </plugins>
   <runtimePluginRequirements />
   <behavior />

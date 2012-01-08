@@ -14,18 +14,9 @@ grails.project.dependency.resolution = {
 	log "warn" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
 	repositories {
 		grailsCentral()
-		// uncomment the below to enable remote dependency resolution
-		// from public Maven repositories
-		//mavenCentral()
-		//mavenLocal()
-		//mavenRepo "http://snapshots.repository.codehaus.org"
-		//mavenRepo "http://repository.codehaus.org"
-		//mavenRepo "http://download.java.net/maven/2/"
-		//mavenRepo "http://repository.jboss.com/maven2/"
 	}
 	dependencies {
-		// specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
-		compile 'com.restfb:restfb:1.6.9'
+		compile "com.restfb:restfb:1.6.9"
 	}
 
 	plugins {
@@ -33,8 +24,8 @@ grails.project.dependency.resolution = {
 			  ":release:1.0.0") {
 			export = false
 		}
-		// Dev plugins (only for development)
-		provided ":codenarc:0.16.1",
-				":twitter-bootstrap:1.4.0.14"
+
+		provided ":codenarc:0.16.1"
+		provided ":twitter-bootstrap:1.4.0.14"
 	}
 }
