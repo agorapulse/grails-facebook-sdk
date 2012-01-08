@@ -165,6 +165,7 @@ grails console
 ```
 
 **Initialization**
+
 ```groovy
 import grails.plugins.facebooksdk.FacebookGraphClient
 // For public data
@@ -175,6 +176,7 @@ def facebookClient = new FacebookGraphClient(userAccessToken)
 ```
 
 **Fetching Single Objects**
+
 ```groovy
 def user = facebookClient.fetchObject("me") // Requires a user access token
 def page = facebookClient.fetchObject("cocacola")
@@ -183,6 +185,7 @@ println "Page likes: " + page.likes
 ```
 
 **Fetching Multiple Objects in One Call**
+
 ```groovy
 def fetchObjectsResults = facebookClient.fetchObjects(["me", "cocacola"])
 println "User name: " + fetchObjectsResults["me"].name
@@ -190,6 +193,7 @@ println "Page likes: " + fetchObjectsResults["cocacola"].likes
 ```
 
 **Fetching Connections**
+
 ```groovy
 def myFriends = facebookClient.fetchConnection("me/friends")
 def myFeed = facebookClient.fetchConnection("me/feed")
@@ -198,6 +202,7 @@ println "First item in my feed: " + myFeed[0]
 ```
 
 **Searching**
+
 ```groovy
 // Searching is just a special case of fetching Connections -
 // all you have to do is pass along a few extra parameters.
@@ -209,6 +214,7 @@ println "Posts on my wall by friends named Mark: " + targetedSearch.size()
 ```
 
 **Fetching Insights**
+
 ```groovy
 // Fetching Insights data is as simple as fetching a Connection
 def insights = facebookClient.fetchConnection("PAGE_ID/insights")
@@ -216,6 +222,7 @@ for (insight in insights) println insight.name
 ```
 
 **Executing FQL Queries**
+
 ```groovy
 String query = "SELECT uid, name FROM user WHERE uid=220439 or uid=7901103"
 def users = facebookClient.executeQuery(query)
@@ -223,6 +230,7 @@ println "Users: " + users
 ```
 
 **Executing Multiple FQL Queries in One Call**
+
 ```groovy
 Map queries = [users:"SELECT uid, name FROM user WHERE uid=220439 OR uid=7901103", likers:"SELECT user_id FROM like WHERE object_id=122788341354"]
 multiqueryResults = facebookClient.executeMultiquery(queries)
@@ -231,6 +239,7 @@ println "People who liked: " + multiqueryResults.likers
 ```
 
 **Metadata/Introspection**
+
 ```groovy
 // You can specify metadata=1 for many calls, not just this one.
 // See the Facebook Graph API documentation for more details. 
@@ -239,6 +248,7 @@ println "User connections  " + userWithMetadata.metadata.connections
 ```
 
 **Passing Parameters**
+
 ```groovy
 // You can pass along any parameters you'd like to the Facebook endpoint.
 Date oneWeekAgo = new Date() - 7
@@ -247,12 +257,14 @@ println "Filtered feed count: " + filteredFeed.size()
 ```
 
 **Selecting Specific Fields**
+
 ```groovy
 def user = facebookClient.fetchObject("me", [fields:"id, name"])
 println "User name: " + user.name
 ```
 
 **Publishing a Message and Event**
+
 ```groovy
 // Publishing a simple message.
 def publishMessageResponse = facebookClient.publish("me/feed", [message:"RestFB test"])
@@ -266,6 +278,7 @@ println "Published event ID: " + publishEventResponse.id
 ```
 
 **Publishing a Photo or a Video**
+
 ```groovy
 // Publishing an image to a photo album is easy!
 // Just specify the image you'd like to upload and RestFB will handle it from there.
@@ -276,12 +289,14 @@ facebookClient.publish("me/videos", [message, "Test cat"], "/cat.mov")
 ```
 
 **Deleting**
+
 ```groovy
 Boolean deleted = facebookClient.deleteObject("some object ID")
 out.println("Deleted object? " + deleted)
 ```
 
 **Using the Batch Request API**
+
 ```groovy
 List batchResponses = facebookClient.executeBatch(["me", "m83music/feed"]);
 // Responses are ordered to match up with their corresponding requests.
