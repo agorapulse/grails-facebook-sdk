@@ -145,13 +145,14 @@ def beforeInterceptor =  {
 
 You might also use a global _Filter_.
 
-## Graph API
+# Facebook Graph Client usage
 
 To perform Facebook Graph API call, use the _FacebookGraphClient_ without access token for public data or with an access token for private data.
 _FacebookGraphClient_ is a thin groovy wrapper around the rock solid [RestFB java library](http://restfb.com/).
 It will return JSON-based graph objects.
 
-To play with the API, you might use the grails console from your project root.
+To play with the API, you might use the grails console from your project root and get user token or app token from [Facebook Access Token Tool](https://developers.facebook.com/tools/access_token/).
+
 ```groovy
 grails console
 ```
@@ -163,7 +164,7 @@ import grails.plugins.facebooksdk.FacebookGraphClient
 // For public data
 def facebookClient = new FacebookGraphClient()
 // For private data (access token required)
-def userAccessToken = facebookAppService.getUserAccessToken()
+def userAccessToken = facebookAppService.getUserAccessToken() // Or any app/user token
 def facebookClient = new FacebookGraphClient(userAccessToken)
 ```
 
@@ -362,7 +363,7 @@ You might also use Facebook JS SDK [Login button](http://developers.facebook.com
 For the user to logout from your app and Facebook.com, use `logoutLink` tag.
 
 ```html
-<facebook:logoutLink>Logout</facebook:loginLink>
+<facebook:logoutLink>Logout</facebook:logoutLink>
 ```
 
 Optional attributes are :
