@@ -45,12 +45,13 @@ grails.resources.modules = {
 	}
 }
 
-
+// Disable SVN for plugin release
+grails.release.scm.enabled = false
 
 // Twitter bootstrap plugin
 grails.plugins.twitterbootstrap.fixtaglib = true
 
 // Facebook sdk plugin
-grails.plugins.facebooksdk.appId = 242034339191134
+grails.plugins.facebooksdk.appId = 
 grails.plugins.facebooksdk.appPermissions = "publish_stream"
-grails.plugins.facebooksdk.appSecret = "fa2cbd14c910dfefeb96793f70f51578"
+grails.plugins.facebooksdk.appSecret =

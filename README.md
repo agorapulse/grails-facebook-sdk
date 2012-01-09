@@ -58,13 +58,7 @@ Browse to :
 
 # Plugin Installation
 
-Run the install-plugin script from your project root.
-
-```groovy
-grails install-plugin facebook-sdk
-```
-
-But since Grails 1.3.x, it is recommanded to declare the plugin dependency in the BuildConfig.groovvy file, as shown here:
+Declare the plugin dependency in the BuildConfig.groovvy file, as shown here:
 
 ```groovy
 grails.project.dependency.resolution = {
@@ -82,8 +76,6 @@ grails.project.dependency.resolution = {
     }
 }
 ```
-
-**WARNING: since, this plugin is not yet released on Grails.org, you have to manually package and install the plugin...**
 
 
 # Plugin Config 
