@@ -1,16 +1,17 @@
-Facebook Grails SDK Plugin
+Facebook SDK Grails Plugin
 ================================
 
 # Introduction
 
 The [Facebook Platform](http://developers.facebook.com/) is a set of APIs that make your application more social. Read more about [integrating Facebook with your web site](http://developers.facebook.com/docs/guides/web) on the Facebook developer site. 
 
-This project contains the open source **Facebook Grails SDK Plugin** that allows you to integrate the [Facebook Platform](http://developers.facebook.com/) on a website/app powered by [Grails](http://grails.org).
+This project contains the open source **Facebook SDK Grails Plugin** that allows you to integrate the [Facebook Platform](http://developers.facebook.com/) on a website/app powered by [Grails](http://grails.org).
 
-This plugin is a port to [Grails 2.0](http://grails.org) of the official [Facebook PHP SDK V3.1.1](http://github.com/facebook/facebook-php-sdk).
+This plugin is a port of the official [Facebook PHP SDK V3.1.1](http://github.com/facebook/facebook-php-sdk) to [Grails 2.0](http://grails.org).
+
 It supports the latest *OAuth2.0 authentication* (required since October 1st 2011).
 
-**Facebook Grails SDK Plugin** provides :
+**Facebook SDK Grails Plugin** provides :
 
 * **FacebookAppService** - A service to build [apps on Facebook.com](http://developers.facebook.com/docs/guides/canvas/) and [websites with the Facebook Platform](http://developers.facebook.com/docs/guides/web).
 * **FacebookJSTagLib** - A collection of tags to easily integrate [Facebook JS SDK](http://developers.facebook.com/docs/reference/javascript/) in your GSPs.
@@ -21,10 +22,10 @@ It supports the latest *OAuth2.0 authentication* (required since October 1st 201
 
 If you want to quickly run the SDK.
 
-**1- Download or clone the [plugin GitHub project](https://github.com/benorama/facebook-grails-sdk).**
+**1- Download or clone the [plugin GitHub project](https://github.com/benorama/facebook-sdk-grails-plugin).**
 
 ```groovy
-git clone https://benorama@github.com/benorama/facebook-grails-sdk.git
+git clone https://benorama@github.com/benorama/facebook-sdk-grails-plugin.git
 ```
 
 **2- Create a Facebook app on [Facebook Developers](https://developers.facebook.com/apps), in order to get your own app ID and app secret.**
@@ -62,18 +63,18 @@ Declare the plugin dependency in the BuildConfig.groovvy file, as shown here:
 
 ```groovy
 grails.project.dependency.resolution = {
-    inherits("global") { }
-    log "info"
-    repositories {
-        //your repositories
-    }
-    dependencies {
-        //your regular dependencies
-    }
-    plugins {
-        //here go your plugin dependencies
-        runtime ':facebook-sdk:0.1.1'
-    }
+		inherits("global") { }
+		log "info"
+		repositories {
+				//your repositories
+		}
+		dependencies {
+				//your regular dependencies
+		}
+		plugins {
+				//here go your plugin dependencies
+				runtime ':facebook-sdk:0.1.2'
+		}
 }
 ```
 
@@ -107,9 +108,9 @@ It will return `0` if user is not authenticated (or if he has not authorized you
 ```groovy
 def userId = facebookAppService.getUserId()
 if (userId) {
-  println "User authenticated (id=${userId})"
+	println "User authenticated (id=${userId})"
 } else {
-  println "User not authenticated"
+	println "User not authenticated"
 }
 ```
 
@@ -123,9 +124,9 @@ If the app is running on Facebook.com, the access token will be extracted from t
 
 ```groovy
 try {
-  String userAccessToken = facebookAppService.getUserAccessToken()
+	String userAccessToken = facebookAppService.getUserAccessToken()
 } catch (Exception exception) {
-  // Something went wrong...
+	// Something went wrong...
 }
 ```
 
@@ -137,9 +138,9 @@ An easy way to integrate the Facebook SDK is to use a `beforeInterceptor` in you
 
 ```groovy
 def beforeInterceptor =  {
-  request.appId = facebookAppService.appId
-  request.appPermissions = facebookAppService.appPermissions
-  request.userId = facebookAppService.userId
+	request.appId = facebookAppService.appId
+	request.appPermissions = facebookAppService.appPermissions
+	request.userId = facebookAppService.userId
 }
 ```
 
@@ -374,7 +375,7 @@ Optional attributes are :
 
 # Bugs
 
-To report any bug, please use the project [Issues](http://github.com/benorama/facebook-grails-sdk/issues) section on GitHub.
+To report any bug, please use the project [Issues](http://github.com/benorama/facebook-sdk-grails-plugin/issues) section on GitHub.
 
 # Alpha status
 
@@ -383,7 +384,7 @@ The underlying APIs are generally stable, however we may make changes to the lib
 
 # Feedback
 
-The **Facebook Grails SDK Plugin** is not an official Facebook SDK such as [Javascript](http://developers.facebook.com/docs/reference/javascript/), [PHP](http://github.com/facebook/facebook-php-sdk), [iOS](http://github.com/facebook/facebook-ios-sdk/) and [Android SDKs](http://github.com/facebook/facebook-android-sdk).
+The **Facebook SDK Grails Plugin** is not an official Facebook SDK such as [Javascript](http://developers.facebook.com/docs/reference/javascript/), [PHP](http://github.com/facebook/facebook-php-sdk), [iOS](http://github.com/facebook/facebook-ios-sdk/) and [Android SDKs](http://github.com/facebook/facebook-android-sdk).
 
 It is developped by [Affinitiz](http://poweredby.affinitiz.com), a french social media web agency.
 

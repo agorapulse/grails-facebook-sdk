@@ -5,7 +5,7 @@ import grails.plugins.facebooksdk.FacebookAppSessionScope
 
 class FacebookSdkGrailsPlugin {
 	
-	def version = "0.1.1"
+	def version = "0.1.2"
 	def grailsVersion = "2.0 > *"
 	def dependsOn = [:]
 	//def loadAfter                = ['services', 'controllers']
@@ -23,10 +23,8 @@ class FacebookSdkGrailsPlugin {
 	def author = "Benoit Hediard"
 	def authorEmail = "ben@benorama.com"
 	def title = "Facebook SDK Grails Plugin"
-	def description = '''\
-The Facebook SDK plugin allows your Grails application to use the Facebook Platform and develop Facebook apps\
- on Facebook.com or on web sites (with Facebook Connect).
-It uses RestFB java library under the cover : http://restfb.com/.
+	def description = '''The Facebook SDK Plugin allows your Grails application to use the Facebook Platform and develop Facebook apps on Facebook.com or on web sites (with Facebook Connect).
+It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
 ''' 
 	
 	def documentation = "http://grails.org/plugin/facebook-sdk-grails-plugin/blob/master/README.md"
