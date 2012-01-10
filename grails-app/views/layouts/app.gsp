@@ -12,23 +12,10 @@
 </head>
 
 <body>
-
-	<div class="topbar">
-		<div class="topbar-inner">
-			<div class="container-fluid">
-				<a class="brand" href="#">Facebook Grails SDK</a>
-			</div>
-		</div>
-	</div>
-
-	<div class="container-fluid">
-		<div class="sidebar">
-			<g:render template="/website/links" />
-		</div>
-		<div class="content">
-			<g:layoutBody />
-			<g:render template="/website/footer" />
-		</div>
+	
+	<div class="container-fluid canvas">
+		<g:layoutBody />
+		<g:render template="/website/footer" />
 	</div>
 
 </body>

@@ -36,11 +36,11 @@ log4j = {
 
 grails.resources.modules = {
 	app {
-		dependsOn 'bootstrap'
+		dependsOn 'fbootstrapp'
 		resource url:'/css/app.css'
 	}
 	website {
-		dependsOn 'bootstrap'
+		dependsOn 'fbootstrapp'
 		resource url:'/css/website.css'
 	}
 }
@@ -48,10 +48,10 @@ grails.resources.modules = {
 // Disable SVN for plugin release
 grails.release.scm.enabled = false
 
-// Twitter bootstrap plugin
-grails.plugins.twitterbootstrap.fixtaglib = true
+// FBootstrapp plugin
+grails.plugins.fboostrapp.fixtaglib = true
 
 // Facebook sdk plugin
-grails.plugins.facebooksdk.appId = 
-grails.plugins.facebooksdk.appPermissions = "publish_stream"
-grails.plugins.facebooksdk.appSecret =
+//grails.plugins.facebooksdk.appId = 
+//grails.plugins.facebooksdk.appPermissions = "publish_stream"
+//grails.plugins.facebooksdk.appSecret = ""

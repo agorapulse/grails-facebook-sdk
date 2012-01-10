@@ -14,13 +14,13 @@
 			<facebook:initJS appId="${appId}" />
 			
 			<g:if test="${!user}">
-				<h2>Authentication</h2>
+				<h2 class="tab">Authentication</h2>
 				<p>
 					Install app via Facebook JavaScript SDK: <facebook:loginLink appPermissions="${appPermissions}" elementClass="large primary btn">Login</facebook:loginLink>
 				</p>
 			</g:if>
 			<g:else>
-				<h2>Your data</h2>
+				<h2 class="tab">Your data</h2>
 				<h3>Your profile pic + name</h3>
 				<p>
 					<img src="https://graph.facebook.com/${user.id}/picture">
@@ -33,9 +33,9 @@
 					</g:each>
 				</p>
 			</g:else>
-			<hr />
+			<p>&nbsp;</p>
 		</g:else>
-		<h2>Public data</h2>
+		<h2 class="tab">Public data</h2>
 		<h3>Profile pic + name</h3>
 		<p>
 			<img src="https://graph.facebook.com/benorama/picture">

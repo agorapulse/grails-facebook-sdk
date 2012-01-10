@@ -13,7 +13,6 @@ class FacebookSdkGrailsPlugin {
 	//def watchedResources         = ["grails-app/services/**/*Service.groovy", "grails-app/controllers/**/*Controller.groovy"]
 	def pluginExcludes = [
 		"grails-app/controllers/**",
-		"grails-app/i18n/**",
 		"grails-app/views/app/*",
 		"grails-app/views/error.gsp",
 		"grails-app/views/layouts/*",
@@ -21,22 +20,19 @@ class FacebookSdkGrailsPlugin {
 		"web-app/**",
 	]
 
-	def title = "Facebook SDK Plugin" // Headline display name of the plugin
+	def author = "Benoit Hediard"
+	def authorEmail = "ben@benorama.com"
+	def title = "Facebook SDK Grails Plugin"
 	def description = '''\
 The Facebook SDK plugin allows your Grails application to use the Facebook Platform and develop Facebook apps\
  on Facebook.com or on web sites (with Facebook Connect).
 It uses RestFB java library under the cover : http://restfb.com/.
 ''' 
-	def author = "Benoit Hediard"
-	def authorEmail = "hediard@affinitiz.com"
 	
-	def documentation = "http://grails.org/plugin/facebook-sdk"
-
-	def license                  = "APACHE"
-	def organization             = [  name: "Affinitiz", url: "http://github.com/affinitiz" ]
-	def developers               = [[ name: "Benoit HEDIARD", email: "hediard@affinitiz.com" ]]
-	def scm                      = [  url: "https://github.com/affinitiz/facebook-grails-sdk" ]
-	//def issueManagement          = [  system: "JIRA", url: "http://jira.grails.org/browse/FBSDK" ]
+	def documentation = "http://grails.org/plugin/facebook-sdk-grails-plugin/blob/master/README.md"
+	def license = "APACHE"
+	def issueManagement = [ system: "github", url: "https://github.com/benorama/facebook-sdk-grails-plugin/issues" ]
+	def scm = [  url: "https://github.com/benorama/facebook-sdk-grails-plugin" ]
 
 	def doWithWebDescriptor = { xml ->
 	}

@@ -13,7 +13,7 @@
 			-->
 			<facebook:initJS appId="${appId}" />
 			
-			<h2>Authentication</h2>
+			<h2 class="tab">Authentication</h2>
 			<g:if test="${user}">
 				<p>
 					Log out via Facebook JavaScript SDK: <facebook:logoutLink elementClass="btn" nextURL="${createLink(action:'logout')}">Logout</facebook:logoutLink>
@@ -36,9 +36,9 @@
 					(<i>with Facebook Grails SDK handling authorization code from url on return</i>)
 				</p> -->
 			</g:else>
-			<hr />
+			<p>&nbsp;</p>
 			<g:if test="${user}">
-				<h2>Your data</h2>
+				<h2 class="tab">Your data</h2>
 				<h3>Your profile pic + name</h3>
 				<p>
 					<img src="https://graph.facebook.com/${user.id}/picture">
@@ -54,9 +54,9 @@
 			<g:else>
 				<strong><em>You are not Connected.</em></strong>
 			</g:else>
+			<p>&nbsp;</p>
 		</g:else>
-		<hr />
-		<h2>Public data</h2>
+		<h2 class="tab">Public data</h2>
 		<h3>Profile pic + name</h3>
 		<p>
 			<img src="https://graph.facebook.com/benorama/picture">

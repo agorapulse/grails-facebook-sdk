@@ -18,14 +18,12 @@ grails.project.dependency.resolution = {
 	dependencies {
 		compile "com.restfb:restfb:1.6.9"
 	}
-
 	plugins {
+		compile ":resources:latest.integration"
 		build(":tomcat:$grailsVersion",
-			  ":release:1.0.0") {
+			  ":release:latest.integration") {
 			export = false
 		}
-
-		provided ":codenarc:0.16.1"
-		provided ":twitter-bootstrap:1.4.0.14"
+		runtime ":fbootstrapp:0.1.1"
 	}
 }
