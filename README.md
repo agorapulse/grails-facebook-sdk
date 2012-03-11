@@ -66,6 +66,8 @@ Reference *facebookAppService* from any of your grails artefacts (controllers, d
 def facebookAppService
 ```
 
+## Filter
+
 The plugin automatically run a filter that create the following data in request scope.
 
 ```groovy
@@ -78,7 +80,7 @@ request.facebook.authenticated = {TRUE_OR_FALSE}
 
 ## User Id
 
-You can check if current user has authorized your app and is authenticated, get `userId` from *facebookAppService*.
+You can also check if current user has authorized your app and is authenticated by getting `userId` from *facebookAppService*.
 It will return `0` if user is not authenticated (or if he has not authorized your app).
 
 ```groovy
