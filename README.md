@@ -18,44 +18,9 @@ It supports the latest *OAuth2.0 authentication* (required since October 1st 201
 * **FacebookGraphClient** - A client to call [Facebook Graph API](http://developers.facebook.com/docs/reference/api/), which is a wrapper around the rock solid [RestFB java library](http://restfb.com/) version 1.6.9.
 
 
-# Getting started
+# Getting started with a demo app
 
-If you want to quickly run the SDK on a demo app.
-
-**1- Download or clone the [plugin GitHub project](https://github.com/benorama/facebook-sdk-demo).**
-
-```groovy
-git clone https://benorama@github.com/benorama/facebook-sdk-demo.git
-```
-
-**2- Create a Facebook app on [Facebook Developers](https://developers.facebook.com/apps), in order to get your own app ID and app secret.**
-
-Configure your Facebook app as below:
-
-* *App name space* = my-app-name-space
-* *App domain* = localhost
-* *Website URL* = http://localhost:8080/facebook-sdk/website/
-* *App on Facebook* = http://localhost:8080/facebook-sdk/app/
-* *sandbox mode* = enabled (in Advanced setting, to be able to use the app on Facebook without SSL certificate)
-
-**3- Add your Facebook app parameters to _grails-app/conf/Config.groovy_.**
-
-```groovy
-grails.plugins.facebooksdk.appId = {APP_ID}
-grails.plugins.facebooksdk.appPermissions = {APP_PERMISSIONS}
-grails.plugins.facebooksdk.appSecret = {APP_SECRET}
-```
-
-**4-Run the app from the project root.** 
-
-```groovy
-grails run-app
-```
-
-Browse to :
-
-* <http://localhost:8080/facebook-sdk/website/> for the website example
-* <http://apps.facebook.com/my-app-name-space> for the app example on Facebook
+If you want to quickly run the SDK on a demo app, you can download [Facebook SDK Grails demo](https://github.com/benorama/facebook-sdk-grails-demo).
 
 
 # Plugin Installation
@@ -101,7 +66,7 @@ Reference *facebookAppService* from any of your grails artefacts (controllers, d
 def facebookAppService
 ```
 
-The plugin automatically run a filter that create the followin Map in request scope.
+The plugin automatically run a filter that create the following data in request scope.
 
 ```groovy
 request.facebook.app.id = YOU_APP_ID
@@ -115,7 +80,7 @@ request.facebook.authenticated = TRUE_OR_FALSE
 
 ## User Id
 
-You can also check if current user has authorized your app and is authenticated, get `userId` from *facebookAppService*.
+You can check if current user has authorized your app and is authenticated, get `userId` from *facebookAppService*.
 It will return `0` if user is not authenticated (or if he has not authorized your app).
 
 ```groovy
