@@ -1,8 +1,6 @@
 grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
-grails.project.target.level = 1.6
-grails.project.source.level = 1.6
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 
 grails.project.dependency.resolution = {
@@ -14,16 +12,15 @@ grails.project.dependency.resolution = {
 	log "warn" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
 	repositories {
 		grailsCentral()
+		mavenCentral()
 	}
 	dependencies {
 		compile "com.restfb:restfb:1.6.9"
 	}
 	plugins {
-		compile ":resources:latest.integration"
 		build(":tomcat:$grailsVersion",
 			  ":release:latest.integration") {
 			export = false
 		}
-		runtime ":fbootstrapp:0.1.1"
 	}
 }

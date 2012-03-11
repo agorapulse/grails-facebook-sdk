@@ -1,17 +1,6 @@
 // configuration for plugin testing - will not be included in the plugin zip
 
 log4j = {
-		appenders {
-				console name: "stdout",
-								layout: pattern(conversionPattern: "%d{ISO8601} %p %c{1} - %m%n")
-				environments {
-						production {
-								rollingFile name: "myAppender", maxFileSize: 1024,
-														file: "/var/tmp/logs/grails-facebook-sdk.log"
-						}
-				}
-		}
-
 		error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
 					 'org.codehaus.groovy.grails.web.pages', //  GSP
 					 'org.codehaus.groovy.grails.web.sitemesh', //  layouts
@@ -25,33 +14,10 @@ log4j = {
 					 'net.sf.ehcache.hibernate'
 
 		warn   'org.mortbay.log'
-
-		environments {
-			development {
-				debug "grails.app.controllers.grails.plugins.facebooksdk"
-				debug "grails.app.services.grails.plugins.facebooksdk"
-			}
-		}
-}
-
-grails.resources.modules = {
-	app {
-		dependsOn 'fbootstrapp'
-		resource url:'/css/app.css'
-	}
-	website {
-		dependsOn 'fbootstrapp'
-		resource url:'/css/website.css'
-	}
 }
 
 // Disable SVN for plugin release
 grails.release.scm.enabled = false
 
-// FBootstrapp plugin
-grails.plugins.fboostrapp.fixtaglib = true
-
-// Facebook sdk plugin
-//grails.plugins.facebooksdk.appId = 
-//grails.plugins.facebooksdk.appPermissions = "publish_stream"
-//grails.plugins.facebooksdk.appSecret = ""
+grails.views.default.codec="none" // none, html, base64
+grails.views.gsp.encoding="UTF-8"

@@ -1,24 +1,12 @@
-import grails.plugins.facebooksdk.FacebookAppService
-import grails.plugins.facebooksdk.FacebookAppCookieScope
-import grails.plugins.facebooksdk.FacebookAppRequestScope
-import grails.plugins.facebooksdk.FacebookAppSessionScope
-
 class FacebookSdkGrailsPlugin {
 	
-	def version = "0.1.2"
+	def version = "0.2.0"
 	def grailsVersion = "2.0 > *"
 	def dependsOn = [:]
 	//def loadAfter                = ['services', 'controllers']
 	//def observe                  = ['services', 'controllers']
 	//def watchedResources         = ["grails-app/services/**/*Service.groovy", "grails-app/controllers/**/*Controller.groovy"]
-	def pluginExcludes = [
-		"grails-app/controllers/**",
-		"grails-app/views/app/*",
-		"grails-app/views/error.gsp",
-		"grails-app/views/layouts/*",
-		"grails-app/views/website/*",
-		"web-app/**",
-	]
+	def pluginExcludes = []
 
 	def author = "Benoit Hediard"
 	def authorEmail = "ben@benorama.com"
@@ -36,14 +24,22 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
 	}
 
 	def doWithSpring = {
-		facebookAppService(FacebookAppService) {
+		facebookApp(grails.plugins.facebooksdk.FacebookApp)
+		facebookAppService(grails.plugins.facebooksdk.FacebookAppService) {
+			facebookApp = ref("facebookApp")
 			facebookAppCookieScope = ref("facebookAppCookieScope")
 			facebookAppRequestScope = ref("facebookAppRequestScope")
 			facebookAppPersistentScope = ref("facebookAppPersistentScope")
 		}
-		facebookAppCookieScope(FacebookAppCookieScope)
-		facebookAppRequestScope(FacebookAppRequestScope)
-		facebookAppPersistentScope(FacebookAppSessionScope)
+		facebookAppCookieScope(grails.plugins.facebooksdk.FacebookAppCookieScope) {
+			facebookApp = ref("facebookApp")
+		}
+		facebookAppRequestScope(grails.plugins.facebooksdk.FacebookAppRequestScope) {
+			facebookApp = ref("facebookApp")
+		}
+		facebookAppPersistentScope(grails.plugins.facebooksdk.FacebookAppSessionScope) {
+			facebookApp = ref("facebookApp")
+		}
 	}
 
 	def doWithDynamicMethods = { ctx ->
@@ -51,16 +47,10 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
 
 	def doWithApplicationContext = { applicationContext ->
 		if (application.config.grails.plugins.facebooksdk) {
-			def facebookAppService = applicationContext.getBean("facebookAppService")
-			facebookAppService.appId  = application.config.grails.plugins.facebooksdk.appId
-			facebookAppService.appSecret  = application.config.grails.plugins.facebooksdk.appSecret
-			facebookAppService.appPermissions = application.config.grails.plugins.facebooksdk.appPermissions
-			def facebookAppCookieScope = applicationContext.getBean("facebookAppCookieScope")
-			facebookAppCookieScope.appId = application.config.grails.plugins.facebooksdk.appId
-			def facebookAppRequestScope = applicationContext.getBean("facebookAppRequestScope")
-			facebookAppRequestScope.appId = application.config.grails.plugins.facebooksdk.appId
-			def facebookAppPersistentScope = applicationContext.getBean("facebookAppPersistentScope")
-			facebookAppPersistentScope.appId = application.config.grails.plugins.facebooksdk.appId
+			def facebookApp = applicationContext.getBean("facebookApp")
+			facebookApp.id  = application.config.grails.plugins.facebooksdk.appId
+			facebookApp.secret  = application.config.grails.plugins.facebooksdk.appSecret
+			facebookApp.permissions = application.config.grails.plugins.facebooksdk.appPermissions
 		} 
 	}
 
@@ -69,16 +59,10 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
 
 	def onConfigChange = { event ->
 		if (application.config.grails.plugins.facebooksdk) {
-			def facebookAppService = applicationContext.getBean("facebookAppService")
-			facebookAppService.appId  = application.config.grails.plugins.facebooksdk.appId
-			facebookAppService.appSecret  = application.config.grails.plugins.facebooksdk.appSecret
-			facebookAppService.appPermissions = application.config.grails.plugins.facebooksdk.appPermissions
-			def facebookAppCookieScope = applicationContext.getBean("facebookAppCookieScope")
-			facebookAppCookieScope.appId = application.config.grails.plugins.facebooksdk.appId
-			def facebookAppRequestScope = applicationContext.getBean("facebookAppRequestScope")
-			facebookAppRequestScope.appId = application.config.grails.plugins.facebooksdk.appId
-			def facebookAppPersistentScope = applicationContext.getBean("facebookAppPersistentScope")
-			facebookAppPersistentScope.appId = application.config.grails.plugins.facebooksdk.appId
+			def facebookApp = applicationContext.getBean("facebookApp")
+			facebookApp.id  = application.config.grails.plugins.facebooksdk.appId
+			facebookApp.secret  = application.config.grails.plugins.facebooksdk.appSecret
+			facebookApp.permissions = application.config.grails.plugins.facebooksdk.appPermissions
 		}
 	}
 
