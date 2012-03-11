@@ -69,13 +69,11 @@ def facebookAppService
 The plugin automatically run a filter that create the following data in request scope.
 
 ```groovy
-request.facebook.app.id = YOU_APP_ID
-request.facebook.app.permissions = YOU_APP_PERMISSIONS
-request.facebook.app.secret = YOU_APP_SECRET
-
-request.facebook.user.id = CURRENT_USER_ID
-
-request.facebook.authenticated = TRUE_OR_FALSE
+request.facebook.app.id = {APP_ID}
+request.facebook.app.permissions = {APP_PERMISSIONS}
+request.facebook.app.secret = {APP_SECRET}
+request.facebook.user.id = {AUTHENTICATED_USER_ID}
+request.facebook.authenticated = {TRUE_OR_FALSE}
 ```
 
 ## User Id
@@ -110,7 +108,6 @@ try {
 
 By default, after initial request, access token is stored in session scope for better performance: another reason to surround all your _Facebook Graph API_ calls in try/catch in order to catch expired/invalid access tokens.
 
-## Controller integration
 
 # Facebook Graph Client usage
 
@@ -312,10 +309,10 @@ For the user to connect/install your app, use `loginLink` tag.
 Optional attributes are :
 
 * `appPermissions` Facebook app permissions/scope
-* `cancelURL` Cancel URL for redirect if login is canceled (if not defined, nothing happens)
+* `cancelUrl` Cancel URL for redirect if login is canceled (if not defined, nothing happens)
 * `elementClass` HTML element 'class' attribute value
 * `elementId` HTML element 'id' attribute value
-* `returnURL` Return URL for redirect after login (if not defined page will be reloaded)
+* `redirectUrl` Return URL for redirect after login (if not defined page will be reloaded)
 
 You might also use Facebook JS SDK [Login button](http://developers.facebook.com/docs/reference/plugins/login/) (but do not forget to set `xfbml` attributes to true in `facebook:init` tag).
 
@@ -337,7 +334,7 @@ Optional attributes are :
 
 * `elementClass` HTML element 'class' attribute value
 * `elementId` HTML element 'id' attribute value
-* `nextURL` Next URL for redirect after logout (if not defined page will be reloaded)
+* `nextUrl` Next URL for redirect after logout (if not defined page will be reloaded)
 
 # Bugs
 
@@ -352,6 +349,6 @@ The underlying APIs are generally stable, however we may make changes to the lib
 
 The **Facebook SDK Grails Plugin** is not an official Facebook SDK such as [Javascript](http://developers.facebook.com/docs/reference/javascript/), [PHP](http://github.com/facebook/facebook-php-sdk), [iOS](http://github.com/facebook/facebook-ios-sdk/) and [Android SDKs](http://github.com/facebook/facebook-android-sdk).
 
-It is developped by [Affinitiz](http://poweredby.affinitiz.com), a french social media web agency.
+It is developped by [AgoraPulse](http://www.agorapulse.com).
 
 The **Facebook Grails SDK** is licensed under the [Apache Licence, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
