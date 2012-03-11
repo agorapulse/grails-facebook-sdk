@@ -20,12 +20,12 @@ It supports the latest *OAuth2.0 authentication* (required since October 1st 201
 
 # Getting started
 
-If you want to quickly run the SDK.
+If you want to quickly run the SDK on a demo app.
 
-**1- Download or clone the [plugin GitHub project](https://github.com/benorama/facebook-sdk-grails-plugin).**
+**1- Download or clone the [plugin GitHub project](https://github.com/benorama/facebook-sdk-demo).**
 
 ```groovy
-git clone https://benorama@github.com/benorama/facebook-sdk-grails-plugin.git
+git clone https://benorama@github.com/benorama/facebook-sdk-demo.git
 ```
 
 **2- Create a Facebook app on [Facebook Developers](https://developers.facebook.com/apps), in order to get your own app ID and app secret.**
@@ -33,6 +33,7 @@ git clone https://benorama@github.com/benorama/facebook-sdk-grails-plugin.git
 Configure your Facebook app as below:
 
 * *App name space* = my-app-name-space
+* *App domain* = localhost
 * *Website URL* = http://localhost:8080/facebook-sdk/website/
 * *App on Facebook* = http://localhost:8080/facebook-sdk/app/
 * *sandbox mode* = enabled (in Advanced setting, to be able to use the app on Facebook without SSL certificate)
@@ -73,7 +74,7 @@ grails.project.dependency.resolution = {
 		}
 		plugins {
 				//here go your plugin dependencies
-				runtime ':facebook-sdk:0.1.2'
+				runtime ':facebook-sdk:0.2.0'
 		}
 }
 ```
@@ -100,9 +101,21 @@ Reference *facebookAppService* from any of your grails artefacts (controllers, d
 def facebookAppService
 ```
 
+The plugin automatically run a filter that create the followin Map in request scope.
+
+```groovy
+request.facebook.app.id = YOU_APP_ID
+request.facebook.app.permissions = YOU_APP_PERMISSIONS
+request.facebook.app.secret = YOU_APP_SECRET
+
+request.facebook.user.id = CURRENT_USER_ID
+
+request.facebook.authenticated = TRUE_OR_FALSE
+```
+
 ## User Id
 
-To check if current user has authorized your app and is authenticated, get `userId` from *facebookAppService*.
+You can also check if current user has authorized your app and is authenticated, get `userId` from *facebookAppService*.
 It will return `0` if user is not authenticated (or if he has not authorized your app).
 
 ```groovy
@@ -133,18 +146,6 @@ try {
 By default, after initial request, access token is stored in session scope for better performance: another reason to surround all your _Facebook Graph API_ calls in try/catch in order to catch expired/invalid access tokens.
 
 ## Controller integration
-
-An easy way to integrate the Facebook SDK is to use a `beforeInterceptor` in your _controller_.
-
-```groovy
-def beforeInterceptor =  {
-	request.appId = facebookAppService.appId
-	request.appPermissions = facebookAppService.appPermissions
-	request.userId = facebookAppService.userId
-}
-```
-
-You might also use a global _Filter_.
 
 # Facebook Graph Client usage
 
@@ -323,7 +324,7 @@ To initialize [Facebook JS SDK](http://developers.facebook.com/docs/reference/ja
 The only required attribute is `appId`.
 
 ```html
-<facebook:initJS appId="${appId}" />
+<facebook:initJS appId="${facebook.app.id}" />
 ```
 
 Optional attributes are : 
@@ -340,7 +341,7 @@ Optional attributes are :
 For the user to connect/install your app, use `loginLink` tag.
 
 ```html
-<facebook:loginLink appPermissions="${appPermissions}">Login</facebook:loginLink>
+<facebook:loginLink appPermissions="${facebook.app.permissions}">Login</facebook:loginLink>
 ```
 
 Optional attributes are :
@@ -356,7 +357,7 @@ You might also use Facebook JS SDK [Login button](http://developers.facebook.com
 ```html
 <html xmlns:fb="http://ogp.me/ns/fb#">
 ...
-<fb:login-button scope="${appPermissions}"></fb:login-button>
+<fb:login-button scope="${facebook.app.permissions}"></fb:login-button>
 ```
 
 ## facebook:logoutLink
