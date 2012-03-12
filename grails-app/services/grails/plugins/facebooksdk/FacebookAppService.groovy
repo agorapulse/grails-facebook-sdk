@@ -140,7 +140,7 @@ class FacebookAppService {
 						log.debug("getUserAccessToken accessToken=$accessToken (from persistent scope)")
 					} else {
 						accessToken = getAccessTokenFromCode(signedRequest.code, '')
-						log.debug("getUserAccessToken accessToken=$accessToken (from code)")
+						log.debug("getUserAccessToken accessToken=$accessToken (from code in signed request)")
 					}
 				}
 				
@@ -153,6 +153,7 @@ class FacebookAppService {
 				String code = getCode()
 				if (code && code != facebookAppPersistentScope.getData('code')) {
 					accessToken = getAccessTokenFromCode(code)
+					log.debug("getUserAccessToken accessToken=$accessToken (from code in persistent scope)")
 					if (!accessToken) {
 						// Code was bogus, so everything based on it should be invalidated.
 						invalidateUser()
@@ -160,6 +161,7 @@ class FacebookAppService {
 				} else {
 					// Falling back on persistent store, knowing nothing explicit (signed request, authorization code, etc.) was present to shadow it (or we saw a code in URL/FORM scope, but it"s the same as what"s in the persistent store)
 					accessToken = facebookAppPersistentScope.getData('accessToken', '')
+					log.debug("getUserAccessToken accessToken=$accessToken (from persistent scope)")
 				}
 			}
 			facebookAppRequestScope.setData('accessToken', accessToken)
@@ -237,13 +239,15 @@ class FacebookAppService {
 								redirect_uri: redirectUri] //.encodeAsURL()
 				def result = facebookGraphClient.fetchObject('oauth/access_token', parameters)
 				log.debug("getAccessTokenFromCode result=$result")
-				if (result['access_token'] && result['expires']) {
+				if (result['access_token']) {
 					accessToken = result['access_token']
-					Integer expires = result['expires'] as Integer
-					Long expirationTime = System.currentTimeMillis() + expires * 1000
 					facebookAppPersistentScope.setData('accessToken', accessToken)
 					facebookAppPersistentScope.setData('code', code)
-					facebookAppPersistentScope.setData('expirationTime', expirationTime)
+					if (result['expires']) {
+						Integer expires = result['expires'] as Integer
+						Long expirationTime = System.currentTimeMillis() + expires * 1000
+						facebookAppPersistentScope.setData('expirationTime', expirationTime)
+					}
 				} else {
 
 				}
