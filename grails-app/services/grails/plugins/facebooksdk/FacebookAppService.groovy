@@ -24,6 +24,32 @@ class FacebookAppService {
 	}
 
 	/*
+	* @description Exchange a valid access token to get a longer expiration time (59 days)
+	* @hint
+	*/
+	Map exchangeAccessToken(String oldAccessToken) {
+		def result = [:]
+		if (oldAccessToken) {
+			//log.debug("exchangeAccessToken oldAccessToken=$oldAccessToken")
+			try {
+				def facebookGraphClient = new FacebookGraphClient()
+				Map parameters = [client_id:facebookApp.id,
+								client_secret:facebookApp.secret,
+								grant_type:'fb_exchange_token',
+								fb_exchange_token:oldAccessToken] //.encodeAsURL()
+				result = facebookGraphClient.fetchObject('oauth/access_token', parameters)
+				//log.debug("exchangeAccessToken result=$result")
+			} catch (FacebookOAuthException exception) {
+				//if (exception.message.find('Code was invalid or expired')) {
+				//	invalidateUser()
+				//}
+				throw exception
+			}
+		}
+		return result
+	}
+
+	/*
 	* @description Invalidate current user (persistent data and cookie)
 	* @hint
 	*/
@@ -40,7 +66,7 @@ class FacebookAppService {
 	
 	/*
 	* @description Get OAuth accessToken
-	* @hint Determines the access token that should be used for API calls. The first time this is called, accessToken is set equal to either a valid user access token, or it"s set to the application access token if a valid user access token wasn"t available. Subsequent calls return whatever the first call returned.
+	* @hint Determines the access token that should be used for API calls. The first time this is called, accessToken is set equal to either a valid user access token, or it's set to the application access token if a valid user access token wasn't available. Subsequent calls return whatever the first call returned.
 	*/
 	String getAccessToken() {
 		if (!facebookAppRequestScope.hasData('accessToken')) {
@@ -134,10 +160,23 @@ class FacebookAppService {
 					facebookAppPersistentScope.setData('accessToken', accessToken)
 				} else if (signedRequest.code) {
 					// Facebook Javascript SDK puts an authorization code in signed request
-					if (signedRequest.code == facebookAppPersistentScope.getData('code')
-						&& !isAccessTokenExpired()) {
-						accessToken = facebookAppPersistentScope.getData('accessToken')
-						log.debug("getUserAccessToken accessToken=$accessToken (from persistent scope)")
+					if (signedRequest.code == facebookAppPersistentScope.getData('code')) {
+						if (!isAccessTokenExpired()) {
+							if (isAccessTokenExpiredSoon()) {
+								def result = exchangeAccessToken(facebookAppPersistentScope.getData('accessToken'))
+								if (result['access_token'] && result['expires']) {
+									log.debug("getUserAccessToken accessToken=$accessToken (exchanged from old token, expiring soon)")
+									accessToken = result['access_token']
+									facebookAppPersistentScope.setData('accessToken', accessToken)
+									Integer expires = result['expires'] as Integer
+									Long expirationTime = new Date().time + expires * 1000
+									facebookAppPersistentScope.setData('expirationTime', expirationTime)
+								}
+							} else {
+								accessToken = facebookAppPersistentScope.getData('accessToken')
+								log.debug("getUserAccessToken accessToken=$accessToken (from persistent scope)")
+							}
+						}
 					} else {
 						accessToken = getAccessTokenFromCode(signedRequest.code, '')
 						log.debug("getUserAccessToken accessToken=$accessToken (from code in signed request)")
@@ -245,11 +284,9 @@ class FacebookAppService {
 					facebookAppPersistentScope.setData('code', code)
 					if (result['expires']) {
 						Integer expires = result['expires'] as Integer
-						Long expirationTime = System.currentTimeMillis() + expires * 1000
+						Long expirationTime = new Date().time + expires * 1000
 						facebookAppPersistentScope.setData('expirationTime', expirationTime)
 					}
-				} else {
-
 				}
 			} catch (FacebookOAuthException exception) {
 				if (exception.message.find('Code was invalid or expired')) {
@@ -332,7 +369,12 @@ class FacebookAppService {
 
 	private Boolean isAccessTokenExpired() {
 		Long expirationTime = facebookAppPersistentScope.getData('expirationTime', 0)
-		return expirationTime && ((expirationTime - System.currentTimeMillis()) < EXPIRATION_PREVENTION_THRESHOLD)
+		return expirationTime && (new Date().time > expirationTime)
+	}
+
+	private Boolean isAccessTokenExpiredSoon() {
+		Long expirationTime = facebookAppPersistentScope.getData('expirationTime', 0)
+		return expirationTime && (!isAccessTokenExpired() && (expirationTime - new Date().time) < EXPIRATION_PREVENTION_THRESHOLD)
 	}
 
 	private String serializeQueryString(Map parameters, Boolean urlEncoded = true) {
