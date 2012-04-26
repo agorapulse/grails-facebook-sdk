@@ -12,7 +12,7 @@ import grails.converters.JSON
 
 class FacebookGraphClient extends DefaultFacebookClient {
 	
-	FacebookGraphClient(String accessToken = "") {
+	FacebookGraphClient(String accessToken = '') {
 		super(accessToken)
 	}
 
@@ -27,21 +27,7 @@ class FacebookGraphClient extends DefaultFacebookClient {
 
 	def fetchObject(String object, Map parameters = [:]) {
 		String result = makeRequest(object, buildVariableArgs(parameters))
-		if (result.startsWith("{")) {
-			return JSON.parse(result)
-		} else if (result.find("=")) {
-			Map resultMap = [:]
-			result.tokenize("&").each {
-				resultMap[it.tokenize("=")[0]] = it.tokenize("=")[1]
-			}
-			return resultMap
-		} else if (result == "false") {
-			return false
-		} else if (result == "true") {
-			return true
-		} else {
-			return result
-		}
+		parseResult(result)
 	}
 
 	Map fetchObjects(List ids, Map parameters = [:], int batchSize = 20) {
@@ -59,7 +45,7 @@ class FacebookGraphClient extends DefaultFacebookClient {
 		return objects
 	}
 
-	def publish(String connection, Map parameters = [:], String filePath = "") {
+	def publish(String connection, Map parameters = [:], String filePath = '') {
 		if (filePath) {
 			File file = new File(filePath)
 			return super.publish(connection, JsonObject, BinaryAttachment.with(file.name, new FileInputStream(file)), buildVariableArgs(parameters))
@@ -98,16 +84,19 @@ class FacebookGraphClient extends DefaultFacebookClient {
 		return JSON.parse(result.toString())
 	}
 
-	String makeRequest(String endPoint, Map parameters = [:]) {
-		return super.makeRequest(endPoint, false, false, null, buildVariableArgs(parameters))
+	def makeRequest(String endPoint, Map parameters = [:]) {
+		def result = super.makeRequest(endPoint, false, false, null, buildVariableArgs(parameters))
+		return parseResult(result)
 	}
 
-	String makePostRequest(String endPoint, Map parameters = [:]) {
-		return super.makeRequest(endPoint, true, false, null, buildVariableArgs(parameters))
+	def makePostRequest(String endPoint, Map parameters = [:]) {
+		def result = super.makeRequest(endPoint, true, false, null, buildVariableArgs(parameters))
+		return parseResult(result)
 	}
 
-	String makeDeleteRequest(String endPoint, Map parameters = [:]) {
-		return super.makeRequest(endPoint, false, true, null, buildVariableArgs(parameters))
+	def makeDeleteRequest(String endPoint, Map parameters = [:]) {
+		def result = super.makeRequest(endPoint, false, true, null, buildVariableArgs(parameters))
+		return parseResult(result)
 	}
 
 	// PRIVATE
@@ -118,6 +107,24 @@ class FacebookGraphClient extends DefaultFacebookClient {
 			variableArgs[index-1] = Parameter.with(key, value)
 		}
 		return variableArgs
+	}
+	
+	private def parseResult(String result) {
+		if (result.startsWith('{')) {
+			return JSON.parse(result)
+		} else if (result.find('=')) {
+			Map resultMap = [:]
+			result.tokenize('&').each {
+				resultMap[it.tokenize('=')[0]] = it.tokenize('=')[1]
+			}
+			return resultMap
+		} else if (result == 'false') {
+			return false
+		} else if (result == 'true') {
+			return true
+		} else {
+			return result
+		}
 	}
 
 }
