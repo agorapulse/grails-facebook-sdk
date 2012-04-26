@@ -293,12 +293,19 @@ The only required attribute is `appId`.
 
 Optional attributes are : 
 
-* `autoGrowth` Call FB.setAutoGroth() after page rendering (default to `false`)
+* `autoGrow` Call FB.setAutoGrow() after page rendering (default to `false`)
 * `channelUrl` Channel File
 * `cookie` Enable cookies to allow the server to access the session (default to `true`)
 * `locale` Define JS SDK locale (default to server locale)
 * `status` Check login status (default to `false`)
 * `xfbml` Parse XFBML (default to `false`)
+
+You can put any JS code inside initJS tag. It will be automatically injected inside the fbAsyncInit function body.
+
+<facebook:initJS appId="${facebook.app.id}">
+  // Put here any JS code to be executed after Facebook JS initialization
+  alert('Some JS code');
+</facebook:initJS>
 
 ## facebook:loginLink
 

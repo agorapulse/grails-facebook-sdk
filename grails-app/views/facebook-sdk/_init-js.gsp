@@ -10,8 +10,8 @@
 			xfbml   : <g:if test="${xfbml}">true</g:if><g:else>false</g:else> // parse XFBML
 		});
 		
-		<g:if test="${autoGrowth}">
-			FB.Canvas.setAutoGrowth();
+		<g:if test="${autoGrow}">
+			FB.Canvas.setAutoGrow();
 		</g:if>
 		
 		${body}

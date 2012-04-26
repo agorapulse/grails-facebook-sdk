@@ -10,7 +10,7 @@ class FacebookJSTagLib {
 	* Initialize Facebook JS SDK
 	*
 	* @attr appId REQUIRED
-	* @attr autoGrowth (Default to false)
+	* @attr autoGrow (Default to false)
 	* @attr channelUrl
 	* @attr	cookie (Default to true)
 	* @attr locale (Default to server locale)
