@@ -19,3 +19,5 @@
 stacktrace.log
 
 grails-facebook-sdk-*.zip
+.idea/
+*.iml

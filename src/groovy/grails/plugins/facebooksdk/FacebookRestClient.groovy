@@ -1,10 +1,7 @@
 package grails.plugins.facebooksdk
 
-import java.util.Map;
-
 import com.restfb.DefaultLegacyFacebookClient
 import com.restfb.Parameter
-import com.restfb.json.JsonObject
 
 class FacebookRestClient extends DefaultLegacyFacebookClient {
 
@@ -22,7 +19,7 @@ class FacebookRestClient extends DefaultLegacyFacebookClient {
 	private Parameter[] buildVariableArgs(Map parameters) {
 		Parameter[] variableArgs = new Parameter[parameters.size()]
 		parameters.eachWithIndex { key, value, index ->
-			variableArgs[index-1] = Parameter.with(key, value)
+			variableArgs[index-1] = Parameter.with(key as String, value)
 		}
 		return variableArgs
 	}

@@ -1,9 +1,9 @@
 package grails.plugins.facebooksdk
 
+import com.restfb.exception.FacebookOAuthException
+
 import org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequest
 import org.springframework.web.context.request.RequestContextHolder
-
-import com.restfb.exception.FacebookOAuthException
 
 class FacebookAppService {
 	
@@ -28,7 +28,7 @@ class FacebookAppService {
 	* @hint
 	*/
 	Map exchangeAccessToken(String oldAccessToken) {
-		def result = [:]
+		Map result = [:]
 		if (oldAccessToken) {
 			//log.debug("exchangeAccessToken oldAccessToken=$oldAccessToken")
 			try {

@@ -1,8 +1,6 @@
 package grails.plugins.facebooksdk
 
 import javax.servlet.http.Cookie
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 
 /**
 * Signed request cookie (set by Facebook Javascript SDK)

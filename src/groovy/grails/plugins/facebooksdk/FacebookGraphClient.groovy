@@ -22,12 +22,12 @@ class FacebookGraphClient extends DefaultFacebookClient {
 
 	List fetchConnection(String connection, Map parameters = [:]) {
 		Connection result = super.fetchConnection(connection, JsonObject, buildVariableArgs(parameters))
-		return (result && result.data) ? JSON.parse(result.data.toString()) : []
+		return (result && result.data) ? JSON.parse(result.data.toString()) as List : []
 	}
 
 	def fetchObject(String object, Map parameters = [:]) {
 		String result = makeRequest(object, buildVariableArgs(parameters))
-		parseResult(result)
+		return parseResult(result)
 	}
 
 	Map fetchObjects(List ids, Map parameters = [:], int batchSize = 20) {
@@ -39,7 +39,7 @@ class FacebookGraphClient extends DefaultFacebookClient {
 			if (batchIds.size() == batchSize || batchId == ids[-1]) {
 				jsonObject = super.fetchObjects(batchIds, JsonObject, buildVariableArgs(parameters))
 				objects += JSON.parse(jsonObject.toString())
-				batchIds = []
+				batchIds.clear()
 			}
 		}
 		return objects
@@ -58,7 +58,11 @@ class FacebookGraphClient extends DefaultFacebookClient {
 		List batchRequests = []
 		List responses = []
 		requests.each {
-			batchRequests << new BatchRequestBuilder(it).build()
+            if (it instanceof BatchRequest) {
+                batchRequests << it
+            } else {
+                batchRequests << new BatchRequestBuilder(it as String).build()
+            }
 			if (batchRequests.size() == batchSize || it == requests[-1]) {
 				def batchResponses = super.executeBatch(batchRequests, [])
 				batchResponses.eachWithIndex { batchResponse, index ->
@@ -68,20 +72,32 @@ class FacebookGraphClient extends DefaultFacebookClient {
 						responses << "Bad request (error code ${batchResponse.code})"
 					}
 				}
-				batchRequests = []
+				batchRequests.clear()
 			}
 		}
 		return responses
 	}
 
-	Map executeMultiquery(Map queries, Map parameters = [:]) {
-		def results = super.executeMultiquery(queries, JsonObject, buildVariableArgs(parameters))
-		return JSON.parse(results.toString())
+	Map executeQueries(Map queries, Map parameters = [:]) {
+		parameters['q'] = queries
+		def result = makeRequest('fql', buildVariableArgs(parameters))
+		result = parseResult(result)
+		if (result && result.data) {
+			def results = [:]
+			result.data.each {
+				results[it['name']] = it['fql_result_set']
+			}
+			return results
+		} else {
+			return [:]
+		}
 	}
 
 	List executeQuery(String query, Map parameters = [:]) {
-		def result = super.executeQuery(query, JsonObject, buildVariableArgs(parameters))
-		return JSON.parse(result.toString())
+		parameters['q'] = query
+		def result = makeRequest('fql', buildVariableArgs(parameters))
+		result = parseResult(result)
+		return (result && result.data) ? result.data : []
 	}
 
 	def makeRequest(String endPoint, Map parameters = [:]) {
@@ -104,7 +120,7 @@ class FacebookGraphClient extends DefaultFacebookClient {
 	private Parameter[] buildVariableArgs(Map parameters) {
 		Parameter[] variableArgs = new Parameter[parameters.size()]
 		parameters.eachWithIndex { key, value, index ->
-			variableArgs[index-1] = Parameter.with(key, value)
+			variableArgs[index-1] = Parameter.with(key as String, value)
 		}
 		return variableArgs
 	}

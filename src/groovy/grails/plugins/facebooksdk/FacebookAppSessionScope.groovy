@@ -13,8 +13,8 @@ class FacebookAppSessionScope extends FacebookAppScope {
 	}
  
 	void deleteAllData() {
-		PERSISTENT_KEYS.each {key ->
-			deleteData(key)
+		PERSISTENT_KEYS.each { key ->
+			deleteData(key as String)
 		}
 	}
 	
@@ -25,7 +25,7 @@ class FacebookAppSessionScope extends FacebookAppScope {
 	}
 	
 	Boolean hasData(String key) {
-		request.session.getAttribute(getKeyVariableName(key)) ? true : false
+		request.getCurrentRequest().session.getAttribute(getKeyVariableName(key)) ? true : false
 	}
 	
 	Boolean isEnabled() {

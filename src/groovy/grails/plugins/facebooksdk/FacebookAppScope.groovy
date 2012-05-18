@@ -8,10 +8,10 @@ abstract class FacebookAppScope {
 	FacebookApp facebookApp
 	
 	GrailsWebRequest getRequest() {
-		RequestContextHolder.getRequestAttributes()
+		RequestContextHolder.getRequestAttributes() as GrailsWebRequest
 	}
 	
-	private String getKeyVariableName(String key) {
+	protected String getKeyVariableName(String key) {
 		"fb_${facebookApp.id}_${key}"
 	}
 	

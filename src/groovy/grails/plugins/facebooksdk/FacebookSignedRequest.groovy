@@ -4,7 +4,6 @@ import grails.converters.JSON
 
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
-import javax.servlet.http.Cookie
 
 class FacebookSignedRequest {
 
@@ -30,13 +29,13 @@ class FacebookSignedRequest {
 		assert data['algorithm'] == 'HMAC-SHA256', 'Unknown algorithm. Expected HMAC-SHA256'
 
 		if (data['oauth_token']) this.accessToken = data['oauth_token']
-		if (data['app_data']) this.appData = data['app_data']
+		if (data['app_data']) this.appData = data['app_data'] as Map
 		if (data['code']) this.code = data['code']
-		if (data['expires']) this.expirationTime = data['expires']
-		if (data['issued_at']) this.creationTime = data['issued_at']
-		if (data['page']) this.page = data['page']
-		if (data['user']) this.user = data['user']
-		if (data['user_id']) this.userId = data['user_id'].toLong()
+		if (data['expires']) this.expirationTime = data['expires'] as Long
+		if (data['issued_at']) this.creationTime = data['issued_at'] as Long
+		if (data['page']) this.page = data['page'] as Map
+		if (data['user']) this.user = data['user'] as Map
+		if (data['user_id']) this.userId = data['user_id'] as Long
 	}
 
 	String toString() {
@@ -59,7 +58,7 @@ class FacebookSignedRequest {
 		assert expectedSignature == encodedSignature.decodeBase64(), 'Invalid signed request'
 
 		// Decode parameters
-		return JSON.parse(new String(encodedParameters.decodeBase64()))
+		return JSON.parse(new String(encodedParameters.decodeBase64())) as Map
 	}
 
 }

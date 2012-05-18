@@ -7,7 +7,7 @@ class FacebookAppRequestScope extends FacebookAppScope {
 	
 	final static List REQUEST_KEYS = ['accessToken','code','state','signedRequest','userId']
 	
-	Boolean deleteData(String key) {
+	void deleteData(String key) {
 		assert REQUEST_KEYS.contains(key), "Unsupported key '$key' passed to deleteData"
 		request.getCurrentRequest().removeAttribute(getKeyVariableName(key))
 	}
