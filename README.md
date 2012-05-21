@@ -20,8 +20,11 @@ It supports the latest *OAuth2.0 authentication* (required since October 1st 201
 
 # Getting started with a demo app
 
-If you want to quickly run the SDK on a demo app, you can download [Facebook SDK Grails demo](https://github.com/benorama/facebook-sdk-grails-demo).
+If you want to quickly run the SDK on a demo app, you can download [Facebook SDK Grails - Demo](https://github.com/benorama/facebook-sdk-grails-demo).
 
+# Integration with Shiro Grails Plugin
+
+To see an example of integration with Shiro Grails Plugin, you can download [Facebook SDK Grails - Shiro demo](https://github.com/benorama/facebook-sdk-grails-demo-shiro).
 
 # Plugin Installation
 
