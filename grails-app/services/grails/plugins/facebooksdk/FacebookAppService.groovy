@@ -13,10 +13,10 @@ class FacebookAppService {
 	
 	boolean transactional = false
 	
-	def facebookApp
-	def facebookAppCookieScope
+	FacebookApp facebookApp
+	FacebookAppCookieScope facebookAppCookieScope
 	def facebookAppPersistentScope // Any persistentScope class with the following methods : deleteData, deleteAllData, getData, isEnabled, setData
-	def facebookAppRequestScope
+	FacebookAppRequestScope facebookAppRequestScope
 	def grailsLinkGenerator
 	
 	GrailsWebRequest getRequest() {
