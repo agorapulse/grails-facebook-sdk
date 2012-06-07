@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>4 Facebook App Service 0.2.0</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs" style="display:none;">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/gettingStarted.html"><strong>2</strong><span>Getting started</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/facebookFilter.html"><strong>3</strong><span>Facebook Filter</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/facebookAppService.html"><strong>4</strong><span>Facebook App Service</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/facebookGraphClient.html"><strong>5</strong><span>Facebook Graph Client</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>The Facebook SDK Plugin allows your Grails application to use the Facebook Platform and develop Facebook apps on Facebook.com or on web sites (with Facebook Connect).
+It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
+</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../guide/facebookFilter.html">&lt;&lt; <strong>3</strong><span>Facebook Filter</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../guide/facebookGraphClient.html"><strong>5</strong><span>Facebook Graph Client</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>4 Facebook App Service - Reference Documentation</h1>
+
+                    <p><strong>Authors:</strong> Benoit Hediard</p>
+
+                    <p><strong>Version:</strong> 0.2.0</p>
+
+                    
+                </div>
+
+                
+
+                
+
+<h1 id="facebookAppService">4 Facebook App Service</h1>
+Reference <code>facebookAppService</code> from any of your grails artefacts (controllers, domain, services...) to automatically inject it.<p class="paragraph"/><div class="code"><pre>def facebookAppService</pre></div><p class="paragraph"/>
+<h3>User Id</h3><p class="paragraph"/>You can check if current user has authorized your app and is authenticated by getting <code>userId</code> from <code>facebookAppService</code>.
+It will return <code>0</code> if user is not authenticated (or if he has not authorized your app).<p class="paragraph"/><div class="code"><pre>def userId = facebookAppService.getUserId()
+<span class="java&#45;keyword">if</span> (userId) &#123;
+	println <span class="java&#45;quote">"User authenticated (id=$&#123;userId&#125;)"</span>
+&#125; <span class="java&#45;keyword">else</span> &#123;
+	println <span class="java&#45;quote">"User not authenticated"</span>
+&#125;</pre></div><p class="paragraph"/><h3>User Access Token</h3><p class="paragraph"/>If current user is authenticated, you can get his private <code>accessToken</code> from <code>facebookAppService</code>.<p class="paragraph"/>If the app is running on a website, the access token will be automatically fetched in exchange for the authorization code returned by <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Facebook JS SDK</a> signed request cookie. It is recommended to wrap this code in a try/catch block since external HTTP calls to  <em class="italic">Facebook Graph API</em>  might be executed.<p class="paragraph"/>If the app is running on Facebook.com, the access token will be extracted from the signed request params (passed through the canvas iFrame).<p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">try</span> &#123;
+	<span class="java&#45;object">String</span> userAccessToken = facebookAppService.getUserAccessToken()
+&#125; <span class="java&#45;keyword">catch</span> (Exception exception) &#123;
+	// Something went wrong&#8230;
+&#125;</pre></div><p class="paragraph"/>By default, after initial request, access token is stored in session scope for better performance: another reason to surround all your  <em class="italic">Facebook Graph API</em>  calls in try/catch in order to catch expired/invalid access tokens.<p class="paragraph"/>
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../guide/facebookFilter.html">&lt;&lt; <strong>3</strong><span>Facebook Filter</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../guide/facebookGraphClient.html"><strong>5</strong><span>Facebook Graph Client</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">Tags</h1><div class="menu-sub">
+                        
+                            
+                            <div class="menu-item"><a href="../ref/Tags/init.html">init</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/loginLink.html">loginLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/logoutLink.html">logoutLink</a>
+                            </div>
+                            
+                            </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

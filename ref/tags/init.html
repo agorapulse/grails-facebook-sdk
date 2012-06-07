@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>Facebook SDK Grails Plugin 0.2.0</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass(el) {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/gettingStarted.html"><strong>2</strong><span>Getting started</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/facebookFilter.html"><strong>3</strong><span>Facebook Filter</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/facebookAppService.html"><strong>4</strong><span>Facebook App Service</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/facebookGraphClient.html"><strong>5</strong><span>Facebook Graph Client</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>The Facebook SDK Plugin allows your Grails application to use the Facebook Platform and develop Facebook apps on Facebook.com or on web sites (with Facebook Connect).
+It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
+</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="reference corner-all">
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                To initialize <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Facebook JS SDK</a> in your GSP views, simply insert <code>initJS</code> tag, after HTML body tag.
+The only required attribute is <code>appId</code>.<p class="paragraph"/><div class="code"><pre><span class="xml&#45;tag">&#60;facebook:initJS appId=<span class="xml&#45;quote">"$&#123;facebook.app.id&#125;"</span> /&#62;</span></pre></div><p class="paragraph"/>Optional attributes are :
+<ul class="star">
+<li><code>autoGrow</code> Call <code>FB.setAutoGrow()</code> after page rendering (default to <code>false</code>)</li>
+<li><code>channelUrl</code> Channel File</li>
+<li><code>cookie</code> Enable cookies to allow the server to access the session (default to <code>true</code>)</li>
+<li><code>locale</code> Define JS SDK locale (default to server locale)</li>
+<li><code>status</code> Check login status (default to <code>false</code>)</li>
+<li><code>xfbml</code> Parse XFBML (default to <code>false</code>)</li>
+</ul><p class="paragraph"/>You can put any JS code inside initJS tag. It will be automatically injected inside the fbAsyncInit function body.<p class="paragraph"/><div class="code"><pre><span class="xml&#45;tag">&#60;facebook:initJS appId=<span class="xml&#45;quote">"$&#123;facebook.app.id&#125;"</span>&#62;</span>
+  // Put here any JS code to be executed after Facebook JS initialization
+  alert('Some JS code');
+<span class="xml&#45;tag">&#60;/facebook:initJS&#62;</span></pre></div>
+
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                    <div class="menu-block">
+                        <h1 class="menu-title" onclick="toggleRef(nextElement(this))">Tags</h1>
+                        <div class="menu-sub selected">
+                            
+                            
+                            <div class="menu-item"><a href="../../ref/Tags/init.html">init</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Tags/loginLink.html">loginLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Tags/logoutLink.html">logoutLink</a>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+
+<script type="text/javascript" src="../../js/docs.js"></script>
+
+</body>
+</html>

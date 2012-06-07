@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>1 Introduction 0.2.0</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs" style="display:none;">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/gettingStarted.html"><strong>2</strong><span>Getting started</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/facebookFilter.html"><strong>3</strong><span>Facebook Filter</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/facebookAppService.html"><strong>4</strong><span>Facebook App Service</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/facebookGraphClient.html"><strong>5</strong><span>Facebook Graph Client</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>The Facebook SDK Plugin allows your Grails application to use the Facebook Platform and develop Facebook apps on Facebook.com or on web sites (with Facebook Connect).
+It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
+</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../guide/gettingStarted.html"><strong>2</strong><span>Getting started</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>1 Introduction - Reference Documentation</h1>
+
+                    <p><strong>Authors:</strong> Benoit Hediard</p>
+
+                    <p><strong>Version:</strong> 0.2.0</p>
+
+                    
+                </div>
+
+                
+
+                
+
+<h1 id="introduction">1 Introduction</h1>
+The <a href="http://developers.facebook.com/" target="blank">Facebook Platform</a> is a set of APIs that make your application more social. Read more about <a href="http://developers.facebook.com/docs/guides/web" target="blank">integrating Facebook with your web site</a> on the Facebook developer site.<p class="paragraph"/>This project contains the open source <strong class="bold">Facebook SDK Grails Plugin</strong> that allows you to integrate the <a href="http://developers.facebook.com/" target="blank">Facebook Platform</a> on a website/app powered by <a href="http://grails.org" target="blank">Grails</a> .<p class="paragraph"/>This plugin is a port of the official <a href="http://github.com/facebook/facebook-php-sdk" target="blank">Facebook PHP SDK V3.1.1</a> to <a href="http://grails.org" target="blank">Grails 2.0</a> .<p class="paragraph"/>It supports the latest <strong class="bold">OAuth2.0 authentication</strong> (required since October 1st 2011).<p class="paragraph"/><strong class="bold">Facebook SDK Grails Plugin</strong> provides :
+<ul class="star">
+<li><strong class="bold">FacebookAppService</strong> - A service to build <a href="http://developers.facebook.com/docs/guides/canvas/" target="blank">apps on Facebook.com</a> and <a href="http://developers.facebook.com/docs/guides/web" target="blank">websites with the Facebook Platform</a> .</li>
+<li><strong class="bold">FacebookGraphClient</strong> - A client to call <a href="http://developers.facebook.com/docs/reference/api/," target="blank">Facebook Graph API</a> which is a wrapper around the rock solid <a href="http://restfb.com/" target="blank">RestFB java library</a> version 1.6.9 (released October 21, 2011).</li>
+<li><strong class="bold">FacebookJSTagLib</strong> - A collection of tags to easily integrate <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Facebook JS SDK</a> in your GSPs.</li>
+</ul><p class="paragraph"/><h3>Bugs</h3><p class="paragraph"/>To report any bug, please use the project <a href="http://github.com/benorama/facebook-sdk-grails-plugin/issues" target="blank">Issues</a> section on GitHub.<p class="paragraph"/><blockquote class="note">
+This is an <strong class="bold">alpha release</strong>.
+The underlying APIs are generally stable, however we may make changes to the library in response to developer feedback.
+</blockquote><p class="paragraph"/>
+<h3>About</h3><p class="paragraph"/>The <strong class="bold">Facebook SDK Grails Plugin</strong> is not an official Facebook SDK such as <a href="http://developers.facebook.com/docs/reference/javascript/," target="blank">Javascript</a> <a href="http://github.com/facebook/facebook-php-sdk," target="blank">PHP</a> <a href="http://github.com/facebook/facebook-ios-sdk/" target="blank">iOS</a> and <a href="http://github.com/facebook/facebook-android-sdk." target="blank">Android SDKs</a><p class="paragraph"/>It is developped by <a href="http://www.agorapulse.com" target="blank">AgoraPulse</a> and licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0.html" target="blank">Apache Licence, Version 2.0</a> .
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item next-right"><a href="../guide/gettingStarted.html"><strong>2</strong><span>Getting started</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">Tags</h1><div class="menu-sub">
+                        
+                            
+                            <div class="menu-item"><a href="../ref/Tags/init.html">init</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/loginLink.html">loginLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/logoutLink.html">logoutLink</a>
+                            </div>
+                            
+                            </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>
