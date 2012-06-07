@@ -66,8 +66,8 @@ To see an example of integration with Shiro Grails Plugin, you can download [Fac
 
 Project documentation is located here :
 
-* [Manual (Page per chapter)]
-* [Manual (Single page)]
+* [Reference Documentation (Page per chapter)]:http://benorama.github.com/facebook-sdk-grails-plugin/guide
+* [Reference Documentation (Single page)]:http://benorama.github.com/facebook-sdk-grails-plugin/guide/single.html
 * [Groovy API docs]
 
 
