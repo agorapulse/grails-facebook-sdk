@@ -1,0 +1,9 @@
+The plugin automatically run a filter that create the following data in request scope.
+
+{code}
+request.facebook.app.id = {APP_ID}
+request.facebook.app.permissions = {APP_PERMISSIONS}
+request.facebook.app.secret = {APP_SECRET}
+request.facebook.user.id = {AUTHENTICATED_USER_ID}
+request.facebook.authenticated = {TRUE_OR_FALSE}
+{code}

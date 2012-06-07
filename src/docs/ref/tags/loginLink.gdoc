@@ -1,0 +1,21 @@
+For the user to connect/install your app, use @loginLink@ tag.
+
+{code}
+<facebook:loginLink appPermissions="${facebook.app.permissions}">Login</facebook:loginLink>
+{code}
+
+Optional attributes are :
+
+* @appPermissions@ Facebook app permissions/scope
+* @cancelUrl@ Cancel URL for redirect if login is canceled (if not defined, nothing happens)
+* @elementClass@ HTML element 'class' attribute value
+* @elementId@ HTML element 'id' attribute value
+* @redirectUrl@ Return URL for redirect after login (if not defined page will be reloaded)
+
+You might also use Facebook JS SDK "Login button":http://developers.facebook.com/docs/reference/plugins/login/ (but do not forget to set @xfbml@ attributes to true in @facebook:init@ tag).
+
+{code:xml}
+<html xmlns:fb="http://ogp.me/ns/fb#">
+...
+<fb:login-button scope="${facebook.app.permissions}"></fb:login-button>
+{code}
