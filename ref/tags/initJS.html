@@ -66,12 +66,20 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
 
                 <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
 
-                <h1>facebook:logoutLink</h1><p class="paragraph"/>For the user to logout from your app and Facebook.com, use <code>logoutLink</code> tag.<p class="paragraph"/><div class="code"><pre><span class="xml&#45;tag">&#60;facebook:logoutLink&#62;</span>Logout<span class="xml&#45;tag">&#60;/facebook:logoutLink&#62;</span></pre></div><p class="paragraph"/>Optional attributes are :
+                <h1>facebook:initJS</h1><p class="paragraph"/>To initialize <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Facebook JS SDK</a> in your GSP views, simply insert <code>initJS</code> tag, after HTML body tag.
+The only required attribute is <code>appId</code>.<p class="paragraph"/><div class="code"><pre><span class="xml&#45;tag">&#60;facebook:initJS appId=<span class="xml&#45;quote">"$&#123;facebook.app.id&#125;"</span> /&#62;</span></pre></div><p class="paragraph"/>Optional attributes are :
 <ul class="star">
-<li><code>elementClass</code> HTML element 'class' attribute value</li>
-<li><code>elementId</code> HTML element 'id' attribute value</li>
-<li><code>nextUrl</code> Next URL for redirect after logout (if not defined page will be reloaded)</li>
-</ul><p class="paragraph"/>
+<li><code>autoGrow</code> Call <code>FB.setAutoGrow()</code> after page rendering (default to <code>false</code>)</li>
+<li><code>channelUrl</code> Channel File</li>
+<li><code>cookie</code> Enable cookies to allow the server to access the session (default to <code>true</code>)</li>
+<li><code>locale</code> Define JS SDK locale (default to server locale)</li>
+<li><code>status</code> Check login status (default to <code>false</code>)</li>
+<li><code>xfbml</code> Parse XFBML (default to <code>false</code>)</li>
+</ul><p class="paragraph"/>You can put any JS code inside initJS tag. It will be automatically injected inside the fbAsyncInit function body.<p class="paragraph"/><div class="code"><pre><span class="xml&#45;tag">&#60;facebook:initJS appId=<span class="xml&#45;quote">"$&#123;facebook.app.id&#125;"</span>&#62;</span>
+  // Put here any JS code to be executed after Facebook JS initialization
+  alert('Some JS code');
+<span class="xml&#45;tag">&#60;/facebook:initJS&#62;</span></pre></div>
+
             </div>
         </td>
         <td id="col2">
