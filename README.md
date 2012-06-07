@@ -3,7 +3,7 @@ Facebook SDK Grails Plugin
 
 # Introduction
 
-The [Facebook Platform](http://developers.facebook.com/) is a set of APIs that make your application more social. Read more about [integrating Facebook with your web site](http://developers.facebook.com/docs/guides/web) on the Facebook developer site. 
+The [Facebook Platform](http://developers.facebook.com/) is a set of APIs that make your application more social. Read more about [integrating Facebook with your web site](http://developers.facebook.com/docs/guides/web) on the Facebook developer site.
 
 This project contains the open source **Facebook SDK Grails Plugin** that allows you to integrate the [Facebook Platform](http://developers.facebook.com/) on a website/app powered by [Grails](http://grails.org).
 
@@ -66,9 +66,9 @@ To see an example of integration with Shiro Grails Plugin, you can download [Fac
 
 Project documentation is located here :
 
-* [Reference Documentation (Page per chapter)]:http://benorama.github.com/facebook-sdk-grails-plugin/guide
-* [Reference Documentation (Single page)]:http://benorama.github.com/facebook-sdk-grails-plugin/guide/single.html
-* [Groovy API docs]
+* [Reference Documentation (Page per chapter)](http://benorama.github.com/facebook-sdk-grails-plugin/guide)
+* [Reference Documentation (Single page)](http://benorama.github.com/facebook-sdk-grails-plugin/guide/single.html)
+* [Groovy API docs](http://benorama.github.com/facebook-sdk-grails-plugin/gapi/)
 
 
 # Bugs
