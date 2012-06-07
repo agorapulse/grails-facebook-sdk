@@ -1,3 +1,5 @@
+h1. facebook:loginLink
+
 For the user to connect/install your app, use @loginLink@ tag.
 
 {code}

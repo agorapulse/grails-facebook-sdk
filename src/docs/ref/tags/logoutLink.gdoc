@@ -1,3 +1,5 @@
+h1. facebook:logoutLink
+
 For the user to logout from your app and Facebook.com, use @logoutLink@ tag.
 
 {code:xml}
