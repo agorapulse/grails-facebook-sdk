@@ -1,6 +1,6 @@
 h3. Installation
 
-Declare the plugin dependency in @BuildConfig.groovvy@ file, as shown here:
+Declare the plugin dependency in @BuildConfig.groovy@ file, as shown here:
 
 {code}
 grails.project.dependency.resolution = {

@@ -11,7 +11,7 @@ This plugin is a port of the official [Facebook PHP SDK V3.1.1](http://github.co
 
 It supports the latest *OAuth2.0 authentication* (required since October 1st 2011).
 
-**Facebook SDK Grails Plugin** provides :
+**Facebook SDK Grails Plugin** provides the following Grails artefacts:
 
 * **FacebookAppService** - A service to build [apps on Facebook.com](http://developers.facebook.com/docs/guides/canvas/) and [websites with the Facebook Platform](http://developers.facebook.com/docs/guides/web).
 * **FacebookGraphClient** - A client to call [Facebook Graph API](http://developers.facebook.com/docs/reference/api/), which is a wrapper around the rock solid [RestFB java library](http://restfb.com/) version 1.6.9 (released October 21, 2011).
