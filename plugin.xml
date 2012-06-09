@@ -1,4 +1,4 @@
-<plugin name='facebook-sdk' version='0.2.0' grailsVersion='2.0.4 &gt; *'>
+<plugin name='facebook-sdk' version='0.3.0' grailsVersion='2.0 &gt; *'>
   <author>Benoit Hediard</author>
   <authorEmail>ben@benorama.com</authorEmail>
   <title>Facebook SDK Grails Plugin</title>
@@ -18,22 +18,13 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
     <repository name='http://repo.grails.org/grails/core' url='http://repo.grails.org/grails/core/' />
     <repository name='grailsCore' url='http://svn.codehaus.org/grails/trunk/grails-plugins' />
     <repository name='mavenCentral' url='http://repo1.maven.org/maven2/' />
-    <repository name='https://repository.sonatype.org/content/repositories/central' url='https://repository.sonatype.org/content/repositories/central/' />
   </repositories>
-  <dependencies />
-  <plugins>
+  <dependencies>
     <compile>
-      <plugin group='org.grails.plugins' name='resources' version='latest.integration' />
+      <dependency group='com.restfb' name='restfb' version='1.6.9' />
     </compile>
-    <runtime>
-      <plugin group='org.grails.plugins' name='jquery' version='1.7.1' />
-      <plugin group='org.grails.plugins' name='twitter-bootstrap' version='2.0.2.25' />
-      <plugin group='org.grails.plugins' name='hibernate' version='2.0.4' />
-    </runtime>
-    <build>
-      <plugin group='org.grails.plugins' name='tomcat' version='2.0.4' />
-    </build>
-  </plugins>
+  </dependencies>
+  <plugins />
   <runtimePluginRequirements />
   <behavior />
 </plugin>
