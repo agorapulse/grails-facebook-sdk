@@ -7,7 +7,7 @@ import grails.plugin.facebooksdk.FacebookAppSessionScope
 
 class FacebookSdkGrailsPlugin {
 	
-	def version = "0.3.1"
+	def version = "0.3.2"
 	def grailsVersion = "2.0 > *"
 	def dependsOn = [:]
 	def pluginExcludes = []
@@ -45,7 +45,7 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
     }
 
     def doWithApplicationContext = { applicationContext ->
-        def facebooksdk = application.config.grails?.plugins?.facebooksdk
+        def facebooksdk = application.config.grails?.plugin?.facebooksdk
         if (facebooksdk) {
             FacebookApp facebookApp = applicationContext.getBean("facebookApp")
             facebookApp.id  = facebooksdk.appId
