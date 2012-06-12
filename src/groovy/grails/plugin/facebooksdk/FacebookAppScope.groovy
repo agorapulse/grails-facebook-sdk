@@ -1,4 +1,4 @@
-package grails.plugins.facebooksdk
+package grails.plugin.facebooksdk
 
 import org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequest
 import org.springframework.web.context.request.RequestContextHolder

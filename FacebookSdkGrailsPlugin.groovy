@@ -1,4 +1,9 @@
-import grails.plugins.facebooksdk.FacebookApp
+import grails.plugin.facebooksdk.FacebookApp
+import grails.plugin.facebooksdk.FacebookAppService
+import grails.plugin.facebooksdk.FacebookAppRequestScope
+import grails.plugin.facebooksdk.FacebookAppCookieScope
+import grails.plugin.facebooksdk.FacebookApp
+import grails.plugin.facebooksdk.FacebookAppSessionScope
 
 class FacebookSdkGrailsPlugin {
 	
@@ -21,20 +26,20 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
 	def scm = [  url: "https://github.com/benorama/facebook-sdk-grails-plugin" ]
 
     def doWithSpring = {
-        facebookApp(grails.plugins.facebooksdk.FacebookApp)
-        facebookAppService(grails.plugins.facebooksdk.FacebookAppService) {
+        facebookApp(FacebookApp)
+        facebookAppService(FacebookAppService) {
             facebookApp = ref("facebookApp")
             facebookAppCookieScope = ref("facebookAppCookieScope")
             facebookAppRequestScope = ref("facebookAppRequestScope")
             facebookAppPersistentScope = ref("facebookAppPersistentScope")
         }
-        facebookAppCookieScope(grails.plugins.facebooksdk.FacebookAppCookieScope) {
+        facebookAppCookieScope(FacebookAppCookieScope) {
             facebookApp = ref("facebookApp")
         }
-        facebookAppRequestScope(grails.plugins.facebooksdk.FacebookAppRequestScope) {
+        facebookAppRequestScope(FacebookAppRequestScope) {
             facebookApp = ref("facebookApp")
         }
-        facebookAppPersistentScope(grails.plugins.facebooksdk.FacebookAppSessionScope) {
+        facebookAppPersistentScope(FacebookAppSessionScope) {
             facebookApp = ref("facebookApp")
         }
     }

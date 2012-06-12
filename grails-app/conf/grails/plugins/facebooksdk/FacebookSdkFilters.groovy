@@ -1,5 +1,8 @@
 package grails.plugins.facebooksdk
 
+import grails.plugin.facebooksdk.FacebookAppService
+import grails.plugin.facebooksdk.FacebookApp
+
 class FacebookSdkFilters {
 	
 	FacebookApp facebookApp

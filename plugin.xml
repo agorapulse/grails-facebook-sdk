@@ -9,8 +9,8 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
   <type>FacebookSdkGrailsPlugin</type>
   <resources>
     <resource>grails.plugins.facebooksdk.FacebookSdkFilters</resource>
-    <resource>grails.plugins.facebooksdk.FacebookAppService</resource>
-    <resource>grails.plugins.facebooksdk.FacebookJSTagLib</resource>
+    <resource>grails.plugin.facebooksdk.FacebookAppService</resource>
+    <resource>grails.plugin.facebooksdk.FacebookJSTagLib</resource>
   </resources>
   <repositories>
     <repository name='grailsCentral' url='http://plugins.grails.org' />

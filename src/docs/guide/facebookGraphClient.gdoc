@@ -11,7 +11,7 @@ grails console
 h3. Initialization
 
 {code}
-import grails.plugins.facebooksdk.FacebookGraphClient
+import grails.plugin.facebooksdk.FacebookGraphClient
 // For public data
 def facebookClient = new FacebookGraphClient()
 // For private data (access token required)

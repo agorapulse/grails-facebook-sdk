@@ -1,4 +1,4 @@
-package grails.plugins.facebooksdk
+package grails.plugin.facebooksdk
 
 /**
 * Uses HTTP request attributes scope to cache data during the duration of the request.

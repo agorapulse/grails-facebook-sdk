@@ -1,4 +1,4 @@
-package grails.plugins.facebooksdk
+package grails.plugin.facebooksdk
 
 import org.springframework.web.servlet.support.RequestContextUtils
 

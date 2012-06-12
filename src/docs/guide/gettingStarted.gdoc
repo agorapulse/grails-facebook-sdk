@@ -27,9 +27,9 @@ Create a Facebook app on "Facebook Developers":https://developers.facebook.com/a
 Add your Facebook app parameters your @Config.groovy@:
 
 {code}
-grails.plugins.facebooksdk.appId = {APP_ID}
-grails.plugins.facebooksdk.appPermissions = {APP_PERMISSIONS}
-grails.plugins.facebooksdk.appSecret = {APP_SECRET}
+grails.plugin.facebooksdk.appId = {APP_ID}
+grails.plugin.facebooksdk.appPermissions = {APP_PERMISSIONS}
+grails.plugin.facebooksdk.appSecret = {APP_SECRET}
 {code}
 
 

@@ -1,4 +1,4 @@
-package grails.plugins.facebooksdk
+package grails.plugin.facebooksdk
 
 import com.restfb.batch.BatchRequest
 import com.restfb.batch.BatchRequest.BatchRequestBuilder

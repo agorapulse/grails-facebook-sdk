@@ -1,4 +1,4 @@
-package grails.plugins.facebooksdk
+package grails.plugin.facebooksdk
 
 import com.restfb.DefaultLegacyFacebookClient
 import com.restfb.Parameter
