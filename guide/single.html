@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
-        <title>Facebook SDK Grails Plugin 0.2.0</title>
+        <title>Facebook SDK Grails Plugin 0.3.1</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
         <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8" />
@@ -62,7 +62,7 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
                         <div class="project">
                             <h1>Facebook SDK Grails Plugin - Reference Documentation</h1>
                             <p><strong>Authors:</strong> Benoit Hediard</p>
-                            <p><strong>Version:</strong> 0.2.0</p>
+                            <p><strong>Version:</strong> 0.3.1</p>
                             
                         </div>
 
@@ -86,11 +86,15 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
                         
 
 <h1 id="introduction">1 Introduction</h1>
-The <a href="http://developers.facebook.com/" target="blank">Facebook Platform</a> is a set of APIs that make your application more social. Read more about <a href="http://developers.facebook.com/docs/guides/web" target="blank">integrating Facebook with your web site</a> on the Facebook developer site.<p class="paragraph"/>This project contains the open source <strong class="bold">Facebook SDK Grails Plugin</strong> that allows you to integrate the <a href="http://developers.facebook.com/" target="blank">Facebook Platform</a> on a website/app powered by <a href="http://grails.org" target="blank">Grails</a> .<p class="paragraph"/>This plugin is a port of the official <a href="http://github.com/facebook/facebook-php-sdk" target="blank">Facebook PHP SDK V3.1.1</a> to <a href="http://grails.org" target="blank">Grails 2.0</a> .<p class="paragraph"/>It supports the latest <strong class="bold">OAuth2.0 authentication</strong> (required since October 1st 2011).<p class="paragraph"/><strong class="bold">Facebook SDK Grails Plugin</strong> provides :
+The <a href="http://developers.facebook.com/" target="blank">Facebook Platform</a> is a set of APIs that make your application more social. Read more about <a href="http://developers.facebook.com/docs/guides/web" target="blank">integrating Facebook with your web site</a> on the Facebook developer site.<p class="paragraph"/>This project contains the open source <strong class="bold">Facebook SDK Grails Plugin</strong> that allows you to integrate the <a href="http://developers.facebook.com/" target="blank">Facebook Platform</a> on a website/app powered by <a href="http://grails.org" target="blank">Grails</a> .<p class="paragraph"/>This plugin is a port of the official <a href="http://github.com/facebook/facebook-php-sdk" target="blank">Facebook PHP SDK V3.1.1</a> to <a href="http://grails.org" target="blank">Grails 2.0</a> .<p class="paragraph"/>It supports the latest <strong class="bold">OAuth2.0 authentication</strong> (required since October 1st 2011).<p class="paragraph"/><strong class="bold">Facebook SDK Grails Plugin</strong> provides Grails artefacts:
 <ul class="star">
-<li><strong class="bold">FacebookAppService</strong> - A service to build <a href="http://developers.facebook.com/docs/guides/canvas/" target="blank">apps on Facebook.com</a> and <a href="http://developers.facebook.com/docs/guides/web" target="blank">websites with the Facebook Platform</a> .</li>
-<li><strong class="bold">FacebookGraphClient</strong> - A client to call <a href="http://developers.facebook.com/docs/reference/api/," target="blank">Facebook Graph API</a> which is a wrapper around the rock solid <a href="http://restfb.com/" target="blank">RestFB java library</a> version 1.6.9 (released October 21, 2011).</li>
-<li><strong class="bold">FacebookJSTagLib</strong> - A collection of tags to easily integrate <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Facebook JS SDK</a> in your GSPs.</li>
+<li><code>FacebookAppService</code> - A service to build <a href="http://developers.facebook.com/docs/guides/canvas/" target="blank">apps on Facebook.com</a> and <a href="http://developers.facebook.com/docs/guides/web" target="blank">websites with the Facebook Platform</a> .</li>
+<li><code>FacebookGraphClient</code> - A client to call <a href="http://developers.facebook.com/docs/reference/api/," target="blank">Facebook Graph API</a> which is a wrapper around the rock solid <a href="http://restfb.com/" target="blank">RestFB java library</a> version 1.6.9 (released October 21, 2011).</li>
+<li><code>FacebookJSTagLib</code> - A collection of tags to easily integrate <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Facebook JS SDK</a> in your GSPs.</li>
+</ul><p class="paragraph"/><h3>Latest releases</h3>
+<ul class="star">
+<li>2012-06-12 <strong class="bold">0.3.1</strong> : package <code>grails.plugins.facebook.sdk</code> renamed to <code>grails.plugin.facebooksdk</code></li>
+<li>2012-06-08 <strong class="bold">0.3.0</strong> : new documentation based on GDoc, <code>FacebookRestClient</code> added + bug fixes</li>
 </ul><p class="paragraph"/><h3>Bugs</h3><p class="paragraph"/>To report any bug, please use the project <a href="http://github.com/benorama/facebook-sdk-grails-plugin/issues" target="blank">Issues</a> section on GitHub.<p class="paragraph"/><blockquote class="note">
 This is an <strong class="bold">alpha release</strong>.
 The underlying APIs are generally stable, however we may make changes to the library in response to developer feedback.
@@ -99,7 +103,7 @@ The underlying APIs are generally stable, however we may make changes to the lib
 
 
 <h1 id="gettingStarted">2 Getting started</h1>
-<h3>Installation</h3><p class="paragraph"/>Declare the plugin dependency in <code>BuildConfig.groovvy</code> file, as shown here:<p class="paragraph"/><div class="code"><pre>grails.project.dependency.resolution = &#123;
+<h3>Installation</h3><p class="paragraph"/>Declare the plugin dependency in <code>BuildConfig.groovy</code> file, as shown here:<p class="paragraph"/><div class="code"><pre>grails.project.dependency.resolution = &#123;
 		inherits(<span class="java&#45;quote">"global"</span>) &#123; &#125;
 		log <span class="java&#45;quote">"info"</span>
 		repositories &#123;
@@ -113,9 +117,9 @@ The underlying APIs are generally stable, however we may make changes to the lib
 				runtime ':facebook&#45;sdk:0.3.0'
 		&#125;
 &#125;</pre></div><p class="paragraph"/>
-<h3>Config</h3><p class="paragraph"/>Create a Facebook app on <a href="https://developers.facebook.com/apps," target="blank">Facebook Developers</a> in order to get your own app ID and app secret.<p class="paragraph"/>Add your Facebook app parameters your <code>Config.groovy</code>:<p class="paragraph"/><div class="code"><pre>grails.plugins.facebooksdk.appId = &#123;APP_ID&#125;
-grails.plugins.facebooksdk.appPermissions = &#123;APP_PERMISSIONS&#125;
-grails.plugins.facebooksdk.appSecret = &#123;APP_SECRET&#125;</pre></div><p class="paragraph"/>
+<h3>Config</h3><p class="paragraph"/>Create a Facebook app on <a href="https://developers.facebook.com/apps," target="blank">Facebook Developers</a> in order to get your own app ID and app secret.<p class="paragraph"/>Add your Facebook app parameters your <code>Config.groovy</code>:<p class="paragraph"/><div class="code"><pre>grails.plugin.facebooksdk.appId = &#123;APP_ID&#125;
+grails.plugin.facebooksdk.appPermissions = &#123;APP_PERMISSIONS&#125;
+grails.plugin.facebooksdk.appSecret = &#123;APP_SECRET&#125;</pre></div><p class="paragraph"/>
 <h3>Demo app</h3><p class="paragraph"/>If you want to quickly run the SDK on a demo app, you can download <a href="https://github.com/benorama/facebook-sdk-grails-demo." target="blank">Facebook SDK Grails - Demo</a><p class="paragraph"/>
 <h3>Integration with Shiro Grails Plugin</h3><p class="paragraph"/>To see an example of integration with Shiro Grails Plugin, you can download <a href="https://github.com/benorama/facebook-sdk-grails-demo-shiro." target="blank">Facebook SDK Grails - Shiro demo</a><p class="paragraph"/>
 
@@ -146,7 +150,7 @@ It will return <code>0</code> if user is not authenticated (or if he has not aut
 <h1 id="facebookGraphClient">5 Facebook Graph Client</h1>
 To perform Facebook Graph API call, use the <code>FacebookGraphClient</code> without access token for public data or with an access token for private data.
 <code>FacebookGraphClient</code> is a thin groovy wrapper around the rock solid <a href="http://restfb.com/" target="blank">RestFB java library</a> .
-It will return JSON-based graph objects.<p class="paragraph"/>To play with the API, you might use the grails console from your project root and get user token or app token from <a href="https://developers.facebook.com/tools/access_token/" target="blank">Facebook Access Token Tool</a> .<p class="paragraph"/><div class="code"><pre>grails console</pre></div><p class="paragraph"/><h3>Initialization</h3><p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">import</span> grails.plugins.facebooksdk.FacebookGraphClient
+It will return JSON-based graph objects.<p class="paragraph"/>To play with the API, you might use the grails console from your project root and get user token or app token from <a href="https://developers.facebook.com/tools/access_token/" target="blank">Facebook Access Token Tool</a> .<p class="paragraph"/><div class="code"><pre>grails console</pre></div><p class="paragraph"/><h3>Initialization</h3><p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">import</span> grails.plugin.facebooksdk.FacebookGraphClient
 // For <span class="java&#45;keyword">public</span> data
 def facebookClient = <span class="java&#45;keyword">new</span> FacebookGraphClient()
 // For <span class="java&#45;keyword">private</span> data (access token required)

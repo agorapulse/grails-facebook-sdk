@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>2 Getting started 0.2.0</title>
+    <title>2 Getting started 0.3.1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -79,7 +79,7 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
 
                     <p><strong>Authors:</strong> Benoit Hediard</p>
 
-                    <p><strong>Version:</strong> 0.2.0</p>
+                    <p><strong>Version:</strong> 0.3.1</p>
 
                     
                 </div>
@@ -89,7 +89,7 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
                 
 
 <h1 id="gettingStarted">2 Getting started</h1>
-<h3>Installation</h3><p class="paragraph"/>Declare the plugin dependency in <code>BuildConfig.groovvy</code> file, as shown here:<p class="paragraph"/><div class="code"><pre>grails.project.dependency.resolution = &#123;
+<h3>Installation</h3><p class="paragraph"/>Declare the plugin dependency in <code>BuildConfig.groovy</code> file, as shown here:<p class="paragraph"/><div class="code"><pre>grails.project.dependency.resolution = &#123;
 		inherits(<span class="java&#45;quote">"global"</span>) &#123; &#125;
 		log <span class="java&#45;quote">"info"</span>
 		repositories &#123;
@@ -103,9 +103,9 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
 				runtime ':facebook&#45;sdk:0.3.0'
 		&#125;
 &#125;</pre></div><p class="paragraph"/>
-<h3>Config</h3><p class="paragraph"/>Create a Facebook app on <a href="https://developers.facebook.com/apps," target="blank">Facebook Developers</a> in order to get your own app ID and app secret.<p class="paragraph"/>Add your Facebook app parameters your <code>Config.groovy</code>:<p class="paragraph"/><div class="code"><pre>grails.plugins.facebooksdk.appId = &#123;APP_ID&#125;
-grails.plugins.facebooksdk.appPermissions = &#123;APP_PERMISSIONS&#125;
-grails.plugins.facebooksdk.appSecret = &#123;APP_SECRET&#125;</pre></div><p class="paragraph"/>
+<h3>Config</h3><p class="paragraph"/>Create a Facebook app on <a href="https://developers.facebook.com/apps," target="blank">Facebook Developers</a> in order to get your own app ID and app secret.<p class="paragraph"/>Add your Facebook app parameters your <code>Config.groovy</code>:<p class="paragraph"/><div class="code"><pre>grails.plugin.facebooksdk.appId = &#123;APP_ID&#125;
+grails.plugin.facebooksdk.appPermissions = &#123;APP_PERMISSIONS&#125;
+grails.plugin.facebooksdk.appSecret = &#123;APP_SECRET&#125;</pre></div><p class="paragraph"/>
 <h3>Demo app</h3><p class="paragraph"/>If you want to quickly run the SDK on a demo app, you can download <a href="https://github.com/benorama/facebook-sdk-grails-demo." target="blank">Facebook SDK Grails - Demo</a><p class="paragraph"/>
 <h3>Integration with Shiro Grails Plugin</h3><p class="paragraph"/>To see an example of integration with Shiro Grails Plugin, you can download <a href="https://github.com/benorama/facebook-sdk-grails-demo-shiro." target="blank">Facebook SDK Grails - Shiro demo</a><p class="paragraph"/>
 
