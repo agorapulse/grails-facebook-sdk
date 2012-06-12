@@ -15,8 +15,8 @@ It supports the latest *OAuth2.0 authentication* (required since October 1st 201
 
 h3. Latest releases
 
-* 2012-06-12 *0.3.1* : package @grails.plugins.facebook.sdk@ renamed to @grails.plugin.facebooksdk@
-* 2012-06-08 *0.3.0* : new documentation based on GDoc, @FacebookRestClient@ added + bug fixes
+* 2012-06-12 *V0.3.1* : package @grails.plugins.facebooksdk@ renamed to @grails.plugin.facebooksdk@
+* 2012-06-08 *V0.3.0* : new documentation based on GDoc, @FacebookRestClient@ added + bug fixes
 
 
 h3. Bugs

@@ -72,8 +72,8 @@ Project documentation is located here :
 
 # Latest releases
 
-* 2012-06-12 **0.3.1** : package _grails.plugins.facebook.sdk_ renamed to _grails.plugin.facebooksdk_
-* 2012-06-08 **0.3.0** : new documentation based on GDoc, FacebookRestClient added + bug fixes
+* 2012-06-12 **V0.3.1** : package _grails.plugins.facebooksdk_ renamed to _grails.plugin.facebooksdk_
+* 2012-06-08 **V0.3.0** : new documentation based on GDoc, FacebookRestClient added + bug fixes
 
 
 # Bugs
