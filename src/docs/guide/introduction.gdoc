@@ -13,6 +13,12 @@ It supports the latest *OAuth2.0 authentication* (required since October 1st 201
 * @FacebookJSTagLib@ - A collection of tags to easily integrate "Facebook JS SDK":http://developers.facebook.com/docs/reference/javascript/ in your GSPs.
 
 
+h3. Latest releases
+
+* 2012-06-12 *0.3.1* : package @grails.plugins.facebook.sdk@ renamed to @grails.plugin.facebooksdk@
+* 2012-06-08 *0.3.0* : new documentation based on GDoc, @FacebookRestClient@ added + bug fixes
+
+
 h3. Bugs
 
 To report any bug, please use the project "Issues":http://github.com/benorama/facebook-sdk-grails-plugin/issues section on GitHub.
