@@ -93,13 +93,14 @@ The <a href="http://developers.facebook.com/" target="blank">Facebook Platform</
 <li><code>FacebookJSTagLib</code> - A collection of tags to easily integrate <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Facebook JS SDK</a> in your GSPs.</li>
 </ul><p class="paragraph"/><h3>Latest releases</h3>
 <ul class="star">
+<li>2012-06-12 <strong class="bold">V0.3.2</strong> : bug fix in filter and plugin config</li>
 <li>2012-06-12 <strong class="bold">V0.3.1</strong> : package <code>grails.plugins.facebooksdk</code> renamed to <code>grails.plugin.facebooksdk</code></li>
 <li>2012-06-08 <strong class="bold">V0.3.0</strong> : new documentation based on GDoc, <code>FacebookRestClient</code> added + bug fixes</li>
 </ul><p class="paragraph"/><h3>Bugs</h3><p class="paragraph"/>To report any bug, please use the project <a href="http://github.com/benorama/grails-facebook-sdk/issues" target="blank">Issues</a> section on GitHub.<p class="paragraph"/><blockquote class="note">
 This is an <strong class="bold">alpha release</strong>.
 The underlying APIs are generally stable, however we may make changes to the library in response to developer feedback.
 </blockquote><p class="paragraph"/>
-<h3>About</h3><p class="paragraph"/>The <strong class="bold">Grails Facebook SDK Plugin</strong> is not an official Facebook SDK such as <a href="http://developers.facebook.com/docs/reference/javascript/," target="blank">Javascript</a> <a href="http://github.com/facebook/facebook-php-sdk," target="blank">PHP</a> <a href="http://github.com/facebook/facebook-ios-sdk/" target="blank">iOS</a> and <a href="http://github.com/facebook/facebook-android-sdk." target="blank">Android SDKs</a><p class="paragraph"/>It is developped by <a href="http://www.agorapulse.com" target="blank">AgoraPulse</a> and licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0.html" target="blank">Apache Licence, Version 2.0</a> .
+<h3>About</h3><p class="paragraph"/>The <strong class="bold">Grails Facebook SDK Plugin</strong> is not an official Facebook SDK such as <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Javascript</a> , <a href="http://github.com/facebook/facebook-php-sdk" target="blank">PHP</a> , <a href="http://github.com/facebook/facebook-ios-sdk/" target="blank">iOS</a> and <a href="http://github.com/facebook/facebook-android-sdk" target="blank">Android SDKs</a> .<p class="paragraph"/>It is developped by <a href="http://www.agorapulse.com" target="blank">AgoraPulse</a> and licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0.html" target="blank">Apache Licence, Version 2.0</a> .
 
 
 <h1 id="gettingStarted">2 Getting started</h1>
@@ -117,11 +118,11 @@ The underlying APIs are generally stable, however we may make changes to the lib
 				runtime ':facebook&#45;sdk:0.3.0'
 		&#125;
 &#125;</pre></div><p class="paragraph"/>
-<h3>Config</h3><p class="paragraph"/>Create a Facebook app on <a href="https://developers.facebook.com/apps," target="blank">Facebook Developers</a> in order to get your own app ID and app secret.<p class="paragraph"/>Add your Facebook app parameters your <code>Config.groovy</code>:<p class="paragraph"/><div class="code"><pre>grails.plugin.facebooksdk.appId = &#123;APP_ID&#125;
+<h3>Config</h3><p class="paragraph"/>Create a Facebook app on <a href="https://developers.facebook.com/apps" target="blank">Facebook Developers</a> , in order to get your own app ID and app secret.<p class="paragraph"/>Add your Facebook app parameters your <code>Config.groovy</code>:<p class="paragraph"/><div class="code"><pre>grails.plugin.facebooksdk.appId = &#123;APP_ID&#125;
 grails.plugin.facebooksdk.appPermissions = &#123;APP_PERMISSIONS&#125;
 grails.plugin.facebooksdk.appSecret = &#123;APP_SECRET&#125;</pre></div><p class="paragraph"/>
-<h3>Demo app</h3><p class="paragraph"/>If you want to quickly run the SDK on a demo app, you can download <a href="https://github.com/benorama/grails-facebook-sdk-demo." target="blank">Facebook SDK Grails - Demo</a><p class="paragraph"/>
-<h3>Integration with Shiro Grails Plugin</h3><p class="paragraph"/>To see an example of integration with Shiro Grails Plugin, you can download <a href="https://github.com/benorama/grails-facebook-sdk-demo-shiro." target="blank">Facebook SDK Grails - Shiro demo</a><p class="paragraph"/>
+<h3>Demo app</h3><p class="paragraph"/>If you want to quickly run the SDK on a demo app, you can download <a href="https://github.com/benorama/grails-facebook-sdk-demo" target="blank">Facebook SDK Grails - Demo</a> .<p class="paragraph"/>
+<h3>Integration with Shiro Grails Plugin</h3><p class="paragraph"/>To see an example of integration with Shiro Grails Plugin, you can download <a href="https://github.com/benorama/grails-facebook-sdk-demo-shiro" target="blank">Facebook SDK Grails - Shiro demo</a> .<p class="paragraph"/>
 
 
 <h1 id="facebookFilter">3 Facebook Filter</h1>
