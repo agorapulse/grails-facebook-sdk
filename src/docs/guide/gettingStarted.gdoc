@@ -22,7 +22,7 @@ grails.project.dependency.resolution = {
 
 h3. Config
 
-Create a Facebook app on "Facebook Developers":https://developers.facebook.com/apps, in order to get your own app ID and app secret.
+Create a Facebook app on "Facebook Developers":https://developers.facebook.com/apps , in order to get your own app ID and app secret.
 
 Add your Facebook app parameters your @Config.groovy@:
 
@@ -35,10 +35,10 @@ grails.plugin.facebooksdk.appSecret = {APP_SECRET}
 
 h3. Demo app
 
-If you want to quickly run the SDK on a demo app, you can download "Facebook SDK Grails - Demo":https://github.com/benorama/grails-facebook-sdk-demo.
+If you want to quickly run the SDK on a demo app, you can download "Facebook SDK Grails - Demo":https://github.com/benorama/grails-facebook-sdk-demo .
 
 
 h3. Integration with Shiro Grails Plugin
 
-To see an example of integration with Shiro Grails Plugin, you can download "Facebook SDK Grails - Shiro demo":https://github.com/benorama/grails-facebook-sdk-demo-shiro.
+To see an example of integration with Shiro Grails Plugin, you can download "Facebook SDK Grails - Shiro demo":https://github.com/benorama/grails-facebook-sdk-demo-shiro .
 
