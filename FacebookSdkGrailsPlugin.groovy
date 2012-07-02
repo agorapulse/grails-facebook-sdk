@@ -19,11 +19,11 @@ class FacebookSdkGrailsPlugin {
 It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
 ''' 
 	
-	def documentation = "http://grails.org/plugin/facebook-sdk-grails-plugin/blob/master/README.md"
+	def documentation = "http://benorama.github.com/grails-facebook-sdk/guide/"
 	def license = "APACHE"
     def organization = [ name: "AgoraPulse", url: "http://www.agorapulse.com/" ]
-    def issueManagement = [ system: "github", url: "https://github.com/benorama/facebook-sdk-grails-plugin/issues" ]
-	def scm = [  url: "https://github.com/benorama/facebook-sdk-grails-plugin" ]
+    def issueManagement = [ system: "github", url: "https://github.com/benorama/grails-facebook-sdk/issues" ]
+	def scm = [  url: "https://github.com/benorama/grails-facebook-sdk" ]
 
     def doWithSpring = {
         facebookApp(FacebookApp)
