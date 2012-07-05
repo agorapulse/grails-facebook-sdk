@@ -9,7 +9,7 @@ class FacebookAppService {
 	
 	final static String VERSION = '3.1.1'
 	private final static List DROP_QUERY_PARAMS = ['code','state','signed_request']
-	private final static Long EXPIRATION_PREVENTION_THRESHOLD = 600000 // 10 minutes
+	private final static long EXPIRATION_PREVENTION_THRESHOLD = 600000 // 10 minutes
 	
 	boolean transactional = false
 	
@@ -84,7 +84,7 @@ class FacebookAppService {
 	* @description Get application OAuth accessToken
 	* @hint
 	*/
-	String getApplicationAccessToken(Boolean oauthEnabled = false) {
+	String getApplicationAccessToken(boolean oauthEnabled = false) {
 		String accessToken = ""
 		if (oauthEnabled) {
 			FacebookGraphClient facebookGraphClient = new FacebookGraphClient()
@@ -169,7 +169,7 @@ class FacebookAppService {
 									accessToken = result['access_token']
 									facebookAppPersistentScope.setData('accessToken', accessToken)
 									Integer expires = result['expires'] as Integer
-									Long expirationTime = new Date().time + expires * 1000
+									long expirationTime = new Date().time + expires * 1000
 									facebookAppPersistentScope.setData('expirationTime', expirationTime)
 								}
 							} else {
@@ -212,9 +212,9 @@ class FacebookAppService {
 	* @description Get the UID of the connected user, or 0 if the Facebook user is not connected.
 	* @hint Determines the connected user by first examining any signed requests, then considering an authorization code, and then falling back to any persistent store storing the user.
 	*/
-	Long getUserId() {
+	long getUserId() {
 		if (!facebookAppRequestScope.hasData('userId')) {
-			Long userId = 0
+			long userId = 0
 			// If a signed request is supplied, then it solely determines who the user is.
 			def signedRequest = getSignedRequest()
 			if (signedRequest) {
@@ -237,7 +237,7 @@ class FacebookAppService {
 					def facebookGraphClient = new FacebookGraphClient(accessToken)
 					def result = facebookGraphClient.fetchObject('me', [fields: 'id'])
 					if (result?.id) {
-						userId = result.id.toLong()
+						userId = result.id.tolong()
 						if (facebookAppPersistentScope.getData('userId') != userId) {
 							facebookAppPersistentScope.setData('userId', userId)
 						}
@@ -284,7 +284,7 @@ class FacebookAppService {
 					facebookAppPersistentScope.setData('code', code)
 					if (result['expires']) {
 						Integer expires = result['expires'] as Integer
-						Long expirationTime = new Date().time + expires * 1000
+						long expirationTime = new Date().time + expires * 1000
 						facebookAppPersistentScope.setData('expirationTime', expirationTime)
 					}
 				}
@@ -367,17 +367,17 @@ class FacebookAppService {
 		return url
 	}
 
-	private Boolean isAccessTokenExpired() {
-		Long expirationTime = facebookAppPersistentScope.getData('expirationTime', 0)
+	private boolean isAccessTokenExpired() {
+		long expirationTime = facebookAppPersistentScope.getData('expirationTime', 0)
 		return expirationTime && (new Date().time > expirationTime)
 	}
 
-	private Boolean isAccessTokenExpiredSoon() {
-		Long expirationTime = facebookAppPersistentScope.getData('expirationTime', 0)
+	private boolean isAccessTokenExpiredSoon() {
+		long expirationTime = facebookAppPersistentScope.getData('expirationTime', 0)
 		return expirationTime && (!isAccessTokenExpired() && (expirationTime - new Date().time) < EXPIRATION_PREVENTION_THRESHOLD)
 	}
 
-	private String serializeQueryString(Map parameters, Boolean urlEncoded = true) {
+	private String serializeQueryString(Map parameters, boolean urlEncoded = true) {
 		if (urlEncoded) {
 			return parameters.collect {key, value -> key.toLowerCase().encodeAsURL() + '=' + value.encodeAsURL() }.join('&')
 		} else {

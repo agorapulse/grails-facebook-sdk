@@ -17,7 +17,7 @@ class FacebookAppRequestScope extends FacebookAppScope {
 		request.getCurrentRequest().getAttribute(getKeyVariableName(key)) ?: defaultValue
 	}
  
-	Boolean hasData(String key) {
+	boolean hasData(String key) {
 		request.getCurrentRequest().getAttribute(getKeyVariableName(key)) ? true : false
 	}
 		

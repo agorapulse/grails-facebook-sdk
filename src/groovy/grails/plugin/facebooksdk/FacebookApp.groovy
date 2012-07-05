@@ -2,7 +2,7 @@ package grails.plugin.facebooksdk
 
 class FacebookApp {
 
-	Long id = 0
+	long id = 0
 	String permissions = ""
 	String secret = ""
 

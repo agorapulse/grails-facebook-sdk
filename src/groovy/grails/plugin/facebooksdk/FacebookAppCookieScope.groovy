@@ -30,7 +30,7 @@ class FacebookAppCookieScope extends FacebookAppScope {
 		}
 	}
 	
-	Boolean hasCookie() {
+	boolean hasCookie() {
 		getCookie() ? true : false
 	}
 	

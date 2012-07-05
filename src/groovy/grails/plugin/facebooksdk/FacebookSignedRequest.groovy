@@ -14,15 +14,15 @@ class FacebookSignedRequest {
 	// Authorization code
 	String code = ''
 	// Unix timestamp when the oauth_token expires.
-	Long expirationTime = 0
+	long expirationTime = 0
 	// Unix timestamp when the request was signed.
-	Long creationTime = 0
+	long creationTime = 0
 	// Page id string, the liked boolean if the user has liked the page, the admin boolean if the user is an admin (only available if your app is an iframe loaded in a Page tab).
 	Map page = [:]
 	// Locale string, country string and the age object (containing the min and max number range of the age) of the current user.
 	Map user = [:]
 	// Facebook user identifier (UID) of the current user.
-	Long userId = 0
+	long userId = 0
 	
 	FacebookSignedRequest(String appSecret, String signedRequest) {
 		Map data = parseSignedRequest(appSecret, signedRequest)
@@ -31,11 +31,11 @@ class FacebookSignedRequest {
 		if (data['oauth_token']) this.accessToken = data['oauth_token']
 		if (data['app_data']) this.appData = data['app_data'] as Map
 		if (data['code']) this.code = data['code']
-		if (data['expires']) this.expirationTime = data['expires'] as Long
-		if (data['issued_at']) this.creationTime = data['issued_at'] as Long
+		if (data['expires']) this.expirationTime = data['expires'] as long
+		if (data['issued_at']) this.creationTime = data['issued_at'] as long
 		if (data['page']) this.page = data['page'] as Map
 		if (data['user']) this.user = data['user'] as Map
-		if (data['user_id']) this.userId = data['user_id'] as Long
+		if (data['user_id']) this.userId = data['user_id'] as long
 	}
 
 	String toString() {

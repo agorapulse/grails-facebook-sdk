@@ -1,4 +1,4 @@
-Grails Facebook SDK Plugin
+Facebook SDK Grails Plugin
 ==========================
 
 # Introduction

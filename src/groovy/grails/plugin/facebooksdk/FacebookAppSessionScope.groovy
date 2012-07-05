@@ -19,21 +19,21 @@ class FacebookAppSessionScope extends FacebookAppScope {
 	}
 	
 	def getData(String key, defaultValue = "") {
-		log.debug("getData key=$key defaultValue=$defaultValue")
+		//log.debug("getData key=$key defaultValue=$defaultValue")
 		assert PERSISTENT_KEYS.contains(key), "Unsupported key '$key' passed to getData"
 		request.session.getAttribute(getKeyVariableName(key)) ?: defaultValue
 	}
 	
-	Boolean hasData(String key) {
+	boolean hasData(String key) {
 		request.getCurrentRequest().session.getAttribute(getKeyVariableName(key)) ? true : false
 	}
 	
-	Boolean isEnabled() {
+	boolean isEnabled() {
 		true
 	}
 		
 	void setData(String key, value) {
-		log.debug("setData key=$key value=$value")
+		//log.debug("setData key=$key value=$value")
 		assert PERSISTENT_KEYS.contains(key), "Unsupported key '$key' passed to setData"
 		request.session.setAttribute(getKeyVariableName(key), value)
 	}
