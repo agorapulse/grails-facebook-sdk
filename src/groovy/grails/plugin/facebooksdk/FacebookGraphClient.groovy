@@ -4,17 +4,18 @@ import com.restfb.batch.BatchRequest
 import com.restfb.batch.BatchRequest.BatchRequestBuilder
 import com.restfb.BinaryAttachment
 import com.restfb.Connection
-import com.restfb.DefaultFacebookClient
 import com.restfb.Parameter
 import com.restfb.json.JsonObject
 
 import grails.converters.JSON
 
-class FacebookGraphClient extends DefaultFacebookClient {
-	
-	FacebookGraphClient(String accessToken = '') {
-		super(accessToken)
-	}
+class FacebookGraphClient extends FacebookBaseClient {
+
+    static final int DEFAULT_READ_TIMEOUT_IN_MS = 180000
+
+    FacebookGraphClient(String accessToken = '', int timeout = DEFAULT_READ_TIMEOUT_IN_MS) {
+        super(accessToken, timeout)
+    }
 
 	boolean deleteObject(String object) {
 		return super.deleteObject(object)
@@ -78,19 +79,25 @@ class FacebookGraphClient extends DefaultFacebookClient {
 		return responses
 	}
 
-	Map executeQueries(Map queries, Map parameters = [:]) {
-		parameters['q'] = queries
-		def result = makeRequest('fql', buildVariableArgs(parameters))
-		result = parseResult(result)
-		if (result && result.data) {
-			def results = [:]
-			result.data.each {
-				results[it['name']] = it['fql_result_set']
-			}
-			return results
-		} else {
-			return [:]
-		}
+	Map executeQueries(Map queries, Map parameters = [:], int batchSize = 20) {
+        Map batchQueries = [:]
+        Map results = [:]
+        List queryNames = queries.keySet() as String[]
+        queryNames.each { String name ->
+            batchQueries[name] = queries[name]
+            if (batchQueries.size() == batchSize || name == queryNames[-1]) {
+                parameters['q'] = batchQueries
+                def result = makeRequest('fql', buildVariableArgs(parameters))
+                result = parseResult(result)
+                if (result && result.data) {
+                    result.data.each {
+                        results[it['name']] = it['fql_result_set']
+                    }
+                }
+                batchQueries.clear()
+            }
+        }
+        return results
 	}
 
 	List executeQuery(String query, Map parameters = [:]) {

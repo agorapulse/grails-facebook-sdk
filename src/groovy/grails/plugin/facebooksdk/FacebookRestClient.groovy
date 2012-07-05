@@ -1,18 +1,49 @@
 package grails.plugin.facebooksdk
 
-import com.restfb.DefaultLegacyFacebookClient
 import com.restfb.Parameter
+import grails.converters.JSON
 
-class FacebookRestClient extends DefaultLegacyFacebookClient {
+class FacebookRestClient extends FacebookBaseClient {
 
-	FacebookRestClient(String accessToken = '') {
-		super(accessToken)
-	}
+    static final int DEFAULT_READ_TIMEOUT_IN_MS = 180000
+
+    FacebookRestClient(String accessToken = '', int timeout = DEFAULT_READ_TIMEOUT_IN_MS) {
+        super(accessToken, timeout)
+    }
 	
 	def execute(String method, Map parameters = [:]) {
 		def result = super.execute(method, String, buildVariableArgs(parameters))
 		return parseResult(result)
 	}
+
+    List executeQuery(String query, Map parameters = [:]) {
+        List result = []
+        parameters['query'] = query
+        List resultList = super.executeForList('fql.query', String, buildVariableArgs(parameters))
+        resultList.each {
+            result << parseResult(it)
+        }
+        return result
+    }
+
+    Map executeQueries(Map queries, Map parameters = [:], int batchSize = 20) {
+        Map batchQueries = [:]
+        Map results = [:]
+        List queryNames = queries.keySet() as String[]
+        queryNames.each { String name ->
+            batchQueries[name] = queries[name]
+            if (batchQueries.size() == batchSize || name == queryNames[-1]) {
+                parameters['queries'] = (batchQueries as JSON).toString()
+                List resultList = super.executeForList('fql.multiquery', String, buildVariableArgs(parameters))
+                resultList.each {
+                    def result = parseResult(it)
+                    results[result['name']] = result['fql_result_set']
+                }
+                batchQueries.clear()
+            }
+        }
+        return results
+    }
 	
 	// PRIVATE
 	
@@ -41,5 +72,5 @@ class FacebookRestClient extends DefaultLegacyFacebookClient {
 			return result
 		}
 	}
-	
+
 }
