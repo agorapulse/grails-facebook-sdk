@@ -9,7 +9,7 @@ import com.restfb.json.JsonObject
 
 import grails.converters.JSON
 
-class FacebookGraphClient extends FacebookBaseClient {
+class FacebookGraphClient extends DefaultFacebookGraphClient {
 
     static final int DEFAULT_READ_TIMEOUT_IN_MS = 180000
 

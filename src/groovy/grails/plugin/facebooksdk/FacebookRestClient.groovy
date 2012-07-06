@@ -3,7 +3,7 @@ package grails.plugin.facebooksdk
 import com.restfb.Parameter
 import grails.converters.JSON
 
-class FacebookRestClient extends FacebookBaseClient {
+class FacebookRestClient extends DefaultFacebookRestClient {
 
     static final int DEFAULT_READ_TIMEOUT_IN_MS = 180000
 
@@ -12,7 +12,7 @@ class FacebookRestClient extends FacebookBaseClient {
     }
 	
 	def execute(String method, Map parameters = [:]) {
-		def result = super.execute(method, String, buildVariableArgs(parameters))
+        def result = super.execute(method, String, buildVariableArgs(parameters))
 		return parseResult(result)
 	}
 

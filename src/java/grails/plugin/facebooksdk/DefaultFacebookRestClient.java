@@ -1,15 +1,15 @@
 package grails.plugin.facebooksdk;
 
-import com.restfb.DefaultFacebookClient;
 import com.restfb.DefaultJsonMapper;
+import com.restfb.DefaultLegacyFacebookClient;
 import com.restfb.DefaultWebRequestor;
 
 import java.net.HttpURLConnection;
 
-public class FacebookBaseClient extends DefaultFacebookClient {
+public class DefaultFacebookRestClient extends DefaultLegacyFacebookClient {
 
     // Override default web requestor to add read timeout parameter
-    FacebookBaseClient(String accessToken, final Integer timeout) {
+    DefaultFacebookRestClient(String accessToken, final Integer timeout) {
         super(accessToken,
                 new DefaultWebRequestor() {
                     @Override
