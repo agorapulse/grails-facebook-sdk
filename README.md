@@ -34,7 +34,7 @@ grails.project.dependency.resolution = {
 		}
 		plugins {
 				//here go your plugin dependencies
-				runtime ':facebook-sdk:0.3.2'
+				runtime ':facebook-sdk:0.3.3'
 		}
 }
 ```
@@ -72,6 +72,7 @@ Project documentation is located here :
 
 # Latest releases
 
+* 2012-07-17 **V0.3.3** : readTimeout parameter added to Graph/Rest client + upgrade to Grails 2.1 with wrapper
 * 2012-06-12 **V0.3.2** : bug fix in filter and plugin config
 * 2012-06-12 **V0.3.1** : package _grails.plugins.facebooksdk_ renamed to _grails.plugin.facebooksdk_
 * 2012-06-08 **V0.3.0** : new documentation based on GDoc, FacebookRestClient added + bug fixes

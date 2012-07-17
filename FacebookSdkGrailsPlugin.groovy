@@ -7,7 +7,7 @@ import grails.plugin.facebooksdk.FacebookAppSessionScope
 
 class FacebookSdkGrailsPlugin {
 	
-	def version = "0.3.2"
+	def version = "0.3.3"
 	def grailsVersion = "2.0 > *"
 	def dependsOn = [:]
 	def pluginExcludes = []
