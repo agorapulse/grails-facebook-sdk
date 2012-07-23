@@ -15,6 +15,7 @@ It supports the latest *OAuth2.0 authentication* (required since October 1st 201
 
 h3. Latest releases
 
+* 2012-07-23 *V0.3.4* : bug fix in facebookAppService
 * 2012-07-17 *V0.3.3* : @readTimeout@ parameter added to Graph/Rest client + upgrade to Grails 2.1 with wrapper
 * 2012-06-12 *V0.3.2* : bug fix in filter and plugin config
 * 2012-06-12 *V0.3.1* : package @grails.plugins.facebooksdk@ renamed to @grails.plugin.facebooksdk@
