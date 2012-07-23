@@ -1,13 +1,8 @@
-import grails.plugin.facebooksdk.FacebookApp
-import grails.plugin.facebooksdk.FacebookAppService
-import grails.plugin.facebooksdk.FacebookAppRequestScope
-import grails.plugin.facebooksdk.FacebookAppCookieScope
-import grails.plugin.facebooksdk.FacebookApp
-import grails.plugin.facebooksdk.FacebookAppSessionScope
+import grails.plugin.facebooksdk.*
 
 class FacebookSdkGrailsPlugin {
 	
-	def version = "0.3.3"
+	def version = "0.3.4"
 	def grailsVersion = "2.0 > *"
 	def dependsOn = [:]
 	def pluginExcludes = []

@@ -1,7 +1,6 @@
 package grails.plugin.facebooksdk
 
 import com.restfb.exception.FacebookOAuthException
-
 import org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequest
 import org.springframework.web.context.request.RequestContextHolder
 
@@ -18,8 +17,8 @@ class FacebookAppService {
 	def facebookAppPersistentScope // Any persistentScope class with the following methods : deleteData, deleteAllData, getData, isEnabled, setData
 	FacebookAppRequestScope facebookAppRequestScope
 	def grailsLinkGenerator
-	
-	GrailsWebRequest getRequest() {
+
+    GrailsWebRequest getRequest() {
 		return RequestContextHolder.getRequestAttributes()
 	}
 
@@ -237,7 +236,7 @@ class FacebookAppService {
 					def facebookGraphClient = new FacebookGraphClient(accessToken)
 					def result = facebookGraphClient.fetchObject('me', [fields: 'id'])
 					if (result?.id) {
-						userId = result.id.tolong()
+						userId = result.id.toLong()
 						if (facebookAppPersistentScope.getData('userId') != userId) {
 							facebookAppPersistentScope.setData('userId', userId)
 						}
