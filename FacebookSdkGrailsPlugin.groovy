@@ -1,11 +1,11 @@
 import grails.plugin.facebooksdk.*
 
 class FacebookSdkGrailsPlugin {
-    
-    def version = "0.3.4"
-    def grailsVersion = "2.0 > *"
-    def dependsOn = [:]
-    def pluginExcludes = []
+
+	def version = "0.3.5"
+	def grailsVersion = "2.0 > *"
+	def dependsOn = [:]
+	def pluginExcludes = []
 
     def author = "Benoit Hediard"
     def authorEmail = "ben@benorama.com"

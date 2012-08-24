@@ -13,8 +13,8 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 
     static final int DEFAULT_READ_TIMEOUT_IN_MS = 180000
 
-    FacebookGraphClient(String accessToken = '', int timeout = DEFAULT_READ_TIMEOUT_IN_MS) {
-        super(accessToken, timeout)
+    FacebookGraphClient(String accessToken = '', int timeout = DEFAULT_READ_TIMEOUT_IN_MS, String proxyHost = null, Integer proxyPort = null) {
+        super(accessToken, timeout, proxyHost, proxyPort)
     }
 
 	boolean deleteObject(String object) {
