@@ -46,6 +46,14 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 		return objects
 	}
 
+    def publish(String connection, Map parameters = [:], String fileName, FileInputStream fileInputStream) {
+        if (fileName && fileInputStream) {
+            return super.publish(connection, JsonObject, BinaryAttachment.with(fileName, fileInputStream), buildVariableArgs(parameters))
+        } else {
+            return super.publish(connection, JsonObject, buildVariableArgs(parameters))
+        }
+    }
+
 	def publish(String connection, Map parameters = [:], String filePath = '') {
 		if (filePath) {
 			File file = new File(filePath)
