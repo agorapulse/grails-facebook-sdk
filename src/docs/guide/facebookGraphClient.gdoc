@@ -12,11 +12,19 @@ h3. Initialization
 
 {code}
 import grails.plugin.facebooksdk.FacebookGraphClient
+
 // For public data
 def facebookClient = new FacebookGraphClient()
+
 // For private data (access token required)
 def userAccessToken = facebookAppService.getUserAccessToken() // Or any app/user token
 def facebookClient = new FacebookGraphClient(userAccessToken)
+
+// With specific timeout (default to 180s)
+def facebookClient = new FacebookGraphClient(userAccessToken, 90000)
+
+// With proxy support
+def facebookClient = new FacebookGraphClient(userAccessToken, FacebookGraphClient.DEFAULT_READ_TIMEOUT_IN_MS, '192.168.0.10', 8080)
 {code}
 
 h3. Fetching Single Objects

@@ -7,8 +7,8 @@ class FacebookRestClient extends DefaultFacebookRestClient {
 
     static final int DEFAULT_READ_TIMEOUT_IN_MS = 180000
 
-    FacebookRestClient(String accessToken = '', int timeout = DEFAULT_READ_TIMEOUT_IN_MS) {
-        super(accessToken, timeout)
+    FacebookRestClient(String accessToken = '', int timeout = DEFAULT_READ_TIMEOUT_IN_MS, String proxyHost = null, Integer proxyPort = null) {
+        super(accessToken, timeout, proxyHost, proxyPort)
     }
 	
 	def execute(String method, Map parameters = [:]) {
