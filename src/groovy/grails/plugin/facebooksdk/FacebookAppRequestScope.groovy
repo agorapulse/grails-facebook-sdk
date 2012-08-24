@@ -9,21 +9,21 @@ class FacebookAppRequestScope extends FacebookAppScope {
 	
 	void deleteData(String key) {
 		assert REQUEST_KEYS.contains(key), "Unsupported key '$key' passed to deleteData"
-		request.getCurrentRequest().removeAttribute(getKeyVariableName(key))
+		request.currentRequest.removeAttribute(getKeyVariableName(key))
 	}
 	
 	def getData(String key, defaultValue = '') {
 		assert REQUEST_KEYS.contains(key), "Unsupported key '$key' passed to getData"
-		request.getCurrentRequest().getAttribute(getKeyVariableName(key)) ?: defaultValue
+		request.currentRequest.getAttribute(getKeyVariableName(key)) ?: defaultValue
 	}
  
 	boolean hasData(String key) {
-		request.getCurrentRequest().getAttribute(getKeyVariableName(key)) ? true : false
+		request.currentRequest.getAttribute(getKeyVariableName(key)) ? true : false
 	}
 		
 	void setData(String key, value) {
 		assert REQUEST_KEYS.contains(key), "Unsupported key '$key' passed to setData"
-		request.getCurrentRequest().setAttribute(getKeyVariableName(key), value)
+		request.currentRequest.setAttribute(getKeyVariableName(key), value)
 	}
 	
 }

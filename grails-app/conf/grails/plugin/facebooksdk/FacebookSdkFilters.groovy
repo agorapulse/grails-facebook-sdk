@@ -1,20 +1,30 @@
 package grails.plugin.facebooksdk
 
 class FacebookSdkFilters {
-	
-	FacebookApp facebookApp
+
 	FacebookAppService facebookAppService
 	
 	def filters = {
 		
 		facebook(controller:'*', action:'*') {
 			before = {
-				log.debug "Facebook SDK filter running..."
+				log.debug "Executing..."
+				// Create facebook app
+                FacebookApp facebookApp = new FacebookApp()
+                //if (request.params?.appFacebookId) {
+                    // TODO
+                //} else if (grailsApplication.config.grails?.plugin?.facebooksdk) {
+                    facebookApp.id = grailsApplication.config.grails.plugin.facebooksdk.appId
+                    facebookApp.secret = grailsApplication.config.grails.plugin.facebooksdk.appSecret
+                    facebookApp.permissions = grailsApplication.config.grails.plugin.facebooksdk.appPermissions ?: ''
+                //}
+
 				// Create facebook data
-				request.facebook = [:]
-				request.facebook.app = facebookApp
-				request.facebook.user = [id:0]
-				request.facebook.authenticated = false
+                request.facebook = [
+                        authenticated: false,
+                        app: facebookApp,
+                        user: [id: 0]
+                ]
 
 				if (request.facebook.app.id) {
 					request.facebook.user.id = facebookAppService.userId
@@ -22,10 +32,10 @@ class FacebookSdkFilters {
 						request.facebook.authenticated = true
 					}
 				}
-				return true
+                return true
 			}
 
-			after = {  Map model ->
+			after = { Map model ->
 				// Check if user has not been invalidated during controllers execution
 				if (request.facebook.app.id) {
 					request.facebook.user.id = facebookAppService.userId
