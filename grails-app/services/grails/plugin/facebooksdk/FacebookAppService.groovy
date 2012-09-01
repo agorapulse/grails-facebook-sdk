@@ -16,11 +16,8 @@ class FacebookAppService {
 	FacebookAppCookieScope facebookAppCookieScope
 	def facebookAppPersistentScope // Any persistentScope class with the following methods : deleteData, deleteAllData, getData, isEnabled, setData
 	FacebookAppRequestScope facebookAppRequestScope
-	def grailsLinkGenerator
-
-    GrailsWebRequest getRequest() {
-		return RequestContextHolder.getRequestAttributes()
-	}
+	def grailsApplication
+    def grailsLinkGenerator
 
 	/*
 	* @description Exchange a valid access token to get a longer expiration time (59 days)
@@ -31,7 +28,12 @@ class FacebookAppService {
 		if (oldAccessToken) {
 			//log.debug("exchangeAccessToken oldAccessToken=$oldAccessToken")
 			try {
-				def facebookGraphClient = new FacebookGraphClient()
+                FacebookGraphClient facebookGraphClient = new FacebookGraphClient(
+                        '',
+                        config.timeout ?: FacebookGraphClient.DEFAULT_READ_TIMEOUT_IN_MS,
+                        config.proxyHost ?: null,
+                        config.proxyPort ?: null
+                )
 				Map parameters = [client_id:facebookApp.id,
 								client_secret:facebookApp.secret,
 								grant_type:'fb_exchange_token',
@@ -86,7 +88,12 @@ class FacebookAppService {
 	String getApplicationAccessToken(boolean oauthEnabled = false) {
 		String accessToken = ""
 		if (oauthEnabled) {
-			FacebookGraphClient facebookGraphClient = new FacebookGraphClient()
+            FacebookGraphClient facebookGraphClient = new FacebookGraphClient(
+                    '',
+                    config.timeout ?: FacebookGraphClient.DEFAULT_READ_TIMEOUT_IN_MS,
+                    config.proxyHost ?: null,
+                    config.proxyPort ?: null
+            )
 			Map parameters = [client_id:facebookApp.id,
 							client_secret:facebookApp.secret,
 							grant_type:'client_credentials']
@@ -233,7 +240,12 @@ class FacebookAppService {
 				// Use access_token to fetch user id if we have a user access_token, or if the cached access token has changed.
 				String accessToken = getUserAccessToken()
 				if (accessToken && !(userId > 0 && accessToken == facebookAppPersistentScope.getData('accessToken'))) {
-					def facebookGraphClient = new FacebookGraphClient(accessToken)
+                    FacebookGraphClient facebookGraphClient = new FacebookGraphClient(
+                            accessToken,
+                            config.timeout ?: FacebookGraphClient.DEFAULT_READ_TIMEOUT_IN_MS,
+                            config.proxyHost ?: null,
+                            config.proxyPort ?: null
+                    )
 					def result = facebookGraphClient.fetchObject('me', [fields: 'id'])
 					if (result?.id) {
 						userId = result.id.toLong()
@@ -251,15 +263,23 @@ class FacebookAppService {
 	}
 	
 	// PRIVATE
-	
-	private void establishCSRFStateToken() {
+
+    private void establishCSRFStateToken() {
 		if (getCSRFStateToken() == '') {
 			String stateToken = UUID.randomUUID().encodeAsMD5()
 			facebookAppRequestScope.setData('state', stateToken)
 			facebookAppPersistentScope.setData('state', stateToken)
 		}
 	}
-	
+
+    private def getConfig() {
+        grailsApplication.config.grails?.plugin?.facebooksdk
+    }
+
+    private GrailsWebRequest getRequest() {
+        return RequestContextHolder.getRequestAttributes()
+    }
+
 	private String getAccessTokenFromCode(String code, String redirectUri = null) {
 		String accessToken = ''
 		if (code) {
@@ -270,7 +290,12 @@ class FacebookAppService {
 
 			log.debug("getAccessTokenFromCode code=$code redirectUri=$redirectUri")
 			try {
-				def facebookGraphClient = new FacebookGraphClient()
+                FacebookGraphClient facebookGraphClient = new FacebookGraphClient(
+                        '',
+                        config.timeout ?: FacebookGraphClient.DEFAULT_READ_TIMEOUT_IN_MS,
+                        config.proxyHost ?: null,
+                        config.proxyPort ?: null
+                )
 				Map parameters = [client_id: facebookApp.id,
 								client_secret: facebookApp.secret,
 								code: code,
