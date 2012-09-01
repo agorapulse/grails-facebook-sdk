@@ -3,8 +3,8 @@
 		FB.login(function(response) {
 			if (response.authResponse) {
 				// user is logged
-				<g:if test="${redirectUrl}">
-					window.location.href = "${redirectUrl}";
+				<g:if test="${returnUrl}">
+					window.location.href = "${returnUrl}";
 				</g:if>
 				<g:else>
 					window.location.reload();
