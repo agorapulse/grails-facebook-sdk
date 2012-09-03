@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>Facebook SDK Grails Plugin 0.3.5</title>
+    <title>Facebook SDK Grails Plugin 0.3.6</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -72,7 +72,7 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
 <li><code>cancelUrl</code> Cancel URL for redirect if login is canceled (if not defined, nothing happens)</li>
 <li><code>elementClass</code> HTML element 'class' attribute value</li>
 <li><code>elementId</code> HTML element 'id' attribute value</li>
-<li><code>redirectUrl</code> Return URL for redirect after login (if not defined page will be reloaded)</li>
+<li><code>returnUrl</code> Return URL for redirect after login (if not defined page will be reloaded)</li>
 </ul><p class="paragraph"/>You might also use Facebook JS SDK <a href="http://developers.facebook.com/docs/reference/plugins/login/" target="blank">Login button</a> (but do not forget to set <code>xfbml</code> attributes to true in <code>facebook:init</code> tag).<p class="paragraph"/><div class="code"><pre><span class="xml&#45;tag">&#60;html xmlns:fb=<span class="xml&#45;quote">"http://ogp.me/ns/fb&#35;"</span>&#62;</span>
 &#8230;
 <span class="xml&#45;tag">&#60;fb:login&#45;button scope=<span class="xml&#45;quote">"$&#123;facebook.app.permissions&#125;"</span>&#62;</span><span class="xml&#45;tag">&#60;/fb:login&#45;button&#62;</span></pre></div>

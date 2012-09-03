@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
-        <title>Facebook SDK Grails Plugin 0.3.5</title>
+        <title>Facebook SDK Grails Plugin 0.3.6</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
         <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8" />
@@ -62,7 +62,7 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
                         <div class="project">
                             <h1>Facebook SDK Grails Plugin - Reference Documentation</h1>
                             <p><strong>Authors:</strong> Benoit Hediard</p>
-                            <p><strong>Version:</strong> 0.3.5</p>
+                            <p><strong>Version:</strong> 0.3.6</p>
                             
                         </div>
 
@@ -93,6 +93,7 @@ The <a href="http://developers.facebook.com/" target="blank">Facebook Platform</
 <li><code>FacebookJSTagLib</code> - A collection of tags to easily integrate <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Facebook JS SDK</a> in your GSPs.</li>
 </ul><p class="paragraph"/><h3>Latest releases</h3>
 <ul class="star">
+<li>2012-09-03 <strong class="bold">V0.3.6</strong> : latest RestFB 1.6.10 dependency, <code>proxyHost</code> and <code>proxyPort</code> added to config and <code>signedRequest</code> added to filter <code>facebook</code> map.</li>
 <li>2012-08-24 <strong class="bold">V0.3.5</strong> : <code>proxyHost</code> and <code>proxyPort</code> parameters added to Graph/Rest client (thanks to Eduard Martini)</li>
 <li>2012-07-23 <strong class="bold">V0.3.4</strong> : bug fix in facebookAppService</li>
 <li>2012-07-17 <strong class="bold">V0.3.3</strong> : <code>readTimeout</code> parameter added to Graph/Rest client + upgrade to Grails 2.1 with wrapper</li>
@@ -100,7 +101,7 @@ The <a href="http://developers.facebook.com/" target="blank">Facebook Platform</
 <li>2012-06-12 <strong class="bold">V0.3.1</strong> : package <code>grails.plugins.facebooksdk</code> renamed to <code>grails.plugin.facebooksdk</code></li>
 <li>2012-06-08 <strong class="bold">V0.3.0</strong> : new documentation based on GDoc, <code>FacebookRestClient</code> added + bug fixes</li>
 </ul><p class="paragraph"/><h3>Bugs</h3><p class="paragraph"/>To report any bug, please use the project <a href="http://github.com/benorama/grails-facebook-sdk/issues" target="blank">Issues</a> section on GitHub.<p class="paragraph"/><blockquote class="note">
-This is an <strong class="bold">alpha release</strong>.
+This is an <strong class="bold">beta release</strong>.
 The underlying APIs are generally stable, however we may make changes to the library in response to developer feedback.
 </blockquote><p class="paragraph"/>
 <h3>About</h3><p class="paragraph"/>The <strong class="bold">Grails Facebook SDK Plugin</strong> is not an official Facebook SDK such as <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Javascript</a> , <a href="http://github.com/facebook/facebook-php-sdk" target="blank">PHP</a> , <a href="http://github.com/facebook/facebook-ios-sdk/" target="blank">iOS</a> and <a href="http://github.com/facebook/facebook-android-sdk" target="blank">Android SDKs</a> .<p class="paragraph"/>It is developped by <a href="http://www.agorapulse.com" target="blank">AgoraPulse</a> and licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0.html" target="blank">Apache Licence, Version 2.0</a> .
@@ -118,12 +119,16 @@ The underlying APIs are generally stable, however we may make changes to the lib
 		&#125;
 		plugins &#123;
 				//here go your plugin dependencies
-				runtime ':facebook&#45;sdk:0.3.5'
+				runtime ':facebook&#45;sdk:0.3.6'
 		&#125;
 &#125;</pre></div><p class="paragraph"/>
-<h3>Config</h3><p class="paragraph"/>Create a Facebook app on <a href="https://developers.facebook.com/apps" target="blank">Facebook Developers</a> , in order to get your own app ID and app secret.<p class="paragraph"/>Add your Facebook app parameters your <code>Config.groovy</code>:<p class="paragraph"/><div class="code"><pre>grails.plugin.facebooksdk.appId = &#123;APP_ID&#125;
+<h3>Config</h3><p class="paragraph"/>Create a Facebook app on <a href="https://developers.facebook.com/apps" target="blank">Facebook Developers</a> , in order to get your own app ID and app secret.<p class="paragraph"/>Add your Facebook app parameters your <code>Config.groovy</code>:<p class="paragraph"/><div class="code"><pre>// Required
+grails.plugin.facebooksdk.appId = &#123;APP_ID&#125;
 grails.plugin.facebooksdk.appPermissions = &#123;APP_PERMISSIONS&#125;
-grails.plugin.facebooksdk.appSecret = &#123;APP_SECRET&#125;</pre></div><p class="paragraph"/>
+grails.plugin.facebooksdk.appSecret = &#123;APP_SECRET&#125;
+// Optional, proxy config <span class="java&#45;keyword">for</span> Facebook HTTP API calls
+// grails.plugin.facebooksdk.proxyHost = &#123;PROXY_HOST&#125;
+// grails.plugin.facebooksdk.proxyPort = &#123;PROXY_PORT&#125;</pre></div><p class="paragraph"/>
 <h3>Demo app</h3><p class="paragraph"/>If you want to quickly run the SDK on a demo app, you can download <a href="https://github.com/benorama/grails-facebook-sdk-demo" target="blank">Facebook SDK Grails - Demo</a> .<p class="paragraph"/>
 <h3>Integration with Shiro Grails Plugin</h3><p class="paragraph"/>To see an example of integration with Shiro Grails Plugin, you can download <a href="https://github.com/benorama/grails-facebook-sdk-demo-shiro" target="blank">Facebook SDK Grails - Shiro demo</a> .<p class="paragraph"/>
 
@@ -132,8 +137,9 @@ grails.plugin.facebooksdk.appSecret = &#123;APP_SECRET&#125;</pre></div><p class
 The plugin automatically run a filter that create the following data in request scope.<p class="paragraph"/><div class="code"><pre>request.facebook.app.id = &#123;APP_ID&#125;
 request.facebook.app.permissions = &#123;APP_PERMISSIONS&#125;
 request.facebook.app.secret = &#123;APP_SECRET&#125;
-request.facebook.user.id = &#123;AUTHENTICATED_USER_ID&#125;
-request.facebook.authenticated = &#123;TRUE_OR_FALSE&#125;</pre></div>
+request.facebook.authenticated = &#123;TRUE_OR_FALSE&#125;
+request.facebook.signedRequest = &#123;DECODED_SIGNED_REQUEST_MAP&#125;
+request.facebook.user.id = &#123;AUTHENTICATED_USER_ID&#125;</pre></div>
 
 
 <h1 id="facebookAppService">4 Facebook App Service</h1>
