@@ -14,7 +14,7 @@ It supports the latest *OAuth2.0 authentication* (required since October 1st 201
 **Grails Facebook SDK Plugin** provides the following Grails artefacts:
 
 * **FacebookAppService** - A service to build [apps on Facebook.com](http://developers.facebook.com/docs/guides/canvas/) and [websites with the Facebook Platform](http://developers.facebook.com/docs/guides/web).
-* **FacebookGraphClient** - A client to call [Facebook Graph API](http://developers.facebook.com/docs/reference/api/), which is a wrapper around the rock solid [RestFB java library](http://restfb.com/) version 1.6.9 (released October 21, 2011).
+* **FacebookGraphClient** - A client to call [Facebook Graph API](http://developers.facebook.com/docs/reference/api/), which is a wrapper around the rock solid [RestFB java library](http://restfb.com/) version 1.6.10 (released September 03, 2012).
 * **FacebookJSTagLib** - A collection of tags to easily integrate [Facebook JS SDK](http://developers.facebook.com/docs/reference/javascript/) in your GSPs.
 
 
@@ -87,13 +87,13 @@ To report any bug, please use the project [Issues](http://github.com/benorama/gr
 
 # Beta status
 
-This is an **beta release**.
+This is a **beta release**.
 The underlying APIs are generally stable, however we may make changes to the library in response to developer feedback.
 
 # Feedback
 
 The **Grails Facebook SDK** is not an official Facebook SDK such as [Javascript](http://developers.facebook.com/docs/reference/javascript/), [PHP](http://github.com/facebook/facebook-php-sdk), [iOS](http://github.com/facebook/facebook-ios-sdk/) and [Android SDKs](http://github.com/facebook/facebook-android-sdk).
 
-It is developped by [AgoraPulse](http://www.agorapulse.com).
+It is developed by [AgoraPulse](http://www.agorapulse.com).
 
 The **Grails Facebook SDK** is licensed under the [Apache Licence, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
