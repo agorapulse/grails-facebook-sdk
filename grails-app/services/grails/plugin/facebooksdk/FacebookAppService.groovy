@@ -148,16 +148,38 @@ class FacebookAppService {
 		if (!parameters['next']) parameters['next'] = getCurrentURL()
 		return getURL('logout.php', parameters)
 	}
-	
-	/*
-	* @description Get user OAuth accessToken
-	* @hint Determines and returns the user access token, first using the signed request if present, and then falling back on the authorization code if present.	The intent is to return a valid user access token, or " if one is determined to not be available.
-	*/
+
+    /*
+     * @description Get decoded signed request data
+     * @hint Might return null if no signed request is found
+     */
+    FacebookSignedRequest getSignedRequest() {
+        if (!facebookAppRequestScope.hasData('signedRequest')) {
+            FacebookSignedRequest signedRequest
+            if (request.getParameter('signed_request')) {
+                // apps.facebook.com (default iframe page)
+                signedRequest = new FacebookSignedRequest(facebookApp.secret, request.getParameter('signed_request'))
+            } else if (facebookAppCookieScope.hasCookie()) {
+                // Cookie created by Facebook Connect Javascript SDK
+                signedRequest = new FacebookSignedRequest(facebookApp.secret, facebookAppCookieScope.getValue())
+            }
+
+            if (signedRequest) {
+                facebookAppRequestScope.setData('signedRequest', signedRequest)
+            }
+        }
+        return facebookAppRequestScope.getData('signedRequest', null)
+    }
+
+    /*
+     * @description Get user OAuth accessToken
+     * @hint Determines and returns the user access token, first using the signed request if present, and then falling back on the authorization code if present.	The intent is to return a valid user access token, or " if one is determined to not be available.
+     */
 	String getUserAccessToken() {
 		if (!facebookAppRequestScope.hasData('accessToken')) {
 			String accessToken = ''
 			// First, consider a signed request if it's supplied. if there is a signed request, then it alone determines the access token.
-			def signedRequest = getSignedRequest()
+            FacebookSignedRequest signedRequest = getSignedRequest()
 			if (signedRequest) {
 				if (signedRequest.accessToken) {
 					// apps.facebook.com hands the access_token in the signed_request
@@ -222,7 +244,7 @@ class FacebookAppService {
 		if (!facebookAppRequestScope.hasData('userId')) {
 			long userId = 0
 			// If a signed request is supplied, then it solely determines who the user is.
-			def signedRequest = getSignedRequest()
+            FacebookSignedRequest signedRequest = getSignedRequest()
 			if (signedRequest) {
 				if (signedRequest.userId) {
 					userId = signedRequest.userId
@@ -359,24 +381,6 @@ class FacebookAppService {
 		return currentURL
 	}
 
-	private def getSignedRequest() {
-		if (!facebookAppRequestScope.hasData('signedRequest')) {
-			def signedRequest
-			if (request.getParameter('signed_request')) {
-				// apps.facebook.com (default iframe page)
-				signedRequest = new FacebookSignedRequest(facebookApp.secret, request.getParameter('signed_request'))
-			} else if (facebookAppCookieScope.hasCookie()) {
-				// Cookie created by Facebook Connect Javascript SDK
-				signedRequest = new FacebookSignedRequest(facebookApp.secret, facebookAppCookieScope.getValue())
-			}
-			
-			if (signedRequest) {
-				facebookAppRequestScope.setData('signedRequest', signedRequest)
-			}
-		}
-		return facebookAppRequestScope.getData('signedRequest')
-	}
-	
 	private String getURL(path = "", parameters = [:]) {
 		String url = "https://www.facebook.com/"
 		if (path) {

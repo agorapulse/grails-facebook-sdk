@@ -6,4 +6,8 @@ class FacebookApp {
 	String permissions = ""
 	String secret = ""
 
+    String toString() {
+        "FacebookApp(id: $id, permissions: $permissions)"
+    }
+
 }
