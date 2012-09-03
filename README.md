@@ -34,7 +34,7 @@ grails.project.dependency.resolution = {
 		}
 		plugins {
 				//here go your plugin dependencies
-				runtime ':facebook-sdk:0.3.5'
+				runtime ':facebook-sdk:0.3.6'
 		}
 }
 ```
@@ -72,7 +72,8 @@ Project documentation is located here :
 
 # Latest releases
 
-* 2012-08-24 **V0.3.5** : proxyHost and proxyPort parameters added to Graph/Rest client (thanks to Eduard Martini)
+* 2012-09-03 **V0.3.6** : latest RestFB 1.6.10 dependency, _proxyHost_ and _proxyPort_ added to config and _signedRequest_ added to filter _facebook_ map.
+* 2012-08-24 **V0.3.5** : _proxyHost_ and _proxyPort_ parameters added to Graph/Rest client (thanks to Eduard Martini)
 * 2012-07-23 **V0.3.4** : bug fix in facebookAppService
 * 2012-07-17 **V0.3.3** : readTimeout parameter added to Graph/Rest client + upgrade to Grails 2.1 with wrapper
 * 2012-06-12 **V0.3.2** : bug fix in filter and plugin config
@@ -84,9 +85,9 @@ Project documentation is located here :
 
 To report any bug, please use the project [Issues](http://github.com/benorama/grails-facebook-sdk/issues) section on GitHub.
 
-# Alpha status
+# Beta status
 
-This is an **alpha release**.
+This is an **beta release**.
 The underlying APIs are generally stable, however we may make changes to the library in response to developer feedback.
 
 # Feedback

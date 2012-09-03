@@ -15,6 +15,7 @@ It supports the latest *OAuth2.0 authentication* (required since October 1st 201
 
 h3. Latest releases
 
+* 2012-09-03 *V0.3.6* : latest RestFB 1.6.10 dependency, @proxyHost@ and @proxyPort@ added to config and @signedRequest@ added to filter @facebook@ map.
 * 2012-08-24 *V0.3.5* : @proxyHost@ and @proxyPort@ parameters added to Graph/Rest client (thanks to Eduard Martini)
 * 2012-07-23 *V0.3.4* : bug fix in facebookAppService
 * 2012-07-17 *V0.3.3* : @readTimeout@ parameter added to Graph/Rest client + upgrade to Grails 2.1 with wrapper
@@ -28,7 +29,7 @@ h3. Bugs
 To report any bug, please use the project "Issues":http://github.com/benorama/grails-facebook-sdk/issues section on GitHub.
 
 {note}
-This is an *alpha release*.
+This is an *beta release*.
 The underlying APIs are generally stable, however we may make changes to the library in response to developer feedback.
 {note}
 
