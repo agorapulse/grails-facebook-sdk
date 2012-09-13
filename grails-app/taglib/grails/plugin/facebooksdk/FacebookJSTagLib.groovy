@@ -7,22 +7,12 @@ class FacebookJSTagLib {
     static String TYPE_LARGE = 'large'
     static String TYPE_SMALL = 'small'
     static String TYPE_SQUARE = 'square'
-    static String TYPE_MINI = 'mini'
 
     static Map SIZES = [
             (TYPE_LARGE):  [width:  200],
             (TYPE_SMALL):  [width:  50],
-            (TYPE_SQUARE): [height: 50, width: 50],
-            (TYPE_MINI):   [height: 32, width: 32],
-            'undefined':  [:]
+            (TYPE_SQUARE): [height: 50, width: 50]
     ]
-
-    static String INVITE_DISPLAY_POPUP = "popup"
-    static String INVITE_DISPLAY_DIALOG = "dialog"
-    static String INVITE_DISPLAY_IFRAME = "iframe"
-    static String INVITE_DISPLAY_ASYNC = "async"
-    static String INVITE_DISPLAY_HIDDEN = "hidden"
-    static String INVITE_DISPLAY_NONE = "none"
 	
 	static namespace = 'facebook'
 	
@@ -80,89 +70,85 @@ class FacebookJSTagLib {
 		out << render(template:"/facebook-sdk/logout-link", model:model, plugin:"facebook-sdk")
 	}
 
+    /**
+     * Picture
+     *
+     * @attr elementClass HTML element 'class' attribute value.
+     * @attr elementId HTML element 'id' attribute value.
+     * @attr facebookId REQUIRED
+     * @attr linkEnabled Render the image as clickable (link to facebook profile)
+     * @attr protocol Define protocol. Can be http to https (default to current protocol)
+     * @attr type Define image size. Can be large, small or square (default).
+     * @attr height Specify a custom height.
+     * @attr width Specify a custom width.
+     */
     def picture = { attrs, body ->
-        attrs.protocol = attrs.protocol ?: (request.secure ? 'https' : 'http')
-        attrs.target = attrs.target ?: '_target'
-        attrs.span = attrs.span ?: 'span1'
-        attrs.type = attrs.type ?: 'undefined'
-
-        String link = "http://www.facebook.com/profile.php?id=${attrs.facebookId}"
-        String imageLink = "${attrs.protocol}://graph.facebook.com/${attrs.facebookId}/picture"
-        if (attrs.type) {
-            imageLink += "?type=${attrs.type}"
-        } else if (attrs.sizes) {
-            imageLink += "?width=${attrs.sizes.width}&height=${attrs.sizes.height}"
+        if (!attrs.protocol) attrs.protocol =  (request.secure ? 'https' : 'http')
+        attrs.queryString = ''
+        if (SIZES[attrs.type]) {
+            attrs.height = SIZES[attrs.type].height
+            attrs.width = SIZES[attrs.type].width
+            if (attrs.type == 'mini') attrs.queryString = "height=$attrs.height&width=$attrs.width"
+            else attrs.queryString = "type=${attrs.type}"
+        } else if (attrs.height || attrs.width) {
+            if (attrs.height) attrs.queryString = "height=${attrs.height}"
+            if (attrs.queryString) attrs.queryString += attrs.queryString + '&'
+            if (attrs.width) attrs.queryString = "width=${attrs.width}"
         }
-
-        out << "<div class='${attrs.span} facebook user picture'>"
-        out << (attrs.linkEnabled ? "<a href='${link}' target='${attrs.target}' title='${attrs.tooltip}'>" : '')
-        out << "<img src='${imageLink}' ${toAttributes(SIZES[attrs.type] as Map)}></img>"
-        out << (attrs.linkEnabled ? '</a>' : '')
-        out << '</div>'
-    }
-
-    def comments = {attrs, body ->
-        attrs.width = attrs.width ?: 810
-        attrs.numPosts = attrs.numPosts ?: 5
-        attrs.href = attrs.href ?: ''
-
-        out << """<fb:comments href='${attrs.href}'
-                               migrated='true' num_posts='${attrs.numPosts}' width='${attrs.width}'>
-                  </fb:comments>"""
-    }
-
-    def invite = {attrs, body ->
-        attrs.htmlClass = attrs.htmlClass ?: ''
-        attrs.disabled = attrs.disabled ?: false
-        attrs.filters = attrs.filters ?: 'all'
-        attrs.label = attrs.label ?: 'Invite'
-        attrs.recipientMaxCount = attrs.recipientMaxCount ?: 0
-        attrs.toolType = attrs.toolType ?: 'Invite'
-
-        out << '<script type="text/javascript" charset="utf-8"> var onInviteButtonClick = function () {'
-        if (!attrs.disabled) {
-            out << "FB.ui({method: 'apprequests', message: '${attrs.message.encodeAsJavaScript()}'"
-            if (attrs.data)              out << ", data:'${attrs.data}'"
-            if (attrs.display)           out << ", display: '${attrs.display}'"
-            if (attrs.excludeIds)        out << ", exclude_ids: '${attrs.excludeIds}'"
-            if (attrs.title)             out << ", title: '${attrs.title.encodeAsJavaScript()}'"
-            if (attrs.to)                out << ", to: '${attrs.to}'"
-            if (attrs.recipientMaxCount) out << ", max_recipients: '${attrs.recipientMaxCount}'"
-            out << '});'
+        if (attrs.protocol == 'https') {
+            if (attrs.queryString) attrs.queryString += attrs.queryString + '&'
+            attrs.queryString += attrs.queryString + 'return_ssl_resources=1'
         }
-        out << "return false; } </script>"
-        out << """<a class='${attrs.htmlClass}' onclick='onInviteButtonClick()'
-                     style='${attrs.style}' title='${attrs.toolTip}'><span>${attrs.label}</span></a>"""
-    }
-
-    def publish = {attrs, body ->
-        attrs.htmlClass = attrs.htmlClass ?: ''
-        attrs.disabled = attrs.disabled ?: false
-        attrs.label = attrs.label ?: 'Publish'
-        attrs.toolType = attrs.toolType ?: 'Publish'
-
-        out << '<script type="text/javascript" charset="utf-8"> var onShareButtonClick = function () {'
-        if (!attrs.disabled) {
-            out << "FB.ui({method: 'feed', message: '${attrs.message.encodeAsJavaScript()}'"
-            if (attrs.caption)     out << ", caption: '${attrs.caption.encodeAsJavaScript()}'"
-            if (attrs.description) out << ", description:'${attrs.description.encodeAsJavaScript()}'"
-            if (attrs.display)     out << ", display: '${attrs.display}'"
-            if (attrs.link)        out << ", link: '${attrs.link}'"
-            if (attrs.name)        out << ", name: '${attrs.name.encodeAsJavaScript()}'"
-            if (attrs.picture)     out << ", picture: '${attrs.picture}'"
-            if (attrs.source)      out << ", source: '${attrs.source}'"
-            out << '});'
+        Map model = [:]
+        attrs.each { key, value ->
+            model[key] = value
         }
-        out << "return false; } </script>"
-        out << """<a class='${attrs.htmlClass}' onclick='onShareButtonClick()'
-                     style='${attrs.style}' title='${attrs.toolTip}'><span>${attrs.label}</span></a>"""
+        out << render(template:"/facebook-sdk/picture", model:model, plugin:"facebook-sdk")
     }
 
-    private String toAttributes(Map m) {
-        String result = ''
-        m.each { key, value ->
-            result += " ${key}='${value}'"
+    /**
+     * Invite link (https://developers.facebook.com/docs/reference/dialogs/requests/)
+     *
+     * @attr data Additional data you may pass for tracking. The maximum length is 255 characters.
+     * @attr disabled Disable click on the link.
+     * @attr display Display mode in which to render the Dialog. Can be page (default), popup, iframe, or touch.
+     * @attr elementClass HTML element 'class' attribute value.
+     * @attr elementId HTML element 'id' attribute value.
+     * @attr excludeIds An array of user IDs that will be excluded from the Dialog.
+     * @attr filters Can be all, app_users and app_non_users.
+     * @attr message REQUIRED The Request string the receiving user will see. The maximum length is 60 characters.
+     * @attr maxRecipients An integer that specifies the maximum number of friends that can be chosen.
+     * @attr title The title for the Dialog. Maximum length is 50 characters.
+     * @attr to A user ID or username.
+     */
+    def inviteLink = {attrs, body ->
+        Map model = [body:body()]
+        attrs.each { key, value ->
+            model[key] = value
         }
-        result
+        out << render(template:"/facebook-sdk/invite-link", model:model, plugin:"facebook-sdk")
     }
+
+    /**
+     * Publish link (https://developers.facebook.com/docs/reference/dialogs/feed/)
+     *
+     * @attr disabled Disable click on the link.
+     * @attr display Display mode in which to render the Dialog. Can be page (default), popup, iframe, or touch.
+     * @attr caption The caption of the link (appears beneath the link name). If not specified, this field is automatically populated with the URL of the link.
+     * @attr description The description of the link (appears beneath the link caption). If not specified, this field is automatically populated by information scraped from the link, typically the title of the page.
+     * @attr elementClass HTML element 'class' attribute value.
+     * @attr elementId HTML element 'id' attribute value.
+     * @attr link The link attached to this post.
+     * @attr name The name of the link attachment.
+     * @attr picture The URL of a picture attached to this post. The picture must be at least 50px by 50px and have a maximum aspect ratio of 3:1.
+     * @attr source The URL of a media file (either SWF or MP3) attached to this post. If both source and picture are specified, only source is used.
+     */
+    def publishLink = {attrs, body ->
+        Map model = [body:body()]
+        attrs.each { key, value ->
+            model[key] = value
+        }
+        out << render(template:"/facebook-sdk/publish-link", model:model, plugin:"facebook-sdk")
+    }
+
 }
