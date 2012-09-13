@@ -104,16 +104,15 @@ class FacebookJSTagLib {
     def comments = {attrs, body ->
         attrs.width = attrs.width ?: 810
         attrs.numPosts = attrs.numPosts ?: 5
+        attrs.href = attrs.href ?: ''
 
-        out << '<div style="min-height:200px">'
-        out << """<fb:comments href='http://${request.serverName}:${request.serverPort}/${attrs.pageApp.app.type}/?pageAppId=${attrs.pageApp.id}'
+        out << """<fb:comments href='${attrs.href}'
                                migrated='true' num_posts='${attrs.numPosts}' width='${attrs.width}'>
                   </fb:comments>"""
-        out << '</div>'
     }
 
     def invite = {attrs, body ->
-        attrs.htmlClass = attrs.htmlClass ?: 'invite link'
+        attrs.htmlClass = attrs.htmlClass ?: ''
         attrs.disabled = attrs.disabled ?: false
         attrs.filters = attrs.filters ?: 'all'
         attrs.label = attrs.label ?: 'Invite'
@@ -137,7 +136,7 @@ class FacebookJSTagLib {
     }
 
     def publish = {attrs, body ->
-        attrs.htmlClass = attrs.htmlClass ?: 'post publish link'
+        attrs.htmlClass = attrs.htmlClass ?: ''
         attrs.disabled = attrs.disabled ?: false
         attrs.label = attrs.label ?: 'Publish'
         attrs.toolType = attrs.toolType ?: 'Publish'
