@@ -16,8 +16,8 @@ Optional attributes are :
 * @display@ Display mode in which to render the Dialog. Can be @page@ (default), @popup@, @iframe@, or @touch@.
 * @elementClass@ HTML element @class@ attribute value.
 * @elementId@ HTML element @id@ attribute value.
-* @excludeIds@ An array of user IDs that will be excluded from the Dialog.
-* @filters@ Can be @all@ (default), @app_users@ and @app_non_users@.
+* @excludeIds@ List of of user IDs that will be excluded from the Dialog.
+* @filters@ List of filters to apply. Can be 'all', 'app_users' and 'app_non_users'.
 * @maxRecipients@ An integer that specifies the maximum number of friends that can be chosen.
 * @title@ The title for the Dialog. Maximum length is 50 characters.
 * @to@ A user ID or username.

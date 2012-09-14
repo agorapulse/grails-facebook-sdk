@@ -1,3 +1,4 @@
+<%@ page import="grails.converters.JSON" %>
 <g:if test="${!disabled}">
 <script type="text/javascript" charset="utf-8">
     function FBGrailsSDK_invite() {
@@ -6,8 +7,8 @@
             message: '${message.encodeAsJavaScript()}#'
             <g:if test="${data}">, data: '${data}'</g:if>
             <g:if test="${display}">, 'display':'${display}'</g:if>
-            <g:if test="${excludeIds}">, exclude_ids: '${excludeIds}'</g:if>
-            <g:if test="${filters}">, filters: '${filters}'</g:if>
+            <g:if test="${excludeIds}">, exclude_ids: '${excludeIds as JSON}'</g:if>
+            <g:if test="${filters}">, filters: ${filters as JSON}</g:if>
             <g:if test="${maxRecipients}">, max_recipients: ${maxRecipients}</g:if>
             <g:if test="${title}">, title: '${title.encodeAsJavaScript()}'</g:if>
             <g:if test="${to}">, to: '${to}'</g:if>
