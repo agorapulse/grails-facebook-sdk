@@ -29,9 +29,8 @@ class FacebookJSTagLib {
 	*/
 	def initJS = { attrs, body ->
 		if (!attrs.containsKey("cookie")) attrs.cookie = true
-		if (!attrs.locale) attrs.locale = RequestContextUtils.getLocale(request)
 		if (!attrs.locale) Locale.getDefault()
-		Map model = [body:body()]
+        Map model = [body:body()]
 		attrs.each { key, value ->
 			model[key] = value	
 		}
@@ -111,11 +110,11 @@ class FacebookJSTagLib {
      *
      * @attr data Additional data you may pass for tracking. The maximum length is 255 characters.
      * @attr disabled Disable click on the link.
-     * @attr display Display mode in which to render the Dialog. Can be page (default), popup, iframe, or touch.
+     * @attr display Display mode in which to render the Dialog. Can be 'page' (default), 'popup', 'iframe', or 'touch'.
      * @attr elementClass HTML element 'class' attribute value.
      * @attr elementId HTML element 'id' attribute value.
-     * @attr excludeIds An array of user IDs that will be excluded from the Dialog.
-     * @attr filters Can be all, app_users and app_non_users.
+     * @attr excludeIds List of of user IDs that will be excluded from the Dialog.
+     * @attr filters List of filters to apply. Can be 'all', 'app_users' and 'app_non_users'.
      * @attr message REQUIRED The Request string the receiving user will see. The maximum length is 60 characters.
      * @attr maxRecipients An integer that specifies the maximum number of friends that can be chosen.
      * @attr title The title for the Dialog. Maximum length is 50 characters.
