@@ -7,12 +7,12 @@ Display a profile picture.
 {code}
 
 Required attribute is :
-* @facebookId User or page id.
+* @facebookId@ User or page id.
 
 Optional attributes are :
 
-* @elementClass@ HTML element 'class' attribute value.
-* @elementId@ HTML element 'id' attribute value.
+* @elementClass@ HTML element @class@ attribute value.
+* @elementId@ HTML element @id@ attribute value.
 * @linkEnabled@ Render the image as clickable (link to facebook profile).
 * @protocol@ Define protocol. Can be @http@ to @https@ (default to current protocol).
 * @type@ Define image size. Can be @large@, @small@ or @square@ (default).
