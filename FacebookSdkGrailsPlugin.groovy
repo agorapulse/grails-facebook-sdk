@@ -21,25 +21,42 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
 	def scm = [  url: "https://github.com/benorama/grails-facebook-sdk" ]
 
     def doWithSpring = {
-        facebookApp(FacebookApp)
+        /*facebookApp(FacebookApp) { bean ->
+            bean.scope = 'prototype'
+            grailsApplication = ref('grailsApplication')
+        }
+        facebookUser(FacebookUser) { bean ->
+            bean.scope = 'prototype'
+            facebookAppService = ref('facebookAppService')
+        }*/
+        facebookContextProxyService(org.springframework.aop.scope.ScopedProxyFactoryBean) { bean ->
+            targetBeanName = 'facebookContextService'
+            proxyTargetClass = true
+        }
+        /*facebookContext(FacebookContext) { bean ->
+            bean.scope = 'prototype'
+            app = ref('facebookApp')
+            facebookAppService = ref('facebookAppService')
+            user = ref('facebookUser')
+        }*/
         facebookAppService(FacebookAppService) {
-            facebookApp = ref("facebookApp")
-            facebookAppCookieScope = ref("facebookAppCookieScope")
-            facebookAppRequestScope = ref("facebookAppRequestScope")
-            facebookAppPersistentScope = ref("facebookAppPersistentScope")
+            facebookContextProxyService= ref('facebookContextProxyService')
+            facebookAppCookieScope = ref('facebookAppCookieScope')
+            facebookAppRequestScope = ref('facebookAppRequestScope')
+            facebookAppPersistentScope = ref('facebookAppPersistentScope')
         }
         facebookAppCookieScope(FacebookAppCookieScope) {
-            facebookApp = ref("facebookApp")
+            facebookContextProxyService = ref('facebookContextProxyService')
         }
         facebookAppRequestScope(FacebookAppRequestScope) {
-            facebookApp = ref("facebookApp")
+            facebookContextProxyService = ref('facebookContextProxyService')
         }
         facebookAppPersistentScope(FacebookAppSessionScope) {
-            facebookApp = ref("facebookApp")
+            facebookContextProxyService = ref('facebookContextProxyService')
         }
     }
 
-    def doWithApplicationContext = { applicationContext ->
+    /*def doWithApplicationContext = { applicationContext ->
         def facebooksdk = application.config.grails?.plugin?.facebooksdk
         if (facebooksdk) {
             FacebookApp facebookApp = applicationContext.getBean("facebookApp")
@@ -47,6 +64,6 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
             facebookApp.secret  = facebooksdk.appSecret
             facebookApp.permissions = facebooksdk.appPermissions
         }
-    }
+    }*/
 
 }

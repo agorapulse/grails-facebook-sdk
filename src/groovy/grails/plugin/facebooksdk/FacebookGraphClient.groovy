@@ -1,12 +1,11 @@
 package grails.plugin.facebooksdk
 
-import com.restfb.batch.BatchRequest
-import com.restfb.batch.BatchRequest.BatchRequestBuilder
 import com.restfb.BinaryAttachment
 import com.restfb.Connection
 import com.restfb.Parameter
+import com.restfb.batch.BatchRequest
+import com.restfb.batch.BatchRequest.BatchRequestBuilder
 import com.restfb.json.JsonObject
-
 import grails.converters.JSON
 
 class FacebookGraphClient extends DefaultFacebookGraphClient {

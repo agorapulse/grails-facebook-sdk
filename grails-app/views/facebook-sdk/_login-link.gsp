@@ -1,7 +1,7 @@
 <script type="text/javascript">
 	function FBGrailsSDK_login() {
-		FB.login(function(response) {
-			if (response.authResponse) {
+        FB.login(function(response) {
+            if (response.authResponse) {
 				// user is logged
 				<g:if test="${returnUrl}">
 					window.location.href = "${returnUrl}";

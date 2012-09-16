@@ -17,7 +17,7 @@ class FacebookAppCookieScope extends FacebookAppScope {
 	
 	Cookie getCookie() {
 		return request.currentRequest.cookies.find { Cookie it ->
-			return it.name == "fbsr_${facebookApp.id}"
+			return it.name == "fbsr_${facebookContextProxyService.app.id}"
 		}
 	}
 	

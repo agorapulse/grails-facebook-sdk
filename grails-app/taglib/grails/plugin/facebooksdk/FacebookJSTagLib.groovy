@@ -1,7 +1,5 @@
 package grails.plugin.facebooksdk
 
-import org.springframework.web.servlet.support.RequestContextUtils
-
 class FacebookJSTagLib {
 
     static String TYPE_LARGE = 'large'

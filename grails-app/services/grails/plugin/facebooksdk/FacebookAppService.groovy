@@ -5,19 +5,15 @@ import org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequest
 import org.springframework.web.context.request.RequestContextHolder
 
 class FacebookAppService {
-	
-	final static String VERSION = '3.1.1'
-	private final static List DROP_QUERY_PARAMS = ['code','state','signed_request']
-	private final static long EXPIRATION_PREVENTION_THRESHOLD = 600000 // 10 minutes
-	
+
 	boolean transactional = false
 	
-	FacebookApp facebookApp
-	FacebookAppCookieScope facebookAppCookieScope
-	def facebookAppPersistentScope // Any persistentScope class with the following methods : deleteData, deleteAllData, getData, isEnabled, setData
-	FacebookAppRequestScope facebookAppRequestScope
-	def grailsApplication
-    def grailsLinkGenerator
+	//FacebookContextService facebookContextProxyService
+	//FacebookAppCookieScope facebookAppCookieScope
+	//def facebookAppPersistentScope // Any persistentScope class with the following methods : deleteData, deleteAllData, getData, isEnabled, setData
+	//FacebookAppRequestScope facebookAppRequestScope
+	//def grailsApplication
+    //def grailsLinkGenerator
 
 	/*
 	* @description Exchange a valid access token to get a longer expiration time (59 days)
@@ -34,10 +30,12 @@ class FacebookAppService {
                         config.proxyHost ?: null,
                         config.proxyPort ?: null
                 )
-				Map parameters = [client_id:facebookApp.id,
-								client_secret:facebookApp.secret,
-								grant_type:'fb_exchange_token',
-								fb_exchange_token:oldAccessToken] //.encodeAsURL()
+				Map parameters = [
+                        client_id: facebookContextProxyService.app.id,
+						client_secret: facebookContextProxyService.app.secret,
+						grant_type: 'fb_exchange_token',
+						fb_exchange_token: oldAccessToken
+                ] //.encodeAsURL()
 				result = facebookGraphClient.fetchObject('oauth/access_token', parameters)
 				//log.debug("exchangeAccessToken result=$result")
 			} catch (FacebookOAuthException exception) {
@@ -48,37 +46,6 @@ class FacebookAppService {
 			}
 		}
 		return result
-	}
-
-	/*
-	* @description Invalidate current user (persistent data and cookie)
-	* @hint
-	*/
-	void invalidateUser() {
-		facebookAppRequestScope.deleteData('accessToken')
-		facebookAppRequestScope.deleteData('userId')
-		if (facebookAppCookieScope.hasCookie()) {
-			facebookAppCookieScope.deleteCookie()
-		}
-		if (facebookAppPersistentScope.isEnabled()) {
-			facebookAppPersistentScope.deleteAllData()
-		}
-	}
-	
-	/*
-	* @description Get OAuth accessToken
-	* @hint Determines the access token that should be used for API calls. The first time this is called, accessToken is set equal to either a valid user access token, or it's set to the application access token if a valid user access token wasn't available. Subsequent calls return whatever the first call returned.
-	*/
-	String getAccessToken() {
-		if (!facebookAppRequestScope.hasData('accessToken')) {
-			String accessToken = getUserAccessToken()
-			if (!accessToken) {
-				// No user access token, establish access token to be the application access token, in case we navigate to the /oauth/access_token endpoint, where SOME access token is required.
-				accessToken = getApplicationAccessToken()
-			}
-			facebookAppRequestScope.setData('accessToken', accessToken)
-		}
-		return facebookAppRequestScope.getData('accessToken')
 	}
 
 	/*
@@ -95,81 +62,15 @@ class FacebookAppService {
                     config.proxyPort ?: null
             )
 			Map parameters = [client_id:facebookApp.id,
-							client_secret:facebookApp.secret,
+							client_secret:facebookContextProxyService.app.secret,
 							grant_type:'client_credentials']
 			def result = facebookGraphClient.fetchObject('oauth/access_token', parameters)
 			if (result['access_token']) accessToken = result['access_token']
 		} else {
-			accessToken = facebookApp.id + "|" + facebookApp.secret
+			accessToken = facebookContextProxyService.app.id + "|" + facebookContextProxyService.app.secret
 		}
 		return accessToken
 	}
-	
-	/*
-	* @description Get a login status URL to fetch the status from facebook.
-	* @hint
-	* Available parameters:
-	* - ok_session: the URL to go to if a session is found
-	* - no_session: the URL to go to if the user is not connected
-	* - no_user: the URL to go to if the user is not signed into facebook
-		 */
-	String getLoginStatusURL(Map parameters = [:]) {
-		if (!request.params['api_key']) parameters['api_key'] = facebookApp.id
-		if (!request.params['no_session']) parameters['no_session'] = getCurrentURL()
-		if (!request.params['no_user']) parameters['no_user'] = getCurrentURL()
-		if (!request.params['ok_session']) parameters['ok_session'] = getCurrentURL()
-		if (!request.params['session_version']) parameters['session_version'] =3
-		return getURL("extern/login_status.php", parameters)
-	}
-	 
-	 /*
-	* @description Get a Login URL for use with redirects.
-	* @hint By default, full page redirect is assumed. If you are using the generated URL with a window.open() call in JavaScript, you can pass in display=popup as part of the parameters.
-	* Available parameters:
-		 * - redirect_uri: the url to go to after a successful login
-		 * - scope: comma separated list of requested extended perms
-	*/
-	String getLoginURL(Map parameters = [:]) {
-		establishCSRFStateToken()
-		if (!parameters['client_id']) parameters['client_id'] = facebookApp.id
-		if (!parameters['redirect_uri']) parameters['redirect_uri'] = getCurrentURL()
-		if (!parameters['state']) parameters['state'] = getCSRFStateToken()
-		return getURL('dialog/oauth', parameters)
-	}
-	 
-	 /*
-	* @description Get a Logout URL suitable for use with redirects.
-	* @hint
-	* Available parameters:
-		 * - next: the url to go to after a successful logout
-	*/
-	String getLogoutURL(Map parameters = [:]) {
-		if (!parameters['access_token']) parameters['access_token'] = getUserAccessToken()
-		if (!parameters['next']) parameters['next'] = getCurrentURL()
-		return getURL('logout.php', parameters)
-	}
-
-    /*
-     * @description Get decoded signed request data
-     * @hint Might return null if no signed request is found
-     */
-    FacebookSignedRequest getSignedRequest() {
-        if (!facebookAppRequestScope.hasData('signedRequest')) {
-            FacebookSignedRequest signedRequest
-            if (request.getParameter('signed_request')) {
-                // apps.facebook.com (default iframe page)
-                signedRequest = new FacebookSignedRequest(facebookApp.secret, request.getParameter('signed_request'))
-            } else if (facebookAppCookieScope.hasCookie()) {
-                // Cookie created by Facebook Connect Javascript SDK
-                signedRequest = new FacebookSignedRequest(facebookApp.secret, facebookAppCookieScope.getValue())
-            }
-
-            if (signedRequest) {
-                facebookAppRequestScope.setData('signedRequest', signedRequest)
-            }
-        }
-        return facebookAppRequestScope.getData('signedRequest', null)
-    }
 
     /*
      * @description Get user OAuth accessToken
@@ -286,22 +187,6 @@ class FacebookAppService {
 	
 	// PRIVATE
 
-    private void establishCSRFStateToken() {
-		if (getCSRFStateToken() == '') {
-			String stateToken = UUID.randomUUID().encodeAsMD5()
-			facebookAppRequestScope.setData('state', stateToken)
-			facebookAppPersistentScope.setData('state', stateToken)
-		}
-	}
-
-    private def getConfig() {
-        grailsApplication.config.grails?.plugin?.facebooksdk
-    }
-
-    private GrailsWebRequest getRequest() {
-        return RequestContextHolder.getRequestAttributes()
-    }
-
 	private String getAccessTokenFromCode(String code, String redirectUri = null) {
 		String accessToken = ''
 		if (code) {
@@ -318,8 +203,8 @@ class FacebookAppService {
                         config.proxyHost ?: null,
                         config.proxyPort ?: null
                 )
-				Map parameters = [client_id: facebookApp.id,
-								client_secret: facebookApp.secret,
+				Map parameters = [client_id: facebookContextProxyService.app.id,
+								client_secret: facebookContextProxyService.app.secret,
 								code: code,
 								redirect_uri: redirectUri] //.encodeAsURL()
 				def result = facebookGraphClient.fetchObject('oauth/access_token', parameters)
@@ -344,73 +229,6 @@ class FacebookAppService {
 		return accessToken
 	}
 	
-	private String getCode() {
-		String code = ''
-		log.debug("getCode code=${request.params['code']} state=${request.params['state']}")
-		if (request.params['code'] && request.params['state']) {
-			String stateToken = getCSRFStateToken()
-			log.debug("getCode CSRF stateToken=$stateToken")
-			if (stateToken != '' && stateToken == request.params['state']) {
-				// CSRF state token has done its job, so delete it
-				facebookAppRequestScope.deleteData('state')
-				facebookAppPersistentScope.deleteData('state')
-				code = request.params['code']
-				log.debug("getCode code=$code")
-			} else {
-				log.debug("getCode invalid CSRF state")
-			}
-		}
-		return code
-	}
-	
-	private String getCSRFStateToken() {
-		if (!facebookAppRequestScope.hasData('state')) {
-			facebookAppRequestScope.setData('state', facebookAppPersistentScope.getData('state'))
-		}
-		return facebookAppRequestScope.getData('state')
-	}
-	
-	private String getCurrentURL(String queryString = '') {
-		Map params = request.params.findAll { key, value -> !DROP_QUERY_PARAMS.contains(key) }
-		String currentURL = grailsLinkGenerator.link(controller:request.params.controller, action:request.params.action, params:params, absolute:true)
-		if (request.getCurrentRequest().getHeader("X-Forwarded-Proto")) {
-			// Detect forwarded protocol (for example from EC2 Load Balancer)
-			URL url = new URL(currentURL)
-			currentURL.replace(url.getProtocol(), request.getCurrentRequest().getHeader("X-Forwarded-Proto"))
-		}
-		return currentURL
-	}
 
-	private String getURL(path = "", parameters = [:]) {
-		String url = "https://www.facebook.com/"
-		if (path) {
-			if (path[0] == "/") {
-				path = path.substring(1)
-			}
-			url += path
-		}
-		if (parameters) {
-			url += "?" + serializeQueryString(parameters)
-		}
-		return url
-	}
-
-	private boolean isAccessTokenExpired() {
-		long expirationTime = facebookAppPersistentScope.getData('expirationTime', 0)
-		return expirationTime && (new Date().time > expirationTime)
-	}
-
-	private boolean isAccessTokenExpiredSoon() {
-		long expirationTime = facebookAppPersistentScope.getData('expirationTime', 0)
-		return expirationTime && (!isAccessTokenExpired() && (expirationTime - new Date().time) < EXPIRATION_PREVENTION_THRESHOLD)
-	}
-
-	private String serializeQueryString(Map parameters, boolean urlEncoded = true) {
-		if (urlEncoded) {
-			return parameters.collect {key, value -> key.toLowerCase().encodeAsURL() + '=' + value.encodeAsURL() }.join('&')
-		} else {
-			return parameters.collect {key, value -> key.toLowerCase().encodeAsURL() + '=' + value }.join('&')
-		}
-	}
 
 }
