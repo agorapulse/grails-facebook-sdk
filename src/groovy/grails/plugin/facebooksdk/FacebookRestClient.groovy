@@ -7,7 +7,7 @@ class FacebookRestClient extends DefaultFacebookRestClient {
 
     static final int DEFAULT_READ_TIMEOUT_IN_MS = 180000
 
-    FacebookRestClient(String accessToken = '', int timeout = DEFAULT_READ_TIMEOUT_IN_MS, String proxyHost = null, Integer proxyPort = null) {
+    FacebookRestClient(String accessToken = '', Integer timeout = DEFAULT_READ_TIMEOUT_IN_MS, String proxyHost = null, Integer proxyPort = null) {
         super(accessToken, timeout, proxyHost, proxyPort)
     }
 	

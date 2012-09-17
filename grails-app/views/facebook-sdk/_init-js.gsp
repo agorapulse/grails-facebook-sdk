@@ -2,12 +2,12 @@
 <script type="text/javascript">
 	window.fbAsyncInit = function() {
 		FB.init({
-			appId   : "${appId}",
+			appId: "${appId}",
 			<g:if test="${channelUrl}">channelUrl  : "${channelUrl}",  // Custom channel URL</g:if>
-			cookie  : <g:if test="${cookie}">true</g:if><g:else>false</g:else>, // enable cookies to allow the server to access the session
-			oauth : true, // enables OAuth 2.0
-			status  : <g:if test="${status}">true</g:if><g:else>false</g:else>, // check login status
-			xfbml   : <g:if test="${xfbml}">true</g:if><g:else>false</g:else> // parse XFBML
+			cookie: <g:if test="${cookie}">true</g:if><g:else>false</g:else>, // enable cookies to allow the server to access the session
+			oauth: true, // enables OAuth 2.0
+			status: <g:if test="${status}">true</g:if><g:else>false</g:else>, // check login status
+			xfbml: <g:if test="${xfbml}">true</g:if><g:else>false</g:else> // parse XFBML
 		});
 		
 		<g:if test="${autoGrow}">

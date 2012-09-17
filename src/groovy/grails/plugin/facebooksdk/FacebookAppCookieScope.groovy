@@ -7,31 +7,21 @@ import javax.servlet.http.Cookie
 */
 class FacebookAppCookieScope extends FacebookAppScope {
 
-	void deleteCookie() {
-		Cookie cookie = getCookie()
+	void delete() {
 		if (cookie) {
 			cookie.setMaxAge(0)
 			request.currentResponse.addCookie(cookie)
 		}
 	}
+
+    String getValue() {
+        cookie?.value ?: ''
+    }
 	
 	Cookie getCookie() {
 		return request.currentRequest.cookies.find { Cookie it ->
-			return it.name == "fbsr_${facebookApp.id}"
+			return it.name == "fbsr_${appId}"
 		}
-	}
-	
-	String getValue() {
-		Cookie cookie = getCookie()
-		if (cookie) {
-			return cookie.value
-		} else {
-			return ""
-		}
-	}
-	
-	boolean hasCookie() {
-		getCookie() ? true : false
 	}
 	
 }

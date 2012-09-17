@@ -1,8 +1,8 @@
 import grails.plugin.facebooksdk.*
 
 class FacebookSdkGrailsPlugin {
-
-	def version = "0.3.5"
+	
+	def version = "0.4.0"
 	def grailsVersion = "2.0 > *"
 	def dependsOn = [:]
 	def pluginExcludes = []
@@ -21,14 +21,14 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
     def scm = [  url: "https://github.com/benorama/grails-facebook-sdk" ]
 
     def doWithSpring = {
-        facebookAppService(FacebookAppService) {
-            facebookAppCookieScope = ref("facebookAppCookieScope")
-            facebookAppRequestScope = ref("facebookAppRequestScope")
-            facebookAppPersistentScope = ref("facebookAppPersistentScope")
+        facebookContextProxy(org.springframework.aop.scope.ScopedProxyFactoryBean) { bean ->
+            targetBeanName = 'facebookContext'
+            proxyTargetClass = true
         }
-        facebookAppCookieScope(FacebookAppCookieScope)
-        facebookAppRequestScope(FacebookAppRequestScope)
-        facebookAppPersistentScope(FacebookAppSessionScope)
+        facebookContext(FacebookContext) { bean ->
+            bean.scope = 'request'
+            grailsLinkGenerator = ref('grailsLinkGenerator')
+        }
     }
 
 }

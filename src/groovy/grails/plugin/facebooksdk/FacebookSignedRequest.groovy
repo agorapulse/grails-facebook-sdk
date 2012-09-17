@@ -23,7 +23,9 @@ class FacebookSignedRequest {
 	Map user = [:]
 	// Facebook user identifier (UID) of the current user.
 	long userId = 0
-	
+
+    FacebookSignedRequest() {}
+
 	FacebookSignedRequest(String appSecret, String signedRequest) {
 		Map data = parseSignedRequest(appSecret, signedRequest)
 		assert data['algorithm'] == 'HMAC-SHA256', 'Unknown algorithm. Expected HMAC-SHA256'
@@ -39,7 +41,7 @@ class FacebookSignedRequest {
 	}
 
 	String toString() {
-		"accessToken: $accessToken, appData: $appData, code: $code, expirationTime: $expirationTime, page: $page, user: $user, userId: $userId"
+		"FacebookSignedRequest(accessToken: $accessToken, appData: $appData, code: $code, expirationTime: $expirationTime, page: $page, user: $user, userId: $userId)"
 	}
 
 	// PRIVATE

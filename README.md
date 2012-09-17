@@ -14,7 +14,7 @@ It supports the latest *OAuth2.0 authentication* (required since October 1st 201
 **Grails Facebook SDK Plugin** provides the following Grails artefacts:
 
 * **FacebookAppService** - A service to build [apps on Facebook.com](http://developers.facebook.com/docs/guides/canvas/) and [websites with the Facebook Platform](http://developers.facebook.com/docs/guides/web).
-* **FacebookGraphClient** - A client to call [Facebook Graph API](http://developers.facebook.com/docs/reference/api/), which is a wrapper around the rock solid [RestFB java library](http://restfb.com/) version 1.6.9 (released October 21, 2011).
+* **FacebookGraphClient** - A client to call [Facebook Graph API](http://developers.facebook.com/docs/reference/api/), which is a wrapper around the rock solid [RestFB java library](http://restfb.com/) version 1.6.10 (released September 03, 2012).
 * **FacebookJSTagLib** - A collection of tags to easily integrate [Facebook JS SDK](http://developers.facebook.com/docs/reference/javascript/) in your GSPs.
 
 
@@ -34,7 +34,7 @@ grails.project.dependency.resolution = {
 		}
 		plugins {
 				//here go your plugin dependencies
-				runtime ':facebook-sdk:0.3.5'
+				runtime ':facebook-sdk:0.3.6'
 		}
 }
 ```
@@ -72,7 +72,8 @@ Project documentation is located here :
 
 # Latest releases
 
-* 2012-08-24 **V0.3.5** : proxyHost and proxyPort parameters added to Graph/Rest client (thanks to Eduard Martini)
+* 2012-09-03 **V0.3.6** : latest RestFB 1.6.10 dependency, _proxyHost_ and _proxyPort_ added to config and _signedRequest_ added to filter _facebook_ map.
+* 2012-08-24 **V0.3.5** : _proxyHost_ and _proxyPort_ parameters added to Graph/Rest client (thanks to Eduard Martini)
 * 2012-07-23 **V0.3.4** : bug fix in facebookAppService
 * 2012-07-17 **V0.3.3** : readTimeout parameter added to Graph/Rest client + upgrade to Grails 2.1 with wrapper
 * 2012-06-12 **V0.3.2** : bug fix in filter and plugin config
@@ -84,15 +85,15 @@ Project documentation is located here :
 
 To report any bug, please use the project [Issues](http://github.com/benorama/grails-facebook-sdk/issues) section on GitHub.
 
-# Alpha status
+# Beta status
 
-This is an **alpha release**.
+This is a **beta release**.
 The underlying APIs are generally stable, however we may make changes to the library in response to developer feedback.
 
 # Feedback
 
 The **Grails Facebook SDK** is not an official Facebook SDK such as [Javascript](http://developers.facebook.com/docs/reference/javascript/), [PHP](http://github.com/facebook/facebook-php-sdk), [iOS](http://github.com/facebook/facebook-ios-sdk/) and [Android SDKs](http://github.com/facebook/facebook-android-sdk).
 
-It is developped by [AgoraPulse](http://www.agorapulse.com).
+It is developed by [AgoraPulse](http://www.agorapulse.com).
 
 The **Grails Facebook SDK** is licensed under the [Apache Licence, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).

@@ -8,6 +8,6 @@ For the user to logout from your app and Facebook.com, use @logoutLink@ tag.
 
 Optional attributes are :
 
-* @elementClass@ HTML element 'class' attribute value
-* @elementId@ HTML element 'id' attribute value
-* @nextUrl@ Next URL for redirect after logout (if not defined page will be reloaded)
+* @elementClass@ HTML element @class@ attribute value.
+* @elementId@ HTML element @id@ attribute value.
+* @nextUrl@ Next URL for redirect after logout (if not defined page will be reloaded).

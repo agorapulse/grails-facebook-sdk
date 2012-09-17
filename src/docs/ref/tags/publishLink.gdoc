@@ -1,0 +1,20 @@
+h1. facebook:publishLink
+
+Display a link that will generate a dialog to publish a story on user's feed.
+
+{code}
+<facebook:publishLink>Publish</facebook:publishLink>
+{code}
+
+Optional attributes are :
+
+* @disabled@ Disable click on the link.
+* @display@ Display mode in which to render the Dialog. Can be page (default), popup, iframe, or touch.
+* @caption@ The caption of the link (appears beneath the link name). If not specified, this field is automatically populated with the URL of the link.
+* @description@ The description of the link (appears beneath the link caption). If not specified, this field is automatically populated by information scraped from the link, typically the title of the page.
+* @elementClass@ HTML element 'class' attribute value.
+* @elementId@ HTML element 'id' attribute value.
+* @link@ The link attached to this post.
+* @name@ The name of the link attachment.
+* @picture@ The URL of a picture attached to this post. The picture must be at least 50px by 50px and have a maximum aspect ratio of 3:1.
+* @source@ The URL of a media file (either SWF or MP3) attached to this post. If both source and picture are specified, only source is used.
