@@ -27,7 +27,7 @@ class FacebookJSTagLib {
 	*/
 	def initJS = { attrs, body ->
 		if (!attrs.containsKey("cookie")) attrs.cookie = true
-		if (!attrs.locale) Locale.getDefault()
+		if (!attrs.locale) attrs.locale = Locale.getDefault()
         Map model = [body:body()]
 		attrs.each { key, value ->
 			model[key] = value	

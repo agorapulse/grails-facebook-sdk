@@ -5,15 +5,14 @@ import org.springframework.web.context.request.RequestContextHolder
 
 abstract class FacebookAppScope {
 	
-	//FacebookApp facebookApp
-    FacebookContextService facebookContextProxyService
-	
+	long appId = 0
+
 	GrailsWebRequest getRequest() {
 		RequestContextHolder.getRequestAttributes() as GrailsWebRequest
 	}
 	
 	protected String getKeyVariableName(String key) {
-		"fb_${facebookContextProxyService.app.id}_${key}"
+		"fb_${appId}_${key}"
 	}
 	
 }
