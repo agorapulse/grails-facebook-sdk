@@ -5,7 +5,7 @@ package grails.plugin.facebooksdk
 */
 class FacebookAppSessionScope extends FacebookAppScope {
 	
-	final static List PERSISTENT_KEYS = ['accessToken','code','expirationTime','state','userId']
+	final static List PERSISTENT_KEYS = ['token','code','expirationTime','state','userId']
 
     void deleteData(String key) {
 		assert PERSISTENT_KEYS.contains(key), "Unsupported key '$key' passed to deleteData"
