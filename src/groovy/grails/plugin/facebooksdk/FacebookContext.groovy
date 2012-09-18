@@ -62,6 +62,9 @@ class FacebookContext implements InitializingBean {
         if (request.params['signed_request']) {
             // apps.facebook.com (default iframe page or page tab)
             signedRequest = new FacebookSignedRequest(app.secret, request.params['signed_request'])
+            if (signedRequest.accessToken) {
+                user.token // Get token to put it in session scope
+            }
             log.debug "Got signed request from params"
         } else if (cookie.value) {
             // Cookie created by Facebook Connect Javascript SDK
