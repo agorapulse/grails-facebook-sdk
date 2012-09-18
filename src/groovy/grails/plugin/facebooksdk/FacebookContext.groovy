@@ -26,9 +26,13 @@ class FacebookContext implements InitializingBean {
     void afterPropertiesSet() {
         def appConfig
         String appIdParamName = config.appIdParamName ?: 'app_id'
-        if (config.apps && request.params[appIdParamName]) {
+        if (config.apps) {
             // Multiple app config
-            appConfig = config.apps.find { it.id == request.params[appIdParamName].toLong() }
+            if (request.params[appIdParamName]) {
+                appConfig = config.apps.find { it.id == request.params[appIdParamName].toLong() }
+            } else {
+                appConfig = config.apps.find { it.controller == request.params.controller }
+            }
         }
 
         if (!appConfig && config.app) {
@@ -74,7 +78,7 @@ class FacebookContext implements InitializingBean {
     }
 
     boolean isAuthenticated() {
-        user.id ? true : false
+        user?.id ? true : false
     }
 
     /*
