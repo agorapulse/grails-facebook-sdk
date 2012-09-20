@@ -1,7 +1,7 @@
 package grails.plugin.facebooksdk
 
 import org.apache.log4j.Logger
-import org.codehaus.groovy.grails.commons.ApplicationHolder
+
 import org.codehaus.groovy.grails.web.mapping.LinkGenerator
 import org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequest
 import org.springframework.beans.factory.InitializingBean
@@ -12,15 +12,16 @@ class FacebookContext implements InitializingBean {
 
     private final static List DROP_QUERY_PARAMS = ['code','state','signed_request']
 
-    LinkGenerator grailsLinkGenerator // Injected by Spring
-    GrailsApplication grailsApplication
+    def grailsLinkGenerator // Injected by Spring
+    def grailsApplication // Injected by Spring
 
-    FacebookApp app
+    FacebookContextApp app
+    FacebookContextPage page // Only if app is running in a page tab and signed request exists in params (initial request)
     FacebookSignedRequest signedRequest = new FacebookSignedRequest()
-    FacebookUser user
+    FacebookContextUser user
 
-    private FacebookAppSessionScope _appSessionScope
-    private FacebookAppCookieScope _appCookieScope
+    private FacebookSessionScope _sessionScope
+    private FacebookCookieScope _cookieScope
     private Logger log = Logger.getLogger(getClass())
 
     void afterPropertiesSet() {
@@ -51,28 +52,39 @@ class FacebookContext implements InitializingBean {
         assert appConfig, 'Facebook app config not found'
         assert appConfig.id && appConfig.secret, 'Invalid Facebook app config, appId and appSecret must be defined'
 
-        app = new FacebookApp(
+        app = new FacebookContextApp(
                 id: appConfig.id,
-                config: config,
+                context: this,
                 permissions: appConfig.permissions ?: [],
                 secret: appConfig.secret
         )
 
-        user = new FacebookUser(
-                context: this,
-                config: config
+        user = new FacebookContextUser(
+                context: this
         )
 
         if (request.params['signed_request']) {
             // apps.facebook.com (default iframe page or page tab)
-            signedRequest = new FacebookSignedRequest(app.secret, request.params['signed_request'])
-            if (signedRequest.accessToken) {
-                user.token // Get token to put it in session scope
+            signedRequest = new FacebookSignedRequest(app.secret, request.params['signed_request'], FacebookSignedRequest.TYPE_PARAMS)
+            if (signedRequest.accessToken && signedRequest.userId) {
+                if (signedRequest.user.age) user.age = signedRequest.user.age
+                if (signedRequest.user.country) user.country = signedRequest.user.country
+                if (signedRequest.user.locale) user.locale = new Locale(signedRequest.user.locale.tokenize('_')[0], signedRequest.user.locale.tokenize('_')[1])
+                // Load token in session scope
+                user.token
             }
+            if (signedRequest.page) {
+                page = new FacebookContextPage(
+                    admin: signedRequest.page.admin ?: false,
+                    id: signedRequest.page.id.toLong(),
+                    liked: signedRequest.page.liked ?: false
+                )
+            }
+            if (signedRequest.appData) app.data = signedRequest.appData
             log.debug "Got signed request from params"
         } else if (cookie.value) {
             // Cookie created by Facebook Connect Javascript SDK
-            signedRequest = new FacebookSignedRequest(app.secret, cookie.value)
+            signedRequest = new FacebookSignedRequest(app.secret, cookie.value, FacebookSignedRequest.TYPE_COOKIE)
             log.debug "Got signed request from cookie"
         }
     }
@@ -84,21 +96,21 @@ class FacebookContext implements InitializingBean {
     /*
     * @description Cookie scope proxy linked to current facebook app.
     */
-    FacebookAppCookieScope getCookie() {
-        if (!_appCookieScope) {
-            _appCookieScope = new FacebookAppCookieScope(appId: app.id)
+    FacebookCookieScope getCookie() {
+        if (!_cookieScope) {
+            _cookieScope = new FacebookCookieScope(appId: app.id)
         }
-        return _appCookieScope
+        return _cookieScope
     }
 
     /*
     * @description Session scope proxy linked to current facebook app.
     */
-    FacebookAppSessionScope getSession() {
-        if (!_appSessionScope) {
-            _appSessionScope = new FacebookAppSessionScope(appId: app.id)
+    FacebookSessionScope getSession() {
+        if (!_sessionScope) {
+            _sessionScope = new FacebookSessionScope(appId: app.id)
         }
-        return _appSessionScope
+        return _sessionScope
     }
 
     /*
@@ -168,7 +180,7 @@ class FacebookContext implements InitializingBean {
     }
 
     private def getConfig() {
-        ApplicationHolder.application.config.grails.plugin.facebooksdk
+        grailsApplication.config.grails.plugin.facebooksdk
     }
 
     private String getCurrentURL(String queryString = '') {

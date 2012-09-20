@@ -3,7 +3,7 @@ package grails.plugin.facebooksdk
 import org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequest
 import org.springframework.web.context.request.RequestContextHolder
 
-abstract class FacebookAppScope {
+abstract class FacebookScope {
 	
 	long appId = 0
 

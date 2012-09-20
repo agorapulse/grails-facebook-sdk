@@ -2,9 +2,12 @@ package grails.plugin.facebooksdk
 
 import org.apache.log4j.Logger
 
-class FacebookApp extends FacebookBase {
+class FacebookContextApp {
+
+    FacebookContext context
 
     long id = 0
+    String data = ''
     List permissions = []
     String secret = ''
 
@@ -32,7 +35,18 @@ class FacebookApp extends FacebookBase {
     }
 
     String toString() {
-        "FacebookApp(id: $id, permissions: $permissions)"
+        "FacebookApp(id: $id, permissions: $permissions, data: $data)"
+    }
+
+    // PRIVATE
+
+    protected FacebookGraphClient getGraphClient(String token = '') {
+        new FacebookGraphClient(
+                token,
+                context.config.timeout ?: FacebookGraphClient.DEFAULT_READ_TIMEOUT_IN_MS,
+                context.config.proxyHost ?: null,
+                context.config.proxyPort ?: null
+        )
     }
 
 }

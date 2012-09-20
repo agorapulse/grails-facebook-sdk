@@ -21,12 +21,14 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
     def scm = [  url: "https://github.com/benorama/grails-facebook-sdk" ]
 
     def doWithSpring = {
+        // It looks like proxy is automatically generated when request scope bean are injected in grails singleton bean (services)
         facebookContextProxy(org.springframework.aop.scope.ScopedProxyFactoryBean) { bean ->
             targetBeanName = 'facebookContext'
             proxyTargetClass = true
         }
         facebookContext(FacebookContext) { bean ->
             bean.scope = 'request'
+            grailsApplication = ref('grailsApplication')
             grailsLinkGenerator = ref('grailsLinkGenerator')
         }
     }

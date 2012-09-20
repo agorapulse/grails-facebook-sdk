@@ -4,14 +4,17 @@ import grails.test.GrailsMock
 import grails.test.GrailsUnitTestCase
 import org.codehaus.groovy.grails.plugins.testing.GrailsMockHttpServletRequest
 import org.junit.Before
+import org.codehaus.groovy.grails.commons.GrailsApplication
 
-class FacebookUserTests extends GrailsUnitTestCase {
+class FacebookContextUserTests extends GrailsUnitTestCase {
 
     static APP_ID = 123456789
     static APP_SECRET = 'abcdefghhijkl'
 
+    FacebookContext context
+
     @Before
-    public void setUp() {
+    void setUp() {
         FacebookGraphClient.metaClass.fetchObject = { String object, Map parameters ->
             switch(object) {
                 case 'oauth/access_token':
@@ -20,25 +23,40 @@ class FacebookUserTests extends GrailsUnitTestCase {
                     break
             }
         }
-        FacebookUser.metaClass.getRequest = { ->
+        FacebookContextUser.metaClass.getRequest = { ->
             def requestMock = new GrailsMockHttpServletRequest()
             requestMock.params = [:]
             requestMock
         }
     }
 
+    @Before
+    void mockContext() {
+        def config = mockConfig('''
+            grails {
+                plugin {
+                    facebooksdk {}
+                }
+            }
+            ''')
+        context = mockFor(FacebookContext, true).createMock()
+        context.grailsApplication = [config: config]
+        context.app = mockFor(FacebookContextApp, true).createMock()
+        context.app.id = APP_ID
+        context.app.secret =  APP_SECRET
+    }
+
     void testExchangeToken() {
         // Setup
-        GrailsMock contextMock = mockFor(FacebookContext)
-        contextMock.demand.getSession(2..2) { ->
-            def sessionScopeMock = mockFor(FacebookAppSessionScope)
-            sessionScopeMock.demand.setData(2..2) { key, value -> }
+        FacebookContextUser user = new FacebookContextUser(
+            context: context
+        )
+        context.metaClass.getSession { ->
+            GrailsMock sessionScopeMock = mockFor(FacebookSessionScope, true)
+            sessionScopeMock.demand.setData { key, value -> }
+            sessionScopeMock.demand.getData { key, defaultValue -> defaultValue }
             sessionScopeMock.createMock()
         }
-        FacebookUser user = new FacebookUser(
-            context: contextMock.createMock()
-        )
-        user.context.app = mockFacebookApp()
 
         // When
         user._token = 'old-token'
@@ -50,16 +68,15 @@ class FacebookUserTests extends GrailsUnitTestCase {
 
     void testGetTokenEmpty() {
         // Setup
-        GrailsMock contextMock = mockFor(FacebookContext)
-        contextMock.demand.getSession(1..1) { ->
-            def sessionScopeMock = mockFor(FacebookAppSessionScope)
-            sessionScopeMock.demand.getData(1..1) { key, defaultValue -> defaultValue }
+        FacebookContextUser user = new FacebookContextUser(
+                context: context
+        )
+        context.metaClass.getRequest { -> [params: [:]]}
+        context.metaClass.getSession { ->
+            GrailsMock sessionScopeMock = mockFor(FacebookSessionScope, true)
+            sessionScopeMock.demand.getData { key, defaultValue -> defaultValue }
             sessionScopeMock.createMock()
         }
-        FacebookUser user = new FacebookUser(
-                context: contextMock.createMock()
-        )
-        user.context.app = mockFacebookApp()
 
         // When
         String token = user.token
@@ -70,17 +87,15 @@ class FacebookUserTests extends GrailsUnitTestCase {
 
     void testGetTokenFromSignedRequest() {
         // Setup
-        GrailsMock contextMock = mockFor(FacebookContext)
-        contextMock.demand.getSession(1..1) { ->
-            def sessionScopeMock = mockFor(FacebookAppSessionScope)
-            sessionScopeMock.demand.setData(1..1) { key, value -> }
+        FacebookContextUser user = new FacebookContextUser(
+                context: context
+        )
+        context.metaClass.getSession { ->
+            GrailsMock sessionScopeMock = mockFor(FacebookSessionScope, true)
+            sessionScopeMock.demand.setData { key, value -> }
             sessionScopeMock.createMock()
         }
-        FacebookUser user = new FacebookUser(
-                context: contextMock.createMock()
-        )
-        user.context.app = mockFacebookApp()
-        user.context.signedRequest = mockFor(FacebookSignedRequest).createMock()
+        context.signedRequest = mockFor(FacebookSignedRequest).createMock()
 
         // When
         user.context.signedRequest.accessToken = 'access-token'
@@ -92,17 +107,15 @@ class FacebookUserTests extends GrailsUnitTestCase {
 
     void testGetTokenFromSignedRequestCode() {
         // Setup
-        GrailsMock contextMock = mockFor(FacebookContext)
-        contextMock.demand.getSession(4..4) { ->
-            def sessionScopeMock = mockFor(FacebookAppSessionScope)
-            sessionScopeMock.demand.getData(0..1) { key -> 'some-other-code' }
-            sessionScopeMock.demand.setData(3..3) { key, value -> }
+        FacebookContextUser user = new FacebookContextUser(
+                context: context
+        )
+        context.metaClass.getSession { ->
+            GrailsMock sessionScopeMock = mockFor(FacebookSessionScope, true)
+            sessionScopeMock.demand.getData { key -> 'some-other-code' }
+            sessionScopeMock.demand.setData { key, value -> }
             sessionScopeMock.createMock()
         }
-        FacebookUser user = new FacebookUser(
-                context: contextMock.createMock()
-        )
-        user.context.app = mockFacebookApp()
         user.context.signedRequest = mockFor(FacebookSignedRequest).createMock()
 
         // When
@@ -153,13 +166,6 @@ class FacebookUserTests extends GrailsUnitTestCase {
         // To implement
     }*/
 
-    // PRIVATE
 
-    private FacebookApp mockFacebookApp() {
-        FacebookApp app = mockFor(FacebookApp).createMock()
-        app.id = APP_ID
-        app.secret =  APP_SECRET
-        return app
-    }
 
 }

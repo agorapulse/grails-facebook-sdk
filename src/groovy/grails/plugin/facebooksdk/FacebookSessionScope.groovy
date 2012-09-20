@@ -3,7 +3,7 @@ package grails.plugin.facebooksdk
 /**
 * Uses HTTP request session attributes scope to provide a primitive persistent store, but another subclass of FacebookAppScope --one that you implement-- might use a database, memcache, or an in-memory cache.
 */
-class FacebookAppSessionScope extends FacebookAppScope {
+class FacebookSessionScope extends FacebookScope {
 	
 	final static List PERSISTENT_KEYS = ['token','code','expirationTime','state','userId']
 

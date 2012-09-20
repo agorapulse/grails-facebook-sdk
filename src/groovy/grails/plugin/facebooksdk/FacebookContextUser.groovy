@@ -2,12 +2,17 @@ package grails.plugin.facebooksdk
 
 import com.restfb.exception.FacebookOAuthException
 import org.apache.log4j.Logger
+import org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequest
 
-class FacebookUser extends FacebookBase {
+class FacebookContextUser {
 
     private final static long EXPIRATION_PREVENTION_THRESHOLD = 600000 // 10 minutes
 
     FacebookContext context
+
+    Map age = [:] // Only returned in Canvas apps, it will not be returned for external apps
+    String country = ''
+    Locale locale
 
     private long _id = -1
     private String _token = null
@@ -86,7 +91,6 @@ class FacebookUser extends FacebookBase {
     */
     String getToken() {
         if (_token == null) {
-            log.debug context.signedRequest
             if (context.signedRequest.accessToken || context.signedRequest.code) { // First, consider a signed request if it's supplied. if there is a signed request, then it alone determines the access token.
                 if (context.signedRequest.accessToken) {
                     // apps.facebook.com hands the access_token in the signed_request
@@ -116,12 +120,12 @@ class FacebookUser extends FacebookBase {
             } else {
                 // Falling back on the authorization code if present
                 String code = ''
-                if (request.params['code'] && request.params['state']) {
+                if (context.request.params['code'] && context.request.params['state']) {
                     String state = context.session.getData('state')
-                    if (state && state == request.params['state']) {
+                    if (state && state == context.request.params['state']) {
                         // CSRF state token has done its job, so delete it
                         context.session.deleteData('state')
-                        code = request.params['code']
+                        code = context.request.params['code']
                     }
                 }
                 if (code && code != context.session.getData('code')) {
@@ -170,6 +174,15 @@ class FacebookUser extends FacebookBase {
     }
 
     // PRIVATE
+
+    private FacebookGraphClient getGraphClient(String token = '') {
+        new FacebookGraphClient(
+                token,
+                context.config.timeout ?: FacebookGraphClient.DEFAULT_READ_TIMEOUT_IN_MS,
+                context.config.proxyHost ?: null,
+                context.config.proxyPort ?: null
+        )
+    }
 
     private String getTokenFromCode(String code, String redirectUri = '') {
         String accessToken = ''

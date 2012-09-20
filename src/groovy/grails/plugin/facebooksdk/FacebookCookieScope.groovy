@@ -5,7 +5,7 @@ import javax.servlet.http.Cookie
 /**
 * Signed request cookie (set by Facebook Javascript SDK)
 */
-class FacebookAppCookieScope extends FacebookAppScope {
+class FacebookCookieScope extends FacebookScope {
 
 	void delete() {
 		if (cookie) {
