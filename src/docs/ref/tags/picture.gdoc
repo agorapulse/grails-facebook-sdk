@@ -1,16 +1,17 @@
 h1. facebook:picture
 
-Display a profile picture.
+Display user profile picture with a specific size.
 
 {code}
-<facebook:picture facebookId="${facebook.user.id}" />
+<facebook:picture facebookId="${facebookContext.user.id}" />
 {code}
+
+h3. Attributes
 
 Required attribute is :
 * @facebookId@ User or page id.
 
 Optional attributes are :
-
 * @elementClass@ HTML element @class@ attribute value.
 * @elementId@ HTML element @id@ attribute value.
 * @linkEnabled@ Render the image as clickable (link to facebook profile).

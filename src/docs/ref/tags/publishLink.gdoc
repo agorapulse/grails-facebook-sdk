@@ -1,15 +1,30 @@
 h1. facebook:publishLink
 
-Display a link that will generate a dialog to publish a story on user's feed.
+Display a link to open "Feed Dialog":https://developers.facebook.com/docs/reference/dialogs/feed/ .
+
+!https://developers.facebook.com/attachment/Feed%20Dialog.png!
+
+The *Feed Dialog* prompts the user to publish an individual story to a profile's feed. This does not require any extended permissions.
 
 {code}
 <facebook:publishLink>Publish</facebook:publishLink>
 {code}
 
-Optional attributes are :
+To check if the app was successfully added or execute some code, you can use @callBackJS@ attribute.
 
+{code}
+<facebook:publishLink
+    callBackJS="function(response) {console.log(response)}">
+    Publish
+</facebook:publishLink>
+{code}
+
+h3. Attributes
+
+Optional attributes are :
+* @callBackJS@ Javascript to code to execute on call back (if the user send the form or close the dialog).
 * @disabled@ Disable click on the link.
-* @display@ Display mode in which to render the Dialog. Can be page (default), popup, iframe, or touch.
+* @display@ Display mode in which to render the Dialog. Can be page (default for web), touch (default for mobile), popup or iframe.
 * @caption@ The caption of the link (appears beneath the link name). If not specified, this field is automatically populated with the URL of the link.
 * @description@ The description of the link (appears beneath the link caption). If not specified, this field is automatically populated by information scraped from the link, typically the title of the page.
 * @elementClass@ HTML element 'class' attribute value.

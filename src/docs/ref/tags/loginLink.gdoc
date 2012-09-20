@@ -1,18 +1,25 @@
 h1. facebook:loginLink
 
-For the user to connect/install your app, use @loginLink@ tag.
+Display a link to open "OAuth Dialog":https://developers.facebook.com/docs/reference/dialogs/oauth/ .
+
+!https://developers.facebook.com/attachment/auth-web-mobileweb.jpg!
+
+The *OAuth Dialog* is used within the authentication flows to enable a user to authorize your application and to grant additional permissions to your app. Facebook's authentication flows are based on the OAuth 2.0 protocol.
 
 {code}
-<facebook:loginLink appPermissions="${facebook.app.permissions}">Login</facebook:loginLink>
+<facebook:loginLink appPermissions="${facebookContext.app.permissions}">Login</facebook:loginLink>
 {code}
+
+h3. Attributes
 
 Optional attributes are :
-
 * @appPermissions@ Facebook app permissions/scope.
 * @cancelUrl@ Cancel URL for redirect if login is canceled (if not defined, nothing happens).
 * @elementClass@ HTML element @class@ attribute value.
 * @elementId@ HTML element @id@ attribute value.
 * @returnUrl@ Return URL for redirect after login (if not defined page will be reloaded).
+
+h3.XFBML login button
 
 You might also use Facebook JS SDK "Login button":http://developers.facebook.com/docs/reference/plugins/login/ (but do not forget to set @xfbml@ attributes to true in @facebook:init@ tag).
 

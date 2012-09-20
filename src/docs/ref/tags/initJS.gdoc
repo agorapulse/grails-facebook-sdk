@@ -4,14 +4,24 @@ To initialize "Facebook JS SDK":http://developers.facebook.com/docs/reference/ja
 The only required attribute is @appId@.
 
 {code:xml}
-<facebook:initJS appId="${facebook.app.id}" />
+<facebook:initJS appId="${facebookContext.app.id}" />
 {code}
+
+You can put any JS code inside initJS tag. It will be automatically injected inside the fbAsyncInit function body.
+
+{code:xml}
+<facebook:initJS appId="${facebookContext.app.id}">
+  // Put here any JS code to be executed after Facebook JS initialization
+  alert('Some JS code');
+</facebook:initJS>
+{code}
+
+h3. Attributes
 
 Required attribute is :
 * @appId@ Facebook app id
 
 Optional attributes are :
-
 * @autoGrow@ Call @FB.setAutoGrow()@ after page rendering (default to @false@).
 * @channelUrl@ Channel File.
 * @cookie@ Enable cookies to allow the server to access the session (default to @true@).
@@ -19,11 +29,3 @@ Optional attributes are :
 * @status@ Check login status (default to @false@).
 * @xfbml@ Parse XFBML (default to @false@).
 
-You can put any JS code inside initJS tag. It will be automatically injected inside the fbAsyncInit function body.
-
-{code:xml}
-<facebook:initJS appId="${facebook.app.id}">
-  // Put here any JS code to be executed after Facebook JS initialization
-  alert('Some JS code');
-</facebook:initJS>
-{code}

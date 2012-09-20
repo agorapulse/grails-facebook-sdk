@@ -1,0 +1,116 @@
+{warning}
+WARNING: Since V0.4.0, @FacebookApp@, @FacebookSdkFilters@ and @FacebookAppService@ from V0.3.* have been deprecated and replaced by @FacebookContext@.
+{warning}
+
+The plugin can automatically create a @facebookContext@ Spring bean, with all the required info:
+- *current Facebook signed request* (if defined).
+- *current Facebook app*,
+- *current Facebook user* (if authenticated),
+- *current Facebook page* (if running in a facebook page tab),
+
+To automatically inject it in your controllers, add the @facebookContext@ property.
+
+{code}
+MyController {
+
+    FacebookContext facebookContext
+
+    ...
+}
+{code}
+
+Note: @facebookContext@ is a @request@ scope bean and should only be used in Grails controllers.
+
+
+h3. Signed Request
+
+The context gives you access to the current signed request sent to your app by Facebook :
+- on *apps.facebook.com* or in a *page tab*, through @signed_request@ params posted to the app iframe,
+- on *external sites* (web or mobile) through "Facebook JS SDK":http://developers.facebook.com/docs/reference/javascript/ signed request cookie.
+
+{code}
+// To get access to signed request data
+facebookContext.signedRequest
+{code}
+
+But the signed request is automatically parsed and all its data are available in @FacebookContext@, so you should not have to use it.
+
+{note}
+If you are running your app on *apps.facebook.com* or in a *page tab*, @signedRequest@ is only available on initial request (if you navigate inside the iframe, signed request is lost if you do not pass it to your links params).
+{note}
+
+
+h3. Facebook App
+
+The context gives you access to *current Facebook app* info.
+
+{code}
+// To get Facebook app id (defined in Config.groovy)
+facebookContext.app.id
+// To get Facebook app permissions (defined in Config.groovy)
+facebookContext.app.permissions
+ // To get Facebook app secret (defined in Config.groovy)
+facebookContext.app.secret
+ // To get default app token, concatenation of id and secret
+facebookContext.app.token
+// To get OAuth app token, required for Graph API calls (it will generate a Graph API call)
+facebookContext.app.getToken(true)
+{code}
+
+If you are running your app in a *page tab*, you'll get additional info:
+
+{code}
+// To get app data pass through page tab query string (...&app_data={SOME_STRING}...)
+facebookContext.app.data
+{code}
+
+
+h3. Facebook User
+
+To check if current user has authorized your app and is authenticated, use @facebookContext.authenticated@.
+
+{code}
+if (facebookContext.authenticated) {
+    // User is authenticated
+}
+{code}
+
+If authenticated, the context gives you access to *current Facebook user* info.
+
+{code}
+// To get facebook user id
+facebookContext.user.id
+// To get OAuth user token, required for Graph API calls
+facebookContext.user.token
+{code}
+
+If the app is running on an *external site* (web or mobile), the access token will be automatically fetched in exchange for the authorization code returned by "Facebook JS SDK":http://developers.facebook.com/docs/reference/javascript/ signed request cookie or server-side redirect query string.
+
+If the app is running on *apps.facebook.com* or in a *page tab*, the access token will be extracted from the signed request params (passed through the canvas iFrame) and you'll get additional info:
+
+{code}
+// To get facebook user age restriction (only returned in Canvas apps, it will not be returned for external apps)
+facebookContext.user.age
+// To get facebook user country
+facebookContext.user.country
+ // To get facebook user locale
+facebookContext.user.locale
+{code}
+
+In order to optimize performances, user @id@ and @token@ are automatically stored in @session@ scope.
+
+
+h3. Facebook Page
+
+If the app is running in a *page tab*, the context gives you access to *current Facebook page* info.
+
+Otherwise, @facebookContext.page@ is @null@. You must check if it exists before accessing it.
+
+{code}
+// To get facebook page id (where the app is installed)
+facebookContext.page?.id
+// To know if current user has liked the current page
+facebookContext.page?.liked
+ // To know if current user is an admin of the current page
+facebookContext.page?.admin
+{code}

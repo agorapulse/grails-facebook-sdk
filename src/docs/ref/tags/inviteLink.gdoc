@@ -1,19 +1,35 @@
 h1. facebook:inviteLink
 
-Display a link that will generate an app requests dialog to invite user friends.
+Display a link to open "Request Dialog":https://developers.facebook.com/docs/reference/dialogs/requests/ .
+
+!https://developers.facebook.com/attachment/multi_request_dialog.png!
+
+The *Request Dialog* sends a Request from one user (the sender) to one or more users (the recipients). The Request Dialog can be used to send a Request directly from one user to another or display a Multi Friend Selector Dialog, allowing the sending user to select multiple recipient users.
 
 {code}
-<facebook:inviteLink message="Install this app!">Invite your friends</facebook:inviteLink>
+<facebook:inviteLink message="Check this app!">Invite your friends</facebook:inviteLink>
 {code}
+
+To check if the app was successfully added or execute some code, you can use @callBackJS@ attribute.
+
+{code}
+<facebook:inviteLink
+    callBackJS="function(response) {console.log(response)}"
+    message="Check this app!">
+    Invite your friends
+</facebook:inviteLink>
+{code}
+
+h3. Attributes
 
 Required attribute is :
 * @message@ The Request string the receiving user will see. The maximum length is 60 characters.
 
 Optional attributes are :
-
+* @callBackJS@ Javascript to code to execute on call back (if the user send the form or close the dialog).
 * @data@ Additional data you may pass for tracking. The maximum length is 255 characters.
 * @disabled@ Disable click on the link.
-* @display@ Display mode in which to render the Dialog. Can be @page@ (default), @popup@, @iframe@, or @touch@.
+* @display@ Display mode in which to render the Dialog. Can be page (default for web), touch (default for mobile), popup or iframe.
 * @elementClass@ HTML element @class@ attribute value.
 * @elementId@ HTML element @id@ attribute value.
 * @excludeIds@ List of of user IDs that will be excluded from the Dialog.

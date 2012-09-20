@@ -1,6 +1,6 @@
 introduction: Introduction
-gettingStarted: Getting started
-facebookFilter: Facebook Filter
-facebookAppService: Facebook App Service
+configuration: Configuration
+facebookContext: Facebook Context
 facebookGraphClient: Facebook Graph Client
+facebookJSTagLib: Facebook JS Tag Lib
 
