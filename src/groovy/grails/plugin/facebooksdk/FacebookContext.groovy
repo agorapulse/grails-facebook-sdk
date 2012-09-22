@@ -45,7 +45,7 @@ class FacebookContext implements InitializingBean {
                     id:  config.appId,
                     secret: config.appSecret
             ]
-            if (config.appPermissions) appConfig = config.appPermissions.tokenize(',') ?: []
+            if (config.appPermissions) appConfig.permissions = config.appPermissions.tokenize(',') ?: []
         }
 
         if (!appConfig && config.apps) assert request.params[appIdParamName], 'Invalid facebook config, for multiple apps, app_id (or custom appIdParamName) must be passed in params'
