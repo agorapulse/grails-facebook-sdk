@@ -13,13 +13,30 @@ To automatically inject it in your controllers, add the @facebookContext@ proper
 {code}
 MyController {
 
-    FacebookContext facebookContext
-
+    def facebookContext
     ...
+    def index() {
+        long userId = facebookContext.user.id
+        ...
+    }
 }
 {code}
 
-Note: @facebookContext@ is a @request@ scope bean and should only be used in Grails controllers.
+Note: @facebookContext@ is a @request@ scope bean and should only be used in Grails controllers (which are also @request@ scope by default).
+
+If you want to access @facebookContext@ from a non @request@ scope bean (ex.: @singleton@ filters), you can use @facebookContextProxy@ (AOP ScopedProxyFactoryBean).
+
+{code}
+MyFilter {
+
+    def facebookContextProxy
+    ...
+    def index() {
+        long userId = facebookContextProxy.user.id
+        ...
+    }
+}
+{code}
 
 
 h3. Signed Request
