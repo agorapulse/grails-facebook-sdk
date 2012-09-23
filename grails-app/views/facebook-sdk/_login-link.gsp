@@ -1,3 +1,6 @@
+<g:if test="${appPermissions instanceof List}">
+    <g:set var="appPermissions" value="${appPermissions.join(',')}" />
+</g:if>
 <script type="text/javascript">
 	function FBGrailsSDK_login() {
         FB.login(function(response) {
