@@ -16,7 +16,8 @@ It supports the latest *OAuth2.0 authentication* (required since October 1st 201
 h3. Latest releases
 
 {warning}
-WARNING: Since V0.4.0, @FacebookApp@, @FacebookSdkFilters@ and @FacebookAppService@ from V0.3.* are DEPRECATED and have been replaced by @FacebookContext@.
+WARNING: Since V0.4.0, @FacebookApp@, @FacebookSdkFilters@ and @FacebookAppService@ from V0.3.* are DEPRECATED and have been replaced by @FacebookContext@: a cleaner approach to access Facebook context related info.
+
 Please check [@FacebookContext@|guide:facebookContext] doc for more info.
 {warning}
 

@@ -1,5 +1,7 @@
 {warning}
-WARNING: Since V0.4.0, @FacebookApp@, @FacebookSdkFilters@ and @FacebookAppService@ from V0.3.* have been deprecated and replaced by @FacebookContext@.
+WARNING: Since V0.4.0, @FacebookApp@, @FacebookSdkFilters@ and @FacebookAppService@ from V0.3.* have been deprecated and replaced by @FacebookContext@: a cleaner approach to access Facebook context related info.
+
+Sorry, V0.3.* users, you might have to do some refactoring...
 {warning}
 
 The plugin can automatically create a @facebookContext@ Spring bean, with all the required info:
@@ -13,7 +15,7 @@ To automatically inject it in your controllers, add the @facebookContext@ proper
 {code}
 MyController {
 
-    def facebookContext
+    FacebookContext facebookContext
     ...
     def index() {
         long userId = facebookContext.user.id
@@ -22,14 +24,14 @@ MyController {
 }
 {code}
 
-Note: @facebookContext@ is a @request@ scope bean and should only be used in Grails controllers (which are also @request@ scope by default).
+Note: @facebookContext@ is a @request@ scope bean and should only be used in Grails controllers (or other @request@ scope beans).
 
-If you want to access @facebookContext@ from a non @request@ scope bean (ex.: @singleton@ filters), you can use @facebookContextProxy@ (AOP ScopedProxyFactoryBean).
+If you want to access @facebookContext@ from a non @request@ scope bean (ex.: @singleton@ filters), you should use @facebookContextProxy@ (AOP scoped proxy).
 
 {code}
 MyFilter {
 
-    def facebookContextProxy
+    FacebookContext facebookContextProxy
     ...
     def index() {
         long userId = facebookContextProxy.user.id
