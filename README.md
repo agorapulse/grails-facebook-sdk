@@ -34,7 +34,7 @@ grails.project.dependency.resolution = {
 		}
 		plugins {
 				//here go your plugin dependencies
-				runtime ':facebook-sdk:0.4.0'
+				runtime ':facebook-sdk:0.4.1'
 		}
 }
 ```
@@ -76,6 +76,7 @@ WARNING: Since V0.4.0, _FacebookApp_, _FacebookSdkFilters_ and _FacebookAppServi
 Please check [FacebookContext](http://benorama.github.com/grails-facebook-sdk/guide/facebookContext.html) doc for more info.
 
 
+* 2012-10-25 **V0.4.1** : bug fix in server side OAuth redirect
 * 2012-10-25 **V0.4.0** : complete refactoring to improve SDK architecture ([FacebookContext](http://benorama.github.com/grails-facebook-sdk/guide/facebookContext.html) implemented) and [multiple apps support](http://benorama.github.com/grails-facebook-sdk/guide/configuration.html) added
 * 2012-09-03 **V0.3.6** : latest RestFB 1.6.10 dependency, _proxyHost_ and _proxyPort_ added to config and _signedRequest_ added to filter _facebook_ map
 * 2012-08-24 **V0.3.5** : _proxyHost_ and _proxyPort_ parameters added to Graph/Rest client (thanks to Eduard Martini)
