@@ -1,7 +1,10 @@
+<g:if test="${appPermissions instanceof List}">
+    <g:set var="appPermissions" value="${appPermissions.join(',')}" />
+</g:if>
 <script type="text/javascript">
 	function FBGrailsSDK_login() {
-		FB.login(function(response) {
-			if (response.authResponse) {
+        FB.login(function(response) {
+            if (response.authResponse) {
 				// user is logged
 				<g:if test="${returnUrl}">
 					window.location.href = "${returnUrl}";

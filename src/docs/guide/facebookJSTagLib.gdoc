@@ -1,0 +1,19 @@
+*Facebook JS Tag Lib* is a set of tags to easily integrate "Facebook JS SDK":http://developers.facebook.com/docs/reference/javascript/ Dialogs in your GSPs.
+
+It provides the following tags:
+* [initJS|Tags] - Initialize "Facebook JS SDK":http://developers.facebook.com/docs/reference/javascript/ (REQUIRED to use other tags).
+* [addToPageLink|Tags] - Display a link to open "Add To Page Dialog":https://developers.facebook.com/docs/reference/dialogs/add_to_page/ .
+* [inviteLink|Tags] - Display a link to open "Request Dialog":https://developers.facebook.com/docs/reference/dialogs/requests/ .
+* [loginLink|Tags] - Display a link to prompt the user to authorize your application, or grant it permissions.
+* [logoutLink|Tags] - Display a link to invalidate current user session.
+* [picture|Tags] - Display user profile picture with a specific size.
+* [publishLink|Tags] - Display a link to open "Feed Dialog":https://developers.facebook.com/docs/reference/dialogs/feed/ .
+* [sendLink|Tags] - Display a link to open "Send Dialog":https://developers.facebook.com/docs/reference/dialogs/send/ .
+
+Dialogs not yet implemented:
+* "Friends Dialog":https://developers.facebook.com/docs/reference/dialogs/friends/ .
+* "Pay Dialog":https://developers.facebook.com/docs/reference/dialogs/pay/ .
+
+Next step would be to integrate with the "Resources plugin":http://grails.org/plugin/resources for JS dependencies.
+
+Feel free to contribute... ;)

@@ -3,16 +3,16 @@ package grails.plugin.facebooksdk
 import org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequest
 import org.springframework.web.context.request.RequestContextHolder
 
-abstract class FacebookAppScope {
+abstract class FacebookScope {
 	
-	FacebookApp facebookApp
-	
+	long appId = 0
+
 	GrailsWebRequest getRequest() {
 		RequestContextHolder.getRequestAttributes() as GrailsWebRequest
 	}
 	
 	protected String getKeyVariableName(String key) {
-		"fb_${facebookApp.id}_${key}"
+		"fb_${appId}_${key}"
 	}
 	
 }

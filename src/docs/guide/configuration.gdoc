@@ -1,0 +1,123 @@
+h3. Installation
+
+Declare the plugin dependency in @BuildConfig.groovy@ file, as shown here:
+
+{code}
+grails.project.dependency.resolution = {
+		inherits("global") { }
+		log "info"
+		repositories {
+				//your repositories
+		}
+		dependencies {
+				//your regular dependencies
+		}
+		plugins {
+				//here go your plugin dependencies
+				runtime ':facebook-sdk:0.4.0'
+		}
+}
+{code}
+
+
+h3. Single Facebook app
+
+Create a Facebook app on "Facebook Developers":https://developers.facebook.com/apps , in order to get your own app ID and app secret.
+
+Add your app settings in @Config.groovy@:
+
+{code}
+// Required
+grails.plugin.facebooksdk.app.id = {APP_ID}
+grails.plugin.facebooksdk.app.permissions = {APP_PERMISSIONS} // Ex. ['email','user_photos']
+grails.plugin.facebooksdk.app.secret = {APP_SECRET}
+// Optional, default proxy config for Facebook Graph Client API calls
+// grails.plugin.facebooksdk.proxyHost = {PROXY_HOST}
+// grails.plugin.facebooksdk.proxyPort = {PROXY_PORT}
+{code}
+
+Or
+
+{code}
+grails {
+    plugin {
+        facebooksdk {
+            app = [
+                id: APP_ID,
+                permissions: APP_PERMISSIONS,
+                secret: APP_SECRET
+            ]
+        }
+    }
+}
+{code}
+
+
+h3. Multiple Facebook apps
+
+Since V0.4, it is possible do define multiple apps in @Config.groovy@:
+
+{code}
+grails {
+    plugin {
+        facebooksdk {
+            appIdParamName = 'app_id' // Default app selection param name
+            apps = [
+                [
+                    id: {APP_ID1},
+                    permissions: {APP_PERMISSIONS1}, // Ex. ['email','user_photos']
+                    secret: {APP_SECRET1}
+                ],
+                [
+                    id: {APP_ID2},
+                    permissions: {APP_PERMISSIONS2}, // Ex. ['email','user_photos']
+                    secret: {APP_SECRET2}
+                ],
+                ...
+            ]
+        }
+    }
+}
+{code}
+
+
+For each request, you must define @app_id@ in @params@ (by appending @?app_id={APP_ID}@ to query string) in order to specify which Facebook app setting to use.
+
+Note: to define another parameter name, set config param @grails.plugin.facebooksdk.appIdParamName@.
+
+You can also associate a Facebook app to a default controller by adding controller name in each app settings :
+
+{code}
+grails {
+    plugin {
+        facebooksdk {
+            apps = [
+                [
+                    controller: {CONTROLLER_NAME1},
+                    id: {APP_ID1},
+                    permissions: {APP_PERMISSIONS1},
+                    secret: {APP_SECRET1}
+                ],
+                [
+                    controller: {CONTROLLER_NAME2},
+                    id: {APP_ID2},
+                    permissions: {APP_PERMISSIONS2},
+                    secret: {APP_SECRET2}
+                ],
+                ...
+            ]
+        }
+    }
+}
+{code}
+
+For example, let's say you have two apps with two controllers: @QuizController@ and @SweepstakesController@.
+
+Add @controller: 'quiz'@ in quiz app settings and @controller: 'sweepstakes'@ in sweepstakes app settings.
+
+To access your quiz app, use http://localhost:8080/my-app/*quiz* .
+
+To access your sweepstakes app, use http://localhost:8080/my-app/*sweepstakes* .
+
+If no app is found based on @app_id@ params and controller name, default single app @grails.plugin.facebooksdk.app@ settings will be used (if defined).
+

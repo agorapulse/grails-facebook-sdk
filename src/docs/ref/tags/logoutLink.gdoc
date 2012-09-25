@@ -1,13 +1,14 @@
 h1. facebook:logoutLink
 
-For the user to logout from your app and Facebook.com, use @logoutLink@ tag.
+Display a link to invalidate current user session.
 
 {code:xml}
 <facebook:logoutLink>Logout</facebook:logoutLink>
 {code}
 
-Optional attributes are :
+h3. Attributes
 
+Optional attributes are :
 * @elementClass@ HTML element @class@ attribute value.
 * @elementId@ HTML element @id@ attribute value.
 * @nextUrl@ Next URL for redirect after logout (if not defined page will be reloaded).

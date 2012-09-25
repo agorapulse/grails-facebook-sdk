@@ -1,7 +1,5 @@
 package grails.plugin.facebooksdk
 
-import org.springframework.web.servlet.support.RequestContextUtils
-
 class FacebookJSTagLib {
 
     static String TYPE_LARGE = 'large'
@@ -29,14 +27,31 @@ class FacebookJSTagLib {
 	*/
 	def initJS = { attrs, body ->
 		if (!attrs.containsKey("cookie")) attrs.cookie = true
-		if (!attrs.locale) Locale.getDefault()
+		if (!attrs.locale) attrs.locale = Locale.getDefault()
         Map model = [body:body()]
 		attrs.each { key, value ->
 			model[key] = value	
 		}
 		out << render(template:"/facebook-sdk/init-js", model:model, plugin:"facebook-sdk")
 	}
-	
+
+    /**
+     * Add to page link (https://developers.facebook.com/docs/reference/dialogs/add_to_page/)
+     *
+     * @attr disabled Disable click on the link.
+     * @attr display Display mode in which to render the Dialog. Can be page (default), popup, iframe, or touch.
+     * @attr elementClass HTML element 'class' attribute value.
+     * @attr elementId HTML element 'id' attribute value.
+     * @attr returnUrl Return URL for redirect after login (if not defined page will be reloaded)
+     */
+    def addToPageLink = {attrs, body ->
+        Map model = [body:body()]
+        attrs.each { key, value ->
+            model[key] = value
+        }
+        out << render(template:"/facebook-sdk/add-to-page-link", model:model, plugin:"facebook-sdk")
+    }
+
 	/**
 	* Login link
 	*
@@ -148,6 +163,27 @@ class FacebookJSTagLib {
             model[key] = value
         }
         out << render(template:"/facebook-sdk/publish-link", model:model, plugin:"facebook-sdk")
+    }
+
+    /**
+     * Send link (https://developers.facebook.com/docs/reference/dialogs/send/)
+     *
+     * @attr disabled Disable click on the link.
+     * @attr display Display mode in which to render the Dialog. Can be page (default), popup, iframe, or touch.
+     * @attr description The description of the link (appears beneath the link caption). If not specified, this field is automatically populated by information scraped from the link, typically the title of the page.
+     * @attr elementClass HTML element 'class' attribute value.
+     * @attr elementId HTML element 'id' attribute value.
+     * @attr link REQUIRED The link attached to this post.
+     * @attr name The name of the link attachment.
+     * @attr picture The URL of a picture attached to this post. The picture must be at least 50px by 50px and have a maximum aspect ratio of 3:1.
+     * @attr to REQUIRED A user ID or username to which to send the message.
+     */
+    def sendLink = {attrs, body ->
+        Map model = [body:body()]
+        attrs.each { key, value ->
+            model[key] = value
+        }
+        out << render(template:"/facebook-sdk/send-link", model:model, plugin:"facebook-sdk")
     }
 
 }

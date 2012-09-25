@@ -1,0 +1,37 @@
+h1. facebook:sendLink
+
+Display a link to open "Send Dialog":https://developers.facebook.com/docs/reference/dialogs/send/ .
+
+!https://developers.facebook.com/attachment/Facebook_Dialogs_Send.png!
+
+The *Send Dialog* lets people to send content to specific friends. They'll have the option to privately share a link as a Facebook message, Group post or email.
+
+{code}
+<facebook:sendLink to="594317994">Send a link to a friend</facebook:sendLink>
+{code}
+
+To check if the app was successfully added or execute some code, you can use @callBackJS@ attribute.
+
+{code}
+<facebook:sendLink
+    callBackJS="function(response) {if (response && response.success) alert('Sent successfully')}"
+    link="http://www.google.com"
+    to="594317994">
+    Send a link to a friend
+</facebook:sendLink>
+{code}
+
+h3. Attributes
+
+Required attributes are :
+* @link@ The link attached to this post.
+* @to@ A user ID or username to which to send the message.
+
+Optional attributes are :
+* @callBackJS@ Javascript to code to execute on call back (if the user send the form or close the dialog).
+* @disabled@ Disable click on the link.
+* @description@ The description of the link (appears beneath the link caption). If not specified, this field is automatically populated by information scraped from the link, typically the title of the page.
+* @elementClass@ HTML element 'class' attribute value.
+* @elementId@ HTML element 'id' attribute value.
+* @name@ The name of the link attachment.
+* @picture@ The URL of a picture attached to this post. The picture must be at least 50px by 50px and have a maximum aspect ratio of 3:1.

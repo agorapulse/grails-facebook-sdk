@@ -1,12 +1,11 @@
 package grails.plugin.facebooksdk
 
-import com.restfb.batch.BatchRequest
-import com.restfb.batch.BatchRequest.BatchRequestBuilder
 import com.restfb.BinaryAttachment
 import com.restfb.Connection
 import com.restfb.Parameter
+import com.restfb.batch.BatchRequest
+import com.restfb.batch.BatchRequest.BatchRequestBuilder
 import com.restfb.json.JsonObject
-
 import grails.converters.JSON
 
 class FacebookGraphClient extends DefaultFacebookGraphClient {
@@ -45,6 +44,14 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 		}
 		return objects
 	}
+
+    def publish(String connection, Map parameters = [:], String fileName, FileInputStream fileInputStream) {
+        if (fileName && fileInputStream) {
+            return super.publish(connection, JsonObject, BinaryAttachment.with(fileName, fileInputStream), buildVariableArgs(parameters))
+        } else {
+            return super.publish(connection, JsonObject, buildVariableArgs(parameters))
+        }
+    }
 
 	def publish(String connection, Map parameters = [:], String filePath = '') {
 		if (filePath) {

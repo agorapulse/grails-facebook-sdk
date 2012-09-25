@@ -7,41 +7,69 @@ import javax.crypto.spec.SecretKeySpec
 
 class FacebookSignedRequest {
 
-	// Facebook access token of the current user.
+    static final TYPE_COOKIE = 'cookie'
+    static final TYPE_PARAMS = 'params'
+
+    // Facebook access token of the current user.
 	String accessToken = ''
 	// App data query string parameter (only available if your app is an iframe loaded in a Page tab).
 	Map appData = [:]
 	// Authorization code
 	String code = ''
-	// Unix timestamp when the oauth_token expires.
+    // Unix timestamp when the request was signed.
+    long creationTime = 0
+    // Unix timestamp when the oauth_token expires.
 	long expirationTime = 0
-	// Unix timestamp when the request was signed.
-	long creationTime = 0
 	// Page id string, the liked boolean if the user has liked the page, the admin boolean if the user is an admin (only available if your app is an iframe loaded in a Page tab).
 	Map page = [:]
-	// Locale string, country string and the age object (containing the min and max number range of the age) of the current user.
-	Map user = [:]
+    // Type (cookie or params)
+    String type = ''
+    // Locale string, country string and the age object (containing the min and max number range of the age) of the current user.
+    Map user = [:]
 	// Facebook user identifier (UID) of the current user.
 	long userId = 0
 
     FacebookSignedRequest() {}
 
-	FacebookSignedRequest(String appSecret, String signedRequest) {
+	FacebookSignedRequest(String appSecret, String signedRequest, String typeValue) {
 		Map data = parseSignedRequest(appSecret, signedRequest)
 		assert data['algorithm'] == 'HMAC-SHA256', 'Unknown algorithm. Expected HMAC-SHA256'
+        assert typeValue in [TYPE_COOKIE, TYPE_PARAMS]
 
-		if (data['oauth_token']) this.accessToken = data['oauth_token']
-		if (data['app_data']) this.appData = data['app_data'] as Map
-		if (data['code']) this.code = data['code']
-		if (data['expires']) this.expirationTime = data['expires'] as long
-		if (data['issued_at']) this.creationTime = data['issued_at'] as long
-		if (data['page']) this.page = data['page'] as Map
-		if (data['user']) this.user = data['user'] as Map
-		if (data['user_id']) this.userId = data['user_id'] as long
+        type = typeValue
+
+        data.each { key, value ->
+            switch(key) {
+                case 'oauth_token':
+                    this.accessToken = value
+                    break
+                case 'app_data':
+                    this.appData = value as Map
+                    break
+                case 'code':
+                    this.code = value
+                    break
+                case 'expires':
+                    this.expirationTime = value as long
+                    break
+                case 'issued_at':
+                    this.creationTime = value as long
+                    break
+                case 'page':
+                    this.page = value as Map
+                    break
+                case 'user':
+                    this.user = value as Map
+                    break
+                case 'user_id':
+                    this.userId = value as long
+                    break
+            }
+        }
 	}
 
 	String toString() {
-		"FacebookSignedRequest(accessToken: $accessToken, appData: $appData, code: $code, expirationTime: $expirationTime, page: $page, user: $user, userId: $userId)"
+		"FacebookSignedRequest(accessToken: $accessToken, appData: $appData, code: $code, expirationTime: $expirationTime, page: $page, type: $type, user: $user, userId: $userId)"
 	}
 
 	// PRIVATE

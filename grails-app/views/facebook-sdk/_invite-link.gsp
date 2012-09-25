@@ -4,7 +4,7 @@
     function FBGrailsSDK_invite() {
         FB.ui({
             method: 'apprequests',
-            message: '${message.encodeAsJavaScript()}#'
+            message: '${message.encodeAsJavaScript()}'
             <g:if test="${data}">, data: '${data}'</g:if>
             <g:if test="${display}">, 'display':'${display}'</g:if>
             <g:if test="${excludeIds}">, exclude_ids: '${excludeIds as JSON}'</g:if>
@@ -12,7 +12,7 @@
             <g:if test="${maxRecipients}">, max_recipients: ${maxRecipients}</g:if>
             <g:if test="${title}">, title: '${title.encodeAsJavaScript()}'</g:if>
             <g:if test="${to}">, to: '${to}'</g:if>
-        });
+        }<g:if test="${callBackJS}">, ${callBackJS}</g:if>);
         return false;
     }
 </script>
