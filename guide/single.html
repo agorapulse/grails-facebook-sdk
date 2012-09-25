@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
-        <title>Facebook SDK Grails Plugin 0.3.6</title>
+        <title>Facebook SDK Grails Plugin 0.4.0</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
         <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8" />
@@ -25,13 +25,13 @@ function addJsClass(el) {
                             
                             <div class="toc-item" style="margin-left:0"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
                             
-                            <div class="toc-item" style="margin-left:0"><a href="#gettingStarted"><strong>2</strong><span>Getting started</span></a></div>
+                            <div class="toc-item" style="margin-left:0"><a href="#configuration"><strong>2</strong><span>Configuration</span></a></div>
                             
-                            <div class="toc-item" style="margin-left:0"><a href="#facebookFilter"><strong>3</strong><span>Facebook Filter</span></a></div>
+                            <div class="toc-item" style="margin-left:0"><a href="#facebookContext"><strong>3</strong><span>Facebook Context</span></a></div>
                             
-                            <div class="toc-item" style="margin-left:0"><a href="#facebookAppService"><strong>4</strong><span>Facebook App Service</span></a></div>
+                            <div class="toc-item" style="margin-left:0"><a href="#facebookGraphClient"><strong>4</strong><span>Facebook Graph Client</span></a></div>
                             
-                            <div class="toc-item" style="margin-left:0"><a href="#facebookGraphClient"><strong>5</strong><span>Facebook Graph Client</span></a></div>
+                            <div class="toc-item" style="margin-left:0"><a href="#facebookJSTagLib"><strong>5</strong><span>Facebook JS Tag Lib</span></a></div>
                             
                         </div>
                     </div>
@@ -62,7 +62,7 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
                         <div class="project">
                             <h1>Facebook SDK Grails Plugin - Reference Documentation</h1>
                             <p><strong>Authors:</strong> Benoit Hediard</p>
-                            <p><strong>Version:</strong> 0.3.6</p>
+                            <p><strong>Version:</strong> 0.4.0</p>
                             
                         </div>
 
@@ -72,13 +72,13 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
                             
                             <div class="toc-item" style="margin-left:0px"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
                             
-                            <div class="toc-item" style="margin-left:0px"><a href="#gettingStarted"><strong>2</strong><span>Getting started</span></a></div>
+                            <div class="toc-item" style="margin-left:0px"><a href="#configuration"><strong>2</strong><span>Configuration</span></a></div>
                             
-                            <div class="toc-item" style="margin-left:0px"><a href="#facebookFilter"><strong>3</strong><span>Facebook Filter</span></a></div>
+                            <div class="toc-item" style="margin-left:0px"><a href="#facebookContext"><strong>3</strong><span>Facebook Context</span></a></div>
                             
-                            <div class="toc-item" style="margin-left:0px"><a href="#facebookAppService"><strong>4</strong><span>Facebook App Service</span></a></div>
+                            <div class="toc-item" style="margin-left:0px"><a href="#facebookGraphClient"><strong>4</strong><span>Facebook Graph Client</span></a></div>
                             
-                            <div class="toc-item" style="margin-left:0px"><a href="#facebookGraphClient"><strong>5</strong><span>Facebook Graph Client</span></a></div>
+                            <div class="toc-item" style="margin-left:0px"><a href="#facebookJSTagLib"><strong>5</strong><span>Facebook JS Tag Lib</span></a></div>
                             
                             <div style="clear:both" ></div>
                         </div>
@@ -86,16 +86,19 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
                         
 
 <h1 id="introduction">1 Introduction</h1>
-The <a href="http://developers.facebook.com/" target="blank">Facebook Platform</a> is a set of APIs that make your application more social. Read more about <a href="http://developers.facebook.com/docs/guides/web" target="blank">integrating Facebook with your web site</a> on the Facebook developer site.<p class="paragraph"/>This project contains the open source <strong class="bold">Grails Facebook SDK Plugin</strong> that allows you to integrate the <a href="http://developers.facebook.com/" target="blank">Facebook Platform</a> on a website/app powered by <a href="http://grails.org" target="blank">Grails</a> .<p class="paragraph"/>This plugin is a port of the official <a href="http://github.com/facebook/facebook-php-sdk" target="blank">Facebook PHP SDK V3.1.1</a> to <a href="http://grails.org" target="blank">Grails 2.0</a> .<p class="paragraph"/>It supports the latest <strong class="bold">OAuth2.0 authentication</strong> (required since October 1st 2011).<p class="paragraph"/><strong class="bold">Grails Facebook SDK Plugin</strong> provides Grails artefacts:
+The <a href="http://developers.facebook.com/" target="blank">Facebook Platform</a> is a set of APIs that make your application more social. Read more about <a href="http://developers.facebook.com/docs/guides/web" target="blank">integrating Facebook with your web site</a> on the Facebook developer site.<p class="paragraph"/>This project contains the open source <strong class="bold">Grails Facebook SDK Plugin</strong> that allows you to integrate the <a href="http://developers.facebook.com/" target="blank">Facebook Platform</a> on a website/app powered by <a href="http://grails.org" target="blank">Grails</a> .<p class="paragraph"/>This plugin is a port of the official <a href="http://github.com/facebook/facebook-php-sdk" target="blank">Facebook PHP SDK V3.1.1</a> to <a href="http://grails.org" target="blank">Grails 2.0</a> .<p class="paragraph"/>It supports the latest <strong class="bold">OAuth2.0 authentication</strong> (required since October 1st 2011).<p class="paragraph"/><strong class="bold">Grails Facebook SDK Plugin</strong> provides the following Grails artefacts:
 <ul class="star">
-<li><code>FacebookAppService</code> - A service to build <a href="http://developers.facebook.com/docs/guides/canvas/" target="blank">apps on Facebook.com</a> and <a href="http://developers.facebook.com/docs/guides/web" target="blank">websites with the Facebook Platform</a> .</li>
+<li><code>FacebookContext</code> - A Spring bean to get current Facebook context in controllers, when running <a href="http://developers.facebook.com/docs/guides/canvas/" target="blank">apps on Facebook.com</a> and <a href="http://developers.facebook.com/docs/guides/web" target="blank">websites with the Facebook Platform</a> .</li>
 <li><code>FacebookGraphClient</code> - A client to call <a href="http://developers.facebook.com/docs/reference/api/," target="blank">Facebook Graph API</a> which is a wrapper around the rock solid <a href="http://restfb.com/" target="blank">RestFB java library</a> version 1.6.10 (released September 03, 2012).</li>
 <li><code>FacebookJSTagLib</code> - A collection of tags to easily integrate <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Facebook JS SDK</a> in your GSPs.</li>
-</ul><p class="paragraph"/><h3>Latest releases</h3>
+</ul><p class="paragraph"/><h3>Latest releases</h3><p class="paragraph"/><blockquote class="warning">
+WARNING: Since V0.4.0, <code>FacebookApp</code>, <code>FacebookSdkFilters</code> and <code>FacebookAppService</code> from V0.3.* are DEPRECATED and have been replaced by <code>FacebookContext</code>: a cleaner approach to access Facebook context related info.<p class="paragraph"/>Please check <a href="../guide/single.html#facebookContext" class="guide"><code>FacebookContext</code></a> doc for more info.
+</blockquote>
 <ul class="star">
-<li>2012-09-03 <strong class="bold">V0.3.6</strong> : latest RestFB 1.6.10 dependency, <code>proxyHost</code> and <code>proxyPort</code> added to config and <code>signedRequest</code> added to filter <code>facebook</code> map.</li>
+<li>2012-10-25 <strong class="bold">V0.4.0</strong> : complete refactoring to improve SDK architecture (<a href="../guide/single.html#facebookContext" class="guide"><code>FacebookContext</code></a> implemented) and <a href="../guide/single.html#configuration" class="guide">multiple Facebook apps</a> support added</li>
+<li>2012-09-03 <strong class="bold">V0.3.6</strong> : latest RestFB 1.6.10 dependency, <code>proxyHost</code> and <code>proxyPort</code> added to config and <code>signedRequest</code> added to filter <code>facebook</code> map</li>
 <li>2012-08-24 <strong class="bold">V0.3.5</strong> : <code>proxyHost</code> and <code>proxyPort</code> parameters added to Graph/Rest client (thanks to Eduard Martini)</li>
-<li>2012-07-23 <strong class="bold">V0.3.4</strong> : bug fix in facebookAppService</li>
+<li>2012-07-23 <strong class="bold">V0.3.4</strong> : bug fix in <code>facebookAppService</code></li>
 <li>2012-07-17 <strong class="bold">V0.3.3</strong> : <code>readTimeout</code> parameter added to Graph/Rest client + upgrade to Grails 2.1 with wrapper</li>
 <li>2012-06-12 <strong class="bold">V0.3.2</strong> : bug fix in filter and plugin config</li>
 <li>2012-06-12 <strong class="bold">V0.3.1</strong> : package <code>grails.plugins.facebooksdk</code> renamed to <code>grails.plugin.facebooksdk</code></li>
@@ -104,10 +107,12 @@ The <a href="http://developers.facebook.com/" target="blank">Facebook Platform</
 This is a <strong class="bold">beta release</strong>.
 The underlying APIs are generally stable, however we may make changes to the library in response to developer feedback.
 </blockquote><p class="paragraph"/>
+<h3>Demo app</h3><p class="paragraph"/>If you want to quickly run the SDK on a demo app, you can download <a href="https://github.com/benorama/grails-facebook-sdk-demo" target="blank">Facebook SDK Grails - Demo</a> .<p class="paragraph"/>
+<h3>Integration with Shiro Grails Plugin</h3><p class="paragraph"/>To see an example of integration with Shiro Grails Plugin, you can download <a href="https://github.com/benorama/grails-facebook-sdk-demo-shiro" target="blank">Facebook SDK Grails - Shiro demo</a> .<p class="paragraph"/>
 <h3>About</h3><p class="paragraph"/>The <strong class="bold">Grails Facebook SDK Plugin</strong> is not an official Facebook SDK such as <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Javascript</a> , <a href="http://github.com/facebook/facebook-php-sdk" target="blank">PHP</a> , <a href="http://github.com/facebook/facebook-ios-sdk/" target="blank">iOS</a> and <a href="http://github.com/facebook/facebook-android-sdk" target="blank">Android SDKs</a> .<p class="paragraph"/>It is developed by <a href="http://www.agorapulse.com" target="blank">AgoraPulse</a> and licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0.html" target="blank">Apache Licence, Version 2.0</a> .
 
 
-<h1 id="gettingStarted">2 Getting started</h1>
+<h1 id="configuration">2 Configuration</h1>
 <h3>Installation</h3><p class="paragraph"/>Declare the plugin dependency in <code>BuildConfig.groovy</code> file, as shown here:<p class="paragraph"/><div class="code"><pre>grails.project.dependency.resolution = &#123;
 		inherits(<span class="java&#45;quote">"global"</span>) &#123; &#125;
 		log <span class="java&#45;quote">"info"</span>
@@ -119,45 +124,130 @@ The underlying APIs are generally stable, however we may make changes to the lib
 		&#125;
 		plugins &#123;
 				//here go your plugin dependencies
-				runtime ':facebook&#45;sdk:0.3.6'
+				runtime ':facebook&#45;sdk:0.4.0'
 		&#125;
 &#125;</pre></div><p class="paragraph"/>
-<h3>Config</h3><p class="paragraph"/>Create a Facebook app on <a href="https://developers.facebook.com/apps" target="blank">Facebook Developers</a> , in order to get your own app ID and app secret.<p class="paragraph"/>Add your Facebook app parameters your <code>Config.groovy</code>:<p class="paragraph"/><div class="code"><pre>// Required
-grails.plugin.facebooksdk.appId = &#123;APP_ID&#125;
-grails.plugin.facebooksdk.appPermissions = &#123;APP_PERMISSIONS&#125;
-grails.plugin.facebooksdk.appSecret = &#123;APP_SECRET&#125;
-// Optional, proxy config <span class="java&#45;keyword">for</span> Facebook HTTP API calls
+<h3>Single Facebook app</h3><p class="paragraph"/>Create a Facebook app on <a href="https://developers.facebook.com/apps" target="blank">Facebook Developers</a> , in order to get your own app ID and app secret.<p class="paragraph"/>Add your app settings in <code>Config.groovy</code>:<p class="paragraph"/><div class="code"><pre>// Required
+grails.plugin.facebooksdk.app.id = &#123;APP_ID&#125;
+grails.plugin.facebooksdk.app.permissions = &#123;APP_PERMISSIONS&#125; // Ex. &#91;'email','user_photos'&#93;
+grails.plugin.facebooksdk.app.secret = &#123;APP_SECRET&#125;
+// Optional, <span class="java&#45;keyword">default</span> proxy config <span class="java&#45;keyword">for</span> Facebook Graph Client API calls
 // grails.plugin.facebooksdk.proxyHost = &#123;PROXY_HOST&#125;
-// grails.plugin.facebooksdk.proxyPort = &#123;PROXY_PORT&#125;</pre></div><p class="paragraph"/>
-<h3>Demo app</h3><p class="paragraph"/>If you want to quickly run the SDK on a demo app, you can download <a href="https://github.com/benorama/grails-facebook-sdk-demo" target="blank">Facebook SDK Grails - Demo</a> .<p class="paragraph"/>
-<h3>Integration with Shiro Grails Plugin</h3><p class="paragraph"/>To see an example of integration with Shiro Grails Plugin, you can download <a href="https://github.com/benorama/grails-facebook-sdk-demo-shiro" target="blank">Facebook SDK Grails - Shiro demo</a> .<p class="paragraph"/>
+// grails.plugin.facebooksdk.proxyPort = &#123;PROXY_PORT&#125;</pre></div><p class="paragraph"/>Or<p class="paragraph"/><div class="code"><pre>grails &#123;
+    plugin &#123;
+        facebooksdk &#123;
+            app = &#91;
+                id: APP_ID,
+                permissions: APP_PERMISSIONS,
+                secret: APP_SECRET
+            &#93;
+        &#125;
+    &#125;
+&#125;</pre></div><p class="paragraph"/>
+<h3>Multiple Facebook apps</h3><p class="paragraph"/>Since V0.4, it is possible do define multiple apps in <code>Config.groovy</code>:<p class="paragraph"/><div class="code"><pre>grails &#123;
+    plugin &#123;
+        facebooksdk &#123;
+            appIdParamName = 'app_id' // Default app selection param name
+            apps = &#91;
+                &#91;
+                    id: &#123;APP_ID1&#125;,
+                    permissions: &#123;APP_PERMISSIONS1&#125;, // Ex. &#91;'email','user_photos'&#93;
+                    secret: &#123;APP_SECRET1&#125;
+                &#93;,
+                &#91;
+                    id: &#123;APP_ID2&#125;,
+                    permissions: &#123;APP_PERMISSIONS2&#125;, // Ex. &#91;'email','user_photos'&#93;
+                    secret: &#123;APP_SECRET2&#125;
+                &#93;,
+                &#8230;
+            &#93;
+        &#125;
+    &#125;
+&#125;</pre></div><p class="paragraph"/>
+For each request, you must define <code>app_id</code> in <code>params</code> (by appending <code>?app_id={APP_ID}</code> to query string) in order to specify which Facebook app setting to use.<p class="paragraph"/>Note: to define another parameter name, set config param <code>grails.plugin.facebooksdk.appIdParamName</code>.<p class="paragraph"/>You can also associate a Facebook app to a default controller by adding controller name in each app settings :<p class="paragraph"/><div class="code"><pre>grails &#123;
+    plugin &#123;
+        facebooksdk &#123;
+            apps = &#91;
+                &#91;
+                    controller: &#123;CONTROLLER_NAME1&#125;,
+                    id: &#123;APP_ID1&#125;,
+                    permissions: &#123;APP_PERMISSIONS1&#125;,
+                    secret: &#123;APP_SECRET1&#125;
+                &#93;,
+                &#91;
+                    controller: &#123;CONTROLLER_NAME2&#125;,
+                    id: &#123;APP_ID2&#125;,
+                    permissions: &#123;APP_PERMISSIONS2&#125;,
+                    secret: &#123;APP_SECRET2&#125;
+                &#93;,
+                &#8230;
+            &#93;
+        &#125;
+    &#125;
+&#125;</pre></div><p class="paragraph"/>For example, let's say you have two apps with two controllers: <code>QuizController</code> and <code>SweepstakesController</code>.<p class="paragraph"/>Add <code>controller: 'quiz'</code> in quiz app settings and <code>controller: 'sweepstakes'</code> in sweepstakes app settings.<p class="paragraph"/>To access your quiz app, use http://localhost:8080/my-app/<strong class="bold">quiz</strong> .<p class="paragraph"/>To access your sweepstakes app, use http://localhost:8080/my-app/<strong class="bold">sweepstakes</strong> .<p class="paragraph"/>If no app is found based on <code>app_id</code> params and controller name, default single app <code>grails.plugin.facebooksdk.app</code> settings will be used (if defined).<p class="paragraph"/>
 
 
-<h1 id="facebookFilter">3 Facebook Filter</h1>
-The plugin automatically run a filter that create the following data in request scope.<p class="paragraph"/><div class="code"><pre>request.facebook.app.id = &#123;APP_ID&#125;
-request.facebook.app.permissions = &#123;APP_PERMISSIONS&#125;
-request.facebook.app.secret = &#123;APP_SECRET&#125;
-request.facebook.authenticated = &#123;TRUE_OR_FALSE&#125;
-request.facebook.signedRequest = &#123;DECODED_SIGNED_REQUEST_MAP&#125;
-request.facebook.user.id = &#123;AUTHENTICATED_USER_ID&#125;</pre></div>
+<h1 id="facebookContext">3 Facebook Context</h1>
+<blockquote class="warning">
+WARNING: Since V0.4.0, <code>FacebookApp</code>, <code>FacebookSdkFilters</code> and <code>FacebookAppService</code> from V0.3.<strong class="bold"> have been deprecated and replaced by <code>FacebookContext</code>: a cleaner approach to access Facebook context related info.<p class="paragraph"/>Sorry, V0.3.</strong> users, you might have to do some refactoring&#8230;
+</blockquote><p class="paragraph"/>The plugin can automatically create a <code>facebookContext</code> Spring bean, with all the required info:
+<ul class="minus">
+<li><strong class="bold">current Facebook signed request</strong> (if defined).</li>
+<li><strong class="bold">current Facebook app</strong>,</li>
+<li><strong class="bold">current Facebook user</strong> (if authenticated),</li>
+<li><strong class="bold">current Facebook page</strong> (if running in a facebook page tab),</li>
+</ul><p class="paragraph"/>To automatically inject it in your controllers, add the <code>facebookContext</code> property.<p class="paragraph"/><div class="code"><pre>MyController &#123;<p class="paragraph"/>    FacebookContext facebookContext
+    &#8230;
+    def index() &#123;
+        <span class="java&#45;object">long</span> userId = facebookContext.user.id
+        &#8230;
+    &#125;
+&#125;</pre></div><p class="paragraph"/>Note: <code>facebookContext</code> is a <code>request</code> scope bean and should only be used in Grails controllers (or other <code>request</code> scope beans).<p class="paragraph"/>If you want to access <code>facebookContext</code> from a non <code>request</code> scope bean (ex.: <code>singleton</code> filters), you should use <code>facebookContextProxy</code> (AOP scoped proxy).<p class="paragraph"/><div class="code"><pre>MyFilter &#123;<p class="paragraph"/>    FacebookContext facebookContextProxy
+    &#8230;
+    def index() &#123;
+        <span class="java&#45;object">long</span> userId = facebookContextProxy.user.id
+        &#8230;
+    &#125;
+&#125;</pre></div><p class="paragraph"/>
+<h3>Signed Request</h3><p class="paragraph"/>The context gives you access to the current signed request sent to your app by Facebook :
+<ul class="minus">
+<li>on <strong class="bold">apps.facebook.com</strong> or in a <strong class="bold">page tab</strong>, through <code>signed_request</code> params posted to the app iframe,</li>
+<li>on <strong class="bold">external sites</strong> (web or mobile) through <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Facebook JS SDK</a> signed request cookie.</li>
+</ul><p class="paragraph"/><div class="code"><pre>// To get access to signed request data
+facebookContext.signedRequest</pre></div><p class="paragraph"/>But the signed request is automatically parsed and all its data are available in <code>FacebookContext</code>, so you should not have to use it.<p class="paragraph"/><blockquote class="note">
+If you are running your app on <strong class="bold">apps.facebook.com</strong> or in a <strong class="bold">page tab</strong>, <code>signedRequest</code> is only available on initial request (if you navigate inside the iframe, signed request is lost if you do not pass it to your links params).
+</blockquote><p class="paragraph"/>
+<h3>Facebook App</h3><p class="paragraph"/>The context gives you access to <strong class="bold">current Facebook app</strong> info.<p class="paragraph"/><div class="code"><pre>// To get Facebook app id (defined in Config.groovy)
+facebookContext.app.id
+// To get Facebook app permissions (defined in Config.groovy)
+facebookContext.app.permissions
+ // To get Facebook app secret (defined in Config.groovy)
+facebookContext.app.secret
+ // To get <span class="java&#45;keyword">default</span> app token, concatenation of id and secret
+facebookContext.app.token
+// To get OAuth app token, required <span class="java&#45;keyword">for</span> Graph API calls (it will generate a Graph API call)
+facebookContext.app.getToken(<span class="java&#45;keyword">true</span>)</pre></div><p class="paragraph"/>If you are running your app in a <strong class="bold">page tab</strong>, you'll get additional info:<p class="paragraph"/><div class="code"><pre>// To get app data pass through page tab query string (...&#38;app_data=&#123;SOME_STRING&#125;...)
+facebookContext.app.data</pre></div><p class="paragraph"/>
+<h3>Facebook User</h3><p class="paragraph"/>To check if current user has authorized your app and is authenticated, use <code>facebookContext.authenticated</code>.<p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">if</span> (facebookContext.authenticated) &#123;
+    // User is authenticated
+&#125;</pre></div><p class="paragraph"/>If authenticated, the context gives you access to <strong class="bold">current Facebook user</strong> info.<p class="paragraph"/><div class="code"><pre>// To get facebook user id
+facebookContext.user.id
+// To get OAuth user token, required <span class="java&#45;keyword">for</span> Graph API calls
+facebookContext.user.token</pre></div><p class="paragraph"/>If the app is running on an <strong class="bold">external site</strong> (web or mobile), the access token will be automatically fetched in exchange for the authorization code returned by <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Facebook JS SDK</a> signed request cookie or server-side redirect query string.<p class="paragraph"/>If the app is running on <strong class="bold">apps.facebook.com</strong> or in a <strong class="bold">page tab</strong>, the access token will be extracted from the signed request params (passed through the canvas iFrame) and you'll get additional info:<p class="paragraph"/><div class="code"><pre>// To get facebook user age restriction (only returned in Canvas apps, it will not be returned <span class="java&#45;keyword">for</span> external apps)
+facebookContext.user.age
+// To get facebook user country
+facebookContext.user.country
+ // To get facebook user locale
+facebookContext.user.locale</pre></div><p class="paragraph"/>In order to optimize performances, user <code>id</code> and <code>token</code> are automatically stored in <code>session</code> scope.<p class="paragraph"/>
+<h3>Facebook Page</h3><p class="paragraph"/>If the app is running in a <strong class="bold">page tab</strong>, the context gives you access to <strong class="bold">current Facebook page</strong> info.<p class="paragraph"/>Otherwise, <code>facebookContext.page</code> is <code>null</code>. You must check if it exists before accessing it.<p class="paragraph"/><div class="code"><pre>// To get facebook page id (where the app is installed)
+facebookContext.page?.id
+// To know <span class="java&#45;keyword">if</span> current user has liked the current page
+facebookContext.page?.liked
+ // To know <span class="java&#45;keyword">if</span> current user is an admin of the current page
+facebookContext.page?.admin</pre></div>
 
 
-<h1 id="facebookAppService">4 Facebook App Service</h1>
-Reference <code>facebookAppService</code> from any of your grails artefacts (controllers, domain, services...) to automatically inject it.<p class="paragraph"/><div class="code"><pre>def facebookAppService</pre></div><p class="paragraph"/>
-<h3>User Id</h3><p class="paragraph"/>You can check if current user has authorized your app and is authenticated by getting <code>userId</code> from <code>facebookAppService</code>.
-It will return <code>0</code> if user is not authenticated (or if he has not authorized your app).<p class="paragraph"/><div class="code"><pre>def userId = facebookAppService.getUserId()
-<span class="java&#45;keyword">if</span> (userId) &#123;
-	println <span class="java&#45;quote">"User authenticated (id=$&#123;userId&#125;)"</span>
-&#125; <span class="java&#45;keyword">else</span> &#123;
-	println <span class="java&#45;quote">"User not authenticated"</span>
-&#125;</pre></div><p class="paragraph"/><h3>User Access Token</h3><p class="paragraph"/>If current user is authenticated, you can get his private <code>accessToken</code> from <code>facebookAppService</code>.<p class="paragraph"/>If the app is running on a website, the access token will be automatically fetched in exchange for the authorization code returned by <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Facebook JS SDK</a> signed request cookie. It is recommended to wrap this code in a try/catch block since external HTTP calls to  <em class="italic">Facebook Graph API</em>  might be executed.<p class="paragraph"/>If the app is running on Facebook.com, the access token will be extracted from the signed request params (passed through the canvas iFrame).<p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">try</span> &#123;
-	<span class="java&#45;object">String</span> userAccessToken = facebookAppService.getUserAccessToken()
-&#125; <span class="java&#45;keyword">catch</span> (Exception exception) &#123;
-	// Something went wrong&#8230;
-&#125;</pre></div><p class="paragraph"/>By default, after initial request, access token is stored in session scope for better performance: another reason to surround all your  <em class="italic">Facebook Graph API</em>  calls in try/catch in order to catch expired/invalid access tokens.<p class="paragraph"/>
-
-
-<h1 id="facebookGraphClient">5 Facebook Graph Client</h1>
+<h1 id="facebookGraphClient">4 Facebook Graph Client</h1>
 To perform Facebook Graph API call, use the <code>FacebookGraphClient</code> without access token for public data or with an access token for private data.
 <code>FacebookGraphClient</code> is a thin groovy wrapper around the rock solid <a href="http://restfb.com/" target="blank">RestFB java library</a> .
 It will return JSON-based graph objects.<p class="paragraph"/>To play with the API, you might use the grails console from your project root and get user token or app token from <a href="https://developers.facebook.com/tools/access_token/" target="blank">Facebook Access Token Tool</a> .<p class="paragraph"/><div class="code"><pre>grails console</pre></div><p class="paragraph"/><h3>Initialization</h3><p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">import</span> grails.plugin.facebooksdk.FacebookGraphClient<p class="paragraph"/>// For <span class="java&#45;keyword">public</span> data
@@ -218,6 +308,24 @@ println <span class="java&#45;quote">"M83 feed "</span> + batchResponses&#91;1&#
 <li><code>FacebookResponseStatusException</code></li>
 </ul><p class="paragraph"/>For more info, check <a href="http://restfb.com/" target="blank">RestFB java library</a> documentation.
 
+
+<h1 id="facebookJSTagLib">5 Facebook JS Tag Lib</h1>
+<strong class="bold">Facebook JS Tag Lib</strong> is a set of tags to easily integrate <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Facebook JS SDK</a> Dialogs in your GSPs.<p class="paragraph"/>It provides the following tags:
+<ul class="star">
+<li><a href="../ref/Tags/initJS.html" class="Tags">initJS</a> - Initialize <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Facebook JS SDK</a> (REQUIRED to use other tags).</li>
+<li><a href="../ref/Tags/addToPageLink.html" class="Tags">addToPageLink</a> - Display a link to open <a href="https://developers.facebook.com/docs/reference/dialogs/add_to_page/" target="blank">Add To Page Dialog</a> .</li>
+<li><a href="../ref/Tags/inviteLink.html" class="Tags">inviteLink</a> - Display a link to open <a href="https://developers.facebook.com/docs/reference/dialogs/requests/" target="blank">Request Dialog</a> .</li>
+<li><a href="../ref/Tags/loginLink.html" class="Tags">loginLink</a> - Display a link to prompt the user to authorize your application, or grant it permissions.</li>
+<li><a href="../ref/Tags/logoutLink.html" class="Tags">logoutLink</a> - Display a link to invalidate current user session.</li>
+<li><a href="../ref/Tags/picture.html" class="Tags">picture</a> - Display user profile picture with a specific size.</li>
+<li><a href="../ref/Tags/publishLink.html" class="Tags">publishLink</a> - Display a link to open <a href="https://developers.facebook.com/docs/reference/dialogs/feed/" target="blank">Feed Dialog</a> .</li>
+<li><a href="../ref/Tags/sendLink.html" class="Tags">sendLink</a> - Display a link to open <a href="https://developers.facebook.com/docs/reference/dialogs/send/" target="blank">Send Dialog</a> .</li>
+</ul><p class="paragraph"/>Dialogs not yet implemented:
+<ul class="star">
+<li><a href="https://developers.facebook.com/docs/reference/dialogs/friends/" target="blank">Friends Dialog</a> .</li>
+<li><a href="https://developers.facebook.com/docs/reference/dialogs/pay/" target="blank">Pay Dialog</a> .</li>
+</ul><p class="paragraph"/>Next step would be to integrate with the <a href="http://grails.org/plugin/resources" target="blank">Resources plugin</a> for JS dependencies.<p class="paragraph"/>Feel free to contribute&#8230; ;)
+
                     </div>
                 </td>
                 <td id="col2">
@@ -228,16 +336,31 @@ println <span class="java&#45;quote">"M83 feed "</span> + batchResponses&#91;1&#
                 </div>
                 <div class="menu">
                     
-                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">tags</h1><div class="menu-sub">
+                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">Tags</h1><div class="menu-sub">
                         
                         
-                        <div class="menu-item"><a href="../ref/tags/initJS.html">initJS</a>
+                        <div class="menu-item"><a href="../ref/Tags/addToPageLink.html">addToPageLink</a>
                         </div>
                         
-                        <div class="menu-item"><a href="../ref/tags/loginLink.html">loginLink</a>
+                        <div class="menu-item"><a href="../ref/Tags/initJS.html">initJS</a>
                         </div>
                         
-                        <div class="menu-item"><a href="../ref/tags/logoutLink.html">logoutLink</a>
+                        <div class="menu-item"><a href="../ref/Tags/inviteLink.html">inviteLink</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Tags/loginLink.html">loginLink</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Tags/logoutLink.html">logoutLink</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Tags/picture.html">picture</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Tags/publishLink.html">publishLink</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Tags/sendLink.html">sendLink</a>
                         </div>
                         
                         </div>

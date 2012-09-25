@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>Facebook SDK Grails Plugin 0.3.6</title>
+    <title>Facebook SDK Grails Plugin 0.4.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -28,16 +28,16 @@ function addJsClass(el) {
                     <div class="toc-item" style="margin-left:0"><a href="../../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0"><a href="../../guide/gettingStarted.html"><strong>2</strong><span>Getting started</span></a>
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/configuration.html"><strong>2</strong><span>Configuration</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0"><a href="../../guide/facebookFilter.html"><strong>3</strong><span>Facebook Filter</span></a>
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/facebookContext.html"><strong>3</strong><span>Facebook Context</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0"><a href="../../guide/facebookAppService.html"><strong>4</strong><span>Facebook App Service</span></a>
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/facebookGraphClient.html"><strong>4</strong><span>Facebook Graph Client</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0"><a href="../../guide/facebookGraphClient.html"><strong>5</strong><span>Facebook Graph Client</span></a>
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/facebookJSTagLib.html"><strong>5</strong><span>Facebook JS Tag Lib</span></a>
                     </div>
                     
                 </div>
@@ -66,11 +66,11 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
 
                 <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
 
-                <h1>facebook:logoutLink</h1><p class="paragraph"/>For the user to logout from your app and Facebook.com, use <code>logoutLink</code> tag.<p class="paragraph"/><div class="code"><pre><span class="xml&#45;tag">&#60;facebook:logoutLink&#62;</span>Logout<span class="xml&#45;tag">&#60;/facebook:logoutLink&#62;</span></pre></div><p class="paragraph"/>Optional attributes are :
+                <h1>facebook:logoutLink</h1><p class="paragraph"/>Display a link to invalidate current user session.<p class="paragraph"/><div class="code"><pre><span class="xml&#45;tag">&#60;facebook:logoutLink&#62;</span>Logout<span class="xml&#45;tag">&#60;/facebook:logoutLink&#62;</span></pre></div><p class="paragraph"/><h3>Attributes</h3><p class="paragraph"/>Optional attributes are :
 <ul class="star">
-<li><code>elementClass</code> HTML element 'class' attribute value</li>
-<li><code>elementId</code> HTML element 'id' attribute value</li>
-<li><code>nextUrl</code> Next URL for redirect after logout (if not defined page will be reloaded)</li>
+<li><code>elementClass</code> HTML element <code>class</code> attribute value.</li>
+<li><code>elementId</code> HTML element <code>id</code> attribute value.</li>
+<li><code>nextUrl</code> Next URL for redirect after logout (if not defined page will be reloaded).</li>
 </ul><p class="paragraph"/>
             </div>
         </td>
@@ -83,17 +83,32 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
                 <div class="menu">
                     
                     <div class="menu-block">
-                        <h1 class="menu-title" onclick="toggleRef(nextElement(this))">tags</h1>
+                        <h1 class="menu-title" onclick="toggleRef(nextElement(this))">Tags</h1>
                         <div class="menu-sub selected">
                             
                             
-                            <div class="menu-item"><a href="../../ref/tags/initJS.html">initJS</a>
+                            <div class="menu-item"><a href="../../ref/Tags/addToPageLink.html">addToPageLink</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../../ref/tags/loginLink.html">loginLink</a>
+                            <div class="menu-item"><a href="../../ref/Tags/initJS.html">initJS</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../../ref/tags/logoutLink.html">logoutLink</a>
+                            <div class="menu-item"><a href="../../ref/Tags/inviteLink.html">inviteLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Tags/loginLink.html">loginLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Tags/logoutLink.html">logoutLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Tags/picture.html">picture</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Tags/publishLink.html">publishLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Tags/sendLink.html">sendLink</a>
                             </div>
                             
                         </div>

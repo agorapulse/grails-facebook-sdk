@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>3 Facebook Context 0.4.0</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs" style="display:none;">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/configuration.html"><strong>2</strong><span>Configuration</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/facebookContext.html"><strong>3</strong><span>Facebook Context</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/facebookGraphClient.html"><strong>4</strong><span>Facebook Graph Client</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/facebookJSTagLib.html"><strong>5</strong><span>Facebook JS Tag Lib</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>The Facebook SDK Plugin allows your Grails application to use the Facebook Platform and develop Facebook apps on Facebook.com or on web sites (with Facebook Connect).
+It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
+</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../guide/configuration.html">&lt;&lt; <strong>2</strong><span>Configuration</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../guide/facebookGraphClient.html"><strong>4</strong><span>Facebook Graph Client</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>3 Facebook Context - Reference Documentation</h1>
+
+                    <p><strong>Authors:</strong> Benoit Hediard</p>
+
+                    <p><strong>Version:</strong> 0.4.0</p>
+
+                    
+                </div>
+
+                
+
+                
+
+<h1 id="facebookContext">3 Facebook Context</h1>
+<blockquote class="warning">
+WARNING: Since V0.4.0, <code>FacebookApp</code>, <code>FacebookSdkFilters</code> and <code>FacebookAppService</code> from V0.3.<strong class="bold"> have been deprecated and replaced by <code>FacebookContext</code>: a cleaner approach to access Facebook context related info.<p class="paragraph"/>Sorry, V0.3.</strong> users, you might have to do some refactoring&#8230;
+</blockquote><p class="paragraph"/>The plugin can automatically create a <code>facebookContext</code> Spring bean, with all the required info:
+<ul class="minus">
+<li><strong class="bold">current Facebook signed request</strong> (if defined).</li>
+<li><strong class="bold">current Facebook app</strong>,</li>
+<li><strong class="bold">current Facebook user</strong> (if authenticated),</li>
+<li><strong class="bold">current Facebook page</strong> (if running in a facebook page tab),</li>
+</ul><p class="paragraph"/>To automatically inject it in your controllers, add the <code>facebookContext</code> property.<p class="paragraph"/><div class="code"><pre>MyController &#123;<p class="paragraph"/>    FacebookContext facebookContext
+    &#8230;
+    def index() &#123;
+        <span class="java&#45;object">long</span> userId = facebookContext.user.id
+        &#8230;
+    &#125;
+&#125;</pre></div><p class="paragraph"/>Note: <code>facebookContext</code> is a <code>request</code> scope bean and should only be used in Grails controllers (or other <code>request</code> scope beans).<p class="paragraph"/>If you want to access <code>facebookContext</code> from a non <code>request</code> scope bean (ex.: <code>singleton</code> filters), you should use <code>facebookContextProxy</code> (AOP scoped proxy).<p class="paragraph"/><div class="code"><pre>MyFilter &#123;<p class="paragraph"/>    FacebookContext facebookContextProxy
+    &#8230;
+    def index() &#123;
+        <span class="java&#45;object">long</span> userId = facebookContextProxy.user.id
+        &#8230;
+    &#125;
+&#125;</pre></div><p class="paragraph"/>
+<h3>Signed Request</h3><p class="paragraph"/>The context gives you access to the current signed request sent to your app by Facebook :
+<ul class="minus">
+<li>on <strong class="bold">apps.facebook.com</strong> or in a <strong class="bold">page tab</strong>, through <code>signed_request</code> params posted to the app iframe,</li>
+<li>on <strong class="bold">external sites</strong> (web or mobile) through <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Facebook JS SDK</a> signed request cookie.</li>
+</ul><p class="paragraph"/><div class="code"><pre>// To get access to signed request data
+facebookContext.signedRequest</pre></div><p class="paragraph"/>But the signed request is automatically parsed and all its data are available in <code>FacebookContext</code>, so you should not have to use it.<p class="paragraph"/><blockquote class="note">
+If you are running your app on <strong class="bold">apps.facebook.com</strong> or in a <strong class="bold">page tab</strong>, <code>signedRequest</code> is only available on initial request (if you navigate inside the iframe, signed request is lost if you do not pass it to your links params).
+</blockquote><p class="paragraph"/>
+<h3>Facebook App</h3><p class="paragraph"/>The context gives you access to <strong class="bold">current Facebook app</strong> info.<p class="paragraph"/><div class="code"><pre>// To get Facebook app id (defined in Config.groovy)
+facebookContext.app.id
+// To get Facebook app permissions (defined in Config.groovy)
+facebookContext.app.permissions
+ // To get Facebook app secret (defined in Config.groovy)
+facebookContext.app.secret
+ // To get <span class="java&#45;keyword">default</span> app token, concatenation of id and secret
+facebookContext.app.token
+// To get OAuth app token, required <span class="java&#45;keyword">for</span> Graph API calls (it will generate a Graph API call)
+facebookContext.app.getToken(<span class="java&#45;keyword">true</span>)</pre></div><p class="paragraph"/>If you are running your app in a <strong class="bold">page tab</strong>, you'll get additional info:<p class="paragraph"/><div class="code"><pre>// To get app data pass through page tab query string (...&#38;app_data=&#123;SOME_STRING&#125;...)
+facebookContext.app.data</pre></div><p class="paragraph"/>
+<h3>Facebook User</h3><p class="paragraph"/>To check if current user has authorized your app and is authenticated, use <code>facebookContext.authenticated</code>.<p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">if</span> (facebookContext.authenticated) &#123;
+    // User is authenticated
+&#125;</pre></div><p class="paragraph"/>If authenticated, the context gives you access to <strong class="bold">current Facebook user</strong> info.<p class="paragraph"/><div class="code"><pre>// To get facebook user id
+facebookContext.user.id
+// To get OAuth user token, required <span class="java&#45;keyword">for</span> Graph API calls
+facebookContext.user.token</pre></div><p class="paragraph"/>If the app is running on an <strong class="bold">external site</strong> (web or mobile), the access token will be automatically fetched in exchange for the authorization code returned by <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Facebook JS SDK</a> signed request cookie or server-side redirect query string.<p class="paragraph"/>If the app is running on <strong class="bold">apps.facebook.com</strong> or in a <strong class="bold">page tab</strong>, the access token will be extracted from the signed request params (passed through the canvas iFrame) and you'll get additional info:<p class="paragraph"/><div class="code"><pre>// To get facebook user age restriction (only returned in Canvas apps, it will not be returned <span class="java&#45;keyword">for</span> external apps)
+facebookContext.user.age
+// To get facebook user country
+facebookContext.user.country
+ // To get facebook user locale
+facebookContext.user.locale</pre></div><p class="paragraph"/>In order to optimize performances, user <code>id</code> and <code>token</code> are automatically stored in <code>session</code> scope.<p class="paragraph"/>
+<h3>Facebook Page</h3><p class="paragraph"/>If the app is running in a <strong class="bold">page tab</strong>, the context gives you access to <strong class="bold">current Facebook page</strong> info.<p class="paragraph"/>Otherwise, <code>facebookContext.page</code> is <code>null</code>. You must check if it exists before accessing it.<p class="paragraph"/><div class="code"><pre>// To get facebook page id (where the app is installed)
+facebookContext.page?.id
+// To know <span class="java&#45;keyword">if</span> current user has liked the current page
+facebookContext.page?.liked
+ // To know <span class="java&#45;keyword">if</span> current user is an admin of the current page
+facebookContext.page?.admin</pre></div>
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../guide/configuration.html">&lt;&lt; <strong>2</strong><span>Configuration</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../guide/facebookGraphClient.html"><strong>4</strong><span>Facebook Graph Client</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">Tags</h1><div class="menu-sub">
+                        
+                            
+                            <div class="menu-item"><a href="../ref/Tags/addToPageLink.html">addToPageLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/initJS.html">initJS</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/inviteLink.html">inviteLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/loginLink.html">loginLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/logoutLink.html">logoutLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/picture.html">picture</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/publishLink.html">publishLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/sendLink.html">sendLink</a>
+                            </div>
+                            
+                            </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

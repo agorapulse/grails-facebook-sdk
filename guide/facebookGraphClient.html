@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>5 Facebook Graph Client 0.3.6</title>
+    <title>4 Facebook Graph Client 0.4.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -27,16 +27,16 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:0"><a href="../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0"><a href="../guide/gettingStarted.html"><strong>2</strong><span>Getting started</span></a>
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/configuration.html"><strong>2</strong><span>Configuration</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0"><a href="../guide/facebookFilter.html"><strong>3</strong><span>Facebook Filter</span></a>
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/facebookContext.html"><strong>3</strong><span>Facebook Context</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0"><a href="../guide/facebookAppService.html"><strong>4</strong><span>Facebook App Service</span></a>
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/facebookGraphClient.html"><strong>4</strong><span>Facebook Graph Client</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0"><a href="../guide/facebookGraphClient.html"><strong>5</strong><span>Facebook Graph Client</span></a>
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/facebookJSTagLib.html"><strong>5</strong><span>Facebook JS Tag Lib</span></a>
                     </div>
                     
                 </div>
@@ -64,20 +64,22 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
             <div id="main" class="corner-all">
 
                 
-                    <div class="toc-item prev-left"><a href="../guide/facebookAppService.html">&lt;&lt; <strong>4</strong><span>Facebook App Service</span></a></div>
+                    <div class="toc-item prev-left"><a href="../guide/facebookContext.html">&lt;&lt; <strong>3</strong><span>Facebook Context</span></a></div>
                 
 
                 <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
 
                 
+                    <div class="toc-item next-right"><a href="../guide/facebookJSTagLib.html"><strong>5</strong><span>Facebook JS Tag Lib</span> >></a></div>
+                
 
 
                 <div class="project">
-                    <h1>5 Facebook Graph Client - Reference Documentation</h1>
+                    <h1>4 Facebook Graph Client - Reference Documentation</h1>
 
                     <p><strong>Authors:</strong> Benoit Hediard</p>
 
-                    <p><strong>Version:</strong> 0.3.6</p>
+                    <p><strong>Version:</strong> 0.4.0</p>
 
                     
                 </div>
@@ -86,7 +88,7 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
 
                 
 
-<h1 id="facebookGraphClient">5 Facebook Graph Client</h1>
+<h1 id="facebookGraphClient">4 Facebook Graph Client</h1>
 To perform Facebook Graph API call, use the <code>FacebookGraphClient</code> without access token for public data or with an access token for private data.
 <code>FacebookGraphClient</code> is a thin groovy wrapper around the rock solid <a href="http://restfb.com/" target="blank">RestFB java library</a> .
 It will return JSON-based graph objects.<p class="paragraph"/>To play with the API, you might use the grails console from your project root and get user token or app token from <a href="https://developers.facebook.com/tools/access_token/" target="blank">Facebook Access Token Tool</a> .<p class="paragraph"/><div class="code"><pre>grails console</pre></div><p class="paragraph"/><h3>Initialization</h3><p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">import</span> grails.plugin.facebooksdk.FacebookGraphClient<p class="paragraph"/>// For <span class="java&#45;keyword">public</span> data
@@ -150,7 +152,9 @@ println <span class="java&#45;quote">"M83 feed "</span> + batchResponses&#91;1&#
 
                 <div style="clear:both;margin-top:15px;"></div>
                 
-                    <div class="toc-item prev-left"><a href="../guide/facebookAppService.html">&lt;&lt; <strong>4</strong><span>Facebook App Service</span></a></div>
+                    <div class="toc-item prev-left"><a href="../guide/facebookContext.html">&lt;&lt; <strong>3</strong><span>Facebook Context</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../guide/facebookJSTagLib.html"><strong>5</strong><span>Facebook JS Tag Lib</span> >></a></div>
                 
                 <div style="clear:both"></div>
             </div>
@@ -163,16 +167,31 @@ println <span class="java&#45;quote">"M83 feed "</span> + batchResponses&#91;1&#
                 </div>
                 <div class="menu">
                     
-                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">tags</h1><div class="menu-sub">
+                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">Tags</h1><div class="menu-sub">
                         
                             
-                            <div class="menu-item"><a href="../ref/tags/initJS.html">initJS</a>
+                            <div class="menu-item"><a href="../ref/Tags/addToPageLink.html">addToPageLink</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/tags/loginLink.html">loginLink</a>
+                            <div class="menu-item"><a href="../ref/Tags/initJS.html">initJS</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../ref/tags/logoutLink.html">logoutLink</a>
+                            <div class="menu-item"><a href="../ref/Tags/inviteLink.html">inviteLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/loginLink.html">loginLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/logoutLink.html">logoutLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/picture.html">picture</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/publishLink.html">publishLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/sendLink.html">sendLink</a>
                             </div>
                             
                             </div>

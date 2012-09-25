@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>2 Configuration 0.4.0</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs" style="display:none;">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/configuration.html"><strong>2</strong><span>Configuration</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/facebookContext.html"><strong>3</strong><span>Facebook Context</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/facebookGraphClient.html"><strong>4</strong><span>Facebook Graph Client</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/facebookJSTagLib.html"><strong>5</strong><span>Facebook JS Tag Lib</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>The Facebook SDK Plugin allows your Grails application to use the Facebook Platform and develop Facebook apps on Facebook.com or on web sites (with Facebook Connect).
+It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
+</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../guide/introduction.html">&lt;&lt; <strong>1</strong><span>Introduction</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../guide/facebookContext.html"><strong>3</strong><span>Facebook Context</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>2 Configuration - Reference Documentation</h1>
+
+                    <p><strong>Authors:</strong> Benoit Hediard</p>
+
+                    <p><strong>Version:</strong> 0.4.0</p>
+
+                    
+                </div>
+
+                
+
+                
+
+<h1 id="configuration">2 Configuration</h1>
+<h3>Installation</h3><p class="paragraph"/>Declare the plugin dependency in <code>BuildConfig.groovy</code> file, as shown here:<p class="paragraph"/><div class="code"><pre>grails.project.dependency.resolution = &#123;
+		inherits(<span class="java&#45;quote">"global"</span>) &#123; &#125;
+		log <span class="java&#45;quote">"info"</span>
+		repositories &#123;
+				//your repositories
+		&#125;
+		dependencies &#123;
+				//your regular dependencies
+		&#125;
+		plugins &#123;
+				//here go your plugin dependencies
+				runtime ':facebook&#45;sdk:0.4.0'
+		&#125;
+&#125;</pre></div><p class="paragraph"/>
+<h3>Single Facebook app</h3><p class="paragraph"/>Create a Facebook app on <a href="https://developers.facebook.com/apps" target="blank">Facebook Developers</a> , in order to get your own app ID and app secret.<p class="paragraph"/>Add your app settings in <code>Config.groovy</code>:<p class="paragraph"/><div class="code"><pre>// Required
+grails.plugin.facebooksdk.app.id = &#123;APP_ID&#125;
+grails.plugin.facebooksdk.app.permissions = &#123;APP_PERMISSIONS&#125; // Ex. &#91;'email','user_photos'&#93;
+grails.plugin.facebooksdk.app.secret = &#123;APP_SECRET&#125;
+// Optional, <span class="java&#45;keyword">default</span> proxy config <span class="java&#45;keyword">for</span> Facebook Graph Client API calls
+// grails.plugin.facebooksdk.proxyHost = &#123;PROXY_HOST&#125;
+// grails.plugin.facebooksdk.proxyPort = &#123;PROXY_PORT&#125;</pre></div><p class="paragraph"/>Or<p class="paragraph"/><div class="code"><pre>grails &#123;
+    plugin &#123;
+        facebooksdk &#123;
+            app = &#91;
+                id: APP_ID,
+                permissions: APP_PERMISSIONS,
+                secret: APP_SECRET
+            &#93;
+        &#125;
+    &#125;
+&#125;</pre></div><p class="paragraph"/>
+<h3>Multiple Facebook apps</h3><p class="paragraph"/>Since V0.4, it is possible do define multiple apps in <code>Config.groovy</code>:<p class="paragraph"/><div class="code"><pre>grails &#123;
+    plugin &#123;
+        facebooksdk &#123;
+            appIdParamName = 'app_id' // Default app selection param name
+            apps = &#91;
+                &#91;
+                    id: &#123;APP_ID1&#125;,
+                    permissions: &#123;APP_PERMISSIONS1&#125;, // Ex. &#91;'email','user_photos'&#93;
+                    secret: &#123;APP_SECRET1&#125;
+                &#93;,
+                &#91;
+                    id: &#123;APP_ID2&#125;,
+                    permissions: &#123;APP_PERMISSIONS2&#125;, // Ex. &#91;'email','user_photos'&#93;
+                    secret: &#123;APP_SECRET2&#125;
+                &#93;,
+                &#8230;
+            &#93;
+        &#125;
+    &#125;
+&#125;</pre></div><p class="paragraph"/>
+For each request, you must define <code>app_id</code> in <code>params</code> (by appending <code>?app_id={APP_ID}</code> to query string) in order to specify which Facebook app setting to use.<p class="paragraph"/>Note: to define another parameter name, set config param <code>grails.plugin.facebooksdk.appIdParamName</code>.<p class="paragraph"/>You can also associate a Facebook app to a default controller by adding controller name in each app settings :<p class="paragraph"/><div class="code"><pre>grails &#123;
+    plugin &#123;
+        facebooksdk &#123;
+            apps = &#91;
+                &#91;
+                    controller: &#123;CONTROLLER_NAME1&#125;,
+                    id: &#123;APP_ID1&#125;,
+                    permissions: &#123;APP_PERMISSIONS1&#125;,
+                    secret: &#123;APP_SECRET1&#125;
+                &#93;,
+                &#91;
+                    controller: &#123;CONTROLLER_NAME2&#125;,
+                    id: &#123;APP_ID2&#125;,
+                    permissions: &#123;APP_PERMISSIONS2&#125;,
+                    secret: &#123;APP_SECRET2&#125;
+                &#93;,
+                &#8230;
+            &#93;
+        &#125;
+    &#125;
+&#125;</pre></div><p class="paragraph"/>For example, let's say you have two apps with two controllers: <code>QuizController</code> and <code>SweepstakesController</code>.<p class="paragraph"/>Add <code>controller: 'quiz'</code> in quiz app settings and <code>controller: 'sweepstakes'</code> in sweepstakes app settings.<p class="paragraph"/>To access your quiz app, use http://localhost:8080/my-app/<strong class="bold">quiz</strong> .<p class="paragraph"/>To access your sweepstakes app, use http://localhost:8080/my-app/<strong class="bold">sweepstakes</strong> .<p class="paragraph"/>If no app is found based on <code>app_id</code> params and controller name, default single app <code>grails.plugin.facebooksdk.app</code> settings will be used (if defined).<p class="paragraph"/>
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../guide/introduction.html">&lt;&lt; <strong>1</strong><span>Introduction</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../guide/facebookContext.html"><strong>3</strong><span>Facebook Context</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">Tags</h1><div class="menu-sub">
+                        
+                            
+                            <div class="menu-item"><a href="../ref/Tags/addToPageLink.html">addToPageLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/initJS.html">initJS</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/inviteLink.html">inviteLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/loginLink.html">loginLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/logoutLink.html">logoutLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/picture.html">picture</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/publishLink.html">publishLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/sendLink.html">sendLink</a>
+                            </div>
+                            
+                            </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

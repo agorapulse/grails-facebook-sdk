@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>Facebook SDK Grails Plugin 0.3.6</title>
+    <title>Facebook SDK Grails Plugin 0.4.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -28,16 +28,16 @@ function addJsClass(el) {
                     <div class="toc-item" style="margin-left:0"><a href="../../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0"><a href="../../guide/gettingStarted.html"><strong>2</strong><span>Getting started</span></a>
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/configuration.html"><strong>2</strong><span>Configuration</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0"><a href="../../guide/facebookFilter.html"><strong>3</strong><span>Facebook Filter</span></a>
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/facebookContext.html"><strong>3</strong><span>Facebook Context</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0"><a href="../../guide/facebookAppService.html"><strong>4</strong><span>Facebook App Service</span></a>
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/facebookGraphClient.html"><strong>4</strong><span>Facebook Graph Client</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0"><a href="../../guide/facebookGraphClient.html"><strong>5</strong><span>Facebook Graph Client</span></a>
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/facebookJSTagLib.html"><strong>5</strong><span>Facebook JS Tag Lib</span></a>
                     </div>
                     
                 </div>
@@ -67,19 +67,21 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
                 <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
 
                 <h1>facebook:initJS</h1><p class="paragraph"/>To initialize <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Facebook JS SDK</a> in your GSP views, simply insert <code>initJS</code> tag, after HTML body tag.
-The only required attribute is <code>appId</code>.<p class="paragraph"/><div class="code"><pre><span class="xml&#45;tag">&#60;facebook:initJS appId=<span class="xml&#45;quote">"$&#123;facebook.app.id&#125;"</span> /&#62;</span></pre></div><p class="paragraph"/>Optional attributes are :
-<ul class="star">
-<li><code>autoGrow</code> Call <code>FB.setAutoGrow()</code> after page rendering (default to <code>false</code>)</li>
-<li><code>channelUrl</code> Channel File</li>
-<li><code>cookie</code> Enable cookies to allow the server to access the session (default to <code>true</code>)</li>
-<li><code>locale</code> Define JS SDK locale (default to server locale)</li>
-<li><code>status</code> Check login status (default to <code>false</code>)</li>
-<li><code>xfbml</code> Parse XFBML (default to <code>false</code>)</li>
-</ul><p class="paragraph"/>You can put any JS code inside initJS tag. It will be automatically injected inside the fbAsyncInit function body.<p class="paragraph"/><div class="code"><pre><span class="xml&#45;tag">&#60;facebook:initJS appId=<span class="xml&#45;quote">"$&#123;facebook.app.id&#125;"</span>&#62;</span>
+The only required attribute is <code>appId</code>.<p class="paragraph"/><div class="code"><pre><span class="xml&#45;tag">&#60;facebook:initJS appId=<span class="xml&#45;quote">"$&#123;facebookContext.app.id&#125;"</span> /&#62;</span></pre></div><p class="paragraph"/>You can put any JS code inside initJS tag. It will be automatically injected inside the fbAsyncInit function body.<p class="paragraph"/><div class="code"><pre><span class="xml&#45;tag">&#60;facebook:initJS appId=<span class="xml&#45;quote">"$&#123;facebookContext.app.id&#125;"</span>&#62;</span>
   // Put here any JS code to be executed after Facebook JS initialization
   alert('Some JS code');
-<span class="xml&#45;tag">&#60;/facebook:initJS&#62;</span></pre></div>
-
+<span class="xml&#45;tag">&#60;/facebook:initJS&#62;</span></pre></div><p class="paragraph"/><h3>Attributes</h3><p class="paragraph"/>Required attribute is :
+<ul class="star">
+<li><code>appId</code> Facebook app id</li>
+</ul><p class="paragraph"/>Optional attributes are :
+<ul class="star">
+<li><code>autoGrow</code> Call <code>FB.setAutoGrow()</code> after page rendering (default to <code>false</code>).</li>
+<li><code>channelUrl</code> Channel File.</li>
+<li><code>cookie</code> Enable cookies to allow the server to access the session (default to <code>true</code>).</li>
+<li><code>locale</code> Define JS SDK locale (default to server locale).</li>
+<li><code>status</code> Check login status (default to <code>false</code>).</li>
+<li><code>xfbml</code> Parse XFBML (default to <code>false</code>).</li>
+</ul><p class="paragraph"/>
             </div>
         </td>
         <td id="col2">
@@ -91,17 +93,32 @@ The only required attribute is <code>appId</code>.<p class="paragraph"/><div cla
                 <div class="menu">
                     
                     <div class="menu-block">
-                        <h1 class="menu-title" onclick="toggleRef(nextElement(this))">tags</h1>
+                        <h1 class="menu-title" onclick="toggleRef(nextElement(this))">Tags</h1>
                         <div class="menu-sub selected">
                             
                             
-                            <div class="menu-item"><a href="../../ref/tags/initJS.html">initJS</a>
+                            <div class="menu-item"><a href="../../ref/Tags/addToPageLink.html">addToPageLink</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../../ref/tags/loginLink.html">loginLink</a>
+                            <div class="menu-item"><a href="../../ref/Tags/initJS.html">initJS</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../../ref/tags/logoutLink.html">logoutLink</a>
+                            <div class="menu-item"><a href="../../ref/Tags/inviteLink.html">inviteLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Tags/loginLink.html">loginLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Tags/logoutLink.html">logoutLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Tags/picture.html">picture</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Tags/publishLink.html">publishLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Tags/sendLink.html">sendLink</a>
                             </div>
                             
                         </div>
