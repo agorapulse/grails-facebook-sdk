@@ -129,7 +129,7 @@ class FacebookContextUser {
                     }
                 }
                 if (code && code != context.session.getData('code')) {
-                    _token = getTokenFromCode(code)
+                    _token = getTokenFromCode(code, context.currentURL)
                     log.debug "Got token from server side redirect params code (token=$_token)"
                     if (!_token) {
                         // Code was bogus, so everything based on it should be invalidated.
@@ -157,6 +157,8 @@ class FacebookContextUser {
             context.cookie.delete()
         }
         context.session.deleteAllData()
+        _id = 0
+        _token = ''
     }
 
     boolean isTokenExpired() {
@@ -191,7 +193,7 @@ class FacebookContextUser {
                     client_id: context.app.id,
                     client_secret: context.app.secret,
                     code: code,
-                    redirect_uri: ''
+                    redirect_uri: redirectUri
             ])
             if (result['access_token']) {
                 accessToken = result['access_token']

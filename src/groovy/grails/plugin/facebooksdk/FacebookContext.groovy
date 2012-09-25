@@ -79,7 +79,7 @@ class FacebookContext implements InitializingBean {
             }
             if (signedRequest.appData) app.data = signedRequest.appData
             log.debug "Got signed request from params"
-        } else if (cookie.value) {
+        } else if (cookie.value && !request.params['state'] && !request.params['code']) { // Ignore cookie when coming from a server side OAuth redirect
             // Cookie created by Facebook Connect Javascript SDK
             signedRequest = new FacebookSignedRequest(app.secret, cookie.value, FacebookSignedRequest.TYPE_COOKIE)
             log.debug "Got signed request from cookie"

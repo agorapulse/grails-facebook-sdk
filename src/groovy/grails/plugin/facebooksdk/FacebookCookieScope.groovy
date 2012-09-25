@@ -8,9 +8,12 @@ import javax.servlet.http.Cookie
 class FacebookCookieScope extends FacebookScope {
 
 	void delete() {
-		if (cookie) {
-			cookie.setMaxAge(0)
-			request.currentResponse.addCookie(cookie)
+		Cookie currentCookie = getCookie()
+        if (currentCookie) {
+            if (request.currentRequest.serverName == 'localhost') currentCookie.domain = '.localhost' // For local dev
+            currentCookie.maxAge = 0
+            currentCookie.path = '/'
+			request.currentResponse.addCookie(currentCookie)
 		}
 	}
 
