@@ -47,9 +47,9 @@ Create a Facebook app on [Facebook Developers](https://developers.facebook.com/a
 Add your Facebook app parameters to your _grails-app/conf/Config.groovy_:
 
 ```groovy
-grails.plugin.facebooksdk.appId = {APP_ID}
-grails.plugin.facebooksdk.appPermissions = {APP_PERMISSIONS}
-grails.plugin.facebooksdk.appSecret = {APP_SECRET}
+grails.plugin.facebooksdk.app.id = {APP_ID}
+grails.plugin.facebooksdk.app.permissions = {APP_PERMISSIONS} // Ex. ['email','user_photos']
+grails.plugin.facebooksdk.app.secret = {APP_SECRET}
 ```
 
 # Getting started with a demo app
@@ -76,7 +76,7 @@ WARNING: Since V0.4.0, _FacebookApp_, _FacebookSdkFilters_ and _FacebookAppServi
 Please check [FacebookContext](http://benorama.github.com/grails-facebook-sdk/guide/facebookContext.html) doc for more info.
 
 
-*            **V0.4.0** : complete refactoring to improve SDK architecture ([FacebookContext](http://benorama.github.com/grails-facebook-sdk/guide/facebookContext.html) implemented) and [multiple apps support](http://benorama.github.com/grails-facebook-sdk/guide/configuration.html) added
+* 2012-10-25 **V0.4.0** : complete refactoring to improve SDK architecture ([FacebookContext](http://benorama.github.com/grails-facebook-sdk/guide/facebookContext.html) implemented) and [multiple apps support](http://benorama.github.com/grails-facebook-sdk/guide/configuration.html) added
 * 2012-09-03 **V0.3.6** : latest RestFB 1.6.10 dependency, _proxyHost_ and _proxyPort_ added to config and _signedRequest_ added to filter _facebook_ map
 * 2012-08-24 **V0.3.5** : _proxyHost_ and _proxyPort_ parameters added to Graph/Rest client (thanks to Eduard Martini)
 * 2012-07-23 **V0.3.4** : bug fix in facebookAppService
