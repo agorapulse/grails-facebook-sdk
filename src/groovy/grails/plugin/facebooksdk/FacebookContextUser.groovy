@@ -180,9 +180,9 @@ class FacebookContextUser {
     private FacebookGraphClient getGraphClient(String token = '') {
         new FacebookGraphClient(
                 token,
-                context.config.timeout ?: FacebookGraphClient.DEFAULT_READ_TIMEOUT_IN_MS,
-                context.config.proxyHost ?: null,
-                context.config.proxyPort ?: null
+                context?.config?.timeout ?: FacebookGraphClient.DEFAULT_READ_TIMEOUT_IN_MS,
+                context?.config?.proxyHost ?: null,
+                context?.config?.proxyPort ?: null
         )
     }
 
