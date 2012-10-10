@@ -73,13 +73,17 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
             }
 			if (batchRequests.size() == batchSize || it == requests[-1]) {
 				def batchResponses = super.executeBatch(batchRequests, [])
-				batchResponses.eachWithIndex { batchResponse, index ->
-					if (batchResponse.code == 200) {
-						responses << JSON.parse(batchResponse.body)
-					} else {
-						responses << "Bad request (error code ${batchResponse.code})"
-					}
-				}
+                batchResponses.each { batchResponse ->
+                    if (batchResponse) {
+                        if (batchResponse.code == 200) {
+                            responses << JSON.parse(batchResponse.body)
+                        } else {
+                            responses << [error: [code: batchResponse.code, message: batchResponse.body]]
+                        }
+                    } else {
+                        responses << [:]
+                    }
+                }
 				batchRequests.clear()
 			}
 		}
