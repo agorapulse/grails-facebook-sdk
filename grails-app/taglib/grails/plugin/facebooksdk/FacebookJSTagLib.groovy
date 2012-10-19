@@ -24,6 +24,7 @@ class FacebookJSTagLib {
 	* @attr locale (Default to server locale)
 	* @attr status (Default to false)
 	* @attr	xfbml (Default to false)
+	* @attr frictionlessRequests (Default to false)
 	*/
 	def initJS = { attrs, body ->
 		if (!attrs.containsKey("cookie")) attrs.cookie = true
