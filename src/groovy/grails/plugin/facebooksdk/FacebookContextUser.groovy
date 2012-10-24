@@ -31,12 +31,12 @@ class FacebookContextUser {
                         grant_type: 'fb_exchange_token',
                         fb_exchange_token: _token
                 ])
-                if (result['access_token'] && result['expires']) {
+                if (result['access_token']) {
                     _token = result['access_token']
                     context.session.setData('token', token)
                     if (result['expires']) {
-                        int expires = result['expires'] as int
-                        long expirationTime = new Date().time + expires * 1000
+                        long expires = result['expires'].toLong()
+                        long expirationTime = new Date().time + expires * 1000L
                         context.session.setData('expirationTime', expirationTime)
                     } else {
                         // Non expiring token
