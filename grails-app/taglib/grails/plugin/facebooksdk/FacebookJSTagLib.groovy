@@ -13,21 +13,33 @@ class FacebookJSTagLib {
     ]
 	
 	static namespace = 'facebook'
-	
-	/**
+
+    def grailsLinkGenerator // Injected by Spring
+
+    /**
 	* Initialize Facebook JS SDK
 	*
 	* @attr appId REQUIRED
 	* @attr autoGrow (Default to false)
-	* @attr channelUrl
+    * @attr channel (Default to true)
+	* @attr channelUrl (Default to provided facebook sdk channel)
 	* @attr	cookie (Default to true)
 	* @attr locale (Default to server locale)
 	* @attr status (Default to false)
 	* @attr	xfbml (Default to false)
 	*/
 	def initJS = { attrs, body ->
-		if (!attrs.containsKey("cookie")) attrs.cookie = true
-		if (!attrs.locale) attrs.locale = Locale.getDefault()
+        if (!attrs.locale) attrs.locale = Locale.getDefault()
+        if (!attrs.containsKey("cookie")) attrs.cookie = true
+        if (!attrs.containsKey("channel")) attrs.channel = true
+        if (attrs.channel && !attrs.containsKey("channelUrl")) {
+            attrs.channelUrl = grailsLinkGenerator.link(
+                    absolute: true,
+                    action: 'channel',
+                    controller: 'facebookSdk',
+                    params: [locale: attrs.locale.toString()]
+            )
+        }
         Map model = [body:body()]
 		attrs.each { key, value ->
 			model[key] = value	

@@ -23,7 +23,8 @@ Required attribute is :
 
 Optional attributes are :
 * @autoGrow@ Call @FB.setAutoGrow()@ after page rendering (default to @false@).
-* @channelUrl@ Channel File.
+* @channel@ Define if channel is enabled (default to @true@).
+* @channelUrl@ Channel url (default to provided channel).
 * @cookie@ Enable cookies to allow the server to access the session (default to @true@).
 * @locale@ Define JS SDK locale (default to server locale).
 * @status@ Check login status (default to @false@).
