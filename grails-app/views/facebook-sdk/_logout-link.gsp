@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<r:script disposition="footer">
 	function FBGrailsSDK_logout() {
 		FB.getLoginStatus(function(response) {
 			if (response.authResponse) {
@@ -20,5 +20,5 @@
 		  	}
 		});
 	}
-</script>
+</r:script>
 <a <g:if test="${elementId}">id="${elementId}"</g:if> <g:if test="${elementClass}">class="${elementClass}"</g:if> href="#" onclick="FBGrailsSDK_logout();">${body}</a>

@@ -1,6 +1,6 @@
 <%@ page import="grails.converters.JSON" %>
 <g:if test="${!disabled}">
-<script type="text/javascript" charset="utf-8">
+<r:script disposition="footer">
     function FBGrailsSDK_invite() {
         FB.ui({
             method: 'apprequests',
@@ -15,6 +15,6 @@
         }<g:if test="${callBackJS}">, ${callBackJS}</g:if>);
         return false;
     }
-</script>
+</r:script>
 </g:if>
 <a <g:if test="${elementId}">id="${elementId}"</g:if> <g:if test="${elementClass}">class="${elementClass}"</g:if> href="#" onclick="<g:if test="${!disabled}">FBGrailsSDK_invite();</g:if><g:else>return false;</g:else>">${body}</a>
