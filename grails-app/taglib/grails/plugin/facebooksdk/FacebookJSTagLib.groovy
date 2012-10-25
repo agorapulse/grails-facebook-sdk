@@ -3,11 +3,13 @@ package grails.plugin.facebooksdk
 class FacebookJSTagLib {
 
     static String TYPE_LARGE = 'large'
+    static String TYPE_MINI = 'mini'
     static String TYPE_SMALL = 'small'
     static String TYPE_SQUARE = 'square'
 
     static Map SIZES = [
             (TYPE_LARGE):  [width:  200],
+            (TYPE_MINI): [height: 32, width: 32],
             (TYPE_SMALL):  [width:  50],
             (TYPE_SQUARE): [height: 50, width: 50]
     ]
