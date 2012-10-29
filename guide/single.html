@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
-        <title>Facebook SDK Grails Plugin 0.4.2</title>
+        <title>Facebook SDK Grails Plugin 0.4.3</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
         <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8" />
@@ -62,7 +62,7 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
                         <div class="project">
                             <h1>Facebook SDK Grails Plugin - Reference Documentation</h1>
                             <p><strong>Authors:</strong> Benoit Hediard</p>
-                            <p><strong>Version:</strong> 0.4.2</p>
+                            <p><strong>Version:</strong> 0.4.3</p>
                             
                         </div>
 
@@ -95,6 +95,7 @@ The <a href="http://developers.facebook.com/" target="blank">Facebook Platform</
 WARNING: Since V0.4.0, <code>FacebookApp</code>, <code>FacebookSdkFilters</code> and <code>FacebookAppService</code> from V0.3.* are DEPRECATED and have been replaced by <code>FacebookContext</code>: a cleaner approach to access Facebook context related info.<p class="paragraph"/>Please check <a href="../guide/single.html#facebookContext" class="guide"><code>FacebookContext</code></a> doc for more info.
 </blockquote>
 <ul class="star">
+<li>2012-10-29 <strong class="bold">V0.4.3</strong> : tag lib improvements: channel integration (<code>initJS</code> tag and <code>FacebookSdkController</code> created), resources plugin integration (<code>FacebookSdkResources</code> created)</li>
 <li>2012-10-10 <strong class="bold">V0.4.2</strong> : bug fix in batch responses error handling</li>
 <li>2012-09-25 <strong class="bold">V0.4.1</strong> : bug fix in server side OAuth redirect</li>
 <li>2012-10-25 <strong class="bold">V0.4.0</strong> : complete refactoring to improve SDK architecture (<a href="../guide/single.html#facebookContext" class="guide"><code>FacebookContext</code></a> implemented) and <a href="../guide/single.html#configuration" class="guide">multiple Facebook apps</a> support added</li>
@@ -126,7 +127,7 @@ The underlying APIs are generally stable, however we may make changes to the lib
 		&#125;
 		plugins &#123;
 				//here go your plugin dependencies
-				runtime ':facebook&#45;sdk:0.4.2'
+				runtime ':facebook&#45;sdk:0.4.3'
 		&#125;
 &#125;</pre></div><p class="paragraph"/>
 <h3>Single Facebook app</h3><p class="paragraph"/>Create a Facebook app on <a href="https://developers.facebook.com/apps" target="blank">Facebook Developers</a> , in order to get your own app ID and app secret.<p class="paragraph"/>Add your app settings in <code>Config.groovy</code>:<p class="paragraph"/><div class="code"><pre>// Required
@@ -326,7 +327,7 @@ println <span class="java&#45;quote">"M83 feed "</span> + batchResponses&#91;1&#
 <ul class="star">
 <li><a href="https://developers.facebook.com/docs/reference/dialogs/friends/" target="blank">Friends Dialog</a> .</li>
 <li><a href="https://developers.facebook.com/docs/reference/dialogs/pay/" target="blank">Pay Dialog</a> .</li>
-</ul><p class="paragraph"/>Next step would be to integrate with the <a href="http://grails.org/plugin/resources" target="blank">Resources plugin</a> for JS dependencies.<p class="paragraph"/>Feel free to contribute&#8230; ;)
+</ul><p class="paragraph"/>Feel free to contribute&#8230; ;)
 
                     </div>
                 </td>
@@ -338,31 +339,31 @@ println <span class="java&#45;quote">"M83 feed "</span> + batchResponses&#91;1&#
                 </div>
                 <div class="menu">
                     
-                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">tags</h1><div class="menu-sub">
+                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">Tags</h1><div class="menu-sub">
                         
                         
-                        <div class="menu-item"><a href="../ref/tags/addToPageLink.html">addToPageLink</a>
+                        <div class="menu-item"><a href="../ref/Tags/addToPageLink.html">addToPageLink</a>
                         </div>
                         
-                        <div class="menu-item"><a href="../ref/tags/initJS.html">initJS</a>
+                        <div class="menu-item"><a href="../ref/Tags/initJS.html">initJS</a>
                         </div>
                         
-                        <div class="menu-item"><a href="../ref/tags/inviteLink.html">inviteLink</a>
+                        <div class="menu-item"><a href="../ref/Tags/inviteLink.html">inviteLink</a>
                         </div>
                         
-                        <div class="menu-item"><a href="../ref/tags/loginLink.html">loginLink</a>
+                        <div class="menu-item"><a href="../ref/Tags/loginLink.html">loginLink</a>
                         </div>
                         
-                        <div class="menu-item"><a href="../ref/tags/logoutLink.html">logoutLink</a>
+                        <div class="menu-item"><a href="../ref/Tags/logoutLink.html">logoutLink</a>
                         </div>
                         
-                        <div class="menu-item"><a href="../ref/tags/picture.html">picture</a>
+                        <div class="menu-item"><a href="../ref/Tags/picture.html">picture</a>
                         </div>
                         
-                        <div class="menu-item"><a href="../ref/tags/publishLink.html">publishLink</a>
+                        <div class="menu-item"><a href="../ref/Tags/publishLink.html">publishLink</a>
                         </div>
                         
-                        <div class="menu-item"><a href="../ref/tags/sendLink.html">sendLink</a>
+                        <div class="menu-item"><a href="../ref/Tags/sendLink.html">sendLink</a>
                         </div>
                         
                         </div>

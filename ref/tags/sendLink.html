@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>Facebook SDK Grails Plugin 0.4.2</title>
+    <title>Facebook SDK Grails Plugin 0.4.3</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -66,8 +66,14 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
 
                 <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
 
-                <h1>facebook:sendLink</h1><p class="paragraph"/>Display a link to open <a href="https://developers.facebook.com/docs/reference/dialogs/send/" target="blank">Send Dialog</a> .<p class="paragraph"/><img border="0" class="center" src="https://developers.facebook.com/attachment/Facebook_Dialogs_Send.png"></img><p class="paragraph"/>The <strong class="bold">Send Dialog</strong> lets people to send content to specific friends. They'll have the option to privately share a link as a Facebook message, Group post or email.<p class="paragraph"/><div class="code"><pre>&#60;facebook:sendLink to=<span class="java&#45;quote">"594317994"</span>&#62;Send a link to a friend&#60;/facebook:sendLink&#62;</pre></div><p class="paragraph"/>To check if the app was successfully added or execute some code, you can use <code>callBackJS</code> attribute.<p class="paragraph"/><div class="code"><pre>&#60;facebook:sendLink
-    callBackJS=<span class="java&#45;quote">"function(response) &#123;<span class="java&#45;keyword">if</span> (response &#38;&#38; response.success) alert('Sent successfully')&#125;"</span>
+                <h1>facebook:sendLink</h1><p class="paragraph"/>Display a link to open <a href="https://developers.facebook.com/docs/reference/dialogs/send/" target="blank">Send Dialog</a> .<p class="paragraph"/><img border="0" class="center" src="https://developers.facebook.com/attachment/Facebook_Dialogs_Send.png"></img><p class="paragraph"/>The <strong class="bold">Send Dialog</strong> lets people to send content to specific friends. They'll have the option to privately share a link as a Facebook message, Group post or email.<p class="paragraph"/><div class="code"><pre>&#60;facebook:sendLink link=<span class="java&#45;quote">"http://www.google.com"</span> to=<span class="java&#45;quote">"594317994"</span>&#62;Send a link to a friend&#60;/facebook:sendLink&#62;</pre></div><p class="paragraph"/>To check if the app was successfully added or execute some code, you can use <code>callback</code> attribute.<p class="paragraph"/><div class="code"><pre>&#60;script&#62;
+    function someCallbackFunction(response) &#123;
+        alert('callback called!');
+        <span class="java&#45;keyword">if</span> (response &#38;&#38; response.success) alert('Sent successfully');
+        console.log(response);
+    &#125;
+&#60;/script&#62;<p class="paragraph"/>&#60;facebook:sendLink
+    callback=<span class="java&#45;quote">"someCallbackFunction"</span>
     link=<span class="java&#45;quote">"http://www.google.com"</span>
     to=<span class="java&#45;quote">"594317994"</span>&#62;
     Send a link to a friend
@@ -77,7 +83,7 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
 <li><code>to</code> A user ID or username to which to send the message.</li>
 </ul><p class="paragraph"/>Optional attributes are :
 <ul class="star">
-<li><code>callBackJS</code> Javascript to code to execute on call back (if the user send the form or close the dialog).</li>
+<li><code>callback</code> Optional javascript function name to call when dialog is confirmed or closed.</li>
 <li><code>disabled</code> Disable click on the link.</li>
 <li><code>description</code> The description of the link (appears beneath the link caption). If not specified, this field is automatically populated by information scraped from the link, typically the title of the page.</li>
 <li><code>elementClass</code> HTML element 'class' attribute value.</li>
@@ -96,32 +102,32 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
                 <div class="menu">
                     
                     <div class="menu-block">
-                        <h1 class="menu-title" onclick="toggleRef(nextElement(this))">tags</h1>
+                        <h1 class="menu-title" onclick="toggleRef(nextElement(this))">Tags</h1>
                         <div class="menu-sub selected">
                             
                             
-                            <div class="menu-item"><a href="../../ref/tags/addToPageLink.html">addToPageLink</a>
+                            <div class="menu-item"><a href="../../ref/Tags/addToPageLink.html">addToPageLink</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../../ref/tags/initJS.html">initJS</a>
+                            <div class="menu-item"><a href="../../ref/Tags/initJS.html">initJS</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../../ref/tags/inviteLink.html">inviteLink</a>
+                            <div class="menu-item"><a href="../../ref/Tags/inviteLink.html">inviteLink</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../../ref/tags/loginLink.html">loginLink</a>
+                            <div class="menu-item"><a href="../../ref/Tags/loginLink.html">loginLink</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../../ref/tags/logoutLink.html">logoutLink</a>
+                            <div class="menu-item"><a href="../../ref/Tags/logoutLink.html">logoutLink</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../../ref/tags/picture.html">picture</a>
+                            <div class="menu-item"><a href="../../ref/Tags/picture.html">picture</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../../ref/tags/publishLink.html">publishLink</a>
+                            <div class="menu-item"><a href="../../ref/Tags/publishLink.html">publishLink</a>
                             </div>
                             
-                            <div class="menu-item"><a href="../../ref/tags/sendLink.html">sendLink</a>
+                            <div class="menu-item"><a href="../../ref/Tags/sendLink.html">sendLink</a>
                             </div>
                             
                         </div>
