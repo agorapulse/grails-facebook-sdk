@@ -7,7 +7,8 @@
 			cookie: <g:if test="${cookie}">true</g:if><g:else>false</g:else>, // enable cookies to allow the server to access the session
 			oauth: true, // enables OAuth 2.0
 			status: <g:if test="${status}">true</g:if><g:else>false</g:else>, // check login status
-			xfbml: <g:if test="${xfbml}">true</g:if><g:else>false</g:else> // parse XFBML
+			xfbml: <g:if test="${xfbml}">true</g:if><g:else>false</g:else>, // parse XFBML
+			frictionlessRequests: <g:if test="${frictionlessRequests}">true</g:if><g:else>false</g:else> // to enable frictionless requests
 		});
 		
 		<g:if test="${autoGrow}">
