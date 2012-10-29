@@ -1,6 +1,9 @@
 package grails.plugin.facebooksdk
 
+import grails.web.UrlConverter
 import org.apache.log4j.Logger
+import org.codehaus.groovy.grails.commons.GrailsApplication
+import org.codehaus.groovy.grails.web.mapping.LinkGenerator
 import org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequest
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.web.context.request.RequestContextHolder
@@ -9,8 +12,8 @@ class FacebookContext implements InitializingBean {
 
     private final static List DROP_QUERY_PARAMS = ['code','state','signed_request']
 
-    def grailsLinkGenerator // Injected by Spring
-    def grailsApplication // Injected by Spring
+    GrailsApplication grailsApplication // Injected by Spring
+    LinkGenerator grailsLinkGenerator // Injected by Spring
 
     FacebookContextApp app
     FacebookContextPage page // Only if app is running in a page tab and signed request exists in params (initial request)
@@ -29,7 +32,9 @@ class FacebookContext implements InitializingBean {
             if (request.params[appIdParamName]) {
                 appConfig = config.apps.find { it.id == request.params[appIdParamName].toLong() }
             } else {
-                appConfig = config.apps.find { it.controller == request.params.controller }
+                // Use grails url converter, for example if grails.web.url.converter = 'hyphenated'
+                UrlConverter grailsUrlConverter = grailsApplication.mainContext.getBean(grails.web.UrlConverter.BEAN_NAME) as UrlConverter
+                appConfig = config.apps.find { grailsUrlConverter.toUrlElement(it.controller) == request.params.controller }
             }
         }
 
