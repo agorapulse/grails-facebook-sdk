@@ -21,7 +21,7 @@ WARNING: Since V0.4.0, @FacebookApp@, @FacebookSdkFilters@ and @FacebookAppServi
 Please check [@FacebookContext@|guide:facebookContext] doc for more info.
 {warning}
 
-* 2012-10-25 *V0.4.3* : channel integration added in fb-init tag
+* 2012-10-25 *V0.4.3* : tag lib improvements: channel integration (@initJS@ tag), resources plugin integration (@FacebookSdkResources@ created)
 * 2012-10-10 *V0.4.2* : bug fix in batch responses error handling
 * 2012-09-25 *V0.4.1* : bug fix in server side OAuth redirect
 * 2012-10-25 *V0.4.0* : complete refactoring to improve SDK architecture ([@FacebookContext@|guide:facebookContext] implemented) and [multiple Facebook apps|guide:configuration] support added

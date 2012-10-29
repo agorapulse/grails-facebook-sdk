@@ -1,24 +1,10 @@
-<g:if test="${appPermissions instanceof List}">
-    <g:set var="appPermissions" value="${appPermissions.join(',')}" />
-</g:if>
-<r:script disposition="footer">
-	function FBGrailsSDK_login() {
-        FB.login(function(response) {
-            if (response.authResponse) {
-				// user is logged
-				<g:if test="${returnUrl}">
-					window.location.href = "${returnUrl}";
-				</g:if>
-				<g:else>
-					window.location.reload();
-				</g:else>
-			<g:if test="${cancelUrl}">
-			} else {
-				// user cancelled login
-				window.location.href = "${cancelUrl}";
-			</g:if>
-			}
-		}, {scope:"${appPermissions}"});
-	}
-</r:script>
-<a <g:if test="${elementId}">id="${elementId}"</g:if> <g:if test="${elementClass}">class="${elementClass}"</g:if> href="#" onclick="FBGrailsSDK_login();">${body}</a>
+<g:if test="${!disabled}"><r:require module="fb-sdk-login-link" /></g:if>
+<a <g:if test="${elementId}">id="${elementId}"</g:if>
+   class="<g:if test="${elementClass}">${elementClass} </g:if>fb-sdk-login-link"
+   data-permissions="${appPermissions instanceof List ? appPermissions.join(',') : appPermissions}"
+   <g:if test="${cancelUrl}">data-cancel_url="${cancelUrl}"</g:if>
+   <g:if test="${returnUrl}">data-return_url="${returnUrl}"</g:if>
+   <g:if test="${disabled}">disabled="disabled"</g:if>
+   href="#">
+    ${body}
+</a>

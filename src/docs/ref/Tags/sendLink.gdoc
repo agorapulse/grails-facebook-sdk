@@ -7,14 +7,22 @@ Display a link to open "Send Dialog":https://developers.facebook.com/docs/refere
 The *Send Dialog* lets people to send content to specific friends. They'll have the option to privately share a link as a Facebook message, Group post or email.
 
 {code}
-<facebook:sendLink to="594317994">Send a link to a friend</facebook:sendLink>
+<facebook:sendLink link="http://www.google.com" to="594317994">Send a link to a friend</facebook:sendLink>
 {code}
 
-To check if the app was successfully added or execute some code, you can use @callBackJS@ attribute.
+To check if the app was successfully added or execute some code, you can use @callback@ attribute.
 
 {code}
+<script>
+    function someCallbackFunction(response) {
+        alert('callback called!');
+        if (response && response.success) alert('Sent successfully');
+        console.log(response);
+    }
+</script>
+
 <facebook:sendLink
-    callBackJS="function(response) {if (response && response.success) alert('Sent successfully')}"
+    callback="someCallbackFunction"
     link="http://www.google.com"
     to="594317994">
     Send a link to a friend
@@ -28,7 +36,7 @@ Required attributes are :
 * @to@ A user ID or username to which to send the message.
 
 Optional attributes are :
-* @callBackJS@ Javascript to code to execute on call back (if the user send the form or close the dialog).
+* @callback@ Optional javascript function name to call when dialog is confirmed or closed.
 * @disabled@ Disable click on the link.
 * @description@ The description of the link (appears beneath the link caption). If not specified, this field is automatically populated by information scraped from the link, typically the title of the page.
 * @elementClass@ HTML element 'class' attribute value.

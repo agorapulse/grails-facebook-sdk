@@ -1,24 +1,8 @@
-<r:script disposition="footer">
-	function FBGrailsSDK_logout() {
-		FB.getLoginStatus(function(response) {
-			if (response.authResponse) {
-		    	FB.logout(function(response) {
-					<g:if test="${nextUrl}">
-						window.location.href = "${nextUrl}";
-					</g:if>
-					<g:else>
-						window.location.reload();
-					</g:else>
-				});
-		  	} else {
-		  		<g:if test="${nextUrl}">
-					window.location.href = "${nextUrl}";
-				</g:if>
-				<g:else>
-					window.location.reload();
-				</g:else>
-		  	}
-		});
-	}
-</r:script>
-<a <g:if test="${elementId}">id="${elementId}"</g:if> <g:if test="${elementClass}">class="${elementClass}"</g:if> href="#" onclick="FBGrailsSDK_logout();">${body}</a>
+<g:if test="${!disabled}"><r:require module="fb-sdk-logout-link" /></g:if>
+<a <g:if test="${elementId}">id="${elementId}"</g:if>
+    class="<g:if test="${elementClass}">${elementClass} </g:if>fb-sdk-logout-link"
+    <g:if test="${nextUrl}">data-next_url="${nextUrl}"</g:if>
+    <g:if test="${disabled}">disabled="disabled"</g:if>
+    href="#">
+    ${body}
+</a>

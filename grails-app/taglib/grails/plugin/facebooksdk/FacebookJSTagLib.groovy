@@ -52,11 +52,12 @@ class FacebookJSTagLib {
     /**
      * Add to page link (https://developers.facebook.com/docs/reference/dialogs/add_to_page/)
      *
+     * @attr callback Optional javascript function name to call when dialog is confirmed or closed.
      * @attr disabled Disable click on the link.
      * @attr display Display mode in which to render the Dialog. Can be page (default), popup, iframe, or touch.
      * @attr elementClass HTML element 'class' attribute value.
      * @attr elementId HTML element 'id' attribute value.
-     * @attr returnUrl Return URL for redirect after login (if not defined page will be reloaded)
+     * @attr returnUrl Redirect URL after the page is added
      */
     def addToPageLink = {attrs, body ->
         Map model = [body:body()]
@@ -137,6 +138,7 @@ class FacebookJSTagLib {
     /**
      * Invite link (https://developers.facebook.com/docs/reference/dialogs/requests/)
      *
+     * @attr callback Optional javascript function name to call when dialog is confirmed or closed.
      * @attr data Additional data you may pass for tracking. The maximum length is 255 characters.
      * @attr disabled Disable click on the link.
      * @attr display Display mode in which to render the Dialog. Can be 'page' (default), 'popup', 'iframe', or 'touch'.
@@ -160,6 +162,7 @@ class FacebookJSTagLib {
     /**
      * Publish link (https://developers.facebook.com/docs/reference/dialogs/feed/)
      *
+     * @attr callback Optional javascript function name to call when dialog is confirmed or closed.
      * @attr disabled Disable click on the link.
      * @attr display Display mode in which to render the Dialog. Can be page (default), popup, iframe, or touch.
      * @attr caption The caption of the link (appears beneath the link name). If not specified, this field is automatically populated with the URL of the link.
@@ -182,6 +185,7 @@ class FacebookJSTagLib {
     /**
      * Send link (https://developers.facebook.com/docs/reference/dialogs/send/)
      *
+     * @attr callback Optional javascript function name to call when dialog is confirmed or closed.
      * @attr disabled Disable click on the link.
      * @attr display Display mode in which to render the Dialog. Can be page (default), popup, iframe, or touch.
      * @attr description The description of the link (appears beneath the link caption). If not specified, this field is automatically populated by information scraped from the link, typically the title of the page.

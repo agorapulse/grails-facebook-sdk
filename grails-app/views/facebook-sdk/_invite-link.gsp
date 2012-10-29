@@ -1,20 +1,17 @@
 <%@ page import="grails.converters.JSON" %>
-<g:if test="${!disabled}">
-<r:script disposition="footer">
-    function FBGrailsSDK_invite() {
-        FB.ui({
-            method: 'apprequests',
-            message: '${message.encodeAsJavaScript()}'
-            <g:if test="${data}">, data: '${data}'</g:if>
-            <g:if test="${display}">, 'display':'${display}'</g:if>
-            <g:if test="${excludeIds}">, exclude_ids: '${excludeIds as JSON}'</g:if>
-            <g:if test="${filters}">, filters: ${filters as JSON}</g:if>
-            <g:if test="${maxRecipients}">, max_recipients: ${maxRecipients}</g:if>
-            <g:if test="${title}">, title: '${title.encodeAsJavaScript()}'</g:if>
-            <g:if test="${to}">, to: '${to}'</g:if>
-        }<g:if test="${callBackJS}">, ${callBackJS}</g:if>);
-        return false;
-    }
-</r:script>
-</g:if>
-<a <g:if test="${elementId}">id="${elementId}"</g:if> <g:if test="${elementClass}">class="${elementClass}"</g:if> href="#" onclick="<g:if test="${!disabled}">FBGrailsSDK_invite();</g:if><g:else>return false;</g:else>">${body}</a>
+<g:if test="${!disabled}"><r:require module="fb-sdk-invite-link" /></g:if>
+<a <g:if test="${elementId}">id="${elementId}"</g:if>
+    class="<g:if test="${elementClass}">${elementClass} </g:if>fb-sdk-invite-link"
+    data-message="${message.encodeAsJavaScript()}"
+    <g:if test="${callback}">data-callback="${callback}"</g:if>
+    <g:if test="${data}">data-data="${data}"</g:if>
+    <g:if test="${display}">data-display="${display}"</g:if>
+    <g:if test="${excludeIds}">data-exclude_ids="${(excludeIds as JSON).toString().replace('"',"'")}"</g:if>
+    <g:if test="${filters}">data-filters="${(filters as JSON).toString().replace('"',"'")}"</g:if>
+    <g:if test="${maxRecipients}">data-max_recipients="${maxRecipients}"</g:if>
+    <g:if test="${title}">data-title="${title.encodeAsJavaScript()}"</g:if>
+    <g:if test="${to}">data-to="${to}"</g:if>
+    <g:if test="${disabled}">disabled="disabled"</g:if>
+    href="#">
+    ${body}
+</a>

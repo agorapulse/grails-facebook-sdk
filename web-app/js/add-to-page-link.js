@@ -1,13 +1,14 @@
-$("a.facebook-sdk-add-to-page").click(function() {
+$('a.fb-sdk-add-to-page-link').click(function() {
     var link = $(this);
     var options = {
-
+        method: 'pagetab'
     };
-    //if (link.data('data') != undefined) options['data'] = link.data('data');
+    if (link.data('display') != undefined) options['display'] = link.data('display');
+    if (link.data('return_url') != undefined) options['redirect_uri'] = link.data('return_url');
     FB.ui(options, function(response) {
         if (link.data('callback') != undefined) {
             var callback = window[link.data('callback')];
-            if (typeof fn === 'function') {
+            if (typeof callback === 'function') {
                 callback(response);
             }
         }
