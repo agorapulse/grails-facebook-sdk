@@ -10,11 +10,19 @@ The *Add Page Tab* Dialog prompts the user to add an app to a Facebook Page that
 <facebook:addToPageLink>Add this app to your Facebook Page</facebook:addToPageLink>
 {code}
 
-To check if the app was successfully added or execute some code, you can use @callBackJS@ attribute.
+To check if the app was successfully added or execute some code, you can use @callback@ attribute.
 
 {code}
+<script>
+    function someCallbackFunction(response) {
+        alert('callback called!');
+        alert(response && response.tabs_added.length + ' app added');
+        console.log(response);
+    }
+</script>
+
 <facebook:addToPageLink
-    callBackJS="function(response) {alert(response && response.tabs_added.length + ' app added')}">
+    callback="someCallbackFunction">
     Add to page
 </facebook:addToPageLink>
 {code}
@@ -26,9 +34,9 @@ You must define the page tab URLs on your app settings to enable this dialog.
 h3. Attributes
 
 Optional attributes are :
-* @callBackJS@ Javascript to code to execute on call back (if the user send the form or close the dialog).
+* @callback@ Optional javascript function name to call when dialog is confirmed or closed.
 * @disabled@ Disable click on the link.
 * @display@ Display mode in which to render the Dialog. Can be page (default for web), touch (default for mobile), popup or iframe.
 * @elementClass@ HTML element @class@ attribute value.
 * @elementId@ HTML element @id@ attribute value.
-
+* @redirectUri@ Redirect URL after the page is added

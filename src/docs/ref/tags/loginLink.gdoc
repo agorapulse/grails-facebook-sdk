@@ -10,9 +10,27 @@ The *OAuth Dialog* is used within the authentication flows to enable a user to a
 <facebook:loginLink appPermissions="${facebookContext.app.permissions}">Login</facebook:loginLink>
 {code}
 
+To handle callback yourself, you can use @callback@ attribute.
+
+{code}
+<script>
+    function someCallbackFunction(response) {
+        alert('callback called!');
+        console.log(response);
+    }
+</script>
+
+<facebook:loginLink
+    appPermissions="${facebookContext.app.permissions}"
+    callback="someCallbackFunction">
+    Login
+</facebook:loginLink>
+{code}
+
 h3. Attributes
 
 Optional attributes are :
+* @callback@ Optional javascript function name to call when dialog is confirmed or closed.
 * @appPermissions@ Facebook app permissions/scope.
 * @cancelUrl@ Cancel URL for redirect if login is canceled (if not defined, nothing happens).
 * @elementClass@ HTML element @class@ attribute value.

@@ -10,11 +10,18 @@ The *Feed Dialog* prompts the user to publish an individual story to a profile's
 <facebook:publishLink>Publish</facebook:publishLink>
 {code}
 
-To check if the app was successfully added or execute some code, you can use @callBackJS@ attribute.
+To check if the app was successfully added or execute some code, you can use @callback@ attribute.
 
 {code}
+<script>
+    function someCallbackFunction(response) {
+        alert('callback called!');
+        console.log(response);
+    }
+</script>
+
 <facebook:publishLink
-    callBackJS="function(response) {console.log(response)}">
+    callback="someCallbackFunction">
     Publish
 </facebook:publishLink>
 {code}
@@ -22,7 +29,7 @@ To check if the app was successfully added or execute some code, you can use @ca
 h3. Attributes
 
 Optional attributes are :
-* @callBackJS@ Javascript to code to execute on call back (if the user send the form or close the dialog).
+* @callback@ Optional javascript function name to call when dialog is confirmed or closed.
 * @disabled@ Disable click on the link.
 * @display@ Display mode in which to render the Dialog. Can be page (default for web), touch (default for mobile), popup or iframe.
 * @caption@ The caption of the link (appears beneath the link name). If not specified, this field is automatically populated with the URL of the link.

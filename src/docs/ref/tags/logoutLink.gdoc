@@ -6,9 +6,26 @@ Display a link to invalidate current user session.
 <facebook:logoutLink>Logout</facebook:logoutLink>
 {code}
 
+To handle callback yourself, you can use @callback@ attribute.
+
+{code}
+<script>
+    function someCallbackFunction(response) {
+        alert('callback called!');
+        console.log(response);
+    }
+</script>
+
+<facebook:logoutLink
+    callback="someCallbackFunction">
+    Logout
+</facebook:logoutLink>
+{code}
+
 h3. Attributes
 
 Optional attributes are :
+* @callback@ Optional javascript function name to call when dialog is confirmed or closed.
 * @elementClass@ HTML element @class@ attribute value.
 * @elementId@ HTML element @id@ attribute value.
 * @nextUrl@ Next URL for redirect after logout (if not defined page will be reloaded).
