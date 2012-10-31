@@ -72,7 +72,8 @@ class FacebookJSTagLib {
 	* Login link
 	*
 	* @attr appPermissions Facebook app permissions/scope
-	* @attr cancelUrl Cancel URL for redirect if login is canceled (if not defined, nothing happens)
+    * @attr callback Optional javascript function name to call when dialog is confirmed or closed.
+    * @attr cancelUrl Cancel URL for redirect if login is canceled (if not defined, nothing happens)
 	* @attr elementClass HTML element 'class' attribute value
 	* @attr elementId HTML element 'id' attribute value
 	* @attr returnUrl Return URL for redirect after login (if not defined page will be reloaded)
