@@ -47,7 +47,7 @@ class FacebookJSTagLib {
 		attrs.each { key, value ->
 			model[key] = value	
 		}
-		out << render(template:"/facebook-sdk/init-js", model:model, plugin:"facebook-sdk")
+		out << render(template: '/tags/init-js', model: model, plugin: 'facebook-sdk')
 	}
 
     /**
@@ -65,7 +65,7 @@ class FacebookJSTagLib {
         attrs.each { key, value ->
             model[key] = value
         }
-        out << render(template:"/facebook-sdk/add-to-page-link", model:model, plugin:"facebook-sdk")
+        out << render(template: '/tags/add-to-page-link', model: model, plugin: 'facebook-sdk')
     }
 
 	/**
@@ -83,7 +83,7 @@ class FacebookJSTagLib {
 		attrs.each { key, value ->
 			model[key] = value
 		}
-		out << render(template:"/facebook-sdk/login-link", model:model, plugin:"facebook-sdk")
+		out << render(template: '/tags/login-link', model: model, plugin: 'facebook-sdk')
 	}
 	
 	/**
@@ -98,7 +98,7 @@ class FacebookJSTagLib {
 		attrs.each { key, value ->
 			model[key] = value
 		}
-		out << render(template:"/facebook-sdk/logout-link", model:model, plugin:"facebook-sdk")
+		out << render(template: '/tags/logout-link', model: model, plugin: 'facebook-sdk')
 	}
 
     /**
@@ -134,7 +134,7 @@ class FacebookJSTagLib {
         attrs.each { key, value ->
             model[key] = value
         }
-        out << render(template:"/facebook-sdk/picture", model:model, plugin:"facebook-sdk")
+        out << render(template: '/tags/picture', model: model, plugin: 'facebook-sdk')
     }
 
     /**
@@ -158,7 +158,7 @@ class FacebookJSTagLib {
         attrs.each { key, value ->
             model[key] = value
         }
-        out << render(template:"/facebook-sdk/invite-link", model:model, plugin:"facebook-sdk")
+        out << render(template: '/tags/invite-link', model: model, plugin: 'facebook-sdk')
     }
 
     /**
@@ -181,7 +181,7 @@ class FacebookJSTagLib {
         attrs.each { key, value ->
             model[key] = value
         }
-        out << render(template:"/facebook-sdk/publish-link", model:model, plugin:"facebook-sdk")
+        out << render(template: '/tags/publish-link', model: model, plugin: 'facebook-sdk')
     }
 
     /**
@@ -203,7 +203,7 @@ class FacebookJSTagLib {
         attrs.each { key, value ->
             model[key] = value
         }
-        out << render(template:"/facebook-sdk/send-link", model:model, plugin:"facebook-sdk")
+        out << render(template: '/tags/send-link', model: model, plugin: 'facebook-sdk')
     }
 
 }
