@@ -4,12 +4,10 @@ class FacebookSdkGrailsPlugin {
 	
 	def version = "0.4.3"
 	def grailsVersion = "2.0 > *"
-	def dependsOn = [:]
-	def pluginExcludes = []
 
     def author = "Benoit Hediard"
     def authorEmail = "ben@benorama.com"
-    def title = "Facebook SDK Grails Plugin"
+    def title = "Facebook SDK Plugin"
     def description = '''The Facebook SDK Plugin allows your Grails application to use the Facebook Platform and develop Facebook apps on Facebook.com or on web sites (with Facebook Connect).
 It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
 ''' 
