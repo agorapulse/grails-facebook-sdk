@@ -34,7 +34,7 @@ grails.project.dependency.resolution = {
 		}
 		plugins {
 				//here go your plugin dependencies
-				runtime ':facebook-sdk:0.4.3'
+				runtime ':facebook-sdk:0.4.4'
 		}
 }
 ```
@@ -75,6 +75,7 @@ Project documentation is located here :
 WARNING: Since V0.4.0, _FacebookApp_, _FacebookSdkFilters_ and _FacebookAppService_ from V0.3.* are DEPRECATED and have been replaced by _FacebookContext_.
 Please check [FacebookContext](http://benorama.github.com/grails-facebook-sdk/guide/facebookContext.html) doc for more info.
 
+* 2012-11-15 **V0.4.4** : for photo/video publishing, _FacebookGraphClient_ _publish_ method accepts now _InputStream_ argument type (instead of _FileInputStream_ only)
 * 2012-10-29 **V0.4.3** : tag lib improvements: channel integration (_initJS_ tag and _FacebookSdkController_ created), resources plugin integration (_FacebookSdkResources_ created)
 * 2012-10-10 **V0.4.2** : bug fix in batch responses error handling
 * 2012-09-25 **V0.4.1** : bug fix in server side OAuth redirect

@@ -134,10 +134,16 @@ h3. Publishing a Photo or a Video
 {code}
 // Publishing an image to a photo album is easy!
 // Just specify the image you'd like to upload and RestFB will handle it from there.
-def publishPhotoResponse = facebookClient.publishFile("me/photos", [message, "Test cat"], "/cat.png")
+def publishPhotoResponse = facebookClient.publishFile("me/photos", [message, "Test cat"], "/Users/ben/Downloads/cat.png")
+println "Published photo ID: " + publishPhotoResponse.id
+// Publish a submitted file
+def publishPhotoResponse = facebookClient.publishFile("me/photos", [message, "Test upload"], multipartFile.originalFilename, multipartFile.inputStream)
+// Publish an existing remote file by URL
+def someUrl = "http://www.google.com/images/logo.gif"
+def publishPhotoResponse = facebookClient.publishFile("me/photos", [message, "Test logo"], "logo.gif", new URL(someUrl).openStream())
 println "Published photo ID: " + publishPhotoResponse.id
 // Publishing a video works the same way.
-facebookClient.publish("me/videos", [message, "Test cat"], "/cat.mov")
+facebookClient.publish("me/videos", [message, "Test cat"], "/Users/ben/Downloads/cat.mov")
 {code}
 
 h3. Deleting
