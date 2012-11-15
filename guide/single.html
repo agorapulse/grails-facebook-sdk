@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
-        <title>Facebook SDK Grails Plugin 0.4.3</title>
+        <title>Facebook SDK Plugin 0.4.4</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
         <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8" />
@@ -60,9 +60,9 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
                         <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
 
                         <div class="project">
-                            <h1>Facebook SDK Grails Plugin - Reference Documentation</h1>
+                            <h1>Facebook SDK Plugin - Reference Documentation</h1>
                             <p><strong>Authors:</strong> Benoit Hediard</p>
-                            <p><strong>Version:</strong> 0.4.3</p>
+                            <p><strong>Version:</strong> 0.4.4</p>
                             
                         </div>
 
@@ -95,6 +95,7 @@ The <a href="http://developers.facebook.com/" target="blank">Facebook Platform</
 WARNING: Since V0.4.0, <code>FacebookApp</code>, <code>FacebookSdkFilters</code> and <code>FacebookAppService</code> from V0.3.* are DEPRECATED and have been replaced by <code>FacebookContext</code>: a cleaner approach to access Facebook context related info.<p class="paragraph"/>Please check <a href="../guide/single.html#facebookContext" class="guide"><code>FacebookContext</code></a> doc for more info.
 </blockquote>
 <ul class="star">
+<li>2012-11-15 <strong class="bold">V0.4.4</strong> : for photo/video publishing, <code>FacebookGraphClient</code> <code>publish</code> method accepts now <code>InputStream</code> argument type (instead of <code>FileInputStream</code> only)</li>
 <li>2012-10-29 <strong class="bold">V0.4.3</strong> : tag lib improvements: channel integration (<code>initJS</code> tag and <code>FacebookSdkController</code> created), resources plugin integration (<code>FacebookSdkResources</code> created)</li>
 <li>2012-10-10 <strong class="bold">V0.4.2</strong> : bug fix in batch responses error handling</li>
 <li>2012-09-25 <strong class="bold">V0.4.1</strong> : bug fix in server side OAuth redirect</li>
@@ -127,7 +128,7 @@ The underlying APIs are generally stable, however we may make changes to the lib
 		&#125;
 		plugins &#123;
 				//here go your plugin dependencies
-				runtime ':facebook&#45;sdk:0.4.3'
+				runtime ':facebook&#45;sdk:0.4.4'
 		&#125;
 &#125;</pre></div><p class="paragraph"/>
 <h3>Single Facebook app</h3><p class="paragraph"/>Create a Facebook app on <a href="https://developers.facebook.com/apps" target="blank">Facebook Developers</a> , in order to get your own app ID and app secret.<p class="paragraph"/>Add your app settings in <code>Config.groovy</code>:<p class="paragraph"/><div class="code"><pre>// Required
@@ -294,10 +295,16 @@ Date twoDaysFromNow = <span class="java&#45;keyword">new</span> Date() + 2
 def publishEventResponse = facebookClient.publish(<span class="java&#45;quote">"me/events"</span>, &#91;name:<span class="java&#45;quote">"Party"</span>, start_time:tomorrow, end_time:twoDaysFromNow&#93;)
 println <span class="java&#45;quote">"Published event ID: "</span> + publishEventResponse.id</pre></div><p class="paragraph"/><h3>Publishing a Photo or a Video</h3><p class="paragraph"/><div class="code"><pre>// Publishing an image to a photo album is easy!
 // Just specify the image you'd like to upload and RestFB will handle it from there.
-def publishPhotoResponse = facebookClient.publishFile(<span class="java&#45;quote">"me/photos"</span>, &#91;message, <span class="java&#45;quote">"Test cat"</span>&#93;, <span class="java&#45;quote">"/cat.png"</span>)
+def publishPhotoResponse = facebookClient.publishFile(<span class="java&#45;quote">"me/photos"</span>, &#91;message, <span class="java&#45;quote">"Test cat"</span>&#93;, <span class="java&#45;quote">"/Users/ben/Downloads/cat.png"</span>)
+println <span class="java&#45;quote">"Published photo ID: "</span> + publishPhotoResponse.id
+// Publish a submitted file
+def publishPhotoResponse = facebookClient.publishFile(<span class="java&#45;quote">"me/photos"</span>, &#91;message, <span class="java&#45;quote">"Test upload"</span>&#93;, multipartFile.originalFilename, multipartFile.inputStream)
+// Publish an existing remote file by URL
+def someUrl = <span class="java&#45;quote">"http://www.google.com/images/logo.gif"</span>
+def publishPhotoResponse = facebookClient.publishFile(<span class="java&#45;quote">"me/photos"</span>, &#91;message, <span class="java&#45;quote">"Test logo"</span>&#93;, <span class="java&#45;quote">"logo.gif"</span>, <span class="java&#45;keyword">new</span> URL(someUrl).openStream())
 println <span class="java&#45;quote">"Published photo ID: "</span> + publishPhotoResponse.id
 // Publishing a video works the same way.
-facebookClient.publish(<span class="java&#45;quote">"me/videos"</span>, &#91;message, <span class="java&#45;quote">"Test cat"</span>&#93;, <span class="java&#45;quote">"/cat.mov"</span>)</pre></div><p class="paragraph"/><h3>Deleting</h3><p class="paragraph"/><div class="code"><pre><span class="java&#45;object">Boolean</span> deleted = facebookClient.deleteObject(<span class="java&#45;quote">"some object ID"</span>)
+facebookClient.publish(<span class="java&#45;quote">"me/videos"</span>, &#91;message, <span class="java&#45;quote">"Test cat"</span>&#93;, <span class="java&#45;quote">"/Users/ben/Downloads/cat.mov"</span>)</pre></div><p class="paragraph"/><h3>Deleting</h3><p class="paragraph"/><div class="code"><pre><span class="java&#45;object">Boolean</span> deleted = facebookClient.deleteObject(<span class="java&#45;quote">"some object ID"</span>)
 out.println(<span class="java&#45;quote">"Deleted object? "</span> + deleted)</pre></div><p class="paragraph"/><h3>Using the Batch Request API</h3><p class="paragraph"/><div class="code"><pre>List batchResponses = facebookClient.executeBatch(&#91;<span class="java&#45;quote">"me"</span>, <span class="java&#45;quote">"m83music/feed"</span>&#93;);
 // Responses are ordered to match up with their corresponding requests.
 println <span class="java&#45;quote">"Me object "</span> + batchResponses&#91;0&#93;
