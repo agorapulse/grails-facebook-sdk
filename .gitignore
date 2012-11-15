@@ -4,14 +4,15 @@
 /target-eclipse
 
 # IDE files
+.classpath
+.idea/
+.project
 .settings
 /*.launch
 /*.tmproj
 
 *.log
-
 *.zip
-.idea/
 *.iml
 /out
 plugin.xml
