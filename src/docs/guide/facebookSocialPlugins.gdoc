@@ -1,0 +1,19 @@
+h3. Facebook Social Plugins
+
+Facebook also provides "Facebook Social Plugins":http://developers.facebook.com/docs/plugins/ .
+
+They are very easy to integrate, you just need to set @xfbml@ to @true@ in @facebook:initJS@ tag.
+
+{code}
+...
+<body>
+<facebook:initJS
+        appId="${facebookContext.app.id}"
+        xfbml="${true}" />
+...
+<!-- Facebook Like Button -->
+<div class="fb-like" data-href="http://example.com" data-send="false" data-show-faces="false" data-width="810"></div>
+...
+<!-- Facebook Comments -->
+<div class="fb-comments" data-href="http://example.com" data-num-posts="5" data-width="810"></div>
+{code}
