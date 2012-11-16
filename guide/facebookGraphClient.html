@@ -39,6 +39,9 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:0"><a href="../guide/facebookJSTagLib.html"><strong>5</strong><span>Facebook JS Tag Lib</span></a>
                     </div>
                     
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/facebookSocialPlugins.html"><strong>6</strong><span>Facebook Social Plugins</span></a>
+                    </div>
+                    
                 </div>
             </div>
         </li>
@@ -132,13 +135,13 @@ Date twoDaysFromNow = <span class="java&#45;keyword">new</span> Date() + 2
 def publishEventResponse = facebookClient.publish(<span class="java&#45;quote">"me/events"</span>, &#91;name:<span class="java&#45;quote">"Party"</span>, start_time:tomorrow, end_time:twoDaysFromNow&#93;)
 println <span class="java&#45;quote">"Published event ID: "</span> + publishEventResponse.id</pre></div><p class="paragraph"/><h3>Publishing a Photo or a Video</h3><p class="paragraph"/><div class="code"><pre>// Publishing an image to a photo album is easy!
 // Just specify the image you'd like to upload and RestFB will handle it from there.
-def publishPhotoResponse = facebookClient.publishFile(<span class="java&#45;quote">"me/photos"</span>, &#91;message, <span class="java&#45;quote">"Test cat"</span>&#93;, <span class="java&#45;quote">"/Users/ben/Downloads/cat.png"</span>)
+def publishPhotoResponse = facebookClient.publish(<span class="java&#45;quote">"me/photos"</span>, &#91;message, <span class="java&#45;quote">"Test cat"</span>&#93;, <span class="java&#45;quote">"/Users/ben/Downloads/cat.png"</span>)
 println <span class="java&#45;quote">"Published photo ID: "</span> + publishPhotoResponse.id
 // Publish a submitted file
-def publishPhotoResponse = facebookClient.publishFile(<span class="java&#45;quote">"me/photos"</span>, &#91;message, <span class="java&#45;quote">"Test upload"</span>&#93;, multipartFile.originalFilename, multipartFile.inputStream)
+def publishPhotoResponse = facebookClient.publish(<span class="java&#45;quote">"me/photos"</span>, &#91;message, <span class="java&#45;quote">"Test upload"</span>&#93;, multipartFile.originalFilename, multipartFile.inputStream)
 // Publish an existing remote file by URL
 def someUrl = <span class="java&#45;quote">"http://www.google.com/images/logo.gif"</span>
-def publishPhotoResponse = facebookClient.publishFile(<span class="java&#45;quote">"me/photos"</span>, &#91;message, <span class="java&#45;quote">"Test logo"</span>&#93;, <span class="java&#45;quote">"logo.gif"</span>, <span class="java&#45;keyword">new</span> URL(someUrl).openStream())
+def publishPhotoResponse = facebookClient.publish(<span class="java&#45;quote">"me/photos"</span>, &#91;message, <span class="java&#45;quote">"Test logo"</span>&#93;, <span class="java&#45;quote">"logo.gif"</span>, <span class="java&#45;keyword">new</span> URL(someUrl).openStream())
 println <span class="java&#45;quote">"Published photo ID: "</span> + publishPhotoResponse.id
 // Publishing a video works the same way.
 facebookClient.publish(<span class="java&#45;quote">"me/videos"</span>, &#91;message, <span class="java&#45;quote">"Test cat"</span>&#93;, <span class="java&#45;quote">"/Users/ben/Downloads/cat.mov"</span>)</pre></div><p class="paragraph"/><h3>Deleting</h3><p class="paragraph"/><div class="code"><pre><span class="java&#45;object">Boolean</span> deleted = facebookClient.deleteObject(<span class="java&#45;quote">"some object ID"</span>)

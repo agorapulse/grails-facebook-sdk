@@ -33,6 +33,8 @@ function addJsClass(el) {
                             
                             <div class="toc-item" style="margin-left:0"><a href="#facebookJSTagLib"><strong>5</strong><span>Facebook JS Tag Lib</span></a></div>
                             
+                            <div class="toc-item" style="margin-left:0"><a href="#facebookSocialPlugins"><strong>6</strong><span>Facebook Social Plugins</span></a></div>
+                            
                         </div>
                     </div>
                 </li>
@@ -79,6 +81,8 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
                             <div class="toc-item" style="margin-left:0px"><a href="#facebookGraphClient"><strong>4</strong><span>Facebook Graph Client</span></a></div>
                             
                             <div class="toc-item" style="margin-left:0px"><a href="#facebookJSTagLib"><strong>5</strong><span>Facebook JS Tag Lib</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="#facebookSocialPlugins"><strong>6</strong><span>Facebook Social Plugins</span></a></div>
                             
                             <div style="clear:both" ></div>
                         </div>
@@ -295,13 +299,13 @@ Date twoDaysFromNow = <span class="java&#45;keyword">new</span> Date() + 2
 def publishEventResponse = facebookClient.publish(<span class="java&#45;quote">"me/events"</span>, &#91;name:<span class="java&#45;quote">"Party"</span>, start_time:tomorrow, end_time:twoDaysFromNow&#93;)
 println <span class="java&#45;quote">"Published event ID: "</span> + publishEventResponse.id</pre></div><p class="paragraph"/><h3>Publishing a Photo or a Video</h3><p class="paragraph"/><div class="code"><pre>// Publishing an image to a photo album is easy!
 // Just specify the image you'd like to upload and RestFB will handle it from there.
-def publishPhotoResponse = facebookClient.publishFile(<span class="java&#45;quote">"me/photos"</span>, &#91;message, <span class="java&#45;quote">"Test cat"</span>&#93;, <span class="java&#45;quote">"/Users/ben/Downloads/cat.png"</span>)
+def publishPhotoResponse = facebookClient.publish(<span class="java&#45;quote">"me/photos"</span>, &#91;message, <span class="java&#45;quote">"Test cat"</span>&#93;, <span class="java&#45;quote">"/Users/ben/Downloads/cat.png"</span>)
 println <span class="java&#45;quote">"Published photo ID: "</span> + publishPhotoResponse.id
 // Publish a submitted file
-def publishPhotoResponse = facebookClient.publishFile(<span class="java&#45;quote">"me/photos"</span>, &#91;message, <span class="java&#45;quote">"Test upload"</span>&#93;, multipartFile.originalFilename, multipartFile.inputStream)
+def publishPhotoResponse = facebookClient.publish(<span class="java&#45;quote">"me/photos"</span>, &#91;message, <span class="java&#45;quote">"Test upload"</span>&#93;, multipartFile.originalFilename, multipartFile.inputStream)
 // Publish an existing remote file by URL
 def someUrl = <span class="java&#45;quote">"http://www.google.com/images/logo.gif"</span>
-def publishPhotoResponse = facebookClient.publishFile(<span class="java&#45;quote">"me/photos"</span>, &#91;message, <span class="java&#45;quote">"Test logo"</span>&#93;, <span class="java&#45;quote">"logo.gif"</span>, <span class="java&#45;keyword">new</span> URL(someUrl).openStream())
+def publishPhotoResponse = facebookClient.publish(<span class="java&#45;quote">"me/photos"</span>, &#91;message, <span class="java&#45;quote">"Test logo"</span>&#93;, <span class="java&#45;quote">"logo.gif"</span>, <span class="java&#45;keyword">new</span> URL(someUrl).openStream())
 println <span class="java&#45;quote">"Published photo ID: "</span> + publishPhotoResponse.id
 // Publishing a video works the same way.
 facebookClient.publish(<span class="java&#45;quote">"me/videos"</span>, &#91;message, <span class="java&#45;quote">"Test cat"</span>&#93;, <span class="java&#45;quote">"/Users/ben/Downloads/cat.mov"</span>)</pre></div><p class="paragraph"/><h3>Deleting</h3><p class="paragraph"/><div class="code"><pre><span class="java&#45;object">Boolean</span> deleted = facebookClient.deleteObject(<span class="java&#45;quote">"some object ID"</span>)
@@ -335,6 +339,20 @@ println <span class="java&#45;quote">"M83 feed "</span> + batchResponses&#91;1&#
 <li><a href="https://developers.facebook.com/docs/reference/dialogs/friends/" target="blank">Friends Dialog</a> .</li>
 <li><a href="https://developers.facebook.com/docs/reference/dialogs/pay/" target="blank">Pay Dialog</a> .</li>
 </ul><p class="paragraph"/>Feel free to contribute&#8230; ;)
+
+
+<h1 id="facebookSocialPlugins">6 Facebook Social Plugins</h1>
+<h3>Facebook Social Plugins</h3><p class="paragraph"/>Facebook also provides <a href="http://developers.facebook.com/docs/plugins/" target="blank">Facebook Social Plugins</a> .<p class="paragraph"/>They are very easy to integrate, you just need to set <code>xfbml</code> to <code>true</code> in <code>facebook:initJS</code> tag.<p class="paragraph"/><div class="code"><pre>&#8230;
+&#60;body&#62;
+&#60;facebook:initJS
+        appId=<span class="java&#45;quote">"$&#123;facebookContext.app.id&#125;"</span>
+        xfbml=<span class="java&#45;quote">"$&#123;<span class="java&#45;keyword">true</span>&#125;"</span> /&#62;
+&#8230;
+&#60;!&#45;&#45; Facebook Like Button &#45;&#45;&#62;
+&#60;div class=<span class="java&#45;quote">"fb&#45;like"</span> data&#45;href=<span class="java&#45;quote">"http://example.com"</span> data&#45;send=<span class="java&#45;quote">"<span class="java&#45;keyword">false</span>"</span> data&#45;show&#45;faces=<span class="java&#45;quote">"<span class="java&#45;keyword">false</span>"</span> data&#45;width=<span class="java&#45;quote">"810"</span>&#62;&#60;/div&#62;
+&#8230;
+&#60;!&#45;&#45; Facebook Comments &#45;&#45;&#62;
+&#60;div class=<span class="java&#45;quote">"fb&#45;comments"</span> data&#45;href=<span class="java&#45;quote">"http://example.com"</span> data&#45;num&#45;posts=<span class="java&#45;quote">"5"</span> data&#45;width=<span class="java&#45;quote">"810"</span>&#62;&#60;/div&#62;</pre></div>
 
                     </div>
                 </td>
