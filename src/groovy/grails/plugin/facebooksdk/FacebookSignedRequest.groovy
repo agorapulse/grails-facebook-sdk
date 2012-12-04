@@ -13,7 +13,7 @@ class FacebookSignedRequest {
     // Facebook access token of the current user.
 	String accessToken = ''
 	// App data query string parameter (only available if your app is an iframe loaded in a Page tab).
-	Map appData = [:]
+	def appData
 	// Authorization code
 	String code = ''
     // Unix timestamp when the request was signed.
@@ -44,7 +44,7 @@ class FacebookSignedRequest {
                     this.accessToken = value
                     break
                 case 'app_data':
-                    this.appData = value as Map
+                    this.appData = value
                     break
                 case 'code':
                     this.code = value
