@@ -21,6 +21,7 @@ WARNING: Since V0.4.0, @FacebookApp@, @FacebookSdkFilters@ and @FacebookAppServi
 Please check [@FacebookContext@|guide:facebookContext] doc for more info.
 {warning}
 
+* 2012-12-05 *V0.4.5* : bug fix in @FacebookSignedRequest@ appData property
 * 2012-11-15 *V0.4.4* : for photo/video publishing, @FacebookGraphClient@ @publish@ method accepts now @InputStream@ argument type (instead of @FileInputStream@ only)
 * 2012-10-29 *V0.4.3* : tag lib improvements: channel integration (@initJS@ tag and @FacebookSdkController@ created), resources plugin integration (@FacebookSdkResources@ created)
 * 2012-10-10 *V0.4.2* : bug fix in batch responses error handling
