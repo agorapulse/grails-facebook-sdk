@@ -59,12 +59,12 @@ if "%GRAILS_HOME:~-1%"=="\" SET GRAILS_HOME=%GRAILS_HOME:~0,-1%
 
 :init
 
-set SPRINGLOADED_PARAMS="profile=grails"
-if not "%GRAILS_AGENT_CACHE_DIR%" == "" (
-set SPRINGLOADED_PARAMS="%SPRINGLOADED_PARAMS%;cacheDir=%GRAILS_AGENT_CACHE_DIR%"
+for %%x in ("%HOMEPATH%") do set SHORTHOME=%%~fsx
+if "x%GRAILS_AGENT_CACHE_DIR%" == "x" set GRAILS_AGENT_CACHE_DIR=%SHORTHOME%/.grails/@grails.version@/
+set SPRINGLOADED_PARAMS="profile=grails;cacheDir=%GRAILS_AGENT_CACHE_DIR%"
 if not exist "%GRAILS_AGENT_CACHE_DIR%" mkdir "%GRAILS_AGENT_CACHE_DIR%"
-)
-set AGENT_STRING=-javaagent:wrapper/springloaded-core-1.0.6.jar -noverify -Dspringloaded=%SPRINGLOADED_PARAMS%
+
+set AGENT_STRING=-javaagent:wrapper/springloaded-core-1.1.0.jar -noverify -Dspringloaded=%SPRINGLOADED_PARAMS%
 set DISABLE_RELOADING=
 if "%GRAILS_OPTS%" == "" set GRAILS_OPTS=-server -Xmx768M -Xms768M -XX:PermSize=256m -XX:MaxPermSize=256m -Dfile.encoding=UTF-8
 
@@ -130,7 +130,7 @@ set CMD_LINE_ARGS=%$
 
 :execute
 @rem Setup the command line
-set STARTER_CLASSPATH=wrapper/grails-wrapper-runtime-2.1.0.jar;wrapper;.
+set STARTER_CLASSPATH=wrapper/grails-wrapper-runtime-2.1.2.jar;wrapper;.
 
 if exist "%USERPROFILE%/.groovy/init.bat" call "%USERPROFILE%/.groovy/init.bat"
 
