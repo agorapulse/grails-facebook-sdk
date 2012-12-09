@@ -1,11 +1,13 @@
 package grails.plugin.facebooksdk
 
+import org.springframework.web.servlet.support.RequestContextUtils
+
 class FacebookJSTagLib {
 
-    static String TYPE_LARGE = 'large'
-    static String TYPE_MINI = 'mini'
-    static String TYPE_SMALL = 'small'
-    static String TYPE_SQUARE = 'square'
+    static final String TYPE_LARGE = 'large'
+    static final String TYPE_MINI = 'mini'
+    static final String TYPE_SMALL = 'small'
+    static final String TYPE_SQUARE = 'square'
 
     static Map SIZES = [
             (TYPE_LARGE):  [width:  200],
@@ -13,26 +15,30 @@ class FacebookJSTagLib {
             (TYPE_SMALL):  [width:  50],
             (TYPE_SQUARE): [height: 50, width: 50]
     ]
-	
-	static namespace = 'facebook'
+
+    static namespace = 'facebook'
 
     def grailsLinkGenerator // Injected by Spring
 
     /**
-	* Initialize Facebook JS SDK
-	*
-	* @attr appId REQUIRED
-	* @attr autoGrow (Default to false)
-    * @attr channel (Default to true)
-	* @attr channelUrl (Default to provided facebook sdk channel)
-	* @attr	cookie (Default to true)
-	* @attr locale (Default to server locale)
-	* @attr status (Default to false)
-	* @attr	xfbml (Default to false)
-	* @attr frictionlessRequests (Default to false)
-	*/
-	def initJS = { attrs, body ->
-        if (!attrs.locale) attrs.locale = Locale.getDefault()
+     * Initialize Facebook JS SDK
+     *
+     * @attr appId REQUIRED
+     * @attr autoGrow (Default to false)
+     * @attr channel (Default to true)
+     * @attr channelUrl (Default to provided facebook sdk channel)
+     * @attr	cookie (Default to true)
+     * @attr locale (Default to server locale)
+     * @attr status (Default to false)
+     * @attr	xfbml (Default to false)
+     * @attr frictionlessRequests (Default to false)
+     */
+    def initJS = { attrs, body ->
+        if (!attrs.locale) attrs.locale = RequestContextUtils.getLocale(request)
+        if (!FacebookLocalization.isLocaleSupported(attrs.locale)) {
+            log.warn "Locale $attrs.locale is not supported by Facebook, default locale en_US will be used"
+            attrs.locale = Locale.US
+        }
         if (!attrs.containsKey("cookie")) attrs.cookie = true
         if (!attrs.containsKey("channel")) attrs.channel = true
         if (attrs.channel && !attrs.containsKey("channelUrl")) {
@@ -44,11 +50,11 @@ class FacebookJSTagLib {
             )
         }
         Map model = [body:body()]
-		attrs.each { key, value ->
-			model[key] = value	
-		}
-		out << render(template: '/tags/init-js', model: model, plugin: 'facebook-sdk')
-	}
+        attrs.each { key, value ->
+            model[key] = value
+        }
+        out << render(template: '/tags/init-js', model: model, plugin: 'facebook-sdk')
+    }
 
     /**
      * Add to page link (https://developers.facebook.com/docs/reference/dialogs/add_to_page/)
@@ -68,38 +74,38 @@ class FacebookJSTagLib {
         out << render(template: '/tags/add-to-page-link', model: model, plugin: 'facebook-sdk')
     }
 
-	/**
-	* Login link
-	*
-	* @attr appPermissions Facebook app permissions/scope
-    * @attr callback Optional javascript function name to call when dialog is confirmed or closed.
-    * @attr cancelUrl Cancel URL for redirect if login is canceled (if not defined, nothing happens)
-	* @attr elementClass HTML element 'class' attribute value
-	* @attr elementId HTML element 'id' attribute value
-	* @attr returnUrl Return URL for redirect after login (if not defined page will be reloaded)
-	*/
-	def loginLink = { attrs, body ->
-		Map model = [body:body()]
-		attrs.each { key, value ->
-			model[key] = value
-		}
-		out << render(template: '/tags/login-link', model: model, plugin: 'facebook-sdk')
-	}
-	
-	/**
-	* Logout link
-	*
-	* @attr elementClass HTML element 'class' attribute value
-	* @attr elementId HTML element 'id' attribute value
-	* @attr nextUrl next URL for redirect after login (if not defined page will be reloaded)
-	*/
-	def logoutLink = { attrs, body ->
-		Map model = [body:body()]
-		attrs.each { key, value ->
-			model[key] = value
-		}
-		out << render(template: '/tags/logout-link', model: model, plugin: 'facebook-sdk')
-	}
+    /**
+     * Login link
+     *
+     * @attr appPermissions Facebook app permissions/scope
+     * @attr callback Optional javascript function name to call when dialog is confirmed or closed.
+     * @attr cancelUrl Cancel URL for redirect if login is canceled (if not defined, nothing happens)
+     * @attr elementClass HTML element 'class' attribute value
+     * @attr elementId HTML element 'id' attribute value
+     * @attr returnUrl Return URL for redirect after login (if not defined page will be reloaded)
+     */
+    def loginLink = { attrs, body ->
+        Map model = [body:body()]
+        attrs.each { key, value ->
+            model[key] = value
+        }
+        out << render(template: '/tags/login-link', model: model, plugin: 'facebook-sdk')
+    }
+
+    /**
+     * Logout link
+     *
+     * @attr elementClass HTML element 'class' attribute value
+     * @attr elementId HTML element 'id' attribute value
+     * @attr nextUrl next URL for redirect after login (if not defined page will be reloaded)
+     */
+    def logoutLink = { attrs, body ->
+        Map model = [body:body()]
+        attrs.each { key, value ->
+            model[key] = value
+        }
+        out << render(template: '/tags/logout-link', model: model, plugin: 'facebook-sdk')
+    }
 
     /**
      * Picture
