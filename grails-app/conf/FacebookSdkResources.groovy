@@ -1,33 +1,33 @@
 modules = {
 
     'fb-sdk-add-to-page-link' {
-        defaultBundle 'fb-sdk'
-        resource url: '/js/add-to-page-link.js'
+        defaultBundle 'facebook-sdk'
+        resource: url: [plugin: 'facebook-sdk', dir: 'js', file: 'add-to-page-link.js']
     }
 
     'fb-sdk-invite-link' {
-        defaultBundle 'fb-sdk'
-        resource url: '/js/invite-link.js'
+        defaultBundle 'facebook-sdk'
+        resource: url: [plugin: 'facebook-sdk', dir: 'js', file: 'invite-link.js']
     }
 
     'fb-sdk-login-link' {
-        defaultBundle 'fb-sdk'
-        resource url: '/js/login-link.js'
+        defaultBundle 'facebook-sdk'
+        resource: url: [plugin: 'facebook-sdk', dir: 'js', file: 'login-link.js']
     }
 
     'fb-sdk-logout-link' {
-        defaultBundle 'fb-sdk'
-        resource url: '/js/logout-link.js'
+        defaultBundle 'facebook-sdk'
+        resource: url: [plugin: 'facebook-sdk', dir: 'js', file: 'logout-link.js']
     }
 
     'fb-sdk-publish-link' {
-        defaultBundle 'fb-sdk'
-        resource url: '/js/publish-link.js'
+        defaultBundle 'facebook-sdk'
+        resource: url: [plugin: 'facebook-sdk', dir: 'js', file: 'publish-link.js']
     }
 
     'fb-sdk-send-link' {
-        defaultBundle 'fb-sdk'
-        resource url: '/js/send-link.js'
+        defaultBundle 'facebook-sdk'
+        resource: url: [plugin: 'facebook-sdk', dir: 'js', file: 'send-link.js']
     }
 
 }
