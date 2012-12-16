@@ -1,11 +1,11 @@
-$('a.fb-sdk-login-link').click(function() {
+$('a.fb-sdk-login-link').click(function(event) {
     var link = $(this);
     link.attr('disabled', 'disabled');
     FB.login(function(response) {
         if (link.data('callback') != undefined) {
             var callback = window[link.data('callback')];
-            if (typeof fn === 'function') {
-                callback(response);
+            if (typeof callback === 'function') {
+                callback(response, event.target);
             }
         } else if (response.authResponse) {
             // user is logged
