@@ -16,3 +16,4 @@
 *.iml
 /out
 plugin.xml
+*.sha1
