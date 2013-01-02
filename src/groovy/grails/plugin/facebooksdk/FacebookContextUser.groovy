@@ -187,6 +187,10 @@ class FacebookContextUser {
         return expirationTime && (!isTokenExpired() && (expirationTime - new Date().time) < EXPIRATION_PREVENTION_THRESHOLD)
     }
 
+    boolean isTokenLoaded() {
+        _token != null
+    }
+
     String toString() {
         "FacebookUser(id: $id)"
     }

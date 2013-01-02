@@ -90,6 +90,10 @@ class FacebookContext implements InitializingBean {
             signedRequest = new FacebookSignedRequest(app.secret, cookie.value, FacebookSignedRequest.TYPE_COOKIE)
             log.debug "Got signed request from cookie"
         }
+        // Exchange token if it expires soon
+        if (authenticated && user.tokenLoaded && user.tokenExpiredSoon) {
+            user.exchangeToken()
+        }
     }
 
     boolean isAuthenticated() {
