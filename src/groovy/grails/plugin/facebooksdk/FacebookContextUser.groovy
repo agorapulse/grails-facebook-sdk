@@ -15,7 +15,7 @@ class FacebookContextUser {
 
     private long _id = -1
     private String _token = null
-    private long _tokenExpirationTime = -1
+    private long _tokenExpirationTime = -1 // Unix time stamp in milliseconds
     private Logger log = Logger.getLogger(getClass())
 
     /*
@@ -151,7 +151,7 @@ class FacebookContextUser {
         if (_tokenExpirationTime == -1) {
             // If a signed request is supplied, then it solely determines expiration time.
             if (context.signedRequest.expirationTime) {
-                _tokenExpirationTime = context.signedRequest.expirationTime
+                _tokenExpirationTime = context.signedRequest.expirationTime * 1000
                 log.debug "Got expiration time from signed request (expirationTime=$_tokenExpirationTime)"
                 if (context.session.getData('expirationTime') != _tokenExpirationTime) {
                     context.session.setData('expirationTime', _tokenExpirationTime)
@@ -216,7 +216,7 @@ class FacebookContextUser {
                 context.session.setData('token', accessToken)
                 context.session.setData('code', code)
                 if (result['expires']) {
-                    Integer expires = result['expires'] as Integer
+                    Integer expires = result['expires'].toInteger()
                     long expirationTime = new Date().time + expires * 1000
                     context.session.setData('expirationTime', expirationTime)
                 }
