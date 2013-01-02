@@ -2,7 +2,6 @@ package grails.plugin.facebooksdk
 
 import com.restfb.exception.FacebookOAuthException
 import org.apache.log4j.Logger
-import org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequest
 
 class FacebookContextUser {
 
@@ -16,6 +15,7 @@ class FacebookContextUser {
 
     private long _id = -1
     private String _token = null
+    private long _tokenExpirationTime = -1
     private Logger log = Logger.getLogger(getClass())
 
     /*
@@ -91,7 +91,7 @@ class FacebookContextUser {
     */
     String getToken() {
         if (_token == null) {
-            if (context.signedRequest.accessToken || context.signedRequest.code) { // First, consider a signed request if it's supplied. if there is a signed request, then it alone determines the access token.
+            if (context.signedRequest.accessToken || context.signedRequest.code) { // First, consider a signed request if it's supplied. If there is a signed request, then it alone determines the access token.
                 if (context.signedRequest.accessToken) {
                     // apps.facebook.com hands the access_token in the signed_request
                     _token = context.signedRequest.accessToken
@@ -144,8 +144,24 @@ class FacebookContextUser {
         return _token
     }
 
+    /*
+     * @description Get the token expiration time of the connected user.
+     */
     long getTokenExpirationTime() {
-        context.session.getData('expirationTime', 0).toLong()
+        if (_tokenExpirationTime == -1) {
+            // If a signed request is supplied, then it solely determines expiration time.
+            if (context.signedRequest.expirationTime) {
+                _tokenExpirationTime = context.signedRequest.expirationTime
+                log.debug "Got expiration time from signed request (expirationTime=$_tokenExpirationTime)"
+                if (context.session.getData('expirationTime') != _tokenExpirationTime) {
+                    context.session.setData('expirationTime', _tokenExpirationTime)
+                }
+            } else {
+                _tokenExpirationTime = context.session.getData('expirationTime', 0).toLong()
+                log.debug "Got expiration from session (expirationTime=$_tokenExpirationTime)"
+            }
+        }
+        return _tokenExpirationTime
     }
 
     /*
