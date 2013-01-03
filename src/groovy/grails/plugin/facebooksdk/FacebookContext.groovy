@@ -72,8 +72,9 @@ class FacebookContext implements InitializingBean {
                 if (signedRequest.user.age) user.age = signedRequest.user.age
                 if (signedRequest.user.country) user.country = signedRequest.user.country
                 if (signedRequest.user.locale) user.locale = new Locale(signedRequest.user.locale.tokenize('_')[0], signedRequest.user.locale.tokenize('_')[1])
-                // Load token in session scope
+                // Load token and expiration time in session scope
                 user.token
+                user.tokenExpirationTime
             }
             if (signedRequest.page) {
                 page = new FacebookContextPage(
@@ -88,6 +89,10 @@ class FacebookContext implements InitializingBean {
             // Cookie created by Facebook Connect Javascript SDK
             signedRequest = new FacebookSignedRequest(app.secret, cookie.value, FacebookSignedRequest.TYPE_COOKIE)
             log.debug "Got signed request from cookie"
+        }
+        // Exchange token if it expires soon
+        if (authenticated && user.tokenLoaded && user.tokenExpiredSoon) {
+            user.exchangeToken()
         }
     }
 
