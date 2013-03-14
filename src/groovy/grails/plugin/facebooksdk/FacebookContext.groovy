@@ -12,8 +12,8 @@ class FacebookContext implements InitializingBean {
 
     private final static List DROP_QUERY_PARAMS = ['code','state','signed_request']
 
-    GrailsApplication grailsApplication // Injected by Spring
-    LinkGenerator grailsLinkGenerator // Injected by Spring
+    def grailsApplication // Injected by Spring
+    def grailsLinkGenerator // Injected by Spring
 
     FacebookContextApp app
     FacebookContextPage page // Only if app is running in a page tab and signed request exists in params (initial request)
