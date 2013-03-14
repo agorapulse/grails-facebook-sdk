@@ -1,6 +1,8 @@
 Facebook SDK Grails Plugin
 ==========================
 
+[![Build Status](https://travis-ci.org/benorama/grails-facebook-sdk.png)](https://travis-ci.org/benorama/grails-facebook-sdk)
+
 # Introduction
 
 The [Facebook Platform](http://developers.facebook.com/) is a set of APIs that make your application more social. Read more about [integrating Facebook with your web site](http://developers.facebook.com/docs/guides/web) on the Facebook developer site.
