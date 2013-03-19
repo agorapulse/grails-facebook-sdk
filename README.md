@@ -1,6 +1,8 @@
 Facebook SDK Grails Plugin
 ==========================
 
+[![Build Status](https://travis-ci.org/benorama/grails-facebook-sdk.png)](https://travis-ci.org/benorama/grails-facebook-sdk)
+
 # Introduction
 
 The [Facebook Platform](http://developers.facebook.com/) is a set of APIs that make your application more social. Read more about [integrating Facebook with your web site](http://developers.facebook.com/docs/guides/web) on the Facebook developer site.
@@ -34,7 +36,7 @@ grails.project.dependency.resolution = {
 		}
 		plugins {
 				//here go your plugin dependencies
-				runtime ':facebook-sdk:0.4.8'
+				runtime ':facebook-sdk:0.4.9'
 		}
 }
 ```
@@ -75,6 +77,7 @@ Project documentation is located here :
 WARNING: Since V0.4.0, _FacebookApp_, _FacebookSdkFilters_ and _FacebookAppService_ from V0.3.* are DEPRECATED and have been replaced by _FacebookContext_.
 Please check [FacebookContext](http://benorama.github.com/grails-facebook-sdk/guide/facebookContext.html) doc for more info.
 
+* 2013-03-19 **V0.4.9** : bug fix token exchange from code with concurrent requests (thanks to [elegorod](https://github.com/elegorod))
 * 2013-01-03 **V0.4.8** : bug fix token expiration time handling (in Facebook Page tabs)
 * 2012-12-20 **V0.4.7** : bug fix resources definition
 * 2012-12-07 **V0.4.6** : bug fix in invite/publish/send tags (encode text as HTML in attributes)
