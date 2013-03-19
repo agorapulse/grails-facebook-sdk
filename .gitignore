@@ -1,6 +1,20 @@
+# GRAILS files
+/web-app/WEB-INF
+/target
+/target-eclipse
+
+# IDE files
+.classpath
 .idea/
+.project
+.settings
+/*.launch
+/*.tmproj
+
+*.log
+*.zip
 *.iml
-out/
-target/
+/out
 plugin.xml
-*.tld
+.DS_Store
+*.sha1

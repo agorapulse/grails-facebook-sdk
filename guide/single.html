@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
-        <title>Facebook SDK Plugin 0.4.7</title>
+        <title>Facebook SDK Plugin 0.4.9</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
         <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8" />
@@ -64,7 +64,7 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
                         <div class="project">
                             <h1>Facebook SDK Plugin - Reference Documentation</h1>
                             <p><strong>Authors:</strong> Benoit Hediard</p>
-                            <p><strong>Version:</strong> 0.4.7</p>
+                            <p><strong>Version:</strong> 0.4.9</p>
                             
                         </div>
 
@@ -99,6 +99,9 @@ The <a href="http://developers.facebook.com/" target="blank">Facebook Platform</
 WARNING: Since V0.4.0, <code>FacebookApp</code>, <code>FacebookSdkFilters</code> and <code>FacebookAppService</code> from V0.3.* are DEPRECATED and have been replaced by <code>FacebookContext</code>: a cleaner approach to access Facebook context related info.<p class="paragraph"/>Please check <a href="../guide/single.html#facebookContext" class="guide"><code>FacebookContext</code></a> doc for more info.
 </blockquote>
 <ul class="star">
+<li>2013-03-19 <strong class="bold">V0.4.9</strong> : bug fix token exchange from code with concurrent requests (thanks to <a href="https://github.com/elegorod" target="blank">elegorod</a> )</li>
+<li>2013-01-03 <strong class="bold">V0.4.8</strong> : bug fix token expiration time handling (in Facebook Page tabs)</li>
+<li>2012-12-20 <strong class="bold">V0.4.7</strong> : bug fix resources definition</li>
 <li>2012-12-07 <strong class="bold">V0.4.6</strong> : bug fix in invite/publish/send tags (encode text as HTML in attributes)</li>
 <li>2012-12-05 <strong class="bold">V0.4.5</strong> : bug fix in <code>FacebookSignedRequest</code> appData property</li>
 <li>2012-11-15 <strong class="bold">V0.4.4</strong> : for photo/video publishing, <code>FacebookGraphClient</code> <code>publish</code> method accepts now <code>InputStream</code> argument type (instead of <code>FileInputStream</code> only)</li>
@@ -134,7 +137,7 @@ The underlying APIs are generally stable, however we may make changes to the lib
 		&#125;
 		plugins &#123;
 				//here go your plugin dependencies
-				runtime ':facebook&#45;sdk:0.4.7'
+				runtime ':facebook&#45;sdk:0.4.9'
 		&#125;
 &#125;</pre></div><p class="paragraph"/>
 <h3>Single Facebook app</h3><p class="paragraph"/>Create a Facebook app on <a href="https://developers.facebook.com/apps" target="blank">Facebook Developers</a> , in order to get your own app ID and app secret.<p class="paragraph"/>Add your app settings in <code>Config.groovy</code>:<p class="paragraph"/><div class="code"><pre>// Required
