@@ -99,15 +99,8 @@ class FacebookContextUser {
                     context.session.setData('token', token)
                 } else if (context.signedRequest.code) {
                     // Facebook Javascript SDK puts an authorization code in signed request
-                    if (context.signedRequest.code == context.session.getData('code')) {
-                        if (!isTokenExpired()) {
-                            _token = context.session.getData('token')
-                            log.debug "Got token from code (token=$_token)"
-                            if (isTokenExpiredSoon()) {
-                                exchangeToken()
-                            }
-                        }
-                    } else {
+                    boolean loadedFromCode = loadSavedTokenFromCode(context.signedRequest.code)
+                    if (!loadedFromCode) {
                         _token = getTokenFromCode(context.signedRequest.code)
                         log.debug "Got token from signed request code (token=$_token)"
                     }
@@ -227,9 +220,36 @@ class FacebookContextUser {
             }
         } catch (FacebookOAuthException exception) {
             log.warn "Could not get token from code: $exception.errorMessage"
+            if (exception.errorCode == 100) {
+                // Authorization code has already been used.
+                // Token might have been received by another concurrent process, trying to extract it from session retries were made for distributed session replication
+                for(i in 0..<10) {
+                    sleep(100 + 300 * i)
+                    log.debug "Retry $i to load from code"
+                    boolean loadedFromCode = loadSavedTokenFromCode(code)
+                    if (loadedFromCode) {
+                        return _token
+                    }
+                }
+            }
             invalidate()
         }
         return accessToken
+    }
+
+    private boolean loadSavedTokenFromCode(String code) {
+        boolean result = false
+        if (code == context.session.getData('code')) {
+            result = true
+            if (!isTokenExpired()) {
+                _token = context.session.getData('token')
+                log.debug "Got token from code (token=$_token)"
+                if (isTokenExpiredSoon()) {
+                    exchangeToken()
+                }
+            }
+        }
+        return result
     }
 
 }
