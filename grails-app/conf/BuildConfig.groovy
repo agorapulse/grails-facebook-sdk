@@ -10,7 +10,7 @@ grails.project.dependency.resolution = {
         mavenCentral()
 	}
 	dependencies {
-		compile 'com.restfb:restfb:1.6.10'
+		compile 'com.restfb:restfb:1.6.12'
 	}
 	plugins {
 		build(':release:2.2.0', ':rest-client-builder:1.0.3') {

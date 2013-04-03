@@ -77,6 +77,7 @@ Project documentation is located here :
 WARNING: Since V0.4.0, _FacebookApp_, _FacebookSdkFilters_ and _FacebookAppService_ from V0.3.* are DEPRECATED and have been replaced by _FacebookContext_.
 Please check [FacebookContext](http://benorama.github.com/grails-facebook-sdk/guide/facebookContext.html) doc for more info.
 
+* 2013-04-03 **V0.4.10** : RestFB dependency updated to 1.6.12 + bug fix token exchange
 * 2013-03-19 **V0.4.9** : bug fix token exchange from code with concurrent requests (thanks to [elegorod](https://github.com/elegorod))
 * 2013-01-03 **V0.4.8** : bug fix token expiration time handling (in Facebook Page tabs)
 * 2012-12-20 **V0.4.7** : bug fix resources definition
@@ -87,7 +88,7 @@ Please check [FacebookContext](http://benorama.github.com/grails-facebook-sdk/gu
 * 2012-10-10 **V0.4.2** : bug fix in batch responses error handling
 * 2012-09-25 **V0.4.1** : bug fix in server side OAuth redirect
 * 2012-09-25 **V0.4.0** : complete refactoring to improve SDK architecture ([FacebookContext](http://benorama.github.com/grails-facebook-sdk/guide/facebookContext.html) implemented) and [multiple apps support](http://benorama.github.com/grails-facebook-sdk/guide/configuration.html) added
-* 2012-09-03 **V0.3.6** : latest RestFB 1.6.10 dependency, _proxyHost_ and _proxyPort_ added to config and _signedRequest_ added to filter _facebook_ map
+* 2012-09-03 **V0.3.6** : RestFB dependency updated to 1.6.10, _proxyHost_ and _proxyPort_ added to config and _signedRequest_ added to filter _facebook_ map
 * 2012-08-24 **V0.3.5** : _proxyHost_ and _proxyPort_ parameters added to Graph/Rest client (thanks to Eduard Martini)
 * 2012-07-23 **V0.3.4** : bug fix in facebookAppService
 * 2012-07-17 **V0.3.3** : readTimeout parameter added to Graph/Rest client + upgrade to Grails 2.1 with wrapper

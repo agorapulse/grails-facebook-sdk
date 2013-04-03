@@ -23,7 +23,7 @@ class FacebookContextUser {
     * @hint Returns a map with access_token and expires
     */
     void exchangeToken() {
-        if (_token) {
+        if (token) {
             try {
                 def result = graphClient.fetchObject('oauth/access_token', [
                         client_id: context.app.id,
