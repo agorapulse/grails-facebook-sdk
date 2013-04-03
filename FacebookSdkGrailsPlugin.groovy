@@ -2,7 +2,7 @@ import grails.plugin.facebooksdk.*
 
 class FacebookSdkGrailsPlugin {
 	
-	def version = "0.4.9"
+	def version = "0.4.10"
 	def grailsVersion = "2.0 > *"
 
     def author = "Benoit Hediard"
