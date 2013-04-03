@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>1 Introduction 0.4.9</title>
+    <title>1 Introduction 0.4.10</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -80,7 +80,7 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
 
                     <p><strong>Authors:</strong> Benoit Hediard</p>
 
-                    <p><strong>Version:</strong> 0.4.9</p>
+                    <p><strong>Version:</strong> 0.4.10</p>
 
                     
                 </div>
@@ -99,6 +99,7 @@ The <a href="http://developers.facebook.com/" target="blank">Facebook Platform</
 WARNING: Since V0.4.0, <code>FacebookApp</code>, <code>FacebookSdkFilters</code> and <code>FacebookAppService</code> from V0.3.* are DEPRECATED and have been replaced by <code>FacebookContext</code>: a cleaner approach to access Facebook context related info.<p class="paragraph"/>Please check <a href="../guide/single.html#facebookContext" class="guide"><code>FacebookContext</code></a> doc for more info.
 </blockquote>
 <ul class="star">
+<li>2013-04-03 <strong class="bold">V0.4.10</strong> : RestFB dependency updated to 1.6.12 + bug fix token exchange</li>
 <li>2013-03-19 <strong class="bold">V0.4.9</strong> : bug fix token exchange from code with concurrent requests (thanks to <a href="https://github.com/elegorod" target="blank">elegorod</a> )</li>
 <li>2013-01-03 <strong class="bold">V0.4.8</strong> : bug fix token expiration time handling (in Facebook Page tabs)</li>
 <li>2012-12-20 <strong class="bold">V0.4.7</strong> : bug fix resources definition</li>
@@ -109,7 +110,7 @@ WARNING: Since V0.4.0, <code>FacebookApp</code>, <code>FacebookSdkFilters</code>
 <li>2012-10-10 <strong class="bold">V0.4.2</strong> : bug fix in batch responses error handling</li>
 <li>2012-09-25 <strong class="bold">V0.4.1</strong> : bug fix in server side OAuth redirect</li>
 <li>2012-10-25 <strong class="bold">V0.4.0</strong> : complete refactoring to improve SDK architecture (<a href="../guide/single.html#facebookContext" class="guide"><code>FacebookContext</code></a> implemented) and <a href="../guide/single.html#configuration" class="guide">multiple Facebook apps</a> support added</li>
-<li>2012-09-03 <strong class="bold">V0.3.6</strong> : latest RestFB 1.6.10 dependency, <code>proxyHost</code> and <code>proxyPort</code> added to config and <code>signedRequest</code> added to filter <code>facebook</code> map</li>
+<li>2012-09-03 <strong class="bold">V0.3.6</strong> : RestFB dependency updated to 1.6.10, <code>proxyHost</code> and <code>proxyPort</code> added to config and <code>signedRequest</code> added to filter <code>facebook</code> map</li>
 <li>2012-08-24 <strong class="bold">V0.3.5</strong> : <code>proxyHost</code> and <code>proxyPort</code> parameters added to Graph/Rest client (thanks to Eduard Martini)</li>
 <li>2012-07-23 <strong class="bold">V0.3.4</strong> : bug fix in <code>facebookAppService</code></li>
 <li>2012-07-17 <strong class="bold">V0.3.3</strong> : <code>readTimeout</code> parameter added to Graph/Rest client + upgrade to Grails 2.1 with wrapper</li>
