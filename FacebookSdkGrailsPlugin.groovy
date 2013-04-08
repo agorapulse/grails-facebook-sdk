@@ -12,7 +12,7 @@ class FacebookSdkGrailsPlugin {
 It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
 ''' 
     
-    def documentation = "http://benorama.github.com/grails-facebook-sdk/guide/"
+    def documentation = "http://benorama.github.io/grails-facebook-sdk/guide/"
     def license = "APACHE"
     def organization = [ name: "AgoraPulse", url: "http://www.agorapulse.com/" ]
     def issueManagement = [ system: "github", url: "https://github.com/benorama/grails-facebook-sdk/issues" ]
