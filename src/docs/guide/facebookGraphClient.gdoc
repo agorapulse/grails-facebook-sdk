@@ -46,6 +46,8 @@ println "Page likes: " + fetchObjectsResults["cocacola"].likes
 
 h3. Fetching Connections
 
+Make sure that you asked for the corresponding user permissions, e.g. @user_status@ for the feed, @user_photos@ for the photos, etc.
+
 {code}
 def myFriends = facebookClient.fetchConnection("me/friends")
 def myFeed = facebookClient.fetchConnection("me/feed")
