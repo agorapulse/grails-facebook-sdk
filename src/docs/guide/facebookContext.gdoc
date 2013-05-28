@@ -122,7 +122,7 @@ By default @token@ are only valid during 2 hours, if a request is made with an e
 If required, you can exchange the short-term token for a long-lived one (valid during 60 days).
 
 {code}
-if (facebookContext.user.authenticated) {
+if (facebookContext.authenticated && !facebookContext.user.tokenExpired) {
   // Exchange token to get an extended expiration time (60 days)
   log.info "Current token expiration time: " + new Date(facebookContext.user.tokenExpirationTime)
   facebookContext.user.exchangeToken()
