@@ -94,6 +94,10 @@ class FacebookContext implements InitializingBean {
         if (authenticated && user.tokenLoaded && user.tokenExpiredSoon) {
             user.exchangeToken()
         }
+        // Set token retrieval count
+        if (config.tokenRetrievalRetryCount) {
+            user.tokenRetrievalRetryCount = config.tokenRetrievalRetryCount
+        }
     }
 
     boolean isAuthenticated() {

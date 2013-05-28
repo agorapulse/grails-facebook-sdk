@@ -12,6 +12,7 @@ class FacebookContextUser {
     Map age = [:] // Only returned in Canvas apps, it will not be returned for external apps
     String country = ''
     Locale locale
+    int tokenRetrievalRetryCount = 0
 
     private long _id = -1
     private String _token = null
@@ -36,8 +37,8 @@ class FacebookContextUser {
                     context.session.setData('token', token)
                     if (result['expires']) {
                         long expires = result['expires'].toLong()
-                        long expirationTime = new Date().time + expires * 1000L
-                        context.session.setData('expirationTime', expirationTime)
+                        _tokenExpirationTime = new Date().time + expires * 1000L
+                        context.session.setData('expirationTime', _tokenExpirationTime)
                     } else {
                         // Non expiring token
                         context.session.setData('expirationTime', 0)
@@ -220,10 +221,10 @@ class FacebookContextUser {
             }
         } catch (FacebookOAuthException exception) {
             log.warn "Could not get token from code: $exception.errorMessage"
-            if (exception.errorCode == 100) {
+            if (exception.errorCode == 100 && tokenRetrievalRetryCount) {
                 // Authorization code has already been used.
                 // Token might have been received by another concurrent process, trying to extract it from session retries were made for distributed session replication
-                for(i in 0..<10) {
+                for(i in 0..<tokenRetrievalRetryCount) {
                     sleep(100 + 300 * i)
                     log.debug "Retry $i to load from code"
                     boolean loadedFromCode = loadSavedTokenFromCode(code)
