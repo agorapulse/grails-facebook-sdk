@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>3 Facebook Context 0.4.10</title>
+    <title>3 Facebook Context 0.4.11</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -82,7 +82,7 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
 
                     <p><strong>Authors:</strong> Benoit Hediard</p>
 
-                    <p><strong>Version:</strong> 0.4.10</p>
+                    <p><strong>Version:</strong> 0.4.11</p>
 
                     
                 </div>
@@ -142,8 +142,13 @@ facebookContext.user.age
 // To get facebook user country
 facebookContext.user.country
  // To get facebook user locale
-facebookContext.user.locale</pre></div><p class="paragraph"/>In order to optimize performances, user <code>id</code> and <code>token</code> are automatically stored in <code>session</code> scope.<p class="paragraph"/>
-<h3>Facebook Page</h3><p class="paragraph"/>If the app is running in a <strong class="bold">page tab</strong>, the context gives you access to <strong class="bold">current Facebook page</strong> info.<p class="paragraph"/>Otherwise, <code>facebookContext.page</code> is <code>null</code>. You must check if it exists before accessing it.<p class="paragraph"/><div class="code"><pre>// To get facebook page id (where the app is installed)
+facebookContext.user.locale</pre></div><p class="paragraph"/>In order to optimize performances, user <code>id</code> and <code>token</code> are automatically stored in <code>session</code> scope.<p class="paragraph"/>By default <code>token</code> are only valid during 2 hours, if a request is made with an expired token, session will be automatically invalidated.
+If required, you can exchange the short-term token for a long-lived one (valid during 60 days).<p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">if</span> (facebookContext.authenticated &#38;&#38; !facebookContext.user.tokenExpired) &#123;
+  // Exchange token to get an extended expiration time (60 days)
+  log.info <span class="java&#45;quote">"Current token expiration time: "</span> + <span class="java&#45;keyword">new</span> Date(facebookContext.user.tokenExpirationTime)
+  facebookContext.user.exchangeToken()
+  log.info <span class="java&#45;quote">"Exchanged token expiration time:  "</span> + <span class="java&#45;keyword">new</span> Date(facebookContext.user.tokenExpirationTime)
+&#125;</pre></div><p class="paragraph"/><h3>Facebook Page</h3><p class="paragraph"/>If the app is running in a <strong class="bold">page tab</strong>, the context gives you access to <strong class="bold">current Facebook page</strong> info.<p class="paragraph"/>Otherwise, <code>facebookContext.page</code> is <code>null</code>. You must check if it exists before accessing it.<p class="paragraph"/><div class="code"><pre>// To get facebook page id (where the app is installed)
 facebookContext.page?.id
 // To know <span class="java&#45;keyword">if</span> current user has liked the current page
 facebookContext.page?.liked

@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
-        <title>Facebook SDK Plugin 0.4.10</title>
+        <title>Facebook SDK Plugin 0.4.11</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
         <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8" />
@@ -64,7 +64,7 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
                         <div class="project">
                             <h1>Facebook SDK Plugin - Reference Documentation</h1>
                             <p><strong>Authors:</strong> Benoit Hediard</p>
-                            <p><strong>Version:</strong> 0.4.10</p>
+                            <p><strong>Version:</strong> 0.4.11</p>
                             
                         </div>
 
@@ -99,6 +99,7 @@ The <a href="http://developers.facebook.com/" target="blank">Facebook Platform</
 WARNING: Since V0.4.0, <code>FacebookApp</code>, <code>FacebookSdkFilters</code> and <code>FacebookAppService</code> from V0.3.* are DEPRECATED and have been replaced by <code>FacebookContext</code>: a cleaner approach to access Facebook context related info.<p class="paragraph"/>Please check <a href="../guide/single.html#facebookContext" class="guide"><code>FacebookContext</code></a> doc for more info.
 </blockquote>
 <ul class="star">
+<li>2013-05-28 <strong class="bold">V0.4.11</strong> : <code>tokenRetrievalRetryCount</code> config parameter added + doc update</li>
 <li>2013-04-03 <strong class="bold">V0.4.10</strong> : RestFB dependency updated to 1.6.12 + bug fix token exchange</li>
 <li>2013-03-19 <strong class="bold">V0.4.9</strong> : bug fix token exchange from code with concurrent requests (thanks to <a href="https://github.com/elegorod" target="blank">elegorod</a> )</li>
 <li>2013-01-03 <strong class="bold">V0.4.8</strong> : bug fix token expiration time handling (in Facebook Page tabs)</li>
@@ -117,12 +118,12 @@ WARNING: Since V0.4.0, <code>FacebookApp</code>, <code>FacebookSdkFilters</code>
 <li>2012-06-12 <strong class="bold">V0.3.2</strong> : bug fix in filter and plugin config</li>
 <li>2012-06-12 <strong class="bold">V0.3.1</strong> : package <code>grails.plugins.facebooksdk</code> renamed to <code>grails.plugin.facebooksdk</code></li>
 <li>2012-06-08 <strong class="bold">V0.3.0</strong> : new documentation based on GDoc, <code>FacebookRestClient</code> added + bug fixes</li>
-</ul><p class="paragraph"/><h3>Bugs</h3><p class="paragraph"/>To report any bug, please use the project <a href="http://github.com/benorama/grails-facebook-sdk/issues" target="blank">Issues</a> section on GitHub.<p class="paragraph"/><blockquote class="note">
+</ul><p class="paragraph"/><h3>Bugs</h3><p class="paragraph"/>To report any bug, please use the project <a href="http://github.com/agorapulse/grails-facebook-sdk/issues" target="blank">Issues</a> section on GitHub.<p class="paragraph"/><blockquote class="note">
 This is a <strong class="bold">beta release</strong>.
 The underlying APIs are generally stable, however we may make changes to the library in response to developer feedback.
 </blockquote><p class="paragraph"/>
-<h3>Demo app</h3><p class="paragraph"/>If you want to quickly run the SDK on a demo app, you can download <a href="https://github.com/benorama/grails-facebook-sdk-demo" target="blank">Facebook SDK Grails - Demo</a> .<p class="paragraph"/>
-<h3>Integration with Shiro Grails Plugin</h3><p class="paragraph"/>To see an example of integration with Shiro Grails Plugin, you can download <a href="https://github.com/benorama/grails-facebook-sdk-demo-shiro" target="blank">Facebook SDK Grails - Shiro demo</a> .<p class="paragraph"/>
+<h3>Demo app</h3><p class="paragraph"/>If you want to quickly run the SDK on a demo app, you can download <a href="https://github.com/agorapulse/grails-facebook-sdk-demo" target="blank">Facebook SDK Grails - Demo</a> .<p class="paragraph"/>
+<h3>Integration with Shiro Grails Plugin</h3><p class="paragraph"/>To see an example of integration with Shiro Grails Plugin, you can download <a href="https://github.com/agorapulse/grails-facebook-sdk-demo-shiro" target="blank">Facebook SDK Grails - Shiro demo</a> .<p class="paragraph"/>
 <h3>About</h3><p class="paragraph"/>The <strong class="bold">Grails Facebook SDK Plugin</strong> is not an official Facebook SDK such as <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Javascript</a> , <a href="http://github.com/facebook/facebook-php-sdk" target="blank">PHP</a> , <a href="http://github.com/facebook/facebook-ios-sdk/" target="blank">iOS</a> and <a href="http://github.com/facebook/facebook-android-sdk" target="blank">Android SDKs</a> .<p class="paragraph"/>It is developed by <a href="http://www.agorapulse.com" target="blank">AgoraPulse</a> and licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0.html" target="blank">Apache Licence, Version 2.0</a> .
 
 
@@ -138,7 +139,7 @@ The underlying APIs are generally stable, however we may make changes to the lib
 		&#125;
 		plugins &#123;
 				//here go your plugin dependencies
-				runtime ':facebook&#45;sdk:0.4.10'
+				runtime ':facebook&#45;sdk:0.4.11'
 		&#125;
 &#125;</pre></div><p class="paragraph"/>
 <h3>Single Facebook app</h3><p class="paragraph"/>Create a Facebook app on <a href="https://developers.facebook.com/apps" target="blank">Facebook Developers</a> , in order to get your own app ID and app secret.<p class="paragraph"/>Add your app settings in <code>Config.groovy</code>:<p class="paragraph"/><div class="code"><pre>// Required
@@ -199,6 +200,8 @@ For each request, you must define <code>app_id</code> in <code>params</code> (by
         &#125;
     &#125;
 &#125;</pre></div><p class="paragraph"/>For example, let's say you have two apps with two controllers: <code>QuizController</code> and <code>SweepstakesController</code>.<p class="paragraph"/>Add <code>controller: 'quiz'</code> in quiz app settings and <code>controller: 'sweepstakes'</code> in sweepstakes app settings.<p class="paragraph"/>To access your quiz app, use http://localhost:8080/my-app/<strong class="bold">quiz</strong> .<p class="paragraph"/>To access your sweepstakes app, use http://localhost:8080/my-app/<strong class="bold">sweepstakes</strong> .<p class="paragraph"/>If no app is found based on <code>app_id</code> params and controller name, default single app <code>grails.plugin.facebooksdk.app</code> settings will be used (if defined).<p class="paragraph"/>
+<h3>Session replication and authorization code</h3><p class="paragraph"/>When using distributed session replication, if authorization code is used by two concurrent processes, one of the process will received an error from Facebook and the session will be invalidated.
+You can add the <code>tokenRetrievalRetryCount</code> config parameter to try to extract token from session several times before invalidating the session (the time for the first process to put the token received by Facebook into session scope).<p class="paragraph"/><div class="code"><pre>grails.plugin.facebooksdk.tokenRetrievalRetryCount = 10</pre></div><p class="paragraph"/>By default, this parameter is usually not required and is disabled by default.
 
 
 <h1 id="facebookContext">3 Facebook Context</h1>
@@ -252,8 +255,13 @@ facebookContext.user.age
 // To get facebook user country
 facebookContext.user.country
  // To get facebook user locale
-facebookContext.user.locale</pre></div><p class="paragraph"/>In order to optimize performances, user <code>id</code> and <code>token</code> are automatically stored in <code>session</code> scope.<p class="paragraph"/>
-<h3>Facebook Page</h3><p class="paragraph"/>If the app is running in a <strong class="bold">page tab</strong>, the context gives you access to <strong class="bold">current Facebook page</strong> info.<p class="paragraph"/>Otherwise, <code>facebookContext.page</code> is <code>null</code>. You must check if it exists before accessing it.<p class="paragraph"/><div class="code"><pre>// To get facebook page id (where the app is installed)
+facebookContext.user.locale</pre></div><p class="paragraph"/>In order to optimize performances, user <code>id</code> and <code>token</code> are automatically stored in <code>session</code> scope.<p class="paragraph"/>By default <code>token</code> are only valid during 2 hours, if a request is made with an expired token, session will be automatically invalidated.
+If required, you can exchange the short-term token for a long-lived one (valid during 60 days).<p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">if</span> (facebookContext.user.authenticated) &#123;
+  // Exchange token to get an extended expiration time (60 days)
+  log.info <span class="java&#45;quote">"Current token expiration time: "</span> + <span class="java&#45;keyword">new</span> Date(facebookContext.user.tokenExpirationTime)
+  facebookContext.user.exchangeToken()
+  log.info <span class="java&#45;quote">"Exchanged token expiration time:  "</span> + <span class="java&#45;keyword">new</span> Date(facebookContext.user.tokenExpirationTime)
+&#125;</pre></div><p class="paragraph"/><h3>Facebook Page</h3><p class="paragraph"/>If the app is running in a <strong class="bold">page tab</strong>, the context gives you access to <strong class="bold">current Facebook page</strong> info.<p class="paragraph"/>Otherwise, <code>facebookContext.page</code> is <code>null</code>. You must check if it exists before accessing it.<p class="paragraph"/><div class="code"><pre>// To get facebook page id (where the app is installed)
 facebookContext.page?.id
 // To know <span class="java&#45;keyword">if</span> current user has liked the current page
 facebookContext.page?.liked
@@ -274,7 +282,7 @@ def page = facebookClient.fetchObject(<span class="java&#45;quote">"cocacola"</s
 println <span class="java&#45;quote">"User name: "</span> + user.name
 println <span class="java&#45;quote">"Page likes: "</span> + page.likes</pre></div><p class="paragraph"/><h3>Fetching Multiple Objects in One Call</h3><p class="paragraph"/><div class="code"><pre>def fetchObjectsResults = facebookClient.fetchObjects(&#91;<span class="java&#45;quote">"me"</span>, <span class="java&#45;quote">"cocacola"</span>&#93;)
 println <span class="java&#45;quote">"User name: "</span> + fetchObjectsResults&#91;<span class="java&#45;quote">"me"</span>&#93;.name
-println <span class="java&#45;quote">"Page likes: "</span> + fetchObjectsResults&#91;<span class="java&#45;quote">"cocacola"</span>&#93;.likes</pre></div><p class="paragraph"/><h3>Fetching Connections</h3><p class="paragraph"/><div class="code"><pre>def myFriends = facebookClient.fetchConnection(<span class="java&#45;quote">"me/friends"</span>)
+println <span class="java&#45;quote">"Page likes: "</span> + fetchObjectsResults&#91;<span class="java&#45;quote">"cocacola"</span>&#93;.likes</pre></div><p class="paragraph"/><h3>Fetching Connections</h3><p class="paragraph"/>Make sure that you asked for the corresponding user permissions, e.g. <code>user_status</code> for the feed, <code>user_photos</code> for the photos, etc.<p class="paragraph"/><div class="code"><pre>def myFriends = facebookClient.fetchConnection(<span class="java&#45;quote">"me/friends"</span>)
 def myFeed = facebookClient.fetchConnection(<span class="java&#45;quote">"me/feed"</span>)
 println <span class="java&#45;quote">"Count of my friends: "</span> + myFriends.size()
 println <span class="java&#45;quote">"First item in my feed: "</span> + myFeed&#91;0&#93;</pre></div><p class="paragraph"/><h3>Searching</h3><p class="paragraph"/><div class="code"><pre>// Searching is just a special <span class="java&#45;keyword">case</span> of fetching Connections &#45;
@@ -332,14 +340,14 @@ println <span class="java&#45;quote">"M83 feed "</span> + batchResponses&#91;1&#
 <h1 id="facebookJSTagLib">5 Facebook JS Tag Lib</h1>
 <strong class="bold">Facebook JS Tag Lib</strong> is a set of tags to easily integrate <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Facebook JS SDK</a> Dialogs in your GSPs.<p class="paragraph"/>It provides the following tags:
 <ul class="star">
-<li><a href="http://benorama.github.com/grails-facebook-sdk/ref/tags/initJS.html" target="blank">initJS</a> - Initialize <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Facebook JS SDK</a> (REQUIRED to use other tags).</li>
-<li><a href="http://benorama.github.com/grails-facebook-sdk/ref/tags/addToPageLink.html" target="blank">addToPageLink</a> - Display a link to open <a href="https://developers.facebook.com/docs/reference/dialogs/add_to_page/" target="blank">Add To Page Dialog</a> .</li>
-<li><a href="http://benorama.github.com/grails-facebook-sdk/ref/tags/inviteLink.html" target="blank">inviteLink</a> - Display a link to open <a href="https://developers.facebook.com/docs/reference/dialogs/requests/" target="blank">Request Dialog</a> .</li>
-<li><a href="http://benorama.github.com/grails-facebook-sdk/ref/tags/loginLink.html" target="blank">loginLink</a> - Display a link to prompt the user to authorize your application, or grant it permissions.</li>
-<li><a href="http://benorama.github.com/grails-facebook-sdk/ref/tags/logoutLink.html" target="blank">logoutLink</a> - Display a link to invalidate current user session.</li>
-<li><a href="http://benorama.github.com/grails-facebook-sdk/ref/tags/picture.html" target="blank">picture</a> - Display user profile picture with a specific size.</li>
-<li><a href="http://benorama.github.com/grails-facebook-sdk/ref/tags/publishLink.html" target="blank">publishLink</a> - Display a link to open <a href="https://developers.facebook.com/docs/reference/dialogs/feed/" target="blank">Feed Dialog</a> .</li>
-<li><a href="http://benorama.github.com/grails-facebook-sdk/ref/tags/sendLink.html" target="blank">sendLink</a> - Display a link to open <a href="https://developers.facebook.com/docs/reference/dialogs/send/" target="blank">Send Dialog</a> .</li>
+<li><a href="http://agorapulse.github.io/grails-facebook-sdk/ref/tags/initJS.html" target="blank">initJS</a> - Initialize <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Facebook JS SDK</a> (REQUIRED to use other tags).</li>
+<li><a href="http://agorapulse.github.io/grails-facebook-sdk/ref/tags/addToPageLink.html" target="blank">addToPageLink</a> - Display a link to open <a href="https://developers.facebook.com/docs/reference/dialogs/add_to_page/" target="blank">Add To Page Dialog</a> .</li>
+<li><a href="http://agorapulse.github.io/grails-facebook-sdk/ref/tags/inviteLink.html" target="blank">inviteLink</a> - Display a link to open <a href="https://developers.facebook.com/docs/reference/dialogs/requests/" target="blank">Request Dialog</a> .</li>
+<li><a href="http://agorapulse.github.io/grails-facebook-sdk/ref/tags/loginLink.html" target="blank">loginLink</a> - Display a link to prompt the user to authorize your application, or grant it permissions.</li>
+<li><a href="http://agorapulse.github.io/grails-facebook-sdk/ref/tags/logoutLink.html" target="blank">logoutLink</a> - Display a link to invalidate current user session.</li>
+<li><a href="http://agorapulse.github.io/grails-facebook-sdk/ref/tags/picture.html" target="blank">picture</a> - Display user profile picture with a specific size.</li>
+<li><a href="http://agorapulse.github.io/grails-facebook-sdk/ref/tags/publishLink.html" target="blank">publishLink</a> - Display a link to open <a href="https://developers.facebook.com/docs/reference/dialogs/feed/" target="blank">Feed Dialog</a> .</li>
+<li><a href="http://agorapulse.github.io/grails-facebook-sdk/ref/tags/sendLink.html" target="blank">sendLink</a> - Display a link to open <a href="https://developers.facebook.com/docs/reference/dialogs/send/" target="blank">Send Dialog</a> .</li>
 </ul><p class="paragraph"/>Dialogs not yet implemented:
 <ul class="star">
 <li><a href="https://developers.facebook.com/docs/reference/dialogs/friends/" target="blank">Friends Dialog</a> .</li>
