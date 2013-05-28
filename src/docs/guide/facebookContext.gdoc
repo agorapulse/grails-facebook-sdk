@@ -118,6 +118,17 @@ facebookContext.user.locale
 
 In order to optimize performances, user @id@ and @token@ are automatically stored in @session@ scope.
 
+By default @token@ are only valid during 2 hours, if a request is made with an expired token, session will be automatically invalidated.
+If required, you can exchange the short-term token for a long-lived one (valid during 60 days).
+
+{code}
+if (facebookContext.user.authenticated) {
+  // Exchange token to get an extended expiration time (60 days)
+  log.info "Current token expiration time: " + new Date(facebookContext.user.tokenExpirationTime)
+  facebookContext.user.exchangeToken()
+  log.info "Exchanged token expiration time:  " + new Date(facebookContext.user.tokenExpirationTime)
+}
+{code}
 
 h3. Facebook Page
 

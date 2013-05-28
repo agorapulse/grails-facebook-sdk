@@ -14,7 +14,7 @@ grails.project.dependency.resolution = {
 		}
 		plugins {
 				//here go your plugin dependencies
-				runtime ':facebook-sdk:0.4.10'
+				runtime ':facebook-sdk:0.4.11'
 		}
 }
 {code}
@@ -121,3 +121,14 @@ To access your sweepstakes app, use http://localhost:8080/my-app/*sweepstakes* .
 
 If no app is found based on @app_id@ params and controller name, default single app @grails.plugin.facebooksdk.app@ settings will be used (if defined).
 
+
+h3. Session replication and authorization code
+
+When using distributed session replication, if authorization code is used by two concurrent processes, one of the process will received an error from Facebook and the session will be invalidated.
+You can add the @tokenRetrievalRetryCount@ config parameter to try to extract token from session several times before invalidating the session (the time for the first process to put the token received by Facebook into session scope).
+
+{code}
+grails.plugin.facebooksdk.tokenRetrievalRetryCount = 10
+{code}
+
+By default, this parameter is usually not required and is disabled by default.

@@ -36,7 +36,7 @@ grails.project.dependency.resolution = {
 		}
 		plugins {
 				//here go your plugin dependencies
-				runtime ':facebook-sdk:0.4.9'
+				runtime ':facebook-sdk:0.4.11'
 		}
 }
 ```
@@ -68,15 +68,16 @@ To see an example of integration with Shiro Grails Plugin, you can download [Fac
 
 Project documentation is located here :
 
-* [Reference Documentation (Page per chapter)](http://benorama.github.io/grails-facebook-sdk/guide)
-* [Reference Documentation (Single page)](http://benorama.github.io/grails-facebook-sdk/guide/single.html)
-* [Groovy API docs](http://benorama.github.io/grails-facebook-sdk/gapi/)
+* [Reference Documentation (Page per chapter)](http://agorapulse.github.io/grails-facebook-sdk/guide)
+* [Reference Documentation (Single page)](http://agorapulse.github.io/grails-facebook-sdk/guide/single.html)
+* [Groovy API docs](http://agorapulse.github.io/grails-facebook-sdk/gapi/)
 
 # Latest releases
 
 WARNING: Since V0.4.0, _FacebookApp_, _FacebookSdkFilters_ and _FacebookAppService_ from V0.3.* are DEPRECATED and have been replaced by _FacebookContext_.
-Please check [FacebookContext](http://benorama.github.io/grails-facebook-sdk/guide/facebookContext.html) doc for more info.
+Please check [FacebookContext](http://agorapulse.github.io/grails-facebook-sdk/guide/facebookContext.html) doc for more info.
 
+* 2013-05-28 **V0.4.11** : _tokenRetrievalRetryCount_ config parameter added + doc update
 * 2013-04-03 **V0.4.10** : RestFB dependency updated to 1.6.12 + bug fix token exchange
 * 2013-03-19 **V0.4.9** : bug fix token exchange from code with concurrent requests (thanks to [elegorod](https://github.com/elegorod))
 * 2013-01-03 **V0.4.8** : bug fix token expiration time handling (in Facebook Page tabs)
@@ -87,7 +88,7 @@ Please check [FacebookContext](http://benorama.github.io/grails-facebook-sdk/gui
 * 2012-10-29 **V0.4.3** : tag lib improvements: channel integration (_initJS_ tag and _FacebookSdkController_ created), resources plugin integration (_FacebookSdkResources_ created)
 * 2012-10-10 **V0.4.2** : bug fix in batch responses error handling
 * 2012-09-25 **V0.4.1** : bug fix in server side OAuth redirect
-* 2012-09-25 **V0.4.0** : complete refactoring to improve SDK architecture ([FacebookContext](http://benorama.github.io/grails-facebook-sdk/guide/facebookContext.html) implemented) and [multiple apps support](http://benorama.github.io/grails-facebook-sdk/guide/configuration.html) added
+* 2012-09-25 **V0.4.0** : complete refactoring to improve SDK architecture ([FacebookContext](http://agorapulse.github.io/grails-facebook-sdk/guide/facebookContext.html) implemented) and [multiple apps support](http://agorapulse.github.io/grails-facebook-sdk/guide/configuration.html) added
 * 2012-09-03 **V0.3.6** : RestFB dependency updated to 1.6.10, _proxyHost_ and _proxyPort_ added to config and _signedRequest_ added to filter _facebook_ map
 * 2012-08-24 **V0.3.5** : _proxyHost_ and _proxyPort_ parameters added to Graph/Rest client (thanks to Eduard Martini)
 * 2012-07-23 **V0.3.4** : bug fix in facebookAppService
