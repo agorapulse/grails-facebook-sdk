@@ -1,14 +1,14 @@
 *Facebook JS Tag Lib* is a set of tags to easily integrate "Facebook JS SDK":http://developers.facebook.com/docs/reference/javascript/ Dialogs in your GSPs.
 
 It provides the following tags:
-* "initJS":http://benorama.github.com/grails-facebook-sdk/ref/tags/initJS.html - Initialize "Facebook JS SDK":http://developers.facebook.com/docs/reference/javascript/ (REQUIRED to use other tags).
-* "addToPageLink":http://benorama.github.com/grails-facebook-sdk/ref/tags/addToPageLink.html - Display a link to open "Add To Page Dialog":https://developers.facebook.com/docs/reference/dialogs/add_to_page/ .
-* "inviteLink":http://benorama.github.com/grails-facebook-sdk/ref/tags/inviteLink.html - Display a link to open "Request Dialog":https://developers.facebook.com/docs/reference/dialogs/requests/ .
-* "loginLink":http://benorama.github.com/grails-facebook-sdk/ref/tags/loginLink.html - Display a link to prompt the user to authorize your application, or grant it permissions.
-* "logoutLink":http://benorama.github.com/grails-facebook-sdk/ref/tags/logoutLink.html - Display a link to invalidate current user session.
-* "picture":http://benorama.github.com/grails-facebook-sdk/ref/tags/picture.html - Display user profile picture with a specific size.
-* "publishLink":http://benorama.github.com/grails-facebook-sdk/ref/tags/publishLink.html - Display a link to open "Feed Dialog":https://developers.facebook.com/docs/reference/dialogs/feed/ .
-* "sendLink":http://benorama.github.com/grails-facebook-sdk/ref/tags/sendLink.html - Display a link to open "Send Dialog":https://developers.facebook.com/docs/reference/dialogs/send/ .
+* "initJS":http://agorapulse.github.io/grails-facebook-sdk/ref/tags/initJS.html - Initialize "Facebook JS SDK":http://developers.facebook.com/docs/reference/javascript/ (REQUIRED to use other tags).
+* "addToPageLink":http://agorapulse.github.io/grails-facebook-sdk/ref/tags/addToPageLink.html - Display a link to open "Add To Page Dialog":https://developers.facebook.com/docs/reference/dialogs/add_to_page/ .
+* "inviteLink":http://agorapulse.github.io/grails-facebook-sdk/ref/tags/inviteLink.html - Display a link to open "Request Dialog":https://developers.facebook.com/docs/reference/dialogs/requests/ .
+* "loginLink":http://agorapulse.github.io/grails-facebook-sdk/ref/tags/loginLink.html - Display a link to prompt the user to authorize your application, or grant it permissions.
+* "logoutLink":http://agorapulse.github.io/grails-facebook-sdk/ref/tags/logoutLink.html - Display a link to invalidate current user session.
+* "picture":http://agorapulse.github.io/grails-facebook-sdk/ref/tags/picture.html - Display user profile picture with a specific size.
+* "publishLink":http://agorapulse.github.io/grails-facebook-sdk/ref/tags/publishLink.html - Display a link to open "Feed Dialog":https://developers.facebook.com/docs/reference/dialogs/feed/ .
+* "sendLink":http://agorapulse.github.io/grails-facebook-sdk/ref/tags/sendLink.html - Display a link to open "Send Dialog":https://developers.facebook.com/docs/reference/dialogs/send/ .
 
 Dialogs not yet implemented:
 * "Friends Dialog":https://developers.facebook.com/docs/reference/dialogs/friends/ .

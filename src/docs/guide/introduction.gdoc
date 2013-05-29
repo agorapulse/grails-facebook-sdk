@@ -21,6 +21,7 @@ WARNING: Since V0.4.0, @FacebookApp@, @FacebookSdkFilters@ and @FacebookAppServi
 Please check [@FacebookContext@|guide:facebookContext] doc for more info.
 {warning}
 
+* 2013-05-28 *V0.4.11* : @tokenRetrievalRetryCount@ config parameter added + doc update
 * 2013-04-03 *V0.4.10* : RestFB dependency updated to 1.6.12 + bug fix token exchange
 * 2013-03-19 *V0.4.9* : bug fix token exchange from code with concurrent requests (thanks to "elegorod":https://github.com/elegorod )
 * 2013-01-03 *V0.4.8* : bug fix token expiration time handling (in Facebook Page tabs)
@@ -43,7 +44,7 @@ Please check [@FacebookContext@|guide:facebookContext] doc for more info.
 
 h3. Bugs
 
-To report any bug, please use the project "Issues":http://github.com/benorama/grails-facebook-sdk/issues section on GitHub.
+To report any bug, please use the project "Issues":http://github.com/agorapulse/grails-facebook-sdk/issues section on GitHub.
 
 {note}
 This is a *beta release*.
@@ -53,12 +54,12 @@ The underlying APIs are generally stable, however we may make changes to the lib
 
 h3. Demo app
 
-If you want to quickly run the SDK on a demo app, you can download "Facebook SDK Grails - Demo":https://github.com/benorama/grails-facebook-sdk-demo .
+If you want to quickly run the SDK on a demo app, you can download "Facebook SDK Grails - Demo":https://github.com/agorapulse/grails-facebook-sdk-demo .
 
 
 h3. Integration with Shiro Grails Plugin
 
-To see an example of integration with Shiro Grails Plugin, you can download "Facebook SDK Grails - Shiro demo":https://github.com/benorama/grails-facebook-sdk-demo-shiro .
+To see an example of integration with Shiro Grails Plugin, you can download "Facebook SDK Grails - Shiro demo":https://github.com/agorapulse/grails-facebook-sdk-demo-shiro .
 
 
 h3. About
