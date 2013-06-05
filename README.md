@@ -36,7 +36,7 @@ grails.project.dependency.resolution = {
 		}
 		plugins {
 				//here go your plugin dependencies
-				runtime ':facebook-sdk:0.4.11'
+				runtime ':facebook-sdk:0.4.12'
 		}
 }
 ```
@@ -77,6 +77,7 @@ Project documentation is located here :
 WARNING: Since V0.4.0, _FacebookApp_, _FacebookSdkFilters_ and _FacebookAppService_ from V0.3.* are DEPRECATED and have been replaced by _FacebookContext_.
 Please check [FacebookContext](http://agorapulse.github.io/grails-facebook-sdk/guide/facebookContext.html) doc for more info.
 
+* 2013-06-05 **V0.4.12** : bug fix in sendLink tag (callback attribute)
 * 2013-05-28 **V0.4.11** : _tokenRetrievalRetryCount_ config parameter added + doc update
 * 2013-04-03 **V0.4.10** : RestFB dependency updated to 1.6.12 + bug fix token exchange
 * 2013-03-19 **V0.4.9** : bug fix token exchange from code with concurrent requests (thanks to [elegorod](https://github.com/elegorod))
