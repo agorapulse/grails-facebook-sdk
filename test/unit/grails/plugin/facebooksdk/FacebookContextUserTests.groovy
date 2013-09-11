@@ -28,10 +28,8 @@ class FacebookContextUserTests extends GrailsUnitTestCase {
             requestMock.params = [:]
             requestMock
         }
-    }
 
-    @Before
-    void mockContext() {
+        // Mock context
         def config = mockConfig('''
             grails {
                 plugin {

@@ -17,18 +17,12 @@ class FacebookContextTests extends GrailsUnitTestCase {
 
     @Before
     void setUp() {
-
-    }
-
-    @Before
-    void mockCookieScope() {
+        // Mock cookie scope
         cookieScopeControl = mockFor(FacebookCookieScope, true)
         //cookieScopeControl.demand.value() { -> true }
         cookieScopeControl.demand.deleteCookie() { -> }
-    }
 
-    @Before
-    void mockSessionScope() {
+        // Mock session scope
         mockSession = new GrailsMockHttpSession()
         sessionScopeControl = mockFor(FacebookSessionScope, true)
         sessionScopeControl.demand.deleteAllData() { -> mockSession.attributeNames.each { mockSession[it] = null } }
