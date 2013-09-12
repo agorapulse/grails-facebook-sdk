@@ -26,7 +26,7 @@ grails.project.dependency.resolution = {
 		compile 'com.restfb:restfb:1.6.12'
 	}
 	plugins {
-		build(':release:2.2.0', ':rest-client-builder:1.0.3') {
+		build(':release:3.0.0', ':rest-client-builder:1.0.3') {
             export = false
         }
 	}
