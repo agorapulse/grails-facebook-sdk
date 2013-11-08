@@ -1,4 +1,6 @@
 language: groovy
 jdk:
   - oraclejdk7
-script: ./grailsw refresh-dependencies && ./grailsw clean && ./grailsw "test-app unit:"
+script: ./grailsw refresh-dependencies
+  && ./grailsw clean
+  && ./grailsw "test-app unit:"
