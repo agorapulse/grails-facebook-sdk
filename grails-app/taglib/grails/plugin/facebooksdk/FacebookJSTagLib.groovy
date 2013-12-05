@@ -129,12 +129,12 @@ class FacebookJSTagLib {
             else attrs.queryString = "type=${attrs.type}"
         } else if (attrs.height || attrs.width) {
             if (attrs.height) attrs.queryString = "height=${attrs.height}"
-            if (attrs.queryString) attrs.queryString += attrs.queryString + '&'
+            if (attrs.queryString) attrs.queryString += '&'
             if (attrs.width) attrs.queryString = "width=${attrs.width}"
         }
         if (attrs.protocol == 'https') {
-            if (attrs.queryString) attrs.queryString += attrs.queryString + '&'
-            attrs.queryString += attrs.queryString + 'return_ssl_resources=1'
+            if (attrs.queryString) attrs.queryString += '&'
+            attrs.queryString += 'return_ssl_resources=1'
         }
         Map model = [:]
         attrs.each { key, value ->
