@@ -21,6 +21,7 @@ WARNING: Since V0.4.0, @FacebookApp@, @FacebookSdkFilters@ and @FacebookAppServi
 Please check [@FacebookContext@|guide:facebookContext] doc for more info.
 {warning}
 
+* 2013-12-06 *V0.4.13* : bug fix in picture tag (secure mode)
 * 2013-06-05 *V0.4.12* : bug fix in sendLink tag (callback attribute)
 * 2013-05-28 *V0.4.11* : @tokenRetrievalRetryCount@ config parameter added + doc update
 * 2013-04-03 *V0.4.10* : RestFB dependency updated to 1.6.12 + bug fix token exchange
