@@ -1,3 +1,4 @@
+<%@page expressionCodec="raw" %>
 <div id="fb-root"></div>
 <script type="text/javascript">
 	window.fbAsyncInit = function() {
@@ -10,11 +11,11 @@
 			xfbml: <g:if test="${xfbml}">true</g:if><g:else>false</g:else>, // parse XFBML
 			frictionlessRequests: <g:if test="${frictionlessRequests}">true</g:if><g:else>false</g:else> // to enable frictionless requests
 		});
-		
+
 		<g:if test="${autoGrow}">
 			FB.Canvas.setAutoGrow();
 		</g:if>
-		
+
 		${body}
 	};
 
