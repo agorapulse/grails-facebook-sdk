@@ -21,6 +21,7 @@ WARNING: Since V0.4.0, @FacebookApp@, @FacebookSdkFilters@ and @FacebookAppServi
 Please check [@FacebookContext@|guide:facebookContext] doc for more info.
 {warning}
 
+* 2014-02-12 *V0.5.0* : RestFB dependency updated to 1.6.14
 * 2013-12-06 *V0.4.13* : bug fix in picture tag (secure mode)
 * 2013-06-05 *V0.4.12* : bug fix in sendLink tag (callback attribute)
 * 2013-05-28 *V0.4.11* : @tokenRetrievalRetryCount@ config parameter added + doc update
@@ -47,12 +48,6 @@ Please check [@FacebookContext@|guide:facebookContext] doc for more info.
 h3. Bugs
 
 To report any bug, please use the project "Issues":http://github.com/agorapulse/grails-facebook-sdk/issues section on GitHub.
-
-{note}
-This is a *beta release*.
-The underlying APIs are generally stable, however we may make changes to the library in response to developer feedback.
-{note}
-
 
 h3. Demo app
 

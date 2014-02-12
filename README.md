@@ -36,7 +36,7 @@ grails.project.dependency.resolution = {
 		}
 		plugins {
 				//here go your plugin dependencies
-				runtime ':facebook-sdk:0.4.13'
+				runtime ':facebook-sdk:0.5'
 		}
 }
 ```
@@ -77,6 +77,7 @@ Project documentation is located here :
 WARNING: Since V0.4.0, _FacebookApp_, _FacebookSdkFilters_ and _FacebookAppService_ from V0.3.* are DEPRECATED and have been replaced by _FacebookContext_.
 Please check [FacebookContext](http://agorapulse.github.io/grails-facebook-sdk/guide/facebookContext.html) doc for more info.
 
+* 2014-02-12 **V0.5.0** : RestFB dependency updated to 1.6.14
 * 2013-12-21 **V0.4.14** : bug fix init-js link tag (raw encoding directive added for Grails 2.3 compatibility)
 * 2013-12-06 **V0.4.13** : bug fix in picture tag (secure mode)
 * 2013-06-05 **V0.4.12** : bug fix in sendLink tag (callback attribute)
@@ -104,11 +105,6 @@ Please check [FacebookContext](http://agorapulse.github.io/grails-facebook-sdk/g
 # Bugs
 
 To report any bug, please use the project [Issues](http://github.com/benorama/grails-facebook-sdk/issues) section on GitHub.
-
-# Beta status
-
-This is a **beta release**.
-The underlying APIs are generally stable, however we may make changes to the library in response to developer feedback.
 
 # Feedback
 
