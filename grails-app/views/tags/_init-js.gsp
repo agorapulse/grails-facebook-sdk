@@ -1,7 +1,14 @@
 <%@page expressionCodec="raw" %>
 <div id="fb-root"></div>
 <script type="text/javascript">
-	window.fbAsyncInit = function() {
+    // Disable all fb sdk links until FB JS SDK is initialized
+    $(function() {
+        if (!window.FB) {
+            $('.fb-sdk-link').attr('disabled', 'disabled').addClass('disabled');
+        }
+    });
+
+    window.fbAsyncInit = function() {
 		FB.init({
 			appId: "${appId}",
 			<g:if test="${channelUrl}">channelUrl: "${channelUrl}",  // Custom channel URL</g:if>
@@ -11,8 +18,9 @@
 			xfbml: <g:if test="${xfbml}">true</g:if><g:else>false</g:else>, // parse XFBML
 			frictionlessRequests: <g:if test="${frictionlessRequests}">true</g:if><g:else>false</g:else> // to enable frictionless requests
 		});
+        $('.fb-sdk-link').removeAttr('disabled').removeClass('disabled');
 
-		<g:if test="${autoGrow}">
+        <g:if test="${autoGrow}">
 			FB.Canvas.setAutoGrow();
 		</g:if>
 
