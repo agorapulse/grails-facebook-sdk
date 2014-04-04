@@ -1,28 +1,30 @@
-<script type="text/javascript">
-    $(function() {
-        $('a.fb-sdk-send-link').click(function() {
-            var link = $(this);
-            var options = {
-                method: 'send',
-                link: link.data('link'),
-                to: link.data('to')
-            };
-            if (link.data('display') != undefined) options['display'] = link.data('display');
-            if (link.data('description') != undefined) options['description'] = link.data('description');
-            if (link.data('name') != undefined) options['name'] = link.data('name');
-            if (link.data('picture') != undefined) options['picture'] = link.data('picture');
-            FB.ui(options, function(response) {
-                if (link.data('callback') != undefined) {
-                    var callback = window[link.data('callback')];
-                    if (typeof callback === 'function') {
-                        callback(response);
+<g:if test="${includeScript}">
+    <script type="text/javascript">
+        $(function() {
+            $('a.fb-sdk-send-link').click(function() {
+                var link = $(this);
+                var options = {
+                    method: 'send',
+                    link: link.data('link'),
+                    to: link.data('to')
+                };
+                if (link.data('display') != undefined) options['display'] = link.data('display');
+                if (link.data('description') != undefined) options['description'] = link.data('description');
+                if (link.data('name') != undefined) options['name'] = link.data('name');
+                if (link.data('picture') != undefined) options['picture'] = link.data('picture');
+                FB.ui(options, function(response) {
+                    if (link.data('callback') != undefined) {
+                        var callback = window[link.data('callback')];
+                        if (typeof callback === 'function') {
+                            callback(response);
+                        }
                     }
-                }
+                });
+                return false;
             });
-            return false;
         });
-    });
-</script>
+    </script>
+</g:if>
 <a <g:if test="${elementId}">id="${elementId}"</g:if>
     class="<g:if test="${elementClass}">${elementClass} </g:if>fb-sdk-send-link fb-sdk-link"
     <g:if test="${callback}">data-callback="${callback}"</g:if>

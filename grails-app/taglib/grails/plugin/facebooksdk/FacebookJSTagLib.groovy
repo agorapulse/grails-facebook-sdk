@@ -53,6 +53,7 @@ class FacebookJSTagLib {
         attrs.each { key, value ->
             model[key] = value
         }
+        includeScriptOnce('init-js', model)
         out << render(template: '/tags/init-js', model: model, plugin: 'facebook-sdk')
     }
 
@@ -71,6 +72,7 @@ class FacebookJSTagLib {
         attrs.each { key, value ->
             model[key] = value
         }
+        includeScriptOnce('add-to-page-link', model)
         out << render(template: '/tags/add-to-page-link', model: model, plugin: 'facebook-sdk')
     }
 
@@ -89,6 +91,7 @@ class FacebookJSTagLib {
         attrs.each { key, value ->
             model[key] = value
         }
+        includeScriptOnce('login-link', model)
         out << render(template: '/tags/login-link', model: model, plugin: 'facebook-sdk')
     }
 
@@ -104,6 +107,7 @@ class FacebookJSTagLib {
         attrs.each { key, value ->
             model[key] = value
         }
+        includeScriptOnce('logout-link', model)
         out << render(template: '/tags/logout-link', model: model, plugin: 'facebook-sdk')
     }
 
@@ -140,6 +144,7 @@ class FacebookJSTagLib {
         attrs.each { key, value ->
             model[key] = value
         }
+        includeScriptOnce('picture', model)
         out << render(template: '/tags/picture', model: model, plugin: 'facebook-sdk')
     }
 
@@ -164,6 +169,7 @@ class FacebookJSTagLib {
         attrs.each { key, value ->
             model[key] = value
         }
+        includeScriptOnce('invite-link', model)
         out << render(template: '/tags/invite-link', model: model, plugin: 'facebook-sdk')
     }
 
@@ -187,6 +193,7 @@ class FacebookJSTagLib {
         attrs.each { key, value ->
             model[key] = value
         }
+        includeScriptOnce('publish-link', model)
         out << render(template: '/tags/publish-link', model: model, plugin: 'facebook-sdk')
     }
 
@@ -209,7 +216,20 @@ class FacebookJSTagLib {
         attrs.each { key, value ->
             model[key] = value
         }
+        includeScriptOnce('send-link', model)
         out << render(template: '/tags/send-link', model: model, plugin: 'facebook-sdk')
+    }
+
+    // PRIVATE
+
+    private void includeScriptOnce(String tagName, Map model) {
+        if (!request.facebookSdkIncludedScripts) {
+            request.facebookSdkIncludedScripts = [:]
+        }
+        if (!request.facebookSdkIncludedScripts[tagName]) {
+            request.facebookSdkIncludedScripts[tagName] = true
+            model.includeScript = true
+        }
     }
 
 }
