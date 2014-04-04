@@ -8,7 +8,7 @@
                     FB.logout(function(response) {
                         if (link.data('callback') != undefined) {
                             var callback = window[link.data('callback')];
-                            if (typeof fn === 'function') {
+                            if (typeof callback === 'function') {
                                 callback(response);
                             }
                         } else if (link.data('next_url')) {
