@@ -2,13 +2,12 @@ package grails.plugin.facebooksdk
 
 import grails.web.UrlConverter
 import org.apache.log4j.Logger
-import org.codehaus.groovy.grails.commons.GrailsApplication
-import org.codehaus.groovy.grails.web.mapping.LinkGenerator
 import org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequest
-import org.springframework.beans.factory.InitializingBean
 import org.springframework.web.context.request.RequestContextHolder
 
-class FacebookContext implements InitializingBean {
+import javax.annotation.PostConstruct
+
+class FacebookContext {
 
     private final static List DROP_QUERY_PARAMS = ['code','state','signed_request']
 
@@ -24,7 +23,8 @@ class FacebookContext implements InitializingBean {
     private FacebookCookieScope _cookieScope
     private Logger log = Logger.getLogger(getClass())
 
-    void afterPropertiesSet() {
+    @PostConstruct
+    private void init() {
         def appConfig
         String appIdParamName = config.appIdParamName ?: 'app_id'
         if (config.apps) {
