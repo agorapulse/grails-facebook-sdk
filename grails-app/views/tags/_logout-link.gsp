@@ -42,5 +42,5 @@
     <g:if test="${nextUrl}">data-next_url="${nextUrl}"</g:if>
     <g:if test="${disabled}">disabled="disabled"</g:if>
     href="#">
-    ${body}
+    ${raw(body)}
 </a>

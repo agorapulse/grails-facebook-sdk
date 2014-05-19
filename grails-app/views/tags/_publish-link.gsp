@@ -38,5 +38,5 @@
     <g:if test="${source}">data-source="${source}"</g:if>
     <g:if test="${disabled}">disabled="disabled"</g:if>
     href="#">
-    ${body}
+    ${raw(body)}
 </a>

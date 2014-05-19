@@ -28,5 +28,5 @@
    <g:if test="${returnUrl}">data-redirect_uri="${returnUrl}"</g:if>
    <g:if test="${disabled}">disabled="disabled"</g:if>
    href="#">
-    ${body}
+    ${raw(body)}
 </a>

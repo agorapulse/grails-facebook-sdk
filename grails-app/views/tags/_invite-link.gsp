@@ -41,5 +41,5 @@
     <g:if test="${to}">data-to="${to}"</g:if>
     <g:if test="${disabled}">disabled="disabled"</g:if>
     href="#">
-    ${body}
+    ${raw(body)}
 </a>
