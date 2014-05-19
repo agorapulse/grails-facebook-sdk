@@ -36,7 +36,7 @@ grails.project.dependency.resolution = {
 		}
 		plugins {
 				//here go your plugin dependencies
-				runtime ':facebook-sdk:0.6.2'
+				runtime ':facebook-sdk:0.6.3'
 		}
 }
 ```
