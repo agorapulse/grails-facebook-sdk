@@ -1,7 +1,7 @@
 <g:if test="${includeScript}">
     <script type="text/javascript">
-        $(function() {
-            $('a.fb-sdk-publish-link').click(function() {
+        ${customSelector ?: '$'}(function() {
+            ${customSelector ?: '$'}('a.fb-sdk-publish-link').click(function() {
                 var link = $(this);
                 var options = {
                     method: 'feed'

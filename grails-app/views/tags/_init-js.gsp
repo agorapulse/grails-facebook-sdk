@@ -3,9 +3,9 @@
     <div id="fb-root"></div>
     <script type="text/javascript">
         // Disable all fb sdk links until FB JS SDK is initialized
-        $(function() {
+        ${customSelector ?: '$'}(function() {
             if (!window.FB) {
-                $('.fb-sdk-link').attr('disabled', 'disabled').addClass('disabled');
+                ${customSelector ?: '$'}('.fb-sdk-link').attr('disabled', 'disabled').addClass('disabled');
             }
         });
 
@@ -19,7 +19,7 @@
                 xfbml: <g:if test="${xfbml}">true</g:if><g:else>false</g:else>, // parse XFBML
                 frictionlessRequests: <g:if test="${frictionlessRequests}">true</g:if><g:else>false</g:else> // to enable frictionless requests
             });
-            $('.fb-sdk-link').removeAttr('disabled').removeClass('disabled');
+            ${customSelector ?: '$'}('.fb-sdk-link').removeAttr('disabled').removeClass('disabled');
 
             <g:if test="${autoGrow}">
                 FB.Canvas.setAutoGrow();

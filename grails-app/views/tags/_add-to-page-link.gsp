@@ -1,7 +1,7 @@
 <g:if test="${includeScript}">
     <script type="text/javascript">
-        $(function() {
-            $('a.fb-sdk-add-to-page-link').click(function() {
+        ${customSelector ?: '$'}(function() {
+            ${customSelector ?: '$'}('a.fb-sdk-add-to-page-link').click(function() {
                 var link = $(this);
                 var options = {
                     method: 'pagetab'
