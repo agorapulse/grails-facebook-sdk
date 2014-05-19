@@ -137,14 +137,14 @@ h3. Controllers scope
 
 Since FacebookContext should be instantiated at each request, you must use `prototype` scope for your Controllers (since Grails 2.3, generated Config.groovy defines `singleton` as default scope).
 
-```groovy
+{code}
 grails.controllers.defaultScope = 'prototype'
-```
+{code}
 
 h3. JQuery custom selector
 
 Default jQuery selector is `$`, if you require another one, you can define it globally in your _grails-app/conf/Config.groovy_:
 
- ```groovy
+{code}
 grails.plugin.facebooksdk.customSelector = 'jQuery'
-```
+{code}
