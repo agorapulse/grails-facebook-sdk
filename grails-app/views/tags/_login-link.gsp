@@ -1,7 +1,7 @@
 <g:if test="${includeScript}">
     <script type="text/javascript">
-        $(function() {
-            $('a.fb-sdk-login-link').click(function(event) {
+        ${customSelector ?: '$'}(function() {
+            ${customSelector ?: '$'}('a.fb-sdk-login-link').click(function(event) {
                 var link = $(this);
                 link.attr('disabled', 'disabled');
                 FB.login(function(response) {

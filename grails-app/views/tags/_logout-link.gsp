@@ -1,7 +1,7 @@
 <g:if test="${includeScript}">
     <script type="text/javascript">
-        $(function() {
-            $('a.fb-sdk-logout-link').click(function() {
+        ${customSelector ?: '$'}(function() {
+            ${customSelector ?: '$'}('a.fb-sdk-logout-link').click(function() {
                 var link = $(this);
                 link.attr('disabled', 'disabled');
                 FB.getLoginStatus(function(response) {

@@ -1,8 +1,8 @@
 <%@ page import="grails.converters.JSON" %>
 <g:if test="${includeScript}">
     <script type="text/javascript">
-        $(function() {
-            $('a.fb-sdk-invite-link').click(function() {
+        ${customSelector ?: '$'}(function() {
+            ${customSelector ?: '$'}('a.fb-sdk-invite-link').click(function() {
                 var link = $(this);
                 var options = {
                     method: 'apprequests',
