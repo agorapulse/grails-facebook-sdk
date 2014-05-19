@@ -18,6 +18,7 @@ class FacebookJSTagLib {
 
     static namespace = 'facebook'
 
+    def grailsApplication
     def grailsLinkGenerator // Injected by Spring
 
     /**
@@ -26,11 +27,12 @@ class FacebookJSTagLib {
      * @attr appId REQUIRED
      * @attr autoGrow (Default to false)
      * @attr channel (Default to true)
+     * @attr customSelector (Default to '$')
      * @attr channelUrl (Default to provided facebook sdk channel)
-     * @attr	cookie (Default to true)
+     * @attr cookie (Default to true)
      * @attr locale (Default to server locale)
      * @attr status (Default to false)
-     * @attr	xfbml (Default to false)
+     * @attr xfbml (Default to false)
      * @attr frictionlessRequests (Default to false)
      */
     def initJS = { attrs, body ->
@@ -53,6 +55,9 @@ class FacebookJSTagLib {
         attrs.each { key, value ->
             model[key] = value
         }
+        if (!model['customSelector']) {
+            model['customSelector'] = config.customSelector ?: '$'
+        }
         includeScriptOnce('init-js', model)
         out << render(template: '/tags/init-js', model: model, plugin: 'facebook-sdk')
     }
@@ -61,6 +66,7 @@ class FacebookJSTagLib {
      * Add to page link (https://developers.facebook.com/docs/reference/dialogs/add_to_page/)
      *
      * @attr callback Optional javascript function name to call when dialog is confirmed or closed.
+     * @attr customSelector (Default to '$')
      * @attr disabled Disable click on the link.
      * @attr display Display mode in which to render the Dialog. Can be page (default), popup, iframe, or touch.
      * @attr elementClass HTML element 'class' attribute value.
@@ -72,6 +78,9 @@ class FacebookJSTagLib {
         attrs.each { key, value ->
             model[key] = value
         }
+        if (!model['customSelector']) {
+            model['customSelector'] = config.customSelector ?: '$'
+        }
         includeScriptOnce('add-to-page-link', model)
         out << render(template: '/tags/add-to-page-link', model: model, plugin: 'facebook-sdk')
     }
@@ -82,6 +91,7 @@ class FacebookJSTagLib {
      * @attr appPermissions Facebook app permissions/scope
      * @attr callback Optional javascript function name to call when dialog is confirmed or closed.
      * @attr cancelUrl Cancel URL for redirect if login is canceled (if not defined, nothing happens)
+     * @attr customSelector (Default to '$')
      * @attr elementClass HTML element 'class' attribute value
      * @attr elementId HTML element 'id' attribute value
      * @attr returnUrl Return URL for redirect after login (if not defined page will be reloaded)
@@ -91,6 +101,9 @@ class FacebookJSTagLib {
         attrs.each { key, value ->
             model[key] = value
         }
+        if (!model['customSelector']) {
+            model['customSelector'] = config.customSelector ?: '$'
+        }
         includeScriptOnce('login-link', model)
         out << render(template: '/tags/login-link', model: model, plugin: 'facebook-sdk')
     }
@@ -98,6 +111,7 @@ class FacebookJSTagLib {
     /**
      * Logout link
      *
+     * @attr customSelector (Default to '$')
      * @attr elementClass HTML element 'class' attribute value
      * @attr elementId HTML element 'id' attribute value
      * @attr nextUrl next URL for redirect after login (if not defined page will be reloaded)
@@ -106,6 +120,9 @@ class FacebookJSTagLib {
         Map model = [body:body()]
         attrs.each { key, value ->
             model[key] = value
+        }
+        if (!model['customSelector']) {
+            model['customSelector'] = config.customSelector ?: '$'
         }
         includeScriptOnce('logout-link', model)
         out << render(template: '/tags/logout-link', model: model, plugin: 'facebook-sdk')
@@ -152,6 +169,7 @@ class FacebookJSTagLib {
      * Invite link (https://developers.facebook.com/docs/reference/dialogs/requests/)
      *
      * @attr callback Optional javascript function name to call when dialog is confirmed or closed.
+     * @attr customSelector (Default to '$')
      * @attr data Additional data you may pass for tracking. The maximum length is 255 characters.
      * @attr disabled Disable click on the link.
      * @attr display Display mode in which to render the Dialog. Can be 'page' (default), 'popup', 'iframe', or 'touch'.
@@ -169,6 +187,9 @@ class FacebookJSTagLib {
         attrs.each { key, value ->
             model[key] = value
         }
+        if (!model['customSelector']) {
+            model['customSelector'] = config.customSelector ?: '$'
+        }
         includeScriptOnce('invite-link', model)
         out << render(template: '/tags/invite-link', model: model, plugin: 'facebook-sdk')
     }
@@ -177,6 +198,7 @@ class FacebookJSTagLib {
      * Publish link (https://developers.facebook.com/docs/reference/dialogs/feed/)
      *
      * @attr callback Optional javascript function name to call when dialog is confirmed or closed.
+     * @attr customSelector (Default to '$')
      * @attr disabled Disable click on the link.
      * @attr display Display mode in which to render the Dialog. Can be page (default), popup, iframe, or touch.
      * @attr caption The caption of the link (appears beneath the link name). If not specified, this field is automatically populated with the URL of the link.
@@ -192,6 +214,9 @@ class FacebookJSTagLib {
         Map model = [body:body()]
         attrs.each { key, value ->
             model[key] = value
+        }
+        if (!model['customSelector']) {
+            model['customSelector'] = config.customSelector ?: '$'
         }
         includeScriptOnce('publish-link', model)
         out << render(template: '/tags/publish-link', model: model, plugin: 'facebook-sdk')
@@ -209,6 +234,7 @@ class FacebookJSTagLib {
      * @attr link REQUIRED The link attached to this post.
      * @attr name The name of the link attachment.
      * @attr picture The URL of a picture attached to this post. The picture must be at least 50px by 50px and have a maximum aspect ratio of 3:1.
+     * @attr customSelector (Default to '$')
      * @attr to REQUIRED A user ID or username to which to send the message.
      */
     def sendLink = {attrs, body ->
@@ -216,11 +242,18 @@ class FacebookJSTagLib {
         attrs.each { key, value ->
             model[key] = value
         }
+        if (!model['customSelector']) {
+            model['customSelector'] = config.customSelector ?: '$'
+        }
         includeScriptOnce('send-link', model)
         out << render(template: '/tags/send-link', model: model, plugin: 'facebook-sdk')
     }
 
     // PRIVATE
+
+    private def getConfig() {
+        grailsApplication.config.grails.plugin.facebooksdk
+    }
 
     private void includeScriptOnce(String tagName, Map model) {
         if (!request.facebookSdkIncludedScripts) {
