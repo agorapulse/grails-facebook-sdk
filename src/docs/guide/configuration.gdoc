@@ -14,7 +14,7 @@ grails.project.dependency.resolution = {
 		}
 		plugins {
 				//here go your plugin dependencies
-				runtime ':facebook-sdk:0.6.2'
+				runtime ':facebook-sdk:0.6.3'
 		}
 }
 {code}
@@ -132,3 +132,19 @@ grails.plugin.facebooksdk.tokenRetrievalRetryCount = 10
 {code}
 
 By default, this parameter is usually not required and is disabled by default.
+
+h3. Controllers scope
+
+Since FacebookContext should be instantiated at each request, you must use `prototype` scope for your Controllers (since Grails 2.3, generated Config.groovy defines `singleton` as default scope).
+
+```groovy
+grails.controllers.defaultScope = 'prototype'
+```
+
+h3. JQuery custom selector
+
+Default jQuery selector is `$`, if you require another one, you can define it globally in your _grails-app/conf/Config.groovy_:
+
+ ```groovy
+grails.plugin.facebooksdk.customSelector = 'jQuery'
+```

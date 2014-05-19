@@ -54,6 +54,18 @@ grails.plugin.facebooksdk.app.permissions = {APP_PERMISSIONS} // Ex. ['email','u
 grails.plugin.facebooksdk.app.secret = {APP_SECRET}
 ```
 
+Since FacebookContext should be instantiated at each request, you must use `prototype` scope for your Controllers (since Grails 2.3, generated Config.groovy defines `singleton` as default scope).
+
+```groovy
+grails.controllers.defaultScope = 'prototype'
+```
+
+Default jQuery selector is `$`, if you require another one, you can define it globally in your _grails-app/conf/Config.groovy_:
+
+ ```groovy
+grails.plugin.facebooksdk.customSelector = 'jQuery'
+```
+
 # Getting started with a demo app
 
 If you want to quickly run the SDK on a demo app, you can download [Facebook SDK Grails - Demo](https://github.com/benorama/grails-facebook-sdk-demo).
@@ -77,6 +89,7 @@ Project documentation is located here :
 WARNING: Since V0.4.0, _FacebookApp_, _FacebookSdkFilters_ and _FacebookAppService_ from V0.3.* are DEPRECATED and have been replaced by _FacebookContext_.
 Please check [FacebookContext](http://agorapulse.github.io/grails-facebook-sdk/guide/facebookContext.html) doc for more info.
 
+* 2014-05-19 **V0.6.3** : customSelector attribute and config param added to tag lib
 * 2014-04-28 **V0.6.2** : bug fix in FacebookContext (use @PostConstruct instead of InitializingBean) to solve reloading issue since Grails 2.3.7 (GRAILS-7799)
 * 2014-04-04 **V0.6.1** : TagLib update (scripts are only included once in a page even if tags are used more than once)
 * 2014-04-02 **V0.6.0** : Resources Grails Plugin dependencies removed (to be compatible with Asset Pipeline Grails Plugin)
