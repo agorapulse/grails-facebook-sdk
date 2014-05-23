@@ -12,6 +12,7 @@
         window.fbAsyncInit = function() {
             FB.init({
                 appId: "${appId}",
+                <g:if test="${version}">version: "${version}",  // API version</g:if>
                 <g:if test="${channelUrl}">channelUrl: "${channelUrl}",  // Custom channel URL</g:if>
                 cookie: <g:if test="${cookie}">true</g:if><g:else>false</g:else>, // enable cookies to allow the server to access the session
                 oauth: true, // enables OAuth 2.0
@@ -30,7 +31,7 @@
 
         (function() {
             var e = document.createElement("script");
-            e.src = document.location.protocol + "//connect.facebook.net/${locale}/all.js";
+            e.src = document.location.protocol + "//connect.facebook.net/${locale}/sdk.js";
             e.async = true;
             document.getElementById("fb-root").appendChild(e);
         }());

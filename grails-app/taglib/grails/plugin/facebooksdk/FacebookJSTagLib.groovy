@@ -30,10 +30,11 @@ class FacebookJSTagLib {
      * @attr customSelector (Default to '$')
      * @attr channelUrl (Default to provided facebook sdk channel)
      * @attr cookie (Default to true)
+     * @attr frictionlessRequests (Default to false)
      * @attr locale (Default to server locale)
      * @attr status (Default to false)
      * @attr xfbml (Default to false)
-     * @attr frictionlessRequests (Default to false)
+     * @attr version (Default to '', API v1.0 for app created before April 30th, 2014, API v2.0 for the others)
      */
     def initJS = { attrs, body ->
         if (!attrs.locale) attrs.locale = RequestContextUtils.getLocale(request)

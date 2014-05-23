@@ -29,4 +29,5 @@ Optional attributes are :
 * @locale@ Define JS SDK locale (default to server locale).
 * @status@ Check login status (default to @false@).
 * @xfbml@ Parse XFBML (default to @false@).
+* @version@ API version (default to @''@, API @v1.0@ for app created before April 30th, 2014, API @v2.0@ for the others.
 
