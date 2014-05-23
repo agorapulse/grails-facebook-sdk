@@ -1,7 +1,7 @@
 Facebook SDK Grails Plugin
 ==========================
 
-[![Build Status](https://travis-ci.org/benorama/grails-facebook-sdk.png)](https://travis-ci.org/benorama/grails-facebook-sdk)
+[![Build Status](https://travis-ci.org/agorapulse/grails-facebook-sdk.svg)](https://travis-ci.org/agorapulse/grails-facebook-sdk)
 
 # Introduction
 
@@ -19,6 +19,7 @@ It supports the latest *OAuth2.0 authentication* (required since October 1st 201
 * **FacebookGraphClient** - A client to call [Facebook Graph API](http://developers.facebook.com/docs/reference/api/), which is a wrapper around the rock solid [RestFB java library](http://restfb.com/) version 1.6.10 (released September 03, 2012).
 * **FacebookJSTagLib** - A collection of tags to easily integrate [Facebook JS SDK](http://developers.facebook.com/docs/reference/javascript/) in your GSPs.
 
+**WARNING**: Only Facebook API v1.0 is currently supported by [RestFB java library](http://restfb.com/).
 
 # Installation
 
@@ -36,7 +37,7 @@ grails.project.dependency.resolution = {
 		}
 		plugins {
 				//here go your plugin dependencies
-				runtime ':facebook-sdk:0.6.3'
+				runtime ':facebook-sdk:0.6.4'
 		}
 }
 ```
@@ -89,6 +90,7 @@ Project documentation is located here :
 WARNING: Since V0.4.0, _FacebookApp_, _FacebookSdkFilters_ and _FacebookAppService_ from V0.3.* are DEPRECATED and have been replaced by _FacebookContext_.
 Please check [FacebookContext](http://agorapulse.github.io/grails-facebook-sdk/guide/facebookContext.html) doc for more info.
 
+* 2014-05-23 **V0.6.4** : _version_ attribute added to initJS tag to choose API version for Facebook JS SDK (v1.0 or v2.0)
 * 2014-05-19 **V0.6.3** : customSelector attribute and config param added to tag lib
 * 2014-04-28 **V0.6.2** : bug fix in FacebookContext (use @PostConstruct instead of InitializingBean) to solve reloading issue since Grails 2.3.7 (GRAILS-7799)
 * 2014-04-04 **V0.6.1** : TagLib update (scripts are only included once in a page even if tags are used more than once)
