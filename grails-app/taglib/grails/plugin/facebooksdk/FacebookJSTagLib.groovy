@@ -25,6 +25,7 @@ class FacebookJSTagLib {
      * Initialize Facebook JS SDK
      *
      * @attr appId REQUIRED
+     * @attr version REQUIRED (API v1.0 for app created before April 30th, 2014, API v2.0 for the others)
      * @attr autoGrow (Default to false)
      * @attr channel (Default to true)
      * @attr customSelector (Default to '$')
@@ -34,7 +35,6 @@ class FacebookJSTagLib {
      * @attr locale (Default to server locale)
      * @attr status (Default to false)
      * @attr xfbml (Default to false)
-     * @attr version (Default to '', API v1.0 for app created before April 30th, 2014, API v2.0 for the others)
      */
     def initJS = { attrs, body ->
         if (!attrs.locale) attrs.locale = RequestContextUtils.getLocale(request)
