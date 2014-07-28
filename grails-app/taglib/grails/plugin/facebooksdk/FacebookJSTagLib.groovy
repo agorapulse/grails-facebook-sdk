@@ -25,7 +25,6 @@ class FacebookJSTagLib {
      * Initialize Facebook JS SDK
      *
      * @attr appId REQUIRED
-     * @attr version REQUIRED (API v1.0 for app created before April 30th, 2014, API v2.0 for the others)
      * @attr autoGrow (Default to false)
      * @attr channel (Default to true)
      * @attr customSelector (Default to '$')
@@ -35,6 +34,7 @@ class FacebookJSTagLib {
      * @attr locale (Default to server locale)
      * @attr status (Default to false)
      * @attr xfbml (Default to false)
+     * @attr version (Default to v2.0 or apiVersion config settings)
      */
     def initJS = { attrs, body ->
         if (!attrs.locale) attrs.locale = RequestContextUtils.getLocale(request)
@@ -42,8 +42,8 @@ class FacebookJSTagLib {
             log.warn "Locale $attrs.locale is not supported by Facebook, default locale en_US will be used"
             attrs.locale = Locale.US
         }
-        if (!attrs.containsKey("cookie")) attrs.cookie = true
-        if (!attrs.containsKey("channel")) attrs.channel = true
+        if (!attrs.containsKey('cookie')) attrs.cookie = true
+        if (!attrs.containsKey('channel')) attrs.channel = true
         if (attrs.channel && !attrs.containsKey("channelUrl")) {
             attrs.channelUrl = grailsLinkGenerator.link(
                     absolute: true,
@@ -52,6 +52,7 @@ class FacebookJSTagLib {
                     params: [locale: attrs.locale.toString()]
             )
         }
+        if (!attrs.containsKey('version')) attrs.version = config.apiVersion ?: 'v2.0'
         Map model = [body:body()]
         attrs.each { key, value ->
             model[key] = value
@@ -249,6 +250,30 @@ class FacebookJSTagLib {
         includeScriptOnce('send-link', model)
         out << render(template: '/tags/send-link', model: model, plugin: 'facebook-sdk')
     }
+
+    /**
+     * Share link (https://developers.facebook.com/docs/reference/dialogs/share/)
+     *
+     * @attr callback Optional javascript function name to call when dialog is confirmed or closed.
+     * @attr disabled Disable click on the link.
+     * @attr display Display mode in which to render the Dialog. Can be page (default), popup, iframe, or touch.
+     * @attr elementClass HTML element 'class' attribute value.
+     * @attr elementId HTML element 'id' attribute value.
+     * @attr href REQUIRED The link attached to this post.
+     * @attr customSelector (Default to '$')
+     */
+    def shareLink = {attrs, body ->
+        Map model = [body:body()]
+        attrs.each { key, value ->
+            model[key] = value
+        }
+        if (!model['customSelector']) {
+            model['customSelector'] = config.customSelector ?: '$'
+        }
+        includeScriptOnce('share-link', model)
+        out << render(template: '/tags/share-link', model: model, plugin: 'facebook-sdk')
+    }
+
 
     // PRIVATE
 

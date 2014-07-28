@@ -78,9 +78,9 @@ class FacebookContext {
             }
             if (signedRequest.page) {
                 page = new FacebookContextPage(
-                    admin: signedRequest.page.admin ?: false,
-                    id: signedRequest.page.id.toLong(),
-                    liked: signedRequest.page.liked ?: false
+                        admin: signedRequest.page.admin ?: false,
+                        id: signedRequest.page.id.toLong(),
+                        liked: signedRequest.page.liked ?: false
                 )
             }
             if (signedRequest.appData) app.data = signedRequest.appData
@@ -131,6 +131,7 @@ class FacebookContext {
     * - ok_session: the URL to go to if a session is found
     * - no_session: the URL to go to if the user is not connected
     * - no_user: the URL to go to if the user is not signed into facebook
+    * - version: api version (default to v2.0 or apiVersion config setting)
     */
     String getLoginStatusUrl(Map parameters = [:]) {
         if (!request.params['api_key']) parameters['api_key'] = app.id
@@ -138,6 +139,7 @@ class FacebookContext {
         if (!request.params['no_user']) parameters['no_user'] = currentURL
         if (!request.params['ok_session']) parameters['ok_session'] = currentURL
         if (!request.params['session_version']) parameters['session_version'] = 3
+        if (!parameters['version']) parameters['version'] = config.apiVersion ?: 'v2.0'
         return buildFacebookURL("extern/login_status.php", parameters)
     }
 
@@ -147,6 +149,7 @@ class FacebookContext {
      * Available parameters:
           * - redirect_uri: the url to go to after a successful login
           * - scope: comma separated list of requested extended perms
+          * - version: api version (default to v2.0 or apiVersion config setting)
      */
     String getLoginURL(Map parameters = [:]) {
         String state = UUID.randomUUID().encodeAsMD5()
@@ -155,6 +158,7 @@ class FacebookContext {
         if (!parameters['redirect_uri']) parameters['redirect_uri'] = currentURL
         if (!parameters['scope']) parameters['scope'] = app.permissions.join(',')
         if (!parameters['state']) parameters['state'] = state
+        if (!parameters['version']) parameters['version'] = config.apiVersion ?: 'v2.0'
         return buildFacebookURL('dialog/oauth', parameters)
     }
 
@@ -163,10 +167,12 @@ class FacebookContext {
      * @hint
      * Available parameters:
           * - next: the url to go to after a successful logout
+          * - version: api version (default to v2.0 or apiVersion config setting)
      */
     String getLogoutURL(Map parameters = [:]) {
         if (!parameters['access_token']) parameters['access_token'] = user.token
         if (!parameters['next']) currentURL
+        if (!parameters['version']) parameters['version'] = config.apiVersion ?: 'v2.0'
         return buildFacebookURL('logout.php', parameters)
     }
 
@@ -176,8 +182,9 @@ class FacebookContext {
 
     // PRIVATE
 
-    private String buildFacebookURL(path = "", parameters = [:]) {
-        String url = "https://www.facebook.com/"
+    private String buildFacebookURL(path = '', parameters = [:]) {
+        String url = "https://www.facebook.com/${parameters['version'] ?: 'v2.0'}/"
+        parameters.remove('version')
         if (path) {
             if (path[0] == "/") {
                 path = path.substring(1)

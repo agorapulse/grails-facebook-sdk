@@ -11,12 +11,20 @@ import grails.converters.JSON
 class FacebookGraphClient extends DefaultFacebookGraphClient {
 
     static final int DEFAULT_READ_TIMEOUT_IN_MS = 180000
+    static final String DEFAULT_API_VERSION = 'v2.0'
 
-    FacebookGraphClient(String accessToken = '', Integer timeout = DEFAULT_READ_TIMEOUT_IN_MS, String proxyHost = null, Integer proxyPort = null) {
+    String apiVersion
+
+    FacebookGraphClient(String accessToken = '', String apiVersion = DEFAULT_API_VERSION, Integer timeout = DEFAULT_READ_TIMEOUT_IN_MS, String proxyHost = null, Integer proxyPort = null) {
         super(accessToken, timeout, proxyHost, proxyPort)
+        this.apiVersion = apiVersion
     }
 
-	boolean deleteObject(String object) {
+    @Override protected String getFacebookGraphEndpointUrl() {
+        return "https://graph.facebook.com/${apiVersion}"
+    }
+
+    boolean deleteObject(String object) {
 		return super.deleteObject(object)
 	}
 

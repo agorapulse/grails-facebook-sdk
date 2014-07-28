@@ -43,6 +43,7 @@ class FacebookContextApp {
     protected FacebookGraphClient getGraphClient(String token = '') {
         new FacebookGraphClient(
                 token,
+                context?.config?.apiVersion ?: FacebookGraphClient.DEFAULT_API_VERSION,
                 context?.config?.timeout ?: FacebookGraphClient.DEFAULT_READ_TIMEOUT_IN_MS,
                 context?.config?.proxyHost ?: null,
                 context?.config?.proxyPort ?: null
