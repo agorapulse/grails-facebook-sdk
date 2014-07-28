@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>4 Facebook Graph Client 0.6.4</title>
+    <title>4 Facebook Graph Client 2.0.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -56,7 +56,7 @@ function addJsClass() {
         
     </div>
     <p>The Facebook SDK Plugin allows your Grails application to use the Facebook Platform and develop Facebook apps on Facebook.com or on web sites (with Facebook Connect).
-It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
+It is a port of the official Facebook PHP SDK to Grails 2.0.
 </p>
 </div>
 
@@ -82,7 +82,7 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
 
                     <p><strong>Authors:</strong> Benoit Hediard</p>
 
-                    <p><strong>Version:</strong> 0.6.4</p>
+                    <p><strong>Version:</strong> 2.0.0</p>
 
                     
                 </div>
@@ -92,14 +92,22 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
                 
 
 <h1 id="facebookGraphClient">4 Facebook Graph Client</h1>
+<blockquote class="warning">
+WARNING: Since V2.0.0, <code>FacebookGraphClient</code> constructor has changed with a new <code>apiVersion</code> parameter (default to V2.0).
+<div class="code"><pre>// From
+FacebookGraphClient(<span class="java&#45;object">String</span> accessToken = '', <span class="java&#45;object">Integer</span> timeout = DEFAULT_READ_TIMEOUT_IN_MS, <span class="java&#45;object">String</span> proxyHost = <span class="java&#45;keyword">null</span>, <span class="java&#45;object">Integer</span> proxyPort = <span class="java&#45;keyword">null</span>) &#123;
+// To
+FacebookGraphClient(<span class="java&#45;object">String</span> accessToken = '', <span class="java&#45;object">String</span> apiVersion = DEFAULT_API_VERSION, <span class="java&#45;object">Integer</span> timeout = DEFAULT_READ_TIMEOUT_IN_MS, <span class="java&#45;object">String</span> proxyHost = <span class="java&#45;keyword">null</span>, <span class="java&#45;object">Integer</span> proxyPort = <span class="java&#45;keyword">null</span>) &#123;</pre></div>
+</blockquote><p class="paragraph"/>
 To perform Facebook Graph API call, use the <code>FacebookGraphClient</code> without access token for public data or with an access token for private data.
 <code>FacebookGraphClient</code> is a thin groovy wrapper around the rock solid <a href="http://restfb.com/" target="blank">RestFB java library</a> .
 It will return JSON-based graph objects.<p class="paragraph"/>To play with the API, you might use the grails console from your project root and get user token or app token from <a href="https://developers.facebook.com/tools/access_token/" target="blank">Facebook Access Token Tool</a> .<p class="paragraph"/><div class="code"><pre>grails console</pre></div><p class="paragraph"/><h3>Initialization</h3><p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">import</span> grails.plugin.facebooksdk.FacebookGraphClient<p class="paragraph"/>// For <span class="java&#45;keyword">public</span> data
 def facebookClient = <span class="java&#45;keyword">new</span> FacebookGraphClient()<p class="paragraph"/>// For <span class="java&#45;keyword">private</span> data (access token required)
 def userAccessToken = facebookAppService.getUserAccessToken() // Or any app/user token
-def facebookClient = <span class="java&#45;keyword">new</span> FacebookGraphClient(userAccessToken)<p class="paragraph"/>// With specific timeout (<span class="java&#45;keyword">default</span> to 180s)
-def facebookClient = <span class="java&#45;keyword">new</span> FacebookGraphClient(userAccessToken, 90000)<p class="paragraph"/>// With proxy support
-def facebookClient = <span class="java&#45;keyword">new</span> FacebookGraphClient(userAccessToken, FacebookGraphClient.DEFAULT_READ_TIMEOUT_IN_MS, '192.168.0.10', 8080)</pre></div><p class="paragraph"/><h3>Fetching Single Objects</h3><p class="paragraph"/><div class="code"><pre>def user = facebookClient.fetchObject(<span class="java&#45;quote">"me"</span>) // Requires a user access token
+def facebookClient = <span class="java&#45;keyword">new</span> FacebookGraphClient(userAccessToken)<p class="paragraph"/>// With specific api version
+def facebookClient = <span class="java&#45;keyword">new</span> FacebookGraphClient(userAccessToken, 'v1.0')<p class="paragraph"/>// With specific timeout (<span class="java&#45;keyword">default</span> to 180s)
+def facebookClient = <span class="java&#45;keyword">new</span> FacebookGraphClient(userAccessToken, FacebookGraphClient.DEFAULT_API_VERSION, 90000)<p class="paragraph"/>// With proxy support
+def facebookClient = <span class="java&#45;keyword">new</span> FacebookGraphClient(userAccessToken, FacebookGraphClient.DEFAULT_API_VERSION, FacebookGraphClient.DEFAULT_READ_TIMEOUT_IN_MS, '192.168.0.10', 8080)</pre></div><p class="paragraph"/><h3>Fetching Single Objects</h3><p class="paragraph"/><div class="code"><pre>def user = facebookClient.fetchObject(<span class="java&#45;quote">"me"</span>) // Requires a user access token
 def page = facebookClient.fetchObject(<span class="java&#45;quote">"cocacola"</span>)
 println <span class="java&#45;quote">"User name: "</span> + user.name
 println <span class="java&#45;quote">"Page likes: "</span> + page.likes</pre></div><p class="paragraph"/><h3>Fetching Multiple Objects in One Call</h3><p class="paragraph"/><div class="code"><pre>def fetchObjectsResults = facebookClient.fetchObjects(&#91;<span class="java&#45;quote">"me"</span>, <span class="java&#45;quote">"cocacola"</span>&#93;)
@@ -201,6 +209,9 @@ println <span class="java&#45;quote">"M83 feed "</span> + batchResponses&#91;1&#
                             </div>
                             
                             <div class="menu-item"><a href="../ref/Tags/sendLink.html">sendLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/shareLink.html">shareLink</a>
                             </div>
                             
                             </div>

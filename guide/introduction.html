@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>1 Introduction 0.6.4</title>
+    <title>1 Introduction 2.0.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -56,7 +56,7 @@ function addJsClass() {
         
     </div>
     <p>The Facebook SDK Plugin allows your Grails application to use the Facebook Platform and develop Facebook apps on Facebook.com or on web sites (with Facebook Connect).
-It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
+It is a port of the official Facebook PHP SDK to Grails 2.0.
 </p>
 </div>
 
@@ -80,7 +80,7 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
 
                     <p><strong>Authors:</strong> Benoit Hediard</p>
 
-                    <p><strong>Version:</strong> 0.6.4</p>
+                    <p><strong>Version:</strong> 2.0.0</p>
 
                     
                 </div>
@@ -90,15 +90,17 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
                 
 
 <h1 id="introduction">1 Introduction</h1>
-The <a href="http://developers.facebook.com/" target="blank">Facebook Platform</a> is a set of APIs that make your application more social. Read more about <a href="http://developers.facebook.com/docs/guides/web" target="blank">integrating Facebook with your web site</a> on the Facebook developer site.<p class="paragraph"/>This project contains the open source <strong class="bold">Grails Facebook SDK Plugin</strong> that allows you to integrate the <a href="http://developers.facebook.com/" target="blank">Facebook Platform</a> on a website/app powered by <a href="http://grails.org" target="blank">Grails</a> .<p class="paragraph"/>This plugin is a port of the official <a href="http://github.com/facebook/facebook-php-sdk" target="blank">Facebook PHP SDK V3.1.1</a> to <a href="http://grails.org" target="blank">Grails 2.0</a> .<p class="paragraph"/>It supports the latest <strong class="bold">OAuth2.0 authentication</strong> (required since October 1st 2011).<p class="paragraph"/><strong class="bold">Grails Facebook SDK Plugin</strong> provides the following Grails artefacts:
+The <a href="http://developers.facebook.com/" target="blank">Facebook Platform</a> is a set of APIs that make your application more social. Read more about <a href="http://developers.facebook.com/docs/guides/web" target="blank">integrating Facebook with your web site</a> on the Facebook developer site.<p class="paragraph"/>This project contains the open source <strong class="bold">Grails Facebook SDK Plugin</strong> that allows you to integrate the <a href="http://developers.facebook.com/" target="blank">Facebook Platform</a> on a website/app powered by <a href="http://grails.org" target="blank">Grails</a> .<p class="paragraph"/>This plugin is a port of the official <a href="http://github.com/facebook/facebook-php-sdk" target="blank">Facebook PHP SDK</a> to <a href="http://grails.org" target="blank">Grails 2.0</a> .<p class="paragraph"/>It supports the latest <strong class="bold">OAuth2.0 authentication</strong> (required since October 1st 2011).<p class="paragraph"/><strong class="bold">Grails Facebook SDK Plugin</strong> provides the following Grails artefacts:
 <ul class="star">
 <li><code>FacebookContext</code> - A Spring bean to get current Facebook context in controllers, when running <a href="http://developers.facebook.com/docs/guides/canvas/" target="blank">apps on Facebook.com</a> and <a href="http://developers.facebook.com/docs/guides/web" target="blank">websites with the Facebook Platform</a> .</li>
 <li><code>FacebookGraphClient</code> - A client to call <a href="http://developers.facebook.com/docs/reference/api/," target="blank">Facebook Graph API</a> which is a wrapper around the rock solid <a href="http://restfb.com/" target="blank">RestFB java library</a> version 1.6.10 (released September 03, 2012).</li>
 <li><code>FacebookJSTagLib</code> - A collection of tags to easily integrate <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Facebook JS SDK</a> in your GSPs.</li>
 </ul><p class="paragraph"/><h3>Latest releases</h3><p class="paragraph"/><blockquote class="warning">
-WARNING: Since V0.4.0, <code>FacebookApp</code>, <code>FacebookSdkFilters</code> and <code>FacebookAppService</code> from V0.3.* are DEPRECATED and have been replaced by <code>FacebookContext</code>: a cleaner approach to access Facebook context related info.<p class="paragraph"/>Please check <a href="../guide/single.html#facebookContext" class="guide"><code>FacebookContext</code></a> doc for more info.
+WARNING: Since V2.0.0, Facebook Graph API v2.0 will be used. Make sure that your app is compatible with <a href="https://developers.facebook.com/docs/apps/upgrading" target="blank">v2.0 upgrade</a> .
+You have up to april 30th 2015 to migrate old app using API v1.0.<p class="paragraph"/>Use <code>grails.plugin.facebooksdk.apiVersion = 'v1.0'</code> to override default behaviour.<p class="paragraph"/><code>FacebookGraphClient</code> constructor has also changed with a new <code>apiVersion</code> (some refactoring might be required if you use constructor extra parameters such as timeout or proxy).<p class="paragraph"/>Please check <a href="../guide/single.html#facebookGraphClient" class="guide"><code>FacebookGraphClient</code></a> doc for more info.
 </blockquote>
 <ul class="star">
+<li>2014-07-28 <strong class="bold">V2.0.0</strong> : v2.0 Facebook Graph API support (from now on, used by default)</li>
 <li>2014-05-23 <strong class="bold">V0.6.4</strong> : <code>version</code> attribute added to initJS tag to choose API version for Facebook JS SDK (v1.0 or v2.0)</li>
 <li>2014-05-19 <strong class="bold">V0.6.3</strong> : customSelector attribute and config param added to tag lib</li>
 <li>2014-04-28 <strong class="bold">V0.6.2</strong> : bug fix in FacebookContext (use @PostConstruct instead of InitializingBean) to solve reloading issue since Grails 2.3.7 (GRAILS-7799)</li>
@@ -172,6 +174,9 @@ WARNING: Since V0.4.0, <code>FacebookApp</code>, <code>FacebookSdkFilters</code>
                             </div>
                             
                             <div class="menu-item"><a href="../ref/Tags/sendLink.html">sendLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Tags/shareLink.html">shareLink</a>
                             </div>
                             
                             </div>

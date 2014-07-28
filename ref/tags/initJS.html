@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>Facebook SDK Plugin 0.6.4</title>
+    <title>Facebook SDK Plugin 2.0.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -57,7 +57,7 @@ function addJsClass(el) {
         
     </div>
     <p>The Facebook SDK Plugin allows your Grails application to use the Facebook Platform and develop Facebook apps on Facebook.com or on web sites (with Facebook Connect).
-It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
+It is a port of the official Facebook PHP SDK to Grails 2.0.
 </p>
 </div>
 
@@ -76,6 +76,7 @@ The only required attribute is <code>appId</code>.<p class="paragraph"/><div cla
 <span class="xml&#45;tag">&#60;/facebook:initJS&#62;</span></pre></div><p class="paragraph"/><h3>Attributes</h3><p class="paragraph"/>Required attribute is :
 <ul class="star">
 <li><code>appId</code> Facebook app id</li>
+<li><code>version</code> API version (API <code>v1.0</code> for app created before April 30th, 2014, API <code>v2.0</code> for the others.</li>
 </ul><p class="paragraph"/>Optional attributes are :
 <ul class="star">
 <li><code>autoGrow</code> Call <code>FB.setAutoGrow()</code> after page rendering (default to <code>false</code>).</li>
@@ -85,7 +86,6 @@ The only required attribute is <code>appId</code>.<p class="paragraph"/><div cla
 <li><code>locale</code> Define JS SDK locale (default to server locale).</li>
 <li><code>status</code> Check login status (default to <code>false</code>).</li>
 <li><code>xfbml</code> Parse XFBML (default to <code>false</code>).</li>
-<li><code>version</code> API version (default to <code>''</code>, API <code>v1.0</code> for app created before April 30th, 2014, API <code>v2.0</code> for the others.</li>
 </ul><p class="paragraph"/>
             </div>
         </td>
@@ -124,6 +124,9 @@ The only required attribute is <code>appId</code>.<p class="paragraph"/><div cla
                             </div>
                             
                             <div class="menu-item"><a href="../../ref/Tags/sendLink.html">sendLink</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Tags/shareLink.html">shareLink</a>
                             </div>
                             
                         </div>

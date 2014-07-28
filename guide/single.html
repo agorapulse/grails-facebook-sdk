@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
-        <title>Facebook SDK Plugin 0.6.4</title>
+        <title>Facebook SDK Plugin 2.0.0</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
         <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8" />
@@ -49,7 +49,7 @@ function addJsClass(el) {
                 
             </div>
             <p>The Facebook SDK Plugin allows your Grails application to use the Facebook Platform and develop Facebook apps on Facebook.com or on web sites (with Facebook Connect).
-It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
+It is a port of the official Facebook PHP SDK to Grails 2.0.
 </p>
         </div>
 
@@ -64,7 +64,7 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
                         <div class="project">
                             <h1>Facebook SDK Plugin - Reference Documentation</h1>
                             <p><strong>Authors:</strong> Benoit Hediard</p>
-                            <p><strong>Version:</strong> 0.6.4</p>
+                            <p><strong>Version:</strong> 2.0.0</p>
                             
                         </div>
 
@@ -90,15 +90,17 @@ It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
                         
 
 <h1 id="introduction">1 Introduction</h1>
-The <a href="http://developers.facebook.com/" target="blank">Facebook Platform</a> is a set of APIs that make your application more social. Read more about <a href="http://developers.facebook.com/docs/guides/web" target="blank">integrating Facebook with your web site</a> on the Facebook developer site.<p class="paragraph"/>This project contains the open source <strong class="bold">Grails Facebook SDK Plugin</strong> that allows you to integrate the <a href="http://developers.facebook.com/" target="blank">Facebook Platform</a> on a website/app powered by <a href="http://grails.org" target="blank">Grails</a> .<p class="paragraph"/>This plugin is a port of the official <a href="http://github.com/facebook/facebook-php-sdk" target="blank">Facebook PHP SDK V3.1.1</a> to <a href="http://grails.org" target="blank">Grails 2.0</a> .<p class="paragraph"/>It supports the latest <strong class="bold">OAuth2.0 authentication</strong> (required since October 1st 2011).<p class="paragraph"/><strong class="bold">Grails Facebook SDK Plugin</strong> provides the following Grails artefacts:
+The <a href="http://developers.facebook.com/" target="blank">Facebook Platform</a> is a set of APIs that make your application more social. Read more about <a href="http://developers.facebook.com/docs/guides/web" target="blank">integrating Facebook with your web site</a> on the Facebook developer site.<p class="paragraph"/>This project contains the open source <strong class="bold">Grails Facebook SDK Plugin</strong> that allows you to integrate the <a href="http://developers.facebook.com/" target="blank">Facebook Platform</a> on a website/app powered by <a href="http://grails.org" target="blank">Grails</a> .<p class="paragraph"/>This plugin is a port of the official <a href="http://github.com/facebook/facebook-php-sdk" target="blank">Facebook PHP SDK</a> to <a href="http://grails.org" target="blank">Grails 2.0</a> .<p class="paragraph"/>It supports the latest <strong class="bold">OAuth2.0 authentication</strong> (required since October 1st 2011).<p class="paragraph"/><strong class="bold">Grails Facebook SDK Plugin</strong> provides the following Grails artefacts:
 <ul class="star">
 <li><code>FacebookContext</code> - A Spring bean to get current Facebook context in controllers, when running <a href="http://developers.facebook.com/docs/guides/canvas/" target="blank">apps on Facebook.com</a> and <a href="http://developers.facebook.com/docs/guides/web" target="blank">websites with the Facebook Platform</a> .</li>
 <li><code>FacebookGraphClient</code> - A client to call <a href="http://developers.facebook.com/docs/reference/api/," target="blank">Facebook Graph API</a> which is a wrapper around the rock solid <a href="http://restfb.com/" target="blank">RestFB java library</a> version 1.6.10 (released September 03, 2012).</li>
 <li><code>FacebookJSTagLib</code> - A collection of tags to easily integrate <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Facebook JS SDK</a> in your GSPs.</li>
 </ul><p class="paragraph"/><h3>Latest releases</h3><p class="paragraph"/><blockquote class="warning">
-WARNING: Since V0.4.0, <code>FacebookApp</code>, <code>FacebookSdkFilters</code> and <code>FacebookAppService</code> from V0.3.* are DEPRECATED and have been replaced by <code>FacebookContext</code>: a cleaner approach to access Facebook context related info.<p class="paragraph"/>Please check <a href="../guide/single.html#facebookContext" class="guide"><code>FacebookContext</code></a> doc for more info.
+WARNING: Since V2.0.0, Facebook Graph API v2.0 will be used. Make sure that your app is compatible with <a href="https://developers.facebook.com/docs/apps/upgrading" target="blank">v2.0 upgrade</a> .
+You have up to april 30th 2015 to migrate old app using API v1.0.<p class="paragraph"/>Use <code>grails.plugin.facebooksdk.apiVersion = 'v1.0'</code> to override default behaviour.<p class="paragraph"/><code>FacebookGraphClient</code> constructor has also changed with a new <code>apiVersion</code> (some refactoring might be required if you use constructor extra parameters such as timeout or proxy).<p class="paragraph"/>Please check <a href="../guide/single.html#facebookGraphClient" class="guide"><code>FacebookGraphClient</code></a> doc for more info.
 </blockquote>
 <ul class="star">
+<li>2014-07-28 <strong class="bold">V2.0.0</strong> : v2.0 Facebook Graph API support (from now on, used by default)</li>
 <li>2014-05-23 <strong class="bold">V0.6.4</strong> : <code>version</code> attribute added to initJS tag to choose API version for Facebook JS SDK (v1.0 or v2.0)</li>
 <li>2014-05-19 <strong class="bold">V0.6.3</strong> : customSelector attribute and config param added to tag lib</li>
 <li>2014-04-28 <strong class="bold">V0.6.2</strong> : bug fix in FacebookContext (use @PostConstruct instead of InitializingBean) to solve reloading issue since Grails 2.3.7 (GRAILS-7799)</li>
@@ -144,7 +146,7 @@ WARNING: Since V0.4.0, <code>FacebookApp</code>, <code>FacebookSdkFilters</code>
 		&#125;
 		plugins &#123;
 				//here go your plugin dependencies
-				runtime ':facebook&#45;sdk:0.6.4'
+				runtime ':facebook&#45;sdk:2.0.0'
 		&#125;
 &#125;</pre></div><p class="paragraph"/>
 <h3>Single Facebook app</h3><p class="paragraph"/>Create a Facebook app on <a href="https://developers.facebook.com/apps" target="blank">Facebook Developers</a> , in order to get your own app ID and app secret.<p class="paragraph"/>Add your app settings in <code>Config.groovy</code>:<p class="paragraph"/><div class="code"><pre>// Required
@@ -205,14 +207,14 @@ For each request, you must define <code>app_id</code> in <code>params</code> (by
         &#125;
     &#125;
 &#125;</pre></div><p class="paragraph"/>For example, let's say you have two apps with two controllers: <code>QuizController</code> and <code>SweepstakesController</code>.<p class="paragraph"/>Add <code>controller: 'quiz'</code> in quiz app settings and <code>controller: 'sweepstakes'</code> in sweepstakes app settings.<p class="paragraph"/>To access your quiz app, use http://localhost:8080/my-app/<strong class="bold">quiz</strong> .<p class="paragraph"/>To access your sweepstakes app, use http://localhost:8080/my-app/<strong class="bold">sweepstakes</strong> .<p class="paragraph"/>If no app is found based on <code>app_id</code> params and controller name, default single app <code>grails.plugin.facebooksdk.app</code> settings will be used (if defined).<p class="paragraph"/>
+<h3>Graph API Version</h3><p class="paragraph"/>By default, latest Graph API v2.0 will be used (since SDK version v2.0.0).
+You can override default settings with <code>apiVersion</code> config parameter :<p class="paragraph"/><div class="code"><pre>grails.plugin.facebooksdk.apiVersion = 'v1.0'</pre></div><p class="paragraph"/>
 <h3>Session replication and authorization code</h3><p class="paragraph"/>When using distributed session replication, if authorization code is used by two concurrent processes, one of the process will received an error from Facebook and the session will be invalidated.
-You can add the <code>tokenRetrievalRetryCount</code> config parameter to try to extract token from session several times before invalidating the session (the time for the first process to put the token received by Facebook into session scope).<p class="paragraph"/><div class="code"><pre>grails.plugin.facebooksdk.tokenRetrievalRetryCount = 10</pre></div><p class="paragraph"/>By default, this parameter is usually not required and is disabled by default.<p class="paragraph"/><h3>Controllers scope</h3><p class="paragraph"/>Since FacebookContext should be instantiated at each request, you must use `prototype` scope for your Controllers (since Grails 2.3, generated Config.groovy defines `singleton` as default scope).<p class="paragraph"/><div class="code"><pre>grails.controllers.defaultScope = 'prototype'</pre></div><p class="paragraph"/><h3>JQuery custom selector</h3><p class="paragraph"/>Default jQuery selector is `$`, if you require another one, you can define it globally in your  <em class="italic">grails-app/conf/Config.groovy</em> :<p class="paragraph"/><div class="code"><pre>grails.plugin.facebooksdk.customSelector = 'jQuery'</pre></div>
+You can add the <code>tokenRetrievalRetryCount</code> config parameter to try to extract token from session several times before invalidating the session (the time for the first process to put the token received by Facebook into session scope).<p class="paragraph"/><div class="code"><pre>grails.plugin.facebooksdk.tokenRetrievalRetryCount = 10</pre></div><p class="paragraph"/>By default, this parameter is usually not required and is disabled by default.<p class="paragraph"/><h3>Controllers scope</h3><p class="paragraph"/>Since FacebookContext should be instantiated at each request, you must use <code>prototype</code> scope for your Controllers (since Grails 2.3, generated Config.groovy defines <code>singleton</code> as default scope).<p class="paragraph"/><div class="code"><pre>grails.controllers.defaultScope = 'prototype'</pre></div><p class="paragraph"/><h3>JQuery custom selector</h3><p class="paragraph"/>Default jQuery selector is <code>$</code>, if you require another one, you can define it globally in your  <em class="italic">grails-app/conf/Config.groovy</em> :<p class="paragraph"/><div class="code"><pre>grails.plugin.facebooksdk.customSelector = 'jQuery'</pre></div>
 
 
 <h1 id="facebookContext">3 Facebook Context</h1>
-<blockquote class="warning">
-WARNING: Since V0.4.0, <code>FacebookApp</code>, <code>FacebookSdkFilters</code> and <code>FacebookAppService</code> from V0.3.<strong class="bold"> have been deprecated and replaced by <code>FacebookContext</code>: a cleaner approach to access Facebook context related info.<p class="paragraph"/>Sorry, V0.3.</strong> users, you might have to do some refactoring&#8230;
-</blockquote><p class="paragraph"/>The plugin can automatically create a <code>facebookContext</code> Spring bean, with all the required info:
+The plugin can automatically create a <code>facebookContext</code> Spring bean, with all the required info:
 <ul class="minus">
 <li><strong class="bold">current Facebook signed request</strong> (if defined).</li>
 <li><strong class="bold">current Facebook app</strong>,</li>
@@ -275,14 +277,22 @@ facebookContext.page?.admin</pre></div>
 
 
 <h1 id="facebookGraphClient">4 Facebook Graph Client</h1>
+<blockquote class="warning">
+WARNING: Since V2.0.0, <code>FacebookGraphClient</code> constructor has changed with a new <code>apiVersion</code> parameter (default to V2.0).
+<div class="code"><pre>// From
+FacebookGraphClient(<span class="java&#45;object">String</span> accessToken = '', <span class="java&#45;object">Integer</span> timeout = DEFAULT_READ_TIMEOUT_IN_MS, <span class="java&#45;object">String</span> proxyHost = <span class="java&#45;keyword">null</span>, <span class="java&#45;object">Integer</span> proxyPort = <span class="java&#45;keyword">null</span>) &#123;
+// To
+FacebookGraphClient(<span class="java&#45;object">String</span> accessToken = '', <span class="java&#45;object">String</span> apiVersion = DEFAULT_API_VERSION, <span class="java&#45;object">Integer</span> timeout = DEFAULT_READ_TIMEOUT_IN_MS, <span class="java&#45;object">String</span> proxyHost = <span class="java&#45;keyword">null</span>, <span class="java&#45;object">Integer</span> proxyPort = <span class="java&#45;keyword">null</span>) &#123;</pre></div>
+</blockquote><p class="paragraph"/>
 To perform Facebook Graph API call, use the <code>FacebookGraphClient</code> without access token for public data or with an access token for private data.
 <code>FacebookGraphClient</code> is a thin groovy wrapper around the rock solid <a href="http://restfb.com/" target="blank">RestFB java library</a> .
 It will return JSON-based graph objects.<p class="paragraph"/>To play with the API, you might use the grails console from your project root and get user token or app token from <a href="https://developers.facebook.com/tools/access_token/" target="blank">Facebook Access Token Tool</a> .<p class="paragraph"/><div class="code"><pre>grails console</pre></div><p class="paragraph"/><h3>Initialization</h3><p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">import</span> grails.plugin.facebooksdk.FacebookGraphClient<p class="paragraph"/>// For <span class="java&#45;keyword">public</span> data
 def facebookClient = <span class="java&#45;keyword">new</span> FacebookGraphClient()<p class="paragraph"/>// For <span class="java&#45;keyword">private</span> data (access token required)
 def userAccessToken = facebookAppService.getUserAccessToken() // Or any app/user token
-def facebookClient = <span class="java&#45;keyword">new</span> FacebookGraphClient(userAccessToken)<p class="paragraph"/>// With specific timeout (<span class="java&#45;keyword">default</span> to 180s)
-def facebookClient = <span class="java&#45;keyword">new</span> FacebookGraphClient(userAccessToken, 90000)<p class="paragraph"/>// With proxy support
-def facebookClient = <span class="java&#45;keyword">new</span> FacebookGraphClient(userAccessToken, FacebookGraphClient.DEFAULT_READ_TIMEOUT_IN_MS, '192.168.0.10', 8080)</pre></div><p class="paragraph"/><h3>Fetching Single Objects</h3><p class="paragraph"/><div class="code"><pre>def user = facebookClient.fetchObject(<span class="java&#45;quote">"me"</span>) // Requires a user access token
+def facebookClient = <span class="java&#45;keyword">new</span> FacebookGraphClient(userAccessToken)<p class="paragraph"/>// With specific api version
+def facebookClient = <span class="java&#45;keyword">new</span> FacebookGraphClient(userAccessToken, 'v1.0')<p class="paragraph"/>// With specific timeout (<span class="java&#45;keyword">default</span> to 180s)
+def facebookClient = <span class="java&#45;keyword">new</span> FacebookGraphClient(userAccessToken, FacebookGraphClient.DEFAULT_API_VERSION, 90000)<p class="paragraph"/>// With proxy support
+def facebookClient = <span class="java&#45;keyword">new</span> FacebookGraphClient(userAccessToken, FacebookGraphClient.DEFAULT_API_VERSION, FacebookGraphClient.DEFAULT_READ_TIMEOUT_IN_MS, '192.168.0.10', 8080)</pre></div><p class="paragraph"/><h3>Fetching Single Objects</h3><p class="paragraph"/><div class="code"><pre>def user = facebookClient.fetchObject(<span class="java&#45;quote">"me"</span>) // Requires a user access token
 def page = facebookClient.fetchObject(<span class="java&#45;quote">"cocacola"</span>)
 println <span class="java&#45;quote">"User name: "</span> + user.name
 println <span class="java&#45;quote">"Page likes: "</span> + page.likes</pre></div><p class="paragraph"/><h3>Fetching Multiple Objects in One Call</h3><p class="paragraph"/><div class="code"><pre>def fetchObjectsResults = facebookClient.fetchObjects(&#91;<span class="java&#45;quote">"me"</span>, <span class="java&#45;quote">"cocacola"</span>&#93;)
@@ -408,6 +418,9 @@ println <span class="java&#45;quote">"M83 feed "</span> + batchResponses&#91;1&#
                         </div>
                         
                         <div class="menu-item"><a href="../ref/Tags/sendLink.html">sendLink</a>
+                        </div>
+                        
+                        <div class="menu-item"><a href="../ref/Tags/shareLink.html">shareLink</a>
                         </div>
                         
                         </div>
