@@ -1,9 +1,3 @@
-{warning}
-WARNING: Since V0.4.0, @FacebookApp@, @FacebookSdkFilters@ and @FacebookAppService@ from V0.3.* have been deprecated and replaced by @FacebookContext@: a cleaner approach to access Facebook context related info.
-
-Sorry, V0.3.* users, you might have to do some refactoring...
-{warning}
-
 The plugin can automatically create a @facebookContext@ Spring bean, with all the required info:
 - *current Facebook signed request* (if defined).
 - *current Facebook app*,

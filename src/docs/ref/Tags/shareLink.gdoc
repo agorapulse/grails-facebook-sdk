@@ -1,0 +1,40 @@
+h1. facebook:shareLink
+
+Display a link to open "Share Dialog":https://developers.facebook.com/docs/reference/dialogs/share/ .
+
+!https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-xap1/t39.2178-6/851588_233177146872968_1539107490_n.png!
+
+The *Share Dialog* lets people to publish an individual story.
+
+{code}
+<facebook:shareLink href="http://www.google.com">Share a link</facebook:shareLink>
+{code}
+
+To check if the app was successfully added or execute some code, you can use @callback@ attribute.
+
+{code}
+<script>
+    function someCallbackFunction(response) {
+        alert('callback called!');
+        if (response && response.success) alert('Sent successfully');
+        console.log(response);
+    }
+</script>
+
+<facebook:shareLink
+    callback="someCallbackFunction"
+    href="http://www.google.com"
+    Share a link
+</facebook:sendLink>
+{code}
+
+h3. Attributes
+
+Required attributes are :
+* @href@ The link attached to this post.
+
+Optional attributes are :
+* @callback@ Optional javascript function name to call when dialog is confirmed or closed.
+* @disabled@ Disable click on the link.
+* @elementClass@ HTML element 'class' attribute value.
+* @elementId@ HTML element 'id' attribute value.

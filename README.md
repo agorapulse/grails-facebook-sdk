@@ -9,7 +9,7 @@ The [Facebook Platform](http://developers.facebook.com/) is a set of APIs that m
 
 This project contains the open source **Grails Facebook SDK Plugin** that allows you to integrate the [Facebook Platform](http://developers.facebook.com/) on a website/app powered by [Grails](http://grails.org).
 
-This plugin is a port of the official [Facebook PHP SDK V3.1.1](http://github.com/facebook/facebook-php-sdk) to [Grails 2.0](http://grails.org).
+This plugin is a port of the official [Facebook PHP SDK](http://github.com/facebook/facebook-php-sdk) to [Grails 2.0](http://grails.org).
 
 It supports the latest *OAuth2.0 authentication* (required since October 1st 2011).
 
@@ -19,7 +19,7 @@ It supports the latest *OAuth2.0 authentication* (required since October 1st 201
 * **FacebookGraphClient** - A client to call [Facebook Graph API](http://developers.facebook.com/docs/reference/api/), which is a wrapper around the rock solid [RestFB java library](http://restfb.com/) version 1.6.10 (released September 03, 2012).
 * **FacebookJSTagLib** - A collection of tags to easily integrate [Facebook JS SDK](http://developers.facebook.com/docs/reference/javascript/) in your GSPs.
 
-**WARNING**: Only Facebook API v1.0 is currently supported by [RestFB java library](http://restfb.com/).
+**WARNING**: Facebook API v2.0 is now used by default.
 
 # Installation
 
@@ -37,7 +37,7 @@ grails.project.dependency.resolution = {
 		}
 		plugins {
 				//here go your plugin dependencies
-				runtime ':facebook-sdk:0.6.4'
+				runtime ':facebook-sdk:2.0.0'
 		}
 }
 ```
@@ -55,6 +55,13 @@ grails.plugin.facebooksdk.app.permissions = {APP_PERMISSIONS} // Ex. ['email','u
 grails.plugin.facebooksdk.app.secret = {APP_SECRET}
 ```
 
+By default, latest Graph API v2.0 will be used (since SDK version v2.0.0).
+You can override default settings with `apiVersion` setting:
+
+```groovy
+grails.plugin.facebooksdk.apiVersion = 'v1.0'
+```
+
 Since FacebookContext should be instantiated at each request, you must use `prototype` scope for your Controllers (since Grails 2.3, generated Config.groovy defines `singleton` as default scope).
 
 ```groovy
@@ -63,7 +70,7 @@ grails.controllers.defaultScope = 'prototype'
 
 Default jQuery selector is `$`, if you require another one, you can define it globally in your _grails-app/conf/Config.groovy_:
 
- ```groovy
+```groovy
 grails.plugin.facebooksdk.customSelector = 'jQuery'
 ```
 
@@ -87,9 +94,12 @@ Project documentation is located here :
 
 # Latest releases
 
-WARNING: Since V0.4.0, _FacebookApp_, _FacebookSdkFilters_ and _FacebookAppService_ from V0.3.* are DEPRECATED and have been replaced by _FacebookContext_.
-Please check [FacebookContext](http://agorapulse.github.io/grails-facebook-sdk/guide/facebookContext.html) doc for more info.
+WARNING: Since V2.0.0, Facebook Graph API v2.0 will be used. Make sure that your app is compatible with [v2.0 upgrade](https://developers.facebook.com/docs/apps/upgrading).
+You have up to april 30th 2015 to migrate old app using API v1.0. 
+Use `grails.plugin.facebooksdk.apiVersion = v1.0` to override default behaviour.
+`FacebookGraphClient` constructor has also changed with a new `apiVersion` (some refactoring might be required if you use constructor extra parameters such as timeout or proxy).
 
+* 2014-07-28 **V2.0.0** : v2.0 Facebook Graph API support (from now on, used by default)
 * 2014-05-23 **V0.6.4** : _version_ attribute added to initJS tag to choose API version for Facebook JS SDK (v1.0 or v2.0)
 * 2014-05-19 **V0.6.3** : customSelector attribute and config param added to tag lib
 * 2014-04-28 **V0.6.2** : bug fix in FacebookContext (use @PostConstruct instead of InitializingBean) to solve reloading issue since Grails 2.3.7 (GRAILS-7799)

@@ -2,7 +2,7 @@ The "Facebook Platform":http://developers.facebook.com/ is a set of APIs that ma
 
 This project contains the open source *Grails Facebook SDK Plugin* that allows you to integrate the "Facebook Platform":http://developers.facebook.com/ on a website/app powered by "Grails":http://grails.org .
 
-This plugin is a port of the official "Facebook PHP SDK V3.1.1":http://github.com/facebook/facebook-php-sdk to "Grails 2.0":http://grails.org .
+This plugin is a port of the official "Facebook PHP SDK":http://github.com/facebook/facebook-php-sdk to "Grails 2.0":http://grails.org .
 
 It supports the latest *OAuth2.0 authentication* (required since October 1st 2011).
 
@@ -16,11 +16,17 @@ It supports the latest *OAuth2.0 authentication* (required since October 1st 201
 h3. Latest releases
 
 {warning}
-WARNING: Since V0.4.0, @FacebookApp@, @FacebookSdkFilters@ and @FacebookAppService@ from V0.3.* are DEPRECATED and have been replaced by @FacebookContext@: a cleaner approach to access Facebook context related info.
+WARNING: Since V2.0.0, Facebook Graph API v2.0 will be used. Make sure that your app is compatible with "v2.0 upgrade":https://developers.facebook.com/docs/apps/upgrading .
+You have up to april 30th 2015 to migrate old app using API v1.0.
 
-Please check [@FacebookContext@|guide:facebookContext] doc for more info.
+Use @grails.plugin.facebooksdk.apiVersion = 'v1.0'@ to override default behaviour.
+
+@FacebookGraphClient@ constructor has also changed with a new @apiVersion@ (some refactoring might be required if you use constructor extra parameters such as timeout or proxy).
+
+Please check [@FacebookGraphClient@|guide:facebookGraphClient] doc for more info.
 {warning}
 
+* 2014-07-28 *V2.0.0* : v2.0 Facebook Graph API support (from now on, used by default)
 * 2014-05-23 *V0.6.4* : @version@ attribute added to initJS tag to choose API version for Facebook JS SDK (v1.0 or v2.0)
 * 2014-05-19 *V0.6.3* : customSelector attribute and config param added to tag lib
 * 2014-04-28 *V0.6.2* : bug fix in FacebookContext (use @PostConstruct instead of InitializingBean) to solve reloading issue since Grails 2.3.7 (GRAILS-7799)

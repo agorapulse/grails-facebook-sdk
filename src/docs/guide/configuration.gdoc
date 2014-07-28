@@ -14,7 +14,7 @@ grails.project.dependency.resolution = {
 		}
 		plugins {
 				//here go your plugin dependencies
-				runtime ':facebook-sdk:0.6.4'
+				runtime ':facebook-sdk:2.0.0'
 		}
 }
 {code}
@@ -122,6 +122,16 @@ To access your sweepstakes app, use http://localhost:8080/my-app/*sweepstakes* .
 If no app is found based on @app_id@ params and controller name, default single app @grails.plugin.facebooksdk.app@ settings will be used (if defined).
 
 
+h3. Graph API Version
+
+By default, latest Graph API v2.0 will be used (since SDK version v2.0.0).
+You can override default settings with @apiVersion@ config parameter :
+
+{code}
+grails.plugin.facebooksdk.apiVersion = 'v1.0'
+{code}
+
+
 h3. Session replication and authorization code
 
 When using distributed session replication, if authorization code is used by two concurrent processes, one of the process will received an error from Facebook and the session will be invalidated.
@@ -135,7 +145,7 @@ By default, this parameter is usually not required and is disabled by default.
 
 h3. Controllers scope
 
-Since FacebookContext should be instantiated at each request, you must use `prototype` scope for your Controllers (since Grails 2.3, generated Config.groovy defines `singleton` as default scope).
+Since FacebookContext should be instantiated at each request, you must use @prototype@ scope for your Controllers (since Grails 2.3, generated Config.groovy defines @singleton@ as default scope).
 
 {code}
 grails.controllers.defaultScope = 'prototype'
@@ -143,7 +153,7 @@ grails.controllers.defaultScope = 'prototype'
 
 h3. JQuery custom selector
 
-Default jQuery selector is `$`, if you require another one, you can define it globally in your _grails-app/conf/Config.groovy_:
+Default jQuery selector is @$@, if you require another one, you can define it globally in your _grails-app/conf/Config.groovy_:
 
 {code}
 grails.plugin.facebooksdk.customSelector = 'jQuery'

@@ -3,14 +3,14 @@ import org.springframework.aop.scope.ScopedProxyFactoryBean
 
 class FacebookSdkGrailsPlugin {
 	
-	def version = "0.6.4"
+	def version = "2.0.0"
 	def grailsVersion = "2.0 > *"
 
     def author = "Benoit Hediard"
     def authorEmail = "ben@agorapulse.com"
     def title = "Facebook SDK Plugin"
     def description = '''The Facebook SDK Plugin allows your Grails application to use the Facebook Platform and develop Facebook apps on Facebook.com or on web sites (with Facebook Connect).
-It is a port of the official Facebook PHP SDK V3.1.1 to Grails 2.0.
+It is a port of the official Facebook PHP SDK to Grails 2.0.
 ''' 
     
     def documentation = "http://agorapulse.github.io/grails-facebook-sdk/guide/"
