@@ -9,7 +9,7 @@ import javax.annotation.PostConstruct
 
 class FacebookContext {
 
-    private final static List DROP_QUERY_PARAMS = ['code','state','signed_request']
+    private final static List DROP_QUERY_PARAMS = ['code','denied_scopes','granted_scopes','signed_request','state','token']
 
     def grailsApplication // Injected by Spring
     def grailsLinkGenerator // Injected by Spring
