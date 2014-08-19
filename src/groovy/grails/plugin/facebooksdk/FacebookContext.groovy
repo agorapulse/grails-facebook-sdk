@@ -139,7 +139,7 @@ class FacebookContext {
         if (!request.params['no_user']) parameters['no_user'] = currentURL
         if (!request.params['ok_session']) parameters['ok_session'] = currentURL
         if (!request.params['session_version']) parameters['session_version'] = 3
-        if (!parameters['version']) parameters['version'] = config.apiVersion ?: 'v2.0'
+        if (!parameters['version']) parameters['version'] = config.apiVersion ?: FacebookGraphClient.DEFAULT_API_VERSION
         return buildFacebookURL("extern/login_status.php", parameters)
     }
 
@@ -155,8 +155,8 @@ class FacebookContext {
         if (!parameters['client_id']) parameters['client_id'] = app.id
         if (!parameters['redirect_uri']) parameters['redirect_uri'] = currentURL
         if (!parameters['scope']) parameters['scope'] = app.permissions.join(',')
-        if (!parameters['version']) parameters['version'] = config.apiVersion ?: 'v2.0'
         if (!parameters['state']) parameters['state'] = UUID.randomUUID().encodeAsMD5()
+        if (!parameters['version']) parameters['version'] = config.apiVersion ?: FacebookGraphClient.DEFAULT_API_VERSION
         session.setData('state', parameters['state'])
         return buildFacebookURL('dialog/oauth', parameters)
     }
@@ -171,7 +171,7 @@ class FacebookContext {
     String getLogoutURL(Map parameters = [:]) {
         if (!parameters['access_token']) parameters['access_token'] = user.token
         if (!parameters['next']) currentURL
-        if (!parameters['version']) parameters['version'] = config.apiVersion ?: 'v2.0'
+        if (!parameters['version']) parameters['version'] = config.apiVersion ?: FacebookGraphClient.DEFAULT_API_VERSION
         return buildFacebookURL('logout.php', parameters)
     }
 
@@ -182,7 +182,7 @@ class FacebookContext {
     // PRIVATE
 
     private String buildFacebookURL(path = '', parameters = [:]) {
-        String url = "https://www.facebook.com/${parameters['version'] ?: 'v2.0'}/"
+        String url = "https://www.facebook.com/${parameters['version'] ?: FacebookGraphClient.DEFAULT_API_VERSION}/"
         parameters.remove('version')
         if (path) {
             if (path[0] == "/") {
