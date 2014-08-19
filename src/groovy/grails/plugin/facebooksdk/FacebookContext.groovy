@@ -149,12 +149,11 @@ class FacebookContext {
           * - scope: comma separated list of requested extended perms
      */
     String getLoginURL(Map parameters = [:]) {
-        String state = UUID.randomUUID().encodeAsMD5()
-        session.setData('state', state)
         if (!parameters['client_id']) parameters['client_id'] = app.id
         if (!parameters['redirect_uri']) parameters['redirect_uri'] = currentURL
         if (!parameters['scope']) parameters['scope'] = app.permissions.join(',')
-        if (!parameters['state']) parameters['state'] = state
+        if (!parameters['state']) parameters['state'] = UUID.randomUUID().encodeAsMD5()
+        session.setData('state', parameters['state'])
         return buildFacebookURL('dialog/oauth', parameters)
     }
 
