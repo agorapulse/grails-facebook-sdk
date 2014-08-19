@@ -152,13 +152,12 @@ class FacebookContext {
           * - version: api version (default to v2.0 or apiVersion config setting)
      */
     String getLoginURL(Map parameters = [:]) {
-        String state = UUID.randomUUID().encodeAsMD5()
-        session.setData('state', state)
         if (!parameters['client_id']) parameters['client_id'] = app.id
         if (!parameters['redirect_uri']) parameters['redirect_uri'] = currentURL
         if (!parameters['scope']) parameters['scope'] = app.permissions.join(',')
-        if (!parameters['state']) parameters['state'] = state
         if (!parameters['version']) parameters['version'] = config.apiVersion ?: 'v2.0'
+        if (!parameters['state']) parameters['state'] = UUID.randomUUID().encodeAsMD5()
+        session.setData('state', parameters['state'])
         return buildFacebookURL('dialog/oauth', parameters)
     }
 
