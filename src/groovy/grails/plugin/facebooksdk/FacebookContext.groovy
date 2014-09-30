@@ -3,6 +3,7 @@ package grails.plugin.facebooksdk
 import grails.web.UrlConverter
 import org.apache.log4j.Logger
 import org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequest
+import org.codehaus.groovy.grails.web.util.WebUtils
 import org.springframework.web.context.request.RequestContextHolder
 
 import javax.annotation.PostConstruct
@@ -200,8 +201,8 @@ class FacebookContext {
         grailsApplication.config.grails.plugin.facebooksdk
     }
 
-    private String getCurrentURL(String queryString = '') {
-        Map params = request.params.findAll { key, value -> !DROP_QUERY_PARAMS.contains(key) }
+    private String getCurrentURL() {
+        Map params = WebUtils.fromQueryString(request.request.queryString).findAll { key, value -> !DROP_QUERY_PARAMS.contains(key) } // Use WebUtils instead of request.params (which does not preserve query string order)
         String linkUrl = grailsLinkGenerator.link(
                 absolute: true,
                 action: request.params.action,
