@@ -1,6 +1,6 @@
 package grails.plugin.facebooksdk
 
-import com.restfb.exception.FacebookOAuthException
+import com.restfb.exception.FacebookGraphException
 import org.apache.log4j.Logger
 
 class FacebookContextUser {
@@ -44,7 +44,7 @@ class FacebookContextUser {
                         context.session.setData('expirationTime', 0)
                     }
                 }
-            } catch (FacebookOAuthException exception) {
+            } catch (FacebookGraphException exception) {
                 log.warn "Could not exchange token: $exception.errorMessage"
                 invalidate()
             }
@@ -220,7 +220,7 @@ class FacebookContextUser {
                     context.session.setData('expirationTime', expirationTime)
                 }
             }
-        } catch (FacebookOAuthException exception) {
+        } catch (FacebookGraphException exception) {
             log.warn "Could not get token from code: $exception.errorMessage"
             if (exception.errorCode == 100 && tokenRetrievalRetryCount) {
                 // Authorization code has already been used.

@@ -28,7 +28,7 @@ grails.project.dependency.resolution = {
         build 'org.apache.httpcomponents:httpclient:4.3.2'
         build 'org.apache.httpcomponents:httpmime:4.3.3'
         // Latest RestFB lib
-		compile 'com.restfb:restfb:1.6.14'
+		compile 'com.restfb:restfb:1.6.16'
 	}
 	plugins {
         build(':release:3.0.1',
