@@ -1,5 +1,5 @@
 {warning}
-WARNING: Since V2.0.0, @FacebookGraphClient@ constructor has changed with a new @apiVersion@ parameter (default to V2.0).
+WARNING: Since V2.1.0, @FacebookGraphClient@ constructor has changed with a new @apiVersion@ parameter (default to V2.1).
 {code}
 // From
 FacebookGraphClient(String accessToken = '', Integer timeout = DEFAULT_READ_TIMEOUT_IN_MS, String proxyHost = null, Integer proxyPort = null) {
