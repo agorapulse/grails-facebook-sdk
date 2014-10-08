@@ -3,6 +3,7 @@ package grails.plugin.facebooksdk;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.DefaultJsonMapper;
 import com.restfb.DefaultWebRequestor;
+import com.restfb.Version;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -13,7 +14,7 @@ import java.net.URL;
 public class DefaultFacebookGraphClient extends DefaultFacebookClient {
 
     // Override default web requestor to add read timeout parameter
-    DefaultFacebookGraphClient(String accessToken, final Integer timeout, final String proxyHost, final Integer proxyPort) {
+    DefaultFacebookGraphClient(String accessToken, final Integer timeout, final String proxyHost, final Integer proxyPort, final Version version) {
         super(accessToken,
                 new DefaultWebRequestor() {
                     @Override
@@ -32,7 +33,8 @@ public class DefaultFacebookGraphClient extends DefaultFacebookClient {
                         }
                     }
                 },
-                new DefaultJsonMapper());
+                new DefaultJsonMapper(),
+                version);
     }
 
 }

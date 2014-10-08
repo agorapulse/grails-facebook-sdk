@@ -3,6 +3,7 @@ package grails.plugin.facebooksdk
 import com.restfb.BinaryAttachment
 import com.restfb.Connection
 import com.restfb.Parameter
+import com.restfb.Version
 import com.restfb.batch.BatchRequest
 import com.restfb.batch.BatchRequest.BatchRequestBuilder
 import com.restfb.json.JsonObject
@@ -11,17 +12,10 @@ import grails.converters.JSON
 class FacebookGraphClient extends DefaultFacebookGraphClient {
 
     static final int DEFAULT_READ_TIMEOUT_IN_MS = 180000
-    static final String DEFAULT_API_VERSION = 'v2.0'
-
-    String apiVersion
+    static final String DEFAULT_API_VERSION = 'v2.1'
 
     FacebookGraphClient(String accessToken = '', String apiVersion = DEFAULT_API_VERSION, Integer timeout = DEFAULT_READ_TIMEOUT_IN_MS, String proxyHost = null, Integer proxyPort = null) {
-        super(accessToken, timeout, proxyHost, proxyPort)
-        this.apiVersion = apiVersion
-    }
-
-    @Override protected String getFacebookGraphEndpointUrl() {
-        return "https://graph.facebook.com/${apiVersion}"
+        super(accessToken, timeout, proxyHost, proxyPort, buildVersionFromString(apiVersion))
     }
 
     boolean deleteObject(String object) {
@@ -142,6 +136,22 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 	}
 
 	// PRIVATE
+
+    private Version buildVersionFromString(String apiVersion) {
+        Version version = Version.UNVERSIONED
+        switch (apiVersion) {
+            case 'v1.0':
+                version = Version.VERSION_1_0
+                break
+            case 'v2.0':
+                version = Version.VERSION_2_0
+                break
+            case 'v2.1':
+                version = Version.VERSION_2_1
+                break
+        }
+        version
+    }
 
 	private Parameter[] buildVariableArgs(Map parameters) {
 		Parameter[] variableArgs = new Parameter[parameters.size()]
