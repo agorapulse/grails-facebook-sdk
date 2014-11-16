@@ -19,7 +19,7 @@ It supports the latest *OAuth2.0 authentication* (required since October 1st 201
 * **FacebookGraphClient** - A client to call [Facebook Graph API](http://developers.facebook.com/docs/reference/api/), which is a wrapper around the rock solid [RestFB java library](http://restfb.com/) version 1.6.10 (released September 03, 2012).
 * **FacebookJSTagLib** - A collection of tags to easily integrate [Facebook JS SDK](http://developers.facebook.com/docs/reference/javascript/) in your GSPs.
 
-**WARNING**: Facebook API v2.0 is now used by default.
+**WARNING**: Facebook API v2.2 is now used by default.
 
 # Installation
 
@@ -37,7 +37,7 @@ grails.project.dependency.resolution = {
 		}
 		plugins {
 				//here go your plugin dependencies
-				runtime ':facebook-sdk:2.0.0'
+				runtime ':facebook-sdk:2.2.0'
 		}
 }
 ```
@@ -55,7 +55,7 @@ grails.plugin.facebooksdk.app.permissions = {APP_PERMISSIONS} // Ex. ['email','u
 grails.plugin.facebooksdk.app.secret = {APP_SECRET}
 ```
 
-By default, latest Graph API v2.0 will be used (since SDK version v2.0.0).
+By default, latest Graph API v2.2 will be used.
 You can override default settings with `apiVersion` setting:
 
 ```groovy
@@ -76,12 +76,7 @@ grails.plugin.facebooksdk.customSelector = 'jQuery'
 
 # Getting started with a demo app
 
-If you want to quickly run the SDK on a demo app, you can download [Facebook SDK Grails - Demo](https://github.com/benorama/grails-facebook-sdk-demo).
-
-
-# Integration with Shiro Grails Plugin
-
-To see an example of integration with Shiro Grails Plugin, you can download [Facebook SDK Grails - Shiro demo](https://github.com/benorama/grails-facebook-sdk-demo-shiro).
+If you want to quickly run the SDK on a demo app, you can download [Facebook SDK Grails - Demo](https://github.com/agorapulse/grails-facebook-sdk-demo).
 
 
 # Documentation
@@ -94,12 +89,13 @@ Project documentation is located here :
 
 # Latest releases
 
-WARNING: Since V2.1.0, Facebook Graph API v2.1 will be used. Make sure that your app is compatible with [v2.1 upgrade](https://developers.facebook.com/docs/apps/upgrading).
+WARNING: Since V2.2.0, Facebook Graph API v2.2 will be used. Make sure that your app is compatible with [v2.2 upgrade](https://developers.facebook.com/docs/apps/upgrading).
 You have up to april 30th 2015 to migrate old app using API v1.0. 
 Use `grails.plugin.facebooksdk.apiVersion = v1.0` to override default behaviour.
 `FacebookGraphClient` constructor has also changed with a new `apiVersion` (some refactoring might be required if you use constructor extra parameters such as timeout or proxy).
 
-* 2014-10-08 **V2.1.0** : v2.1 Facebook Graph API support (from now on, used by default) + RestFB dependency updated to 1.6.16
+* 2014-11-16 **V2.2.0** : v2.2 Facebook Graph API support (from now on, used by default) + RestFB dependency updated to 1.7.0
+* 2014-10-08 **V2.1.0** : v2.1 Facebook Graph API support + RestFB dependency updated to 1.6.16
 * 2014-07-28 **V2.0.0** : v2.0 Facebook Graph API support
 * 2014-05-23 **V0.6.4** : _version_ attribute added to initJS tag to choose API version for Facebook JS SDK (v1.0 or v2.0)
 * 2014-05-19 **V0.6.3** : customSelector attribute and config param added to tag lib
