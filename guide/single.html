@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
-        <title>Facebook SDK Plugin 2.1.0-SNAPSHOT</title>
+        <title>Facebook SDK Plugin 2.2.0</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
         <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8" />
@@ -64,7 +64,7 @@ It is a port of the official Facebook PHP SDK to Grails 2.0.
                         <div class="project">
                             <h1>Facebook SDK Plugin - Reference Documentation</h1>
                             <p><strong>Authors:</strong> Benoit Hediard</p>
-                            <p><strong>Version:</strong> 2.1.0-SNAPSHOT</p>
+                            <p><strong>Version:</strong> 2.2.0</p>
                             
                         </div>
 
@@ -96,11 +96,12 @@ The <a href="http://developers.facebook.com/" target="blank">Facebook Platform</
 <li><code>FacebookGraphClient</code> - A client to call <a href="http://developers.facebook.com/docs/reference/api/," target="blank">Facebook Graph API</a> which is a wrapper around the rock solid <a href="http://restfb.com/" target="blank">RestFB java library</a> version 1.6.10 (released September 03, 2012).</li>
 <li><code>FacebookJSTagLib</code> - A collection of tags to easily integrate <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Facebook JS SDK</a> in your GSPs.</li>
 </ul><p class="paragraph"/><h3>Latest releases</h3><p class="paragraph"/><blockquote class="warning">
-WARNING: Since V2.1.0, Facebook Graph API v2.1 will be used. Make sure that your app is compatible with <a href="https://developers.facebook.com/docs/apps/upgrading" target="blank">v2.1 upgrade</a> .
+WARNING: Since V2.2.0, Facebook Graph API v2.2 will be used. Make sure that your app is compatible with <a href="https://developers.facebook.com/docs/apps/upgrading" target="blank">v2.2 upgrade</a> .
 You have up to april 30th 2015 to migrate old app using API v1.0.<p class="paragraph"/>Use <code>grails.plugin.facebooksdk.apiVersion = 'v1.0'</code> to override default behaviour.<p class="paragraph"/><code>FacebookGraphClient</code> constructor has also changed with a new <code>apiVersion</code> (some refactoring might be required if you use constructor extra parameters such as timeout or proxy).<p class="paragraph"/>Please check <a href="../guide/single.html#facebookGraphClient" class="guide"><code>FacebookGraphClient</code></a> doc for more info.
 </blockquote>
 <ul class="star">
-<li>2014-10-08 <strong class="bold">V2.1.0</strong> : v2.1 Facebook Graph API support (from now on, used by default) + RestFB dependency updated to 1.6.16</li>
+<li>2014-11-16 <strong class="bold">V2.2.0</strong> : v2.2 Facebook Graph API support (from now on, used by default) + RestFB dependency updated to 1.7.0</li>
+<li>2014-10-08 <strong class="bold">V2.1.0</strong> : v2.1 Facebook Graph API support + RestFB dependency updated to 1.6.16</li>
 <li>2014-07-28 <strong class="bold">V2.0.0</strong> : v2.0 Facebook Graph API support</li>
 <li>2014-05-23 <strong class="bold">V0.6.4</strong> : <code>version</code> attribute added to initJS tag to choose API version for Facebook JS SDK (v1.0 or v2.0)</li>
 <li>2014-05-19 <strong class="bold">V0.6.3</strong> : customSelector attribute and config param added to tag lib</li>
@@ -130,7 +131,6 @@ You have up to april 30th 2015 to migrate old app using API v1.0.<p class="parag
 <li>2012-06-12 <strong class="bold">V0.3.1</strong> : package <code>grails.plugins.facebooksdk</code> renamed to <code>grails.plugin.facebooksdk</code></li>
 <li>2012-06-08 <strong class="bold">V0.3.0</strong> : new documentation based on GDoc, <code>FacebookRestClient</code> added + bug fixes</li>
 </ul><p class="paragraph"/><h3>Bugs</h3><p class="paragraph"/>To report any bug, please use the project <a href="http://github.com/agorapulse/grails-facebook-sdk/issues" target="blank">Issues</a> section on GitHub.<p class="paragraph"/><h3>Demo app</h3><p class="paragraph"/>If you want to quickly run the SDK on a demo app, you can download <a href="https://github.com/agorapulse/grails-facebook-sdk-demo" target="blank">Facebook SDK Grails - Demo</a> .<p class="paragraph"/>
-<h3>Integration with Shiro Grails Plugin</h3><p class="paragraph"/>To see an example of integration with Shiro Grails Plugin, you can download <a href="https://github.com/agorapulse/grails-facebook-sdk-demo-shiro" target="blank">Facebook SDK Grails - Shiro demo</a> .<p class="paragraph"/>
 <h3>About</h3><p class="paragraph"/>The <strong class="bold">Grails Facebook SDK Plugin</strong> is not an official Facebook SDK such as <a href="http://developers.facebook.com/docs/reference/javascript/" target="blank">Javascript</a> , <a href="http://github.com/facebook/facebook-php-sdk" target="blank">PHP</a> , <a href="http://github.com/facebook/facebook-ios-sdk/" target="blank">iOS</a> and <a href="http://github.com/facebook/facebook-android-sdk" target="blank">Android SDKs</a> .<p class="paragraph"/>It is developed by <a href="http://www.agorapulse.com" target="blank">AgoraPulse</a> and licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0.html" target="blank">Apache Licence, Version 2.0</a> .
 
 
@@ -147,7 +147,7 @@ You have up to april 30th 2015 to migrate old app using API v1.0.<p class="parag
 		&#125;
 		plugins &#123;
 				//here go your plugin dependencies
-				runtime ':facebook&#45;sdk:2.1.0'
+				runtime ':facebook&#45;sdk:2.2.0'
 		&#125;
 &#125;</pre></div><p class="paragraph"/>
 <h3>Single Facebook app</h3><p class="paragraph"/>Create a Facebook app on <a href="https://developers.facebook.com/apps" target="blank">Facebook Developers</a> , in order to get your own app ID and app secret.<p class="paragraph"/>Add your app settings in <code>Config.groovy</code>:<p class="paragraph"/><div class="code"><pre>// Required
@@ -208,7 +208,7 @@ For each request, you must define <code>app_id</code> in <code>params</code> (by
         &#125;
     &#125;
 &#125;</pre></div><p class="paragraph"/>For example, let's say you have two apps with two controllers: <code>QuizController</code> and <code>SweepstakesController</code>.<p class="paragraph"/>Add <code>controller: 'quiz'</code> in quiz app settings and <code>controller: 'sweepstakes'</code> in sweepstakes app settings.<p class="paragraph"/>To access your quiz app, use http://localhost:8080/my-app/<strong class="bold">quiz</strong> .<p class="paragraph"/>To access your sweepstakes app, use http://localhost:8080/my-app/<strong class="bold">sweepstakes</strong> .<p class="paragraph"/>If no app is found based on <code>app_id</code> params and controller name, default single app <code>grails.plugin.facebooksdk.app</code> settings will be used (if defined).<p class="paragraph"/>
-<h3>Graph API Version</h3><p class="paragraph"/>By default, latest Graph API v2.0 will be used (since SDK version v2.0.0).
+<h3>Graph API Version</h3><p class="paragraph"/>By default, latest Graph API v2.2 will be used.
 You can override default settings with <code>apiVersion</code> config parameter :<p class="paragraph"/><div class="code"><pre>grails.plugin.facebooksdk.apiVersion = 'v1.0'</pre></div><p class="paragraph"/>
 <h3>Session replication and authorization code</h3><p class="paragraph"/>When using distributed session replication, if authorization code is used by two concurrent processes, one of the process will received an error from Facebook and the session will be invalidated.
 You can add the <code>tokenRetrievalRetryCount</code> config parameter to try to extract token from session several times before invalidating the session (the time for the first process to put the token received by Facebook into session scope).<p class="paragraph"/><div class="code"><pre>grails.plugin.facebooksdk.tokenRetrievalRetryCount = 10</pre></div><p class="paragraph"/>By default, this parameter is usually not required and is disabled by default.<p class="paragraph"/><h3>Controllers scope</h3><p class="paragraph"/>Since FacebookContext should be instantiated at each request, you must use <code>prototype</code> scope for your Controllers (since Grails 2.3, generated Config.groovy defines <code>singleton</code> as default scope).<p class="paragraph"/><div class="code"><pre>grails.controllers.defaultScope = 'prototype'</pre></div><p class="paragraph"/><h3>JQuery custom selector</h3><p class="paragraph"/>Default jQuery selector is <code>$</code>, if you require another one, you can define it globally in your  <em class="italic">grails-app/conf/Config.groovy</em> :<p class="paragraph"/><div class="code"><pre>grails.plugin.facebooksdk.customSelector = 'jQuery'</pre></div>
