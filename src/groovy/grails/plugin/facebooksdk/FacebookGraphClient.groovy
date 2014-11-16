@@ -12,27 +12,67 @@ import grails.converters.JSON
 class FacebookGraphClient extends DefaultFacebookGraphClient {
 
     static final int DEFAULT_READ_TIMEOUT_IN_MS = 180000
-    static final String DEFAULT_API_VERSION = 'v2.1'
+    static final String DEFAULT_API_VERSION = 'v2.2'
 
-    FacebookGraphClient(String accessToken = '', String apiVersion = DEFAULT_API_VERSION, Integer timeout = DEFAULT_READ_TIMEOUT_IN_MS, String proxyHost = null, Integer proxyPort = null) {
+	/**
+	 *
+	 * @param accessToken
+	 * @param apiVersion
+	 * @param timeout
+	 * @param proxyHost
+	 * @param proxyPort
+	 */
+    FacebookGraphClient(String accessToken = '',
+						String apiVersion = DEFAULT_API_VERSION,
+						Integer timeout = DEFAULT_READ_TIMEOUT_IN_MS,
+						String proxyHost = null,
+						Integer proxyPort = null) {
         super(accessToken, timeout, proxyHost, proxyPort, buildVersionFromString(apiVersion))
     }
 
+	/**
+	 *
+	 * @param object
+	 * @return
+	 */
     boolean deleteObject(String object) {
 		return super.deleteObject(object)
 	}
 
-	List fetchConnection(String connection, Map parameters = [:]) {
+	/**
+	 *
+	 * @param connection
+	 * @param parameters
+	 * @return
+	 */
+	List fetchConnection(String connection,
+						 Map parameters = [:]) {
 		Connection result = super.fetchConnection(connection, JsonObject, buildVariableArgs(parameters))
 		return (result && result.data) ? JSON.parse(result.data.toString()) as List : []
 	}
 
-	def fetchObject(String object, Map parameters = [:]) {
+	/**
+	 *
+	 * @param object
+	 * @param parameters
+	 * @return
+	 */
+	def fetchObject(String object,
+					Map parameters = [:]) {
 		String result = makeRequest(object, buildVariableArgs(parameters))
 		return parseResult(result)
 	}
 
-	Map fetchObjects(List ids, Map parameters = [:], int batchSize = 20) {
+	/**
+	 *
+	 * @param ids
+	 * @param parameters
+	 * @param batchSize
+	 * @return
+	 */
+	Map fetchObjects(List ids,
+					 Map parameters = [:],
+					 int batchSize = 20) {
 		List batchIds = []
 		JsonObject jsonObject
 		Map objects = [:]
@@ -47,7 +87,18 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 		return objects
 	}
 
-    def publish(String connection, Map parameters = [:], String fileName, InputStream inputStream) {
+	/**
+	 *
+	 * @param connection
+	 * @param parameters
+	 * @param fileName
+	 * @param inputStream
+	 * @return
+	 */
+    def publish(String connection,
+				Map parameters = [:],
+				String fileName,
+				InputStream inputStream) {
         if (fileName && inputStream) {
             return super.publish(connection, JsonObject, BinaryAttachment.with(fileName, inputStream), buildVariableArgs(parameters))
         } else {
@@ -55,7 +106,16 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
         }
     }
 
-	def publish(String connection, Map parameters = [:], String filePath = '') {
+	/**
+	 *
+	 * @param connection
+	 * @param parameters
+	 * @param filePath
+	 * @return
+	 */
+	def publish(String connection,
+				Map parameters = [:],
+				String filePath = '') {
 		if (filePath) {
 			File file = new File(filePath)
 			return super.publish(connection, JsonObject, BinaryAttachment.with(file.name, new FileInputStream(file)), buildVariableArgs(parameters))
@@ -64,7 +124,14 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 		}
 	}
 
-	List executeBatch(List requests, int batchSize = 20) {
+	/**
+	 *
+	 * @param requests
+	 * @param batchSize
+	 * @return
+	 */
+	List executeBatch(List requests,
+					  int batchSize = 20) {
 		List batchRequests = []
 		List responses = []
 		requests.each {
@@ -92,7 +159,16 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 		return responses
 	}
 
-	Map executeQueries(Map queries, Map parameters = [:], int batchSize = 20) {
+	/**
+	 *
+	 * @param queries
+	 * @param parameters
+	 * @param batchSize
+	 * @return
+	 */
+	Map executeQueries(Map queries,
+					   Map parameters = [:],
+					   int batchSize = 20) {
         Map batchQueries = [:]
         Map results = [:]
         List queryNames = queries.keySet() as String[]
@@ -113,31 +189,59 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
         return results
 	}
 
-	List executeQuery(String query, Map parameters = [:]) {
+	/**
+	 *
+	 * @param query
+	 * @param parameters
+	 * @return
+	 */
+	List executeQuery(String query,
+					  Map parameters = [:]) {
 		parameters['q'] = query
 		def result = makeRequest('fql', buildVariableArgs(parameters))
 		result = parseResult(result)
 		return (result && result.data) ? result.data : []
 	}
 
-	def makeRequest(String endPoint, Map parameters = [:]) {
+	/**
+	 *
+	 * @param endPoint
+	 * @param parameters
+	 * @return
+	 */
+	def makeRequest(String endPoint,
+					Map parameters = [:]) {
 		def result = super.makeRequest(endPoint, false, false, null, buildVariableArgs(parameters))
 		return parseResult(result)
 	}
 
-	def makePostRequest(String endPoint, Map parameters = [:]) {
+	/**
+	 *
+	 * @param endPoint
+	 * @param parameters
+	 * @return
+	 */
+	def makePostRequest(String endPoint,
+						Map parameters = [:]) {
 		def result = super.makeRequest(endPoint, true, false, null, buildVariableArgs(parameters))
 		return parseResult(result)
 	}
 
-	def makeDeleteRequest(String endPoint, Map parameters = [:]) {
+	/**
+	 *
+	 * @param endPoint
+	 * @param parameters
+	 * @return
+	 */
+	def makeDeleteRequest(String endPoint,
+						  Map parameters = [:]) {
 		def result = super.makeRequest(endPoint, false, true, null, buildVariableArgs(parameters))
 		return parseResult(result)
 	}
 
 	// PRIVATE
 
-    private Version buildVersionFromString(String apiVersion) {
+    static private Version buildVersionFromString(String apiVersion) {
         Version version = Version.UNVERSIONED
         switch (apiVersion) {
             case 'v1.0':
@@ -149,11 +253,14 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
             case 'v2.1':
                 version = Version.VERSION_2_1
                 break
+			case 'v2.2':
+				version = Version.Version_2_2
+				break
         }
         version
     }
 
-	private Parameter[] buildVariableArgs(Map parameters) {
+	static private Parameter[] buildVariableArgs(Map parameters) {
 		Parameter[] variableArgs = new Parameter[parameters.size()]
 		parameters.eachWithIndex { key, value, index ->
 			variableArgs[index-1] = Parameter.with(key as String, value)
@@ -161,7 +268,7 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 		return variableArgs
 	}
 	
-	private def parseResult(String result) {
+	static private def parseResult(String result) {
 		if (result.startsWith('{')) {
 			return JSON.parse(result)
 		} else if (result.find('=')) {
