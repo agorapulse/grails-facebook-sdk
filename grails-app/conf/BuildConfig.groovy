@@ -28,7 +28,7 @@ grails.project.dependency.resolution = {
         build 'org.apache.httpcomponents:httpclient:4.3.2'
         build 'org.apache.httpcomponents:httpmime:4.3.3'
         // Latest RestFB lib
-		compile 'com.restfb:restfb:1.6.16'
+		compile 'com.restfb:restfb:1.7.0'
 	}
 	plugins {
         build(':release:3.0.1',
@@ -36,7 +36,7 @@ grails.project.dependency.resolution = {
                 ':coveralls:0.1') {
             export = false
         }
-        test(':code-coverage:1.2.7') {
+        test(':code-coverage:2.0.3-3') {
             export = false
         }
     }
