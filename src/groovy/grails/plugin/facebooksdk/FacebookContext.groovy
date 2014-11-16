@@ -70,9 +70,18 @@ class FacebookContext {
             // apps.facebook.com (default iframe page or page tab)
             signedRequest = new FacebookSignedRequest(app.secret, request.params['signed_request'], FacebookSignedRequest.TYPE_PARAMS)
             if (signedRequest.accessToken && signedRequest.userId) {
-                if (signedRequest.user.age) user.age = signedRequest.user.age
-                if (signedRequest.user.country) user.country = signedRequest.user.country
-                if (signedRequest.user.locale) user.locale = new Locale(signedRequest.user.locale.tokenize('_')[0], signedRequest.user.locale.tokenize('_')[1])
+                if (signedRequest.user.age) {
+                    user.age = signedRequest.user.age
+                }
+                if (signedRequest.user.country) {
+                    user.country = signedRequest.user.country
+                }
+                if (signedRequest.user.locale) {
+                    user.locale = new Locale(signedRequest.user.locale.tokenize('_')[0], signedRequest.user.locale.tokenize('_')[1])
+                }
+                if (signedRequest.tokenForBusiness) {
+                    user.tokenForBusiness = signedRequest.tokenForBusiness
+                }
                 // Load token and expiration time in session scope
                 user.token
                 user.tokenExpirationTime

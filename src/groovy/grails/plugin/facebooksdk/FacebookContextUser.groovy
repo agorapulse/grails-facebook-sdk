@@ -12,6 +12,7 @@ class FacebookContextUser {
     Map age = [:] // Only returned in Canvas apps, it will not be returned for external apps
     String country = ''
     Locale locale
+    String tokenForBusiness
     int tokenRetrievalRetryCount = 0
 
     private long _id = -1

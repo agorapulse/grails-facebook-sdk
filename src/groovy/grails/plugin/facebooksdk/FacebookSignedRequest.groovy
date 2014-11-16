@@ -22,6 +22,8 @@ class FacebookSignedRequest {
 	long expirationTime = 0
 	// Page id string, the liked boolean if the user has liked the page, the admin boolean if the user is an admin (only available if your app is an iframe loaded in a Page tab).
 	Map page = [:]
+    //
+    String tokenForBusiness = ''
     // Type (cookie or params)
     String type = ''
     // Locale string, country string and the age object (containing the min and max number range of the age) of the current user.
@@ -57,6 +59,9 @@ class FacebookSignedRequest {
                     break
                 case 'page':
                     this.page = value as Map
+                    break
+                case 'token_for_business':
+                    this.tokenForBusiness = value as Map
                     break
                 case 'user':
                     this.user = value as Map
