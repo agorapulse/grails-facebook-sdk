@@ -61,7 +61,7 @@ class FacebookSignedRequest {
                     this.page = value as Map
                     break
                 case 'token_for_business':
-                    this.tokenForBusiness = value as Map
+                    this.tokenForBusiness = value
                     break
                 case 'user':
                     this.user = value as Map
