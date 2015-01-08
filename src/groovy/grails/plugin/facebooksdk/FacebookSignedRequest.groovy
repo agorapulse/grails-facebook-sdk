@@ -73,27 +73,77 @@ class FacebookSignedRequest {
         }
 	}
 
+    String sign(String appSecret) {
+        Map parameters = [algorithm: 'HMAC-SHA256']
+        if (accessToken) {
+            parameters['oauth_token'] = accessToken
+        }
+        if (appData) {
+            parameters['app_data'] = appData
+        }
+        if (code) {
+            parameters['code'] = code
+        }
+        if (expirationTime) {
+            parameters['expires'] = expirationTime
+        }
+        if (creationTime) {
+            parameters['issued_at'] = creationTime
+        }
+        if (page) {
+            parameters['page'] = page
+        }
+        if (tokenForBusiness) {
+            parameters['token_for_business'] = tokenForBusiness
+        }
+        if (user) {
+            parameters['user'] = user
+        }
+        if (userId) {
+            parameters['user_id'] = userId
+        }
+
+        Mac hmacSha256 = buildMac(appSecret)
+        String encodedParameters = new JSON(parameters).toString().encodeAsBase64()
+        String encodedSignature = hmacSha256.doFinal(encodedParameters.bytes).encodeAsBase64()
+
+        "${encodeAsUrlSafe(encodedSignature)}.${encodeAsUrlSafe(encodedParameters)}"
+    }
+
 	String toString() {
 		"FacebookSignedRequest(accessToken: $accessToken, appData: $appData, code: $code, expirationTime: $expirationTime, page: $page, type: $type, user: $user, userId: $userId)"
 	}
 
 	// PRIVATE
 
-	private Map parseSignedRequest(String appSecret, String signedRequest) {
-		String[] signedRequestParts = signedRequest.split('\\.')
-		assert (signedRequestParts.length == 2), 'Invalid Signed Request'
+	private static Mac buildMac(String appSecret) {
+        Mac hmacSha256 = Mac.getInstance('HmacSHA256')
+        hmacSha256.init(new SecretKeySpec(appSecret.bytes, 'HmacSHA256'))
+        hmacSha256
+    }
 
-		String encodedParameters = signedRequest.trim().tokenize(".")[-1].replace('_', '/').replace('-', '+')
-		String encodedSignature = signedRequest.trim().tokenize(".")[0].replace('_', '/').replace('-', '+')
-		
-		// Validate signature
-		Mac hmacSha256 = Mac.getInstance('HmacSHA256')
-		hmacSha256.init(new SecretKeySpec(appSecret.bytes, 'HmacSHA256'))
-		byte[] expectedSignature = hmacSha256.doFinal(encodedParameters.bytes)
-		assert expectedSignature == encodedSignature.decodeBase64(), 'Invalid signed request'
+    private static String encodeAsUrlSafe(String s) {
+        s.replace('/', '_').replace('+', '-')
+    }
 
-		// Decode parameters
-		return JSON.parse(new String(encodedParameters.decodeBase64())) as Map
-	}
+    private static String decodeUrlSafe(String s) {
+        s.replace('_', '/').replace('-', '+')
+    }
 
+    private static Map parseSignedRequest(String appSecret, String signedRequest) {
+        String[] signedRequestParts = signedRequest.split('\\.')
+        assert (signedRequestParts.length == 2), 'Invalid Signed Request'
+
+        String encodedParameters = decodeUrlSafe(signedRequest.trim().tokenize(".")[-1])
+        String encodedSignature = decodeUrlSafe(signedRequest.trim().tokenize(".")[0])
+
+        // Validate signature
+        Mac hmacSha256 = buildMac(appSecret)
+        byte[] expectedSignature = hmacSha256.doFinal(encodedParameters.bytes)
+        assert expectedSignature == encodedSignature.decodeBase64(), 'Invalid signed request'
+
+        // Decode parameters
+        return JSON.parse(new String(encodedParameters.decodeBase64())) as Map
+    }
+    
 }
