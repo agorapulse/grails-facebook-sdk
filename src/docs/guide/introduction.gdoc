@@ -26,6 +26,7 @@ Use @grails.plugin.facebooksdk.apiVersion = 'v1.0'@ to override default behaviou
 Please check [@FacebookGraphClient@|guide:facebookGraphClient] doc for more info.
 {warning}
 
+* 2015-01-08 *V2.2.1* : minor bug fix for token for business parsing
 * 2014-11-16 *V2.2.0* : v2.2 Facebook Graph API support (from now on, used by default) + RestFB dependency updated to 1.7.0
 * 2014-10-08 *V2.1.0* : v2.1 Facebook Graph API support + RestFB dependency updated to 1.6.16
 * 2014-07-28 *V2.0.0* : v2.0 Facebook Graph API support
