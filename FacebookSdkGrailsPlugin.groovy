@@ -3,7 +3,7 @@ import org.springframework.aop.scope.ScopedProxyFactoryBean
 
 class FacebookSdkGrailsPlugin {
 	
-	def version = "2.2.1"
+	def version = "2.2.2"
 	def grailsVersion = "2.0 > *"
 
     def author = "Benoit Hediard"

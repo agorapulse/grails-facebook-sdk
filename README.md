@@ -37,7 +37,7 @@ grails.project.dependency.resolution = {
 		}
 		plugins {
 				//here go your plugin dependencies
-				runtime ':facebook-sdk:2.2.1'
+				runtime ':facebook-sdk:2.2.2'
 		}
 }
 ```
@@ -94,6 +94,7 @@ You have up to april 30th 2015 to migrate old app using API v1.0.
 Use `grails.plugin.facebooksdk.apiVersion = v1.0` to override default behaviour.
 `FacebookGraphClient` constructor has also changed with a new `apiVersion` (some refactoring might be required if you use constructor extra parameters such as timeout or proxy).
 
+* 2015-02-16 **V2.2.2** : bug fix for apiVersion in FacebookGraphClient
 * 2015-01-08 **V2.2.1** : minor bug fix for token for business parsing
 * 2014-11-16 **V2.2.0** : v2.2 Facebook Graph API support (from now on, used by default) + RestFB dependency updated to 1.7.0
 * 2014-10-08 **V2.1.0** : v2.1 Facebook Graph API support + RestFB dependency updated to 1.6.16
