@@ -8,6 +8,8 @@ import com.restfb.batch.BatchRequest
 import com.restfb.batch.BatchRequest.BatchRequestBuilder
 import com.restfb.json.JsonObject
 import grails.converters.JSON
+import grails.util.Holders
+import org.springframework.context.ApplicationContext
 
 class FacebookGraphClient extends DefaultFacebookGraphClient {
 
@@ -23,7 +25,7 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 	 * @param proxyPort
 	 */
     FacebookGraphClient(String accessToken = '',
-						String apiVersion = DEFAULT_API_VERSION,
+						String apiVersion = null,
 						Integer timeout = DEFAULT_READ_TIMEOUT_IN_MS,
 						String proxyHost = null,
 						Integer proxyPort = null) {
@@ -242,6 +244,9 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 	// PRIVATE
 
     static private Version buildVersionFromString(String apiVersion) {
+        if (!apiVersion) {
+            apiVersion = config.apiVersion ?: DEFAULT_API_VERSION
+        }
         Version version = Version.UNVERSIONED
         switch (apiVersion) {
             case 'v1.0':
@@ -267,6 +272,10 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 		}
 		return variableArgs
 	}
+
+    static private def getConfig() {
+        Holders.config.grails.plugin.facebooksdk
+    }
 	
 	static private def parseResult(String result) {
 		if (result.startsWith('{')) {
