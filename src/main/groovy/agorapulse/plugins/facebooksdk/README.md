@@ -9,30 +9,36 @@ The [Facebook Platform](http://developers.facebook.com/) is a set of APIs that m
 
 This project contains the open source **Grails Facebook SDK Plugin** that allows you to integrate the [Facebook Platform](http://developers.facebook.com/) on a website/app powered by [Grails](http://grails.org).
 
-This plugin is a port of the official [Facebook PHP SDK](http://github.com/facebook/facebook-php-sdk) to [Grails 3.0](http://grails.org).
+This plugin is a port of the official [Facebook PHP SDK](http://github.com/facebook/facebook-php-sdk) to [Grails 2.0](http://grails.org).
 
 It supports the latest *OAuth2.0 authentication* (required since October 1st 2011).
 
 **Grails Facebook SDK Plugin** provides the following Grails artefacts:
 
 * **FacebookContext** - A Spring bean to get current Facebook context in controllers, when running [apps on Facebook.com](http://developers.facebook.com/docs/guides/canvas/) or [websites with the Facebook Platform](http://developers.facebook.com/docs/guides/web).
-* **FacebookGraphClient** - A client to call [Facebook Graph API](http://developers.facebook.com/docs/reference/api/), which is a wrapper around the rock solid [RestFB java library](http://restfb.com/) version 1.8.0 (released February 14, 2015).
+* **FacebookGraphClient** - A client to call [Facebook Graph API](http://developers.facebook.com/docs/reference/api/), which is a wrapper around the rock solid [RestFB java library](http://restfb.com/) version 1.6.10 (released September 03, 2012).
 * **FacebookJSTagLib** - A collection of tags to easily integrate [Facebook JS SDK](http://developers.facebook.com/docs/reference/javascript/) in your GSPs.
 
 **WARNING**: Facebook API v2.2 is now used by default.
 
 # Installation
 
-Declare the plugin dependency in the _build.gradle_ file, as shown here:
+Declare the plugin dependency in the BuildConfig.groovvy file, as shown here:
 
 ```groovy
-repositories {
-    ...
-    maven { url "http://dl.bintray.com/agorapulse/plugins" }
-}
-dependencies {
-    ...
-    compile "agorapulse.plugins:facebook-sdk:2.2.2"
+grails.project.dependency.resolution = {
+		inherits("global") { }
+		log "info"
+		repositories {
+				//your repositories
+		}
+		dependencies {
+				//your regular dependencies
+		}
+		plugins {
+				//here go your plugin dependencies
+				runtime ':facebook-sdk:2.2.2'
+		}
 }
 ```
 
@@ -41,11 +47,12 @@ dependencies {
 
 Create a Facebook app on [Facebook Developers](https://developers.facebook.com/apps), in order to get your own app ID and app secret.
 
-Add your Facebook app parameters to your _grails-app/conf/application.yml_:
+Add your Facebook app parameters to your_grails-app/conf/application.yml
 
 ```yml
-agorapulse:
-    plugins:
+---
+grails:
+    plugin:
         facebooksdk:
             app:
                 id: {APP_ID}
@@ -53,31 +60,37 @@ agorapulse:
                 secret: {APP_SECRET}
 ```
 
+Or in your _grails-app/conf/application.groovy_:
+
+```groovy
+grails.plugin.facebooksdk.app.id = {APP_ID}
+grails.plugin.facebooksdk.app.permissions = {APP_PERMISSIONS} // Ex. ['email','user_photos']
+grails.plugin.facebooksdk.app.secret = {APP_SECRET}
+```
+
 By default, latest Graph API v2.2 will be used.
 You can override default settings with `apiVersion` setting:
 
-```yml
-agorapulse:
-    plugins:
-        facebooksdk:
-            apiVersion: v1.0
+```groovy
+grails.plugin.facebooksdk.apiVersion = 'v1.0'
 ```
 
-Since FacebookContext should be instantiated at each request, you must use `prototype` scope for your Controllers (since Grails 2.3, `singleton` is the default scope).
+Since FacebookContext should be instantiated at each request, you must use `prototype` scope for your Controllers (since Grails 2.3, generated Config.groovy defines `singleton` as default scope).
 
 ```yml
 grails:
-    controllers:
+	controllers:
         defaultScope: prototype
+```
+
+```groovy
+grails.controllers.defaultScope = 'prototype'
 ```
 
 Default jQuery selector is `$`, if you require another one, you can define it globally in your _grails-app/conf/Config.groovy_:
 
 ```groovy
-agorapulse:
-    plugins:
-        facebooksdk:
-            customSelector: jQuery
+grails.plugin.facebooksdk.customSelector = 'jQuery'
 ```
 
 # Getting started with a demo app
@@ -97,7 +110,7 @@ Project documentation is located here :
 
 WARNING: Since V2.2.0, Facebook Graph API v2.2 will be used. Make sure that your app is compatible with [v2.2 upgrade](https://developers.facebook.com/docs/apps/upgrading).
 You have up to april 30th 2015 to migrate old app using API v1.0. 
-Use `agorapulse.plugins.facebooksdk.apiVersion = v1.0` to override default behaviour.
+Use `grails.plugin.facebooksdk.apiVersion = v1.0` to override default behaviour.
 `FacebookGraphClient` constructor has also changed with a new `apiVersion` (some refactoring might be required if you use constructor extra parameters such as timeout or proxy).
 
 * 2015-02-16 **V2.2.2** : bug fix for apiVersion in FacebookGraphClient
@@ -137,7 +150,7 @@ Use `agorapulse.plugins.facebooksdk.apiVersion = v1.0` to override default behav
 
 # Bugs
 
-To report any bug, please use the project [Issues](http://github.com/agorapulse/grails-facebook-sdk/issues) section on GitHub.
+To report any bug, please use the project [Issues](http://github.com/benorama/grails-facebook-sdk/issues) section on GitHub.
 
 # Feedback
 

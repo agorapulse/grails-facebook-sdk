@@ -3,6 +3,10 @@
 /target
 /target-eclipse
 
+# GRADLE files
+build/
+.gradle/
+
 # IDE files
 .classpath
 .idea/
