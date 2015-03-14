@@ -73,7 +73,7 @@ grails:
 
 Default jQuery selector is `$`, if you require another one, you can define it globally in your _grails-app/conf/Config.groovy_:
 
-```groovy
+```yml
 agorapulse:
     plugins:
         facebooksdk:
