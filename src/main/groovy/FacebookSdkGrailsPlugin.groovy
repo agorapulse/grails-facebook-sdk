@@ -1,11 +1,11 @@
-import agorapulse.plugins.facebooksdk.FacebookContext
+import grails.plugin.facebooksdk.FacebookContext
 import grails.plugins.*
 import org.springframework.aop.scope.ScopedProxyFactoryBean
 
 class FacebookSdkGrailsPlugin extends Plugin {
 
    // the version or versions of Grails the plugin is designed for
-    def grailsVersion = "3.0.0.M2 > *"
+    def grailsVersion = "3.0.0.RC2 > *"
     // resources that are excluded from plugin packaging
     def pluginExcludes = [
         "grails-app/views/error.gsp"

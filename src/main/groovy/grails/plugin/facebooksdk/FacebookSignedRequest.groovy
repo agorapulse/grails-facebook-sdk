@@ -1,4 +1,4 @@
-package agorapulse.plugins.facebooksdk
+package grails.plugin.facebooksdk
 
 import grails.converters.JSON
 

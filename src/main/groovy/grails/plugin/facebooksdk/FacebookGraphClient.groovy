@@ -1,4 +1,4 @@
-package agorapulse.plugins.facebooksdk
+package grails.plugin.facebooksdk
 
 import com.restfb.BinaryAttachment
 import com.restfb.Connection
@@ -9,7 +9,6 @@ import com.restfb.batch.BatchRequest.BatchRequestBuilder
 import com.restfb.json.JsonObject
 import grails.converters.JSON
 import grails.util.Holders
-import org.springframework.context.ApplicationContext
 
 class FacebookGraphClient extends DefaultFacebookGraphClient {
 

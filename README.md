@@ -32,7 +32,7 @@ repositories {
 }
 dependencies {
     ...
-    compile "agorapulse.plugins:facebook-sdk:2.2.2"
+    compile "agorapulse.plugins:facebook-sdk:3.0.0.RC2"
 }
 ```
 
@@ -44,8 +44,8 @@ Create a Facebook app on [Facebook Developers](https://developers.facebook.com/a
 Add your Facebook app parameters to your _grails-app/conf/application.yml_:
 
 ```yml
-agorapulse:
-    plugins:
+grails:
+    plugin:
         facebooksdk:
             app:
                 id: {APP_ID}
@@ -57,8 +57,8 @@ By default, latest Graph API v2.2 will be used.
 You can override default settings with `apiVersion` setting:
 
 ```yml
-agorapulse:
-    plugins:
+grails:
+    plugin:
         facebooksdk:
             apiVersion: v1.0
 ```
@@ -71,11 +71,11 @@ grails:
         defaultScope: prototype
 ```
 
-Default jQuery selector is `$`, if you require another one, you can define it globally in your _grails-app/conf/Config.groovy_:
+Default jQuery selector is `$`, if you require another one, you can define it globally in your _grails-app/conf/application.groovy_:
 
 ```yml
-agorapulse:
-    plugins:
+grails:
+    plugin:
         facebooksdk:
             customSelector: jQuery
 ```

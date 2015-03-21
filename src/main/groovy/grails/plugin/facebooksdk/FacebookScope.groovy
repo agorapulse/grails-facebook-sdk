@@ -1,4 +1,4 @@
-package agorapulse.plugins.facebooksdk
+package grails.plugin.facebooksdk
 
 import org.grails.web.servlet.mvc.GrailsWebRequest
 import org.springframework.web.context.request.RequestContextHolder

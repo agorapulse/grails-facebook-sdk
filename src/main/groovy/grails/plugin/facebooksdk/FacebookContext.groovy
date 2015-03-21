@@ -1,7 +1,6 @@
-package agorapulse.plugins.facebooksdk
+package grails.plugin.facebooksdk
 
 import grails.util.Holders
-import grails.web.UrlConverter
 import grails.web.mapping.LinkGenerator
 import org.apache.log4j.Logger
 import org.grails.web.util.WebUtils

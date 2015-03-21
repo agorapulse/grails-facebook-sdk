@@ -16,8 +16,8 @@ plugins {
     id "com.jfrog.bintray" version "1.1"
 }
 
-version "0.1.RC1"
-group "agorapulse.plugins"
+version "3.0.0.RC2"
+group "org.grails.plugins"
 
 apply plugin: 'maven-publish'
 apply plugin: 'eclipse'
@@ -76,12 +76,12 @@ task wrapper(type: Wrapper) {
 bintray {
     pkg {
         userOrg = 'agorapulse'
-        name = "agorapulse.plugins:$project.name"
+        name = "org.grails.plugins:$project.name"
         desc = "Grails Facebook SDK plugin"
         issueTrackerUrl = "https://github.com/agorapulse/grails-$project.name/issues"
         vcsUrl = "https://github.com/agorapulse/grails-$project.name"
         version {
-            attributes = ['grails-plugin': "agorapulse.plugins:$project.name"]
+            attributes = ['grails-plugin': "org.grails.plugins:$project.name"]
             name = project.version
         }
     }

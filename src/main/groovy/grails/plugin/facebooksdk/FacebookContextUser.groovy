@@ -1,4 +1,4 @@
-package agorapulse.plugins.facebooksdk
+package grails.plugin.facebooksdk
 
 import com.restfb.exception.FacebookGraphException
 import org.apache.log4j.Logger

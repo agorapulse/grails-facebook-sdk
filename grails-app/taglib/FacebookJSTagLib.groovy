@@ -1,4 +1,4 @@
-import agorapulse.plugins.facebooksdk.FacebookLocalization
+import grails.plugin.facebooksdk.FacebookLocalization
 import grails.core.GrailsApplication
 import grails.web.mapping.LinkGenerator
 import org.springframework.web.servlet.support.RequestContextUtils

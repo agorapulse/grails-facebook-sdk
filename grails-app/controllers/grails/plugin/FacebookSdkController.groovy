@@ -1,3 +1,5 @@
+package grails.plugin
+
 class FacebookSdkController {
 
     def channel() {
