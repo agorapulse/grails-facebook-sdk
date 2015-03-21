@@ -1,5 +1,4 @@
-package grails.plugin.facebooksdk
-
+import grails.plugin.facebooksdk.FacebookContext
 import grails.plugins.*
 import org.springframework.aop.scope.ScopedProxyFactoryBean
 

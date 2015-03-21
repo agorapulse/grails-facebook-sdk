@@ -32,7 +32,7 @@ repositories {
 }
 dependencies {
     ...
-    compile "agorapulse.plugins:facebook-sdk:3.0.0.RC2"
+    compile "agorapulse.plugins:facebook-sdk:3.0.0.RC2.2"
 }
 ```
 
