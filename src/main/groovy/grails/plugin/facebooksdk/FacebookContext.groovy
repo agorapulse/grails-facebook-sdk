@@ -216,7 +216,7 @@ class FacebookContext {
     }
 
     private def getConfig() {
-        Holders.config.agorapulse.plugins.facebooksdk
+        Holders.config.grails.plugin.facebooksdk
     }
 
     private String getCurrentURL() {
