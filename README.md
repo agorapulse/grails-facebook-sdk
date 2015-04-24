@@ -32,7 +32,7 @@ repositories {
 }
 dependencies {
     ...
-    compile "org.grails.plugins:facebook-sdk:3.0.0.RC3"
+    compile "org.grails.plugins:facebook-sdk:3.0.1"
 }
 ```
 
