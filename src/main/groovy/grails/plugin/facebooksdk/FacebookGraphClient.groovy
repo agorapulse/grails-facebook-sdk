@@ -13,7 +13,7 @@ import grails.util.Holders
 class FacebookGraphClient extends DefaultFacebookGraphClient {
 
     static final int DEFAULT_READ_TIMEOUT_IN_MS = 180000
-    static final String DEFAULT_API_VERSION = 'v2.2'
+    static final String DEFAULT_API_VERSION = 'v2.3'
 
 	/**
 	 *
@@ -259,6 +259,9 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
                 break
 			case 'v2.2':
 				version = Version.VERSION_2_2
+				break
+			case 'v2.3':
+				version = Version.VERSION_2_3
 				break
         }
         version
