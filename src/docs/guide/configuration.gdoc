@@ -14,7 +14,7 @@ grails.project.dependency.resolution = {
 		}
 		plugins {
 				//here go your plugin dependencies
-				runtime ':facebook-sdk:2.2.2'
+				runtime ':facebook-sdk:2.3.0'
 		}
 }
 {code}
@@ -124,11 +124,11 @@ If no app is found based on @app_id@ params and controller name, default single 
 
 h3. Graph API Version
 
-By default, latest Graph API v2.2 will be used.
+By default, latest Graph API v2.3 will be used.
 You can override default settings with @apiVersion@ config parameter :
 
 {code}
-grails.plugin.facebooksdk.apiVersion = 'v1.0'
+grails.plugin.facebooksdk.apiVersion = 'v2.2'
 {code}
 
 
