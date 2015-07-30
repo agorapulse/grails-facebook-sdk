@@ -62,7 +62,7 @@ class FacebookJSTagLib {
             model['customSelector'] = config.customSelector ?: '$'
         }
         includeScriptOnce('init-js', model)
-        out << render(template: '/tags/init-js', model: model, plugin: 'facebook-sdk')
+        out << render(template: '/tags/init-js', model: model)
     }
 
     /**
@@ -85,7 +85,7 @@ class FacebookJSTagLib {
             model['customSelector'] = config.customSelector ?: '$'
         }
         includeScriptOnce('add-to-page-link', model)
-        out << render(template: '/tags/add-to-page-link', model: model, plugin: 'facebook-sdk')
+        out << render(template: '/tags/add-to-page-link', model: model)
     }
 
     /**
@@ -108,7 +108,7 @@ class FacebookJSTagLib {
             model['customSelector'] = config.customSelector ?: '$'
         }
         includeScriptOnce('login-link', model)
-        out << render(template: '/tags/login-link', model: model, plugin: 'facebook-sdk')
+        out << render(template: '/tags/login-link', model: model)
     }
 
     /**
@@ -128,7 +128,7 @@ class FacebookJSTagLib {
             model['customSelector'] = config.customSelector ?: '$'
         }
         includeScriptOnce('logout-link', model)
-        out << render(template: '/tags/logout-link', model: model, plugin: 'facebook-sdk')
+        out << render(template: '/tags/logout-link', model: model)
     }
 
     /**
@@ -165,7 +165,7 @@ class FacebookJSTagLib {
             model[key] = value
         }
         includeScriptOnce('picture', model)
-        out << render(template: '/tags/picture', model: model, plugin: 'facebook-sdk')
+        out << render(template: '/tags/picture', model: model)
     }
 
     /**
@@ -194,7 +194,7 @@ class FacebookJSTagLib {
             model['customSelector'] = config.customSelector ?: '$'
         }
         includeScriptOnce('invite-link', model)
-        out << render(template: '/tags/invite-link', model: model, plugin: 'facebook-sdk')
+        out << render(template: '/tags/invite-link', model: model)
     }
 
     /**
@@ -222,7 +222,7 @@ class FacebookJSTagLib {
             model['customSelector'] = config.customSelector ?: '$'
         }
         includeScriptOnce('publish-link', model)
-        out << render(template: '/tags/publish-link', model: model, plugin: 'facebook-sdk')
+        out << render(template: '/tags/publish-link', model: model)
     }
 
     /**
@@ -249,7 +249,7 @@ class FacebookJSTagLib {
             model['customSelector'] = config.customSelector ?: '$'
         }
         includeScriptOnce('send-link', model)
-        out << render(template: '/tags/send-link', model: model, plugin: 'facebook-sdk')
+        out << render(template: '/tags/send-link', model: model)
     }
 
     /**
@@ -272,7 +272,7 @@ class FacebookJSTagLib {
             model['customSelector'] = config.customSelector ?: '$'
         }
         includeScriptOnce('share-link', model)
-        out << render(template: '/tags/share-link', model: model, plugin: 'facebook-sdk')
+        out << render(template: '/tags/share-link', model: model)
     }
 
 
