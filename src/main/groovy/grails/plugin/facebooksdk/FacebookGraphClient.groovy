@@ -13,7 +13,7 @@ import grails.util.Holders
 class FacebookGraphClient extends DefaultFacebookGraphClient {
 
     static final int DEFAULT_READ_TIMEOUT_IN_MS = 180000
-    static final String DEFAULT_API_VERSION = 'v2.3'
+    static final String DEFAULT_API_VERSION = 'v2.4'
 
 	/**
 	 *
@@ -121,7 +121,7 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 			File file = new File(filePath)
 			return super.publish(connection, JsonObject, BinaryAttachment.with(file.name, new FileInputStream(file)), buildVariableArgs(parameters))
 		} else {
-			return super.publish(connection, JsonObject, buildVariableArgs(parameters))	
+			return super.publish(connection, JsonObject, buildVariableArgs(parameters))
 		}
 	}
 
@@ -257,12 +257,15 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
             case 'v2.1':
                 version = Version.VERSION_2_1
                 break
-			case 'v2.2':
-				version = Version.VERSION_2_2
-				break
-			case 'v2.3':
-				version = Version.VERSION_2_3
-				break
+      			case 'v2.2':
+      				version = Version.VERSION_2_2
+      				break
+      			case 'v2.3':
+      				version = Version.VERSION_2_3
+      				break
+            case 'v2.4':
+      				version = Version.VERSION_2_4
+      				break
         }
         version
     }
@@ -278,7 +281,7 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
     static private def getConfig() {
         Holders.config.grails.plugin.facebooksdk
     }
-	
+
 	static private def parseResult(String result) {
 		if (result.startsWith('{')) {
 			return JSON.parse(result)
