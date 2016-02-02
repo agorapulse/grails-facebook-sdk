@@ -58,7 +58,7 @@ dependencies {
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
 
     // Latest RestFB lib
-    compile 'com.restfb:restfb:1.16.0'
+    compile 'com.restfb:restfb:1.18.1'
 }
 
 task wrapper(type: Wrapper) {
