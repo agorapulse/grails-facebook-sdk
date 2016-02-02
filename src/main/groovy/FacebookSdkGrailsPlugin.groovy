@@ -11,7 +11,7 @@ class FacebookSdkGrailsPlugin extends Plugin {
         "grails-app/views/error.gsp"
     ]
 
-   def title = "Facebook SDK Plugin"
+    def title = "Facebook SDK Plugin"
     def author = "Benoit Hediard"
     def authorEmail = "ben@agorapulse.com"
     def description = '''The Facebook SDK Plugin allows your Grails application to use the Facebook Platform and develop Facebook apps on Facebook.com or on web sites (with Facebook Connect).
