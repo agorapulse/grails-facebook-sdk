@@ -32,7 +32,7 @@ repositories {
 }
 dependencies {
     ...
-    compile "org.grails.plugins:facebook-sdk:2.5.0"
+    compile "org.grails.plugins:facebook-sdk:2.5.2"
 }
 ```
 
@@ -95,6 +95,7 @@ Project documentation is located here :
 
 # Latest releases
 
+* 2016-02-05 **V2.5.2** : Bug fix in FacebookRestClient
 * 2016-02-02 **V2.5.1** : RestFB dependency updated to 1.18.1
 
 WARNING: Since V2.5.0, Facebook Graph API v2.5 will be used. Make sure that your app is compatible with [v2.4 upgrade](https://developers.facebook.com/docs/apps/upgrading).
