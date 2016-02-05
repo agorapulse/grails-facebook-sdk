@@ -12,14 +12,14 @@ class FacebookRestClient extends DefaultFacebookRestClient {
     }
 	
 	def execute(String method, Map parameters = [:]) {
-        def result = Object.execute(method, String, buildVariableArgs(parameters))
+        def result = super.execute(method, String, buildVariableArgs(parameters))
 		return parseResult(result)
 	}
 
     List executeQuery(String query, Map parameters = [:]) {
         List result = []
         parameters['query'] = query
-        List resultList = Object.executeForList('fql.query', String, buildVariableArgs(parameters))
+        List resultList = super.executeForList('fql.query', String, buildVariableArgs(parameters))
         resultList.each {
             result << parseResult(it)
         }
@@ -34,7 +34,7 @@ class FacebookRestClient extends DefaultFacebookRestClient {
             batchQueries[name] = queries[name]
             if (batchQueries.size() == batchSize || name == queryNames[-1]) {
                 parameters['queries'] = (batchQueries as JSON).toString()
-                List resultList = Object.executeForList('fql.multiquery', String, buildVariableArgs(parameters))
+                List resultList = super.executeForList('fql.multiquery', String, buildVariableArgs(parameters))
                 resultList.each {
                     def result = parseResult(it)
                     results[result['name']] = result['fql_result_set']

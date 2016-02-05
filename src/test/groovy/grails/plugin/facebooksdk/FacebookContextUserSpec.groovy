@@ -46,7 +46,7 @@ class FacebookContextUserSpec extends Specification {
             context: context
         )
         context.metaClass.getSession { ->
-            GrailsMock sessionScopeMock = mockFor(FacebookSessionScope, true)
+            def sessionScopeMock = mockFor(FacebookSessionScope, true)
             sessionScopeMock.demand.setData { key, value -> }
             sessionScopeMock.demand.getData { key, defaultValue -> defaultValue }
             sessionScopeMock.createMock()
@@ -67,7 +67,7 @@ class FacebookContextUserSpec extends Specification {
         )
         context.metaClass.getRequest { -> [params: [:]]}
         context.metaClass.getSession { ->
-            GrailsMock sessionScopeMock = mockFor(FacebookSessionScope, true)
+            def sessionScopeMock = mockFor(FacebookSessionScope, true)
             sessionScopeMock.demand.getData { key, defaultValue -> defaultValue }
             sessionScopeMock.createMock()
         }
@@ -85,7 +85,7 @@ class FacebookContextUserSpec extends Specification {
                 context: context
         )
         context.metaClass.getSession { ->
-            GrailsMock sessionScopeMock = mockFor(FacebookSessionScope, true)
+            def sessionScopeMock = mockFor(FacebookSessionScope, true)
             sessionScopeMock.demand.setData { key, value -> }
             sessionScopeMock.createMock()
         }
@@ -105,7 +105,7 @@ class FacebookContextUserSpec extends Specification {
                 context: context
         )
         context.metaClass.getSession { ->
-            GrailsMock sessionScopeMock = mockFor(FacebookSessionScope, true)
+            def sessionScopeMock = mockFor(FacebookSessionScope, true)
             sessionScopeMock.demand.getData { key -> 'some-other-code' }
             sessionScopeMock.demand.setData { key, value -> }
             sessionScopeMock.createMock()
@@ -122,7 +122,7 @@ class FacebookContextUserSpec extends Specification {
 
     /*void testGetTokenFromParamsCode() {
         // Setup
-        GrailsMock contextMock = mockFor(FacebookContext)
+        def contextMock = mockFor(FacebookContext)
         contextMock.demand.getSession(4..4) { ->
             def sessionScopeMock = mockFor(FacebookAppSessionScope)
             sessionScopeMock.demand.getData(1..1) { key ->
@@ -141,7 +141,7 @@ class FacebookContextUserSpec extends Specification {
         )
         user.context.app = mockFacebookApp()
         FacebookUser.metaClass.getRequest = { ->
-            def requestMock = new GrailsMockHttpServletRequest()
+            def requestMock = new defHttpServletRequest()
             requestMock.params = [
                     code: 'some-code',
                     state: 'some-state'
