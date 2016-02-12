@@ -49,7 +49,7 @@ dependencies {
     compile "org.grails.plugins:cache"
     compile "org.grails.plugins:scaffolding"
     console "org.grails:grails-console"
-    profile "org.grails.profiles:web-plugin:3.1.0"
+    profile "org.grails.profiles:web-plugin:3.1.1"
     provided "org.grails:grails-plugin-services"
     provided "org.grails:grails-plugin-domain-class"
     testCompile "org.grails:grails-plugin-testing"
@@ -67,8 +67,6 @@ task wrapper(type: Wrapper) {
 
 grailsPublish {
     userOrg = 'agorapulse'
-    //user = 'agorapulse'
-    //key = 'key'
     githubSlug = 'agorapulse/grails-facebook-sdk'
     license {
         name = 'Apache-2.0'
@@ -79,17 +77,8 @@ grailsPublish {
     portalUser = ""
     portalPassword = ""
 }
-
 bintray {
     pkg {
-        userOrg = 'agorapulse'
         name = "org.grails.plugins:$project.name"
-        desc = "Grails Facebook SDK plugin"
-        issueTrackerUrl = "https://github.com/agorapulse/grails-$project.name/issues"
-        vcsUrl = "https://github.com/agorapulse/grails-$project.name"
-        version {
-            attributes = ['grails-plugin': "org.grails.plugins:$project.name"]
-            name = project.version
-        }
     }
 }
