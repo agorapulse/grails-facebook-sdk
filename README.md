@@ -2,6 +2,7 @@ Facebook SDK Grails Plugin
 ==========================
 
 [![Build Status](https://travis-ci.org/agorapulse/grails-facebook-sdk.svg)](https://travis-ci.org/agorapulse/grails-facebook-sdk)
+[![Download](https://api.bintray.com/packages/agorapulse/plugins/facebook-sdk/images/download.svg)](https://bintray.com/agorapulse/plugins/facebook-sdk/_latestVersion)
 
 # Introduction
 
@@ -32,7 +33,7 @@ repositories {
 }
 dependencies {
     ...
-    compile "org.grails.plugins:facebook-sdk:2.5.2"
+    compile "org.grails.plugins:facebook-sdk:2.5.3"
 }
 ```
 
@@ -95,6 +96,7 @@ Project documentation is located here :
 
 # Latest releases
 
+* 2016-05-03 **V2.5.3** : RestFB dependency updated to 1.23.0
 * 2016-02-05 **V2.5.2** : Bug fix in FacebookRestClient
 * 2016-02-02 **V2.5.1** : RestFB dependency updated to 1.18.1
 
