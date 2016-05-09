@@ -35,10 +35,11 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 	/**
 	 *
 	 * @param object
+	 * @param parameters
 	 * @return
 	 */
-    boolean deleteObject(String object) {
-		return super.deleteObject(object)
+	boolean deleteObject(String object, Map parameters = [:]) {
+		return super.deleteObject(object, buildVariableArgs(parameters))
 	}
 
 	/**
