@@ -14,7 +14,7 @@ import org.springframework.context.ApplicationContext
 class FacebookGraphClient extends DefaultFacebookGraphClient {
 
     static final int DEFAULT_READ_TIMEOUT_IN_MS = 180000
-    static final String DEFAULT_API_VERSION = 'v2.5'
+    static final String DEFAULT_API_VERSION = 'v2.6'
 
 	/**
 	 *
@@ -270,6 +270,9 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 				break
 			case 'v2.5':
 				version = Version.VERSION_2_5
+				break
+			case 'v2.6':
+				version = Version.VERSION_2_6
 				break
         }
         version
