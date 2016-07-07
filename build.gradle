@@ -11,7 +11,7 @@ buildscript {
     }
 }
 
-version "2.5.3"
+version "2.6.0"
 group "org.grails.plugins"
 
 apply plugin:"eclipse"
@@ -47,13 +47,13 @@ dependencies {
     compile "org.grails:grails-dependencies"
     compile "org.grails:grails-web-boot"
     console "org.grails:grails-console"
-    profile "org.grails.profiles:web-plugin:3.1.6"
+    profile "org.grails.profiles:web-plugin"
     provided "org.grails:grails-plugin-services"
     provided "org.grails:grails-plugin-domain-class"
     testCompile "org.grails:grails-plugin-testing"
 
     // Latest RestFB lib
-    compile 'com.restfb:restfb:1.23.0'
+    compile 'com.restfb:restfb:1.26.0'
 }
 
 task wrapper(type: Wrapper) {

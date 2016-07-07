@@ -16,16 +16,16 @@ It supports the latest *OAuth2.0 authentication* (required since October 1st 201
 h3. Latest releases
 
 {warning}
-WARNING: Since V2.2.0, Facebook Graph API v2.2 will be used. Make sure that your app is compatible with "v2.2 upgrade":https://developers.facebook.com/docs/apps/upgrading .
-You have up to april 30th 2015 to migrate old app using API v1.0.
+WARNING: Since V2.6.0, Facebook Graph API v2.6 will be used. Make sure that your app is compatible with "v2.5 upgrade":https://developers.facebook.com/docs/apps/upgrading .
 
-Use @grails.plugin.facebooksdk.apiVersion = 'v1.0'@ to override default behaviour.
-
-@FacebookGraphClient@ constructor has also changed with a new @apiVersion@ (some refactoring might be required if you use constructor extra parameters such as timeout or proxy).
+Use @grails.plugin.facebooksdk.apiVersion = 'v2.3'@ to override default behaviour.
 
 Please check [@FacebookGraphClient@|guide:facebookGraphClient] doc for more info.
 {warning}
 
+* 2016-06-23 *V2.6.0* : v2.6 Facebook Graph API support (from now on, used by default) + RestFB dependency updated to 1.24.0
+* 2015-10-30 *V2.5.0* : v2.5 Facebook Graph API support (from now on, used by default) + RestFB dependency updated to 1.16.0
+* 2015-05-04 *V2.3.0* : v2.3 Facebook Graph API support (from now on, used by default) + RestFB dependency updated to 1.10.1
 * 2015-01-08 *V2.2.1* : minor bug fix for token for business parsing
 * 2014-11-16 *V2.2.0* : v2.2 Facebook Graph API support (from now on, used by default) + RestFB dependency updated to 1.7.0
 * 2014-10-08 *V2.1.0* : v2.1 Facebook Graph API support + RestFB dependency updated to 1.6.16

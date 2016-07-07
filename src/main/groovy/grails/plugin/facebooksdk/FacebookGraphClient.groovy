@@ -13,7 +13,7 @@ import grails.util.Holders
 class FacebookGraphClient extends DefaultFacebookGraphClient {
 
     static final int DEFAULT_READ_TIMEOUT_IN_MS = 180000
-    static final String DEFAULT_API_VERSION = 'v2.5'
+    static final String DEFAULT_API_VERSION = 'v2.6'
 
 	/**
 	 *
@@ -34,10 +34,11 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 	/**
 	 *
 	 * @param object
+	 * @param parameters
 	 * @return
 	 */
-    boolean deleteObject(String object) {
-		return super.deleteObject(object)
+	boolean deleteObject(String object, Map parameters = [:]) {
+		return super.deleteObject(object, buildVariableArgs(parameters))
 	}
 
 	/**
@@ -268,6 +269,9 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 				break
 			case 'v2.5':
 				version = Version.VERSION_2_5
+				break
+			case 'v2.6':
+				version = Version.VERSION_2_6
 				break
         }
         version

@@ -20,7 +20,7 @@ It supports the latest *OAuth2.0 authentication* (required since October 1st 201
 * **FacebookGraphClient** - A client to call [Facebook Graph API](http://developers.facebook.com/docs/reference/api/), which is a wrapper around the rock solid [RestFB java library](http://restfb.com/) version 1.14.0 (released July 18, 2015).
 * **FacebookJSTagLib** - A collection of tags to easily integrate [Facebook JS SDK](http://developers.facebook.com/docs/reference/javascript/) in your GSPs.
 
-**WARNING**: Facebook API v2.5 is now used by default.
+**WARNING**: Facebook API v2.6 is now used by default.
 
 # Installation
 
@@ -33,7 +33,7 @@ repositories {
 }
 dependencies {
     ...
-    compile "org.grails.plugins:facebook-sdk:2.5.3"
+    compile "org.grails.plugins:facebook-sdk:2.6.0"
 }
 ```
 
@@ -54,7 +54,7 @@ grails:
                 secret: {APP_SECRET}
 ```
 
-By default, latest Graph API v2.4 will be used.
+By default, latest Graph API v2.6 will be used.
 You can override default settings with `apiVersion` setting:
 
 ```yml
@@ -96,13 +96,14 @@ Project documentation is located here :
 
 # Latest releases
 
+* 2016-07-07 **V2.6.0** : v2.6 Facebook Graph API support (from now on, used by default) + RestFB dependency updated to 1.26.0
+
+WARNING: Since V2.6.0, Facebook Graph API v2.6 will be used. Make sure that your app is compatible with [v2.4 upgrade](https://developers.facebook.com/docs/apps/upgrading).
+Use `grails.plugin.facebooksdk.apiVersion = v2.3` to override default behaviour.
+
 * 2016-05-03 **V2.5.3** : RestFB dependency updated to 1.23.0
 * 2016-02-05 **V2.5.2** : Bug fix in FacebookRestClient
 * 2016-02-02 **V2.5.1** : RestFB dependency updated to 1.18.1
-
-WARNING: Since V2.5.0, Facebook Graph API v2.5 will be used. Make sure that your app is compatible with [v2.4 upgrade](https://developers.facebook.com/docs/apps/upgrading).
-Use `grails.plugin.facebooksdk.apiVersion = v2.3` to override default behaviour.
-
 * 2015-10-30 **V2.5.0** : v2.5 Facebook Graph API support (from now on, used by default) + RestFB dependency updated to 1.16.0
 * 2015-07-04 **V2.4.0** : Grails3 + v2.4 Facebook Graph API support (from now on, used by default) + RestFB dependency updated to 1.14.0
 * 2015-05-04 **V2.3.0** : v2.3 Facebook Graph API support (from now on, used by default) + RestFB dependency updated to 1.10.1
