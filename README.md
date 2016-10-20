@@ -33,7 +33,7 @@ repositories {
 }
 dependencies {
     ...
-    compile "org.grails.plugins:facebook-sdk:2.7.0"
+    compile "org.grails.plugins:facebook-sdk:2.7.1"
 }
 ```
 
@@ -99,6 +99,7 @@ Project documentation is located here :
 WARNING: Since V2.7.0, Facebook Graph API v2.7 will be used. Make sure that your app is compatible with [v2.7 upgrade](https://developers.facebook.com/docs/apps/upgrading).
 Use `grails.plugin.facebooksdk.apiVersion = v2.3` to override default behaviour.
 
+* 2016-10-20 **V2.7.1** : RestFB dependency updated to 1.32.0
 * 2016-08-31 **V2.7.0** : v2.7 Facebook Graph API support (from now on, used by default) + RestFB dependency updated to 1.30.0
 * 2016-07-07 **V2.6.0** : v2.6 Facebook Graph API support (from now on, used by default) + RestFB dependency updated to 1.26.0
 * 2016-05-03 **V2.5.3** : RestFB dependency updated to 1.23.0
