@@ -1,4 +1,14 @@
 language: groovy
 jdk: oraclejdk8
+sudo: false
+
+env:
+  global:
+  - secure: IlXiNgn8SAdtJ0meRNNoWyUpuxAmJ8ew9p+zXhvjkc8IgbJiYTUPMYeW9GP4CH6dFdADPPhC8v1c5P41zefBROkp6peLFaeGwt3NLHIXlehTgRUb9jttp+RJ+LbZc6NLO/ACHeurwVSAHbJPI7beAOMlSGj8Sgdln2wTkRRGpI0=
+  - secure: I8YFAoYIKfu7bg9yQXcQ7Qhd2ywH+C0xYC8Vk+EEsC2ChC2PU1aUPqkxdDofhghEJP0yIfkcevt671oGdYrEsYUA8vFjKXB9UXAdjp5XEbAzB84zxAGTFr3I/BZZ99fHcphY1CJ7I1ux8KRVHfsb7BynlUNvQCzoa/C8jJgKTvU=
+
 script:
-- gradle test
+- "./gradlew clean assemble --stacktrace"
+
+after_success:
+- "./travis-publish.sh"
