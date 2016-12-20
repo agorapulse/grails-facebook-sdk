@@ -10,7 +10,7 @@ class FacebookCookieScope extends FacebookScope {
 	void delete() {
 		Cookie currentCookie = getCookie()
         if (currentCookie) {
-            if (request.currentRequest.serverName == 'localhost') currentCookie.domain = '.localhost' // For local dev
+            //if (request.currentRequest.serverName == 'localhost') currentCookie.domain = '.localhost' // For local dev
             currentCookie.maxAge = 0
             currentCookie.path = '/'
 			request.currentResponse.addCookie(currentCookie)
