@@ -3,6 +3,12 @@ Facebook SDK Grails Plugin
 
 [![Build Status](https://travis-ci.org/agorapulse/grails-facebook-sdk.svg)](https://travis-ci.org/agorapulse/grails-facebook-sdk)
 
+# LEGACY BRANCH FOR GRAILS2
+
+This legacy `grails2` branch is the initial version of the plugin for Grails2.
+
+It is not maintained anymore, please check [Grails 3 version](https://github.com/agorapulse/grails-facebook-sdk).
+
 # Introduction
 
 The [Facebook Platform](http://developers.facebook.com/) is a set of APIs that make your application more social. Read more about [integrating Facebook with your web site](http://developers.facebook.com/docs/guides/web) on the Facebook developer site.
