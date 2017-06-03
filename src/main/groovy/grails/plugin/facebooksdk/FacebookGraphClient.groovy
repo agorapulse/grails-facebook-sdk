@@ -22,6 +22,7 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 	 * @param timeout
 	 * @param proxyHost
 	 * @param proxyPort
+	 * @deprecated use FacebookGraphClientService instead
 	 */
     FacebookGraphClient(String accessToken = '',
 						String apiVersion = null,
