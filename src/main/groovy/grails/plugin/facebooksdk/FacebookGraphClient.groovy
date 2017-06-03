@@ -27,8 +27,8 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
     FacebookGraphClient(String accessToken = '',
 						String apiVersion = null,
 						Integer timeout = DEFAULT_READ_TIMEOUT_IN_MS,
-						String proxyHost = null,
-						Integer proxyPort = null) {
+						String proxyHost = System.getenv('FB_GRAPH_CLIENT_PROXY_HOST'),
+						Integer proxyPort = System.getenv('FB_GRAPH_CLIENT_PROXY_PORT')) {
         super(accessToken, timeout, proxyHost, proxyPort, buildVersionFromString(apiVersion))
     }
 
