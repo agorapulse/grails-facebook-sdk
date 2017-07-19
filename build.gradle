@@ -53,7 +53,7 @@ dependencies {
     testCompile "org.grails:grails-plugin-testing"
 
     // Latest RestFB lib
-    compile 'com.restfb:restfb:1.32.0'
+    compile 'com.restfb:restfb:1.43.0'
 }
 
 task wrapper(type: Wrapper) {

@@ -280,6 +280,9 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 			case 'v2.8':
 				version = Version.VERSION_2_8
 				break
+			case 'v2.9':
+				version = Version.VERSION_2_9
+				break
         }
         version
     }
