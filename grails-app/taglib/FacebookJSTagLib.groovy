@@ -53,7 +53,7 @@ class FacebookJSTagLib {
                     params: [locale: attrs.locale.toString()]
             )
         }
-        if (!attrs.containsKey('version')) attrs.version = config.apiVersion ?: 'v2.7'
+        if (!attrs.containsKey('version')) attrs.version = config.apiVersion ?: 'v2.9'
         Map model = [body:body()]
         attrs.each { key, value ->
             model[key] = value

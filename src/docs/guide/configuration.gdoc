@@ -124,7 +124,7 @@ If no app is found based on @app_id@ params and controller name, default single 
 
 h3. Graph API Version
 
-By default, latest Graph API v2.7 will be used.
+By default, latest Graph API v2.9 will be used.
 You can override default settings with @apiVersion@ config parameter :
 
 {code}

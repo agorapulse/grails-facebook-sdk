@@ -20,7 +20,7 @@ It supports the latest *OAuth2.0 authentication* (required since October 1st 201
 * **FacebookGraphClient** - A client to call [Facebook Graph API](http://developers.facebook.com/docs/reference/api/), which is a wrapper around the rock solid [RestFB java library](http://restfb.com/) version 1.32.0 (released October 13, 2016).
 * **FacebookJSTagLib** - A collection of tags to easily integrate [Facebook JS SDK](http://developers.facebook.com/docs/reference/javascript/) in your GSPs.
 
-**WARNING**: Facebook API v2.7 is now used by default.
+**WARNING**: Facebook API v2.9 is now used by default.
 
 # Installation
 
@@ -51,7 +51,7 @@ grails:
                 secret: {APP_SECRET}
 ```
 
-By default, latest Graph API v2.6 will be used.
+By default, latest Graph API v2.9 will be used.
 You can override default settings with `apiVersion` setting:
 
 ```yml
