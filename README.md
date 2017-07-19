@@ -29,7 +29,7 @@ Declare the plugin dependency in the _build.gradle_ file, as shown here:
 ```groovy
 dependencies {
     ...
-    compile "org.grails.plugins:facebook-sdk:2.7.4"
+    compile "org.grails.plugins:facebook-sdk:2.9.0"
     ...
 }
 ```
