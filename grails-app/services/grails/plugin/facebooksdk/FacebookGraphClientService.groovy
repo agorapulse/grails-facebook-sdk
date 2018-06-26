@@ -1,8 +1,11 @@
 package grails.plugin.facebooksdk
 
 import grails.core.GrailsApplication
+import groovy.transform.CompileDynamic
+import groovy.transform.CompileStatic
 import org.springframework.beans.factory.InitializingBean
 
+@CompileStatic
 class FacebookGraphClientService implements InitializingBean {
 
     String proxyHost
@@ -25,6 +28,9 @@ class FacebookGraphClientService implements InitializingBean {
                 if (this.apiVersion.isUrlElementRequired()) {
                     return graphEndpoint + '/' + this.apiVersion.getUrlElement();
                 }
+                if (this.unsupportedApiVersion) {
+                    return graphEndpoint + '/' + this.apiVersionString
+                }
                 return graphEndpoint;
             }
 
@@ -35,6 +41,9 @@ class FacebookGraphClientService implements InitializingBean {
                 }
                 if (this.apiVersion.isUrlElementRequired()) {
                     return graphVideoEndpoint + '/' + this.apiVersion.getUrlElement();
+                }
+                if (this.unsupportedApiVersion) {
+                    return graphVideoEndpoint + '/' + this.apiVersionString
                 }
                 return graphVideoEndpoint;
             }
@@ -47,12 +56,16 @@ class FacebookGraphClientService implements InitializingBean {
                 if (this.apiVersion.isUrlElementRequired()) {
                     return readOnlyEndpoint + '/' + this.apiVersion.getUrlElement();
                 }
+                if (this.unsupportedApiVersion) {
+                    return readOnlyEndpoint + '/' + this.apiVersionString
+                }
                 return readOnlyEndpoint;
             }
         }
     }
 
     @Override
+    @CompileDynamic
     void afterPropertiesSet() throws Exception {
         if (grailsApplication.config.grails.plugin.facebooksdk.proxyHost) {
             proxyHost = grailsApplication.config.grails.plugin.facebooksdk.proxyHost

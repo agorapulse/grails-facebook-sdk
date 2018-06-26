@@ -9,11 +9,14 @@ import com.restfb.batch.BatchRequest.BatchRequestBuilder
 import com.restfb.json.JsonObject
 import grails.converters.JSON
 import grails.util.Holders
+import groovy.transform.PackageScope
 
 class FacebookGraphClient extends DefaultFacebookGraphClient {
 
     static final int DEFAULT_READ_TIMEOUT_IN_MS = 180000
-    static final String DEFAULT_API_VERSION = 'v2.9'
+    static final String DEFAULT_API_VERSION = 'v3.0'
+
+	protected final String apiVersionString
 
 	/**
 	 *
@@ -24,13 +27,44 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 	 * @param proxyPort
 	 * @deprecated use FacebookGraphClientService instead
 	 */
-    FacebookGraphClient(String accessToken = '',
-						String apiVersion = null,
-						Integer timeout = DEFAULT_READ_TIMEOUT_IN_MS,
-						String proxyHost = null,
-						Integer proxyPort = null) {
+	@Deprecated
+    @PackageScope
+	FacebookGraphClient(String accessToken = '',
+									  String apiVersion = null,
+									  Integer timeout = DEFAULT_READ_TIMEOUT_IN_MS,
+									  String proxyHost = null,
+									  Integer proxyPort = null) {
         super(accessToken, timeout, proxyHost, proxyPort, buildVersionFromString(apiVersion))
+		this.apiVersionString = apiVersion
     }
+
+	boolean isUnsupportedApiVersion() {
+		return apiVersionString && (apiVersionString.startsWith('v3') || apiVersionString.matches(/v2\.1[2-9]/))
+	}
+
+	@Override
+	protected String getFacebookGraphEndpointUrl() {
+		if (unsupportedApiVersion) {
+			return FACEBOOK_GRAPH_ENDPOINT_URL + '/' + apiVersionString
+		}
+		return super.facebookGraphEndpointUrl
+	}
+
+	@Override
+	protected String getFacebookGraphVideoEndpointUrl() {
+		if (unsupportedApiVersion) {
+			return FACEBOOK_GRAPH_VIDEO_ENDPOINT_URL + '/' + apiVersionString
+		}
+		return super.facebookGraphVideoEndpointUrl
+	}
+
+	@Override
+	protected String getFacebookReadOnlyEndpointUrl() {
+		if (unsupportedApiVersion) {
+			return FACEBOOK_READ_ONLY_ENDPOINT_URL + '/' + apiVersionString
+		}
+		return super.facebookReadOnlyEndpointUrl
+	}
 
 	/**
 	 *
