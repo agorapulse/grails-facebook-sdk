@@ -28,7 +28,7 @@ class FacebookGraphClientService implements InitializingBean {
                 if (this.apiVersion.isUrlElementRequired()) {
                     return graphEndpoint + '/' + this.apiVersion.getUrlElement();
                 }
-                if (this.unsupportedApiVersion) {
+                if (this.isUnsupportedApiVersion()) {
                     return graphEndpoint + '/' + this.apiVersionString
                 }
                 return graphEndpoint;
@@ -42,7 +42,7 @@ class FacebookGraphClientService implements InitializingBean {
                 if (this.apiVersion.isUrlElementRequired()) {
                     return graphVideoEndpoint + '/' + this.apiVersion.getUrlElement();
                 }
-                if (this.unsupportedApiVersion) {
+                if (this.isUnsupportedApiVersion()) {
                     return graphVideoEndpoint + '/' + this.apiVersionString
                 }
                 return graphVideoEndpoint;
@@ -56,7 +56,7 @@ class FacebookGraphClientService implements InitializingBean {
                 if (this.apiVersion.isUrlElementRequired()) {
                     return readOnlyEndpoint + '/' + this.apiVersion.getUrlElement();
                 }
-                if (this.unsupportedApiVersion) {
+                if (this.isUnsupportedApiVersion()) {
                     return readOnlyEndpoint + '/' + this.apiVersionString
                 }
                 return readOnlyEndpoint;
