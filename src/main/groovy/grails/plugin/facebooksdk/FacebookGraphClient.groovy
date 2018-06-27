@@ -35,7 +35,7 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 									  String proxyHost = null,
 									  Integer proxyPort = null) {
         super(accessToken, timeout, proxyHost, proxyPort, buildVersionFromString(apiVersion))
-		this.apiVersionString = apiVersion
+		this.apiVersionString = apiVersion ?: DEFAULT_API_VERSION
     }
 
 	boolean isUnsupportedApiVersion() {
