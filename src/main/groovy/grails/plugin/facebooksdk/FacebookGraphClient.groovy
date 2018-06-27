@@ -45,7 +45,7 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 	@Override
 	protected String getFacebookGraphEndpointUrl() {
 		if (isUnsupportedApiVersion()) {
-			return FACEBOOK_GRAPH_ENDPOINT_URL + '/' + apiVersionString
+			return this.@FACEBOOK_GRAPH_ENDPOINT_URL + '/' + apiVersionString
 		}
 		return super.facebookGraphEndpointUrl
 	}
@@ -53,7 +53,7 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 	@Override
 	protected String getFacebookGraphVideoEndpointUrl() {
 		if (isUnsupportedApiVersion()) {
-			return FACEBOOK_GRAPH_VIDEO_ENDPOINT_URL + '/' + apiVersionString
+			return this.@FACEBOOK_GRAPH_VIDEO_ENDPOINT_URL + '/' + apiVersionString
 		}
 		return super.facebookGraphVideoEndpointUrl
 	}
@@ -61,7 +61,7 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 	@Override
 	protected String getFacebookReadOnlyEndpointUrl() {
 		if (isUnsupportedApiVersion()) {
-			return FACEBOOK_READ_ONLY_ENDPOINT_URL + '/' + apiVersionString
+			return this.@FACEBOOK_READ_ONLY_ENDPOINT_URL + '/' + apiVersionString
 		}
 		return super.facebookReadOnlyEndpointUrl
 	}
