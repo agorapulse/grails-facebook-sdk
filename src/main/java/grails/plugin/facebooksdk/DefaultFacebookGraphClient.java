@@ -13,9 +13,15 @@ import java.net.URL;
 
 public class DefaultFacebookGraphClient extends DefaultFacebookClient {
 
-    // Override default web requestor to add read timeout parameter
     DefaultFacebookGraphClient(String accessToken, final Integer timeout, final String proxyHost, final Integer proxyPort, final Version version) {
-        super(accessToken,
+        this(accessToken, null, timeout, proxyHost, proxyPort, version);
+    }
+
+    // Override default web requestor to add read timeout parameter
+    DefaultFacebookGraphClient(String accessToken, String appSecret, final Integer timeout, final String proxyHost, final Integer proxyPort, final Version version) {
+        super(
+                accessToken,
+                appSecret,
                 new DefaultWebRequestor() {
                     @Override
                     protected void customizeConnection(HttpURLConnection connection) {
