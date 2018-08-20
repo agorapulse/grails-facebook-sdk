@@ -18,8 +18,9 @@ class FacebookGraphClientService implements InitializingBean {
 
     FacebookGraphClient newClient(String accessToken = '',
                                   String apiVersion = FacebookGraphClient.DEFAULT_API_VERSION,
-                                  Integer timeout = FacebookGraphClient.DEFAULT_READ_TIMEOUT_IN_MS) {
-        return new FacebookGraphClient(accessToken, apiVersion, timeout, proxyHost, proxyPort) {
+                                  Integer timeout = FacebookGraphClient.DEFAULT_READ_TIMEOUT_IN_MS,
+                                  String appSecret = null) {
+        return new FacebookGraphClient(accessToken, apiVersion, timeout, proxyHost, proxyPort, appSecret) {
             @Override
             protected String getFacebookGraphEndpointUrl() {
                 if (!graphEndpoint) {

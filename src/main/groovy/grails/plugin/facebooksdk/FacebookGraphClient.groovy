@@ -25,6 +25,7 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 	 * @param timeout
 	 * @param proxyHost
 	 * @param proxyPort
+     * @param
 	 * @deprecated use FacebookGraphClientService instead
 	 */
 	@Deprecated
@@ -33,9 +34,10 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 									  String apiVersion = null,
 									  Integer timeout = DEFAULT_READ_TIMEOUT_IN_MS,
 									  String proxyHost = null,
-									  Integer proxyPort = null) {
-        super(accessToken, timeout, proxyHost, proxyPort, buildVersionFromString(apiVersion))
-		this.apiVersionString = apiVersion ?: config.apiVersion ?: DEFAULT_API_VERSION
+									  Integer proxyPort = null,
+                                      String appSecret = null) {
+        super(accessToken, appSecret ?: config.appSecret , timeout, proxyHost, proxyPort, buildVersionFromString(apiVersion))
+        this.apiVersionString = apiVersion ?: config.apiVersion ?: DEFAULT_API_VERSION
     }
 
 	boolean isUnsupportedApiVersion() {
