@@ -36,7 +36,7 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 									  String proxyHost = null,
 									  Integer proxyPort = null,
                                       String appSecret = null) {
-        super(accessToken, appSecret ?: config.appSecret , timeout, proxyHost, proxyPort, buildVersionFromString(apiVersion))
+        super(accessToken, getAppSecretOrFromConfig(appSecret), timeout, proxyHost, proxyPort, buildVersionFromString(apiVersion))
         this.apiVersionString = apiVersion ?: config.apiVersion ?: DEFAULT_API_VERSION
     }
 
@@ -96,7 +96,7 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 	 * @param parameters
 	 * @return
 	 */
-	def fetchObject(String object,
+	Object fetchObject(String object,
 					Map parameters = [:]) {
 		String result = makeRequest(object, buildVariableArgs(parameters))
 		return parseResult(result)
@@ -134,7 +134,7 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 	 * @param inputStream
 	 * @return
 	 */
-    def publish(String connection,
+    Object publish(String connection,
 				Map parameters = [:],
 				String fileName,
 				InputStream inputStream) {
@@ -152,7 +152,7 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 	 * @param filePath
 	 * @return
 	 */
-	def publish(String connection,
+	Object publish(String connection,
 				Map parameters = [:],
 				String filePath = '') {
 		if (filePath) {
@@ -180,7 +180,7 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
                 batchRequests << new BatchRequestBuilder(it as String).build()
             }
 			if (batchRequests.size() == batchSize || it == requests[-1]) {
-				def batchResponses = super.executeBatch(batchRequests, [])
+				Object batchResponses = super.executeBatch(batchRequests, [])
                 batchResponses.each { batchResponse ->
                     if (batchResponse) {
                         if (batchResponse.code == 200) {
@@ -215,7 +215,7 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
             batchQueries[name] = queries[name]
             if (batchQueries.size() == batchSize || name == queryNames[-1]) {
                 parameters['q'] = batchQueries
-                def result = makeRequest('fql', buildVariableArgs(parameters))
+                Object result = makeRequest('fql', buildVariableArgs(parameters))
                 result = parseResult(result)
                 if (result && result.data) {
                     result.data.each {
@@ -237,7 +237,7 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 	List executeQuery(String query,
 					  Map parameters = [:]) {
 		parameters['q'] = query
-		def result = makeRequest('fql', buildVariableArgs(parameters))
+		Object result = makeRequest('fql', buildVariableArgs(parameters))
 		result = parseResult(result)
 		return (result && result.data) ? result.data : []
 	}
@@ -248,9 +248,9 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 	 * @param parameters
 	 * @return
 	 */
-	def makeRequest(String endPoint,
+	Object makeRequest(String endPoint,
 					Map parameters = [:]) {
-		def result = super.makeRequest(endPoint, false, false, null, buildVariableArgs(parameters))
+		Object result = super.makeRequest(endPoint, false, false, null, buildVariableArgs(parameters))
 		return parseResult(result)
 	}
 
@@ -260,9 +260,9 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 	 * @param parameters
 	 * @return
 	 */
-	def makePostRequest(String endPoint,
+	Object makePostRequest(String endPoint,
 						Map parameters = [:]) {
-		def result = super.makeRequest(endPoint, true, false, null, buildVariableArgs(parameters))
+		Object result = super.makeRequest(endPoint, true, false, null, buildVariableArgs(parameters))
 		return parseResult(result)
 	}
 
@@ -272,15 +272,19 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 	 * @param parameters
 	 * @return
 	 */
-	def makeDeleteRequest(String endPoint,
+	Object makeDeleteRequest(String endPoint,
 						  Map parameters = [:]) {
-		def result = super.makeRequest(endPoint, false, true, null, buildVariableArgs(parameters))
+		Object result = super.makeRequest(endPoint, false, true, null, buildVariableArgs(parameters))
 		return parseResult(result)
 	}
 
 	// PRIVATE
 
-    static private Version buildVersionFromString(String apiVersion) {
+	private static String getAppSecretOrFromConfig(String appSecret) {
+		appSecret ?: config.appSecret
+	}
+	
+    private static Version buildVersionFromString(String apiVersion) {
         if (!apiVersion) {
             apiVersion = config.apiVersion ?: DEFAULT_API_VERSION
         }
@@ -329,7 +333,7 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
         version
     }
 
-	static private Parameter[] buildVariableArgs(Map parameters) {
+	private static Parameter[] buildVariableArgs(Map parameters) {
 		Parameter[] variableArgs = new Parameter[parameters.size()]
 		parameters.eachWithIndex { key, value, index ->
 			variableArgs[index-1] = Parameter.with(key as String, value)
@@ -337,11 +341,11 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 		return variableArgs
 	}
 
-    static private def getConfig() {
-        Holders.config.grails.plugin.facebooksdk
+    private static Object getConfig() {
+        Holders.config?.grails?.plugin?.facebooksdk ?: new ConfigObject()
     }
 
-	static private def parseResult(String result) {
+	private static Object parseResult(String result) {
 		if (result.startsWith('{')) {
 			return JSON.parse(result)
 		} else if (result.find('=')) {
