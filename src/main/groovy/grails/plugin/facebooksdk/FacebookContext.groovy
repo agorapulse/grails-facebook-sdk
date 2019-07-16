@@ -1,19 +1,23 @@
 package grails.plugin.facebooksdk
 
+import com.restfb.Version
 import grails.util.Holders
 import grails.web.mapping.LinkGenerator
-import org.apache.log4j.Logger
+import groovy.util.logging.Slf4j
+import org.grails.web.servlet.mvc.GrailsWebRequest
 import org.grails.web.util.WebUtils
 import org.springframework.web.context.request.RequestContextHolder
 
 import javax.annotation.PostConstruct
 
+@Slf4j
 class FacebookContext {
 
     private final static List DROP_QUERY_PARAMS = ['code','denied_scopes','granted_scopes','signed_request','state','token']
 
     //def grailsApplication // Injected by Spring
     LinkGenerator grailsLinkGenerator // Injected by Spring
+    FacebookGraphClientService facebookGraphClientService
 
     FacebookContextApp app
     FacebookContextPage page // Only if app is running in a page tab and signed request exists in params (initial request)
@@ -22,7 +26,6 @@ class FacebookContext {
 
     private FacebookSessionScope _sessionScope
     private FacebookCookieScope _cookieScope
-    private Logger log = Logger.getLogger(getClass())
 
     @PostConstruct
     private void init() {
@@ -157,7 +160,7 @@ class FacebookContext {
         if (!request.params['no_user']) parameters['no_user'] = currentURL
         if (!request.params['ok_session']) parameters['ok_session'] = currentURL
         if (!request.params['session_version']) parameters['session_version'] = 3
-        if (!parameters['version']) parameters['version'] = config.apiVersion ?: FacebookGraphClient.DEFAULT_API_VERSION
+        if (!parameters['version']) parameters['version'] = config.apiVersion ?: Version.LATEST.urlElement
         return buildFacebookURL("extern/login_status.php", parameters)
     }
 
@@ -174,7 +177,7 @@ class FacebookContext {
         if (!parameters['redirect_uri']) parameters['redirect_uri'] = currentURL
         if (!parameters['scope']) parameters['scope'] = app.permissions.join(',')
         if (!parameters['state']) parameters['state'] = UUID.randomUUID().encodeAsMD5()
-        if (!parameters['version']) parameters['version'] = config.apiVersion ?: FacebookGraphClient.DEFAULT_API_VERSION
+        if (!parameters['version']) parameters['version'] = config.apiVersion ?: Version.LATEST.urlElement
         session.setData('state', parameters['state'])
         return buildFacebookURL('dialog/oauth', parameters)
     }
@@ -197,10 +200,14 @@ class FacebookContext {
 
     // PRIVATE
 
+    protected GrailsWebRequest getRequest() {
+        return RequestContextHolder.getRequestAttributes() as GrailsWebRequest
+    }
+
     private String buildFacebookURL(path = '', parameters = [:]) {
         String url = "https://www.facebook.com/"
         if (!path.startsWith('logout')) {
-            url += "${parameters['version'] ?: FacebookGraphClient.DEFAULT_API_VERSION}/"
+            url += "${parameters['version'] ?: Version.LATEST.urlElement}/"
         }
         parameters.remove('version')
         if (path) {
@@ -232,10 +239,6 @@ class FacebookContext {
             linkUrl.replace(new URL(linkUrl).protocol, request.currentRequest.getHeader('X-Forwarded-Proto'))
         }
         return linkUrl
-    }
-
-    private def getRequest() {
-        return RequestContextHolder.getRequestAttributes()
     }
 
     private String serializeQueryString(Map parameters, boolean urlEncoded = true) {

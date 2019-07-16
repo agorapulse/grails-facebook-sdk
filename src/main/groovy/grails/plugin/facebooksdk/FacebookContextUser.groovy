@@ -1,8 +1,10 @@
 package grails.plugin.facebooksdk
 
+import com.restfb.FacebookClient
 import com.restfb.exception.FacebookGraphException
-import org.apache.log4j.Logger
+import groovy.util.logging.Slf4j
 
+@Slf4j
 class FacebookContextUser {
 
     private final static long EXPIRATION_PREVENTION_THRESHOLD = 600000 // 10 minutes
@@ -18,7 +20,6 @@ class FacebookContextUser {
     private long _id = -1
     private String _token = null
     private long _tokenExpirationTime = -1 // Unix time stamp in milliseconds
-    private Logger log = Logger.getLogger(getClass())
 
     /*
     * @description Exchange a valid access token to get a longer expiration time (59 days)
@@ -27,18 +28,17 @@ class FacebookContextUser {
     void exchangeToken() {
         if (token) {
             try {
-                def result = graphClient.fetchObject('oauth/access_token', [
-                        client_id: context.app.id,
-                        client_secret: context.app.secret,
-                        grant_type: 'fb_exchange_token',
-                        fb_exchange_token: _token
-                ])
-                if (result['access_token']) {
-                    _token = result['access_token']
+                FacebookClient.AccessToken result = graphClient.obtainExtendedAccessToken(
+                        context.app.id as String,
+                        context.app.secret,
+                        _token
+                )
+
+                if (result.accessToken) {
+                    _token = result.accessToken
                     context.session.setData('token', token)
-                    if (result['expires']) {
-                        long expires = result['expires'].toLong()
-                        _tokenExpirationTime = new Date().time + expires * 1000L
+                    if (result.expires) {
+                        _tokenExpirationTime = result.expires.time
                         context.session.setData('expirationTime', _tokenExpirationTime)
                     } else {
                         // Non expiring token
@@ -70,7 +70,7 @@ class FacebookContextUser {
                 log.debug "Got userId from session (userId=$_id)"
                 // Use access_token to fetch user id if we have a user access_token (exchanged from code), or if the access token has changed.
                 if (token && (!_id || token != context.session.getData('token'))) {
-                    FacebookGraphClient graphClient = getGraphClient(token)
+                    FacebookClient graphClient = getGraphClient(token)
                     def result = graphClient.fetchObject('me', [fields: 'id'])
                     if (result && result['id']) {
                         _id = result['id'].toLong()
@@ -192,32 +192,25 @@ class FacebookContextUser {
 
     // PRIVATE
 
-    private FacebookGraphClient getGraphClient(String token = '') {
-        new FacebookGraphClient(
-                token,
-                context?.config?.apiVersion ?: FacebookGraphClient.DEFAULT_API_VERSION,
-                context?.config?.timeout ?: FacebookGraphClient.DEFAULT_READ_TIMEOUT_IN_MS,
-                context?.config?.proxyHost ?: null,
-                context?.config?.proxyPort ?: null
-        )
+    private FacebookClient getGraphClient(String token = '') {
+        context.facebookGraphClientService.newClient(token)
     }
 
     private String getTokenFromCode(String code, String redirectUri = '') {
         String accessToken = ''
         try {
-            def result = graphClient.fetchObject('oauth/access_token', [
-                    client_id: context.app.id,
-                    client_secret: context.app.secret,
-                    code: code,
-                    redirect_uri: redirectUri
-            ])
-            if (result['access_token']) {
-                accessToken = result['access_token']
+            FacebookClient.AccessToken token = graphClient.obtainUserAccessToken(
+                    context.app.id as String,
+                    context.app.secret,
+                    redirectUri,
+                    code,
+            )
+            if (token?.accessToken) {
+                accessToken = token.accessToken
                 context.session.setData('token', accessToken)
                 context.session.setData('code', code)
-                if (result['expires']) {
-                    Integer expires = result['expires'].toInteger()
-                    long expirationTime = new Date().time + expires * 1000
+                if (token.expires) {
+                    long expirationTime = token.expires.time
                     context.session.setData('expirationTime', expirationTime)
                 }
             }

@@ -35,6 +35,7 @@ It is a port of the official Facebook PHP SDK to Grails 3.0.
             facebookContext(FacebookContext) { bean ->
                 bean.scope = 'request'
                 grailsLinkGenerator = ref('grailsLinkGenerator')
+                facebookGraphClientService = ref('facebookGraphClientService')
             }
         } 
     }

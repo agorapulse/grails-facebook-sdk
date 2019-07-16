@@ -11,7 +11,7 @@ buildscript {
     }
 }
 
-version "3.0.6"
+version "4.0.0"
 group "org.grails.plugins"
 
 apply plugin:"eclipse"
@@ -50,13 +50,18 @@ dependencies {
     profile "org.grails.profiles:web-plugin"
     provided "org.grails:grails-plugin-services"
     provided "org.grails:grails-plugin-domain-class"
-    testCompile "org.grails:grails-plugin-testing"
 
     // Latest RestFB lib
-    compile 'com.restfb:restfb:1.49.0'
+    compile 'com.restfb:restfb:2.23.1'
+
+    // Tests
+    testCompile 'org.grails:grails-web-testing-support:2.0.0'
+    testCompile 'org.spockframework:spock-core:1.3-groovy-2.5'
+    testCompile 'net.bytebuddy:byte-buddy:1.9.14'
+
 }
 
-task wrapper(type: Wrapper) {
+wrapper {
     gradleVersion = gradleWrapperVersion
 }
 
