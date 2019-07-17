@@ -12,7 +12,7 @@ import grails.util.Holders
 import groovy.transform.PackageScope
 
 /**
- * @deprecated use com.restfb.DefaultFacebookClient directly instead
+ * @deprecated use com.restfb.DefaultFacebookClient and FacebookGraphClientService directly instead
  */
 @Deprecated
 class FacebookGraphClient extends DefaultFacebookGraphClient {
@@ -54,18 +54,6 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 						 Map parameters = [:]) {
 		Connection result = super.fetchConnection(connection, JsonObject, buildVariableArgs(parameters))
 		return (result && result.data) ? JSON.parse(result.data.toString()) as List : []
-	}
-
-	/**
-	 *
-	 * @param object
-	 * @param parameters
-	 * @return
-	 */
-	Object fetchObject(String object,
-					Map parameters = [:]) {
-		String result = makeRequest(object, buildVariableArgs(parameters))
-		return parseResult(result)
 	}
 
 	/**
