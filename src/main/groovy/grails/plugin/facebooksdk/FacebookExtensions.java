@@ -11,7 +11,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Extensions for {@link com.restfb.FacebookClient}
+ * Extensions for {@link com.restfb.FacebookClient}.
+ *
+ * For
  */
 public class FacebookExtensions {
 
@@ -151,6 +153,30 @@ public class FacebookExtensions {
      */
     public static String getLoginDialogUrl(FacebookClient client, String appId, String redirectUri, ScopeBuilder scope, Map<String, Object> additionalParameters) {
         return client.getLoginDialogUrl(appId, redirectUri, scope, buildVariableArgs(additionalParameters));
+    }
+
+    /**
+     * @deprecated use {@link #fetchConnection(FacebookClient, String, Class, Map)} instead.
+     */
+    @Deprecated
+    public static <T> Connection<T> makeRequest(FacebookClient client, String endPoint, Class<T> connectionType, Map<String, Object> parameters) {
+        return fetchConnection(client, endPoint, connectionType, parameters);
+    }
+
+    /**
+     * @deprecated use {@link #publish(FacebookClient, String, Class, Map)} instead.
+     */
+    @Deprecated
+    public static <T> T makePostRequest(FacebookClient client, String connection, Class<T> objectType, Map<String, Object> parameters) {
+        return publish(client, connection, objectType, parameters);
+    }
+
+    /**
+     * @deprecated use {@link #deleteObject(FacebookClient, String, Map)} instead.
+     */
+    @Deprecated
+    public static boolean makeDeleteRequest(FacebookClient client, String endPoint, Map<String, Object> parameters) {
+        return deleteObject(client, endPoint, parameters);
     }
 
     private static Parameter[] buildVariableArgs(Map<String, Object> parameters) {
