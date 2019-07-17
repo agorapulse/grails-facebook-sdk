@@ -1,165 +1,133 @@
 package grails.plugin.facebooksdk
 
-import org.grails.plugins.testing.GrailsMockHttpServletRequest
+import com.restfb.FacebookClient
+import com.restfb.Parameter
+import grails.web.servlet.mvc.GrailsParameterMap
+import org.grails.web.servlet.mvc.GrailsWebRequest
 import spock.lang.Specification
 
 class FacebookContextUserSpec extends Specification {
 
-    static APP_ID = 123456789
+    static APP_ID = '123456789'
     static APP_SECRET = 'abcdefghhijkl'
 
-    FacebookContext context
+    FacebookClient client = Mock() {
+        fetchObject(*_) >> { String object, Class objectType, Parameter... parameters ->
+            if (object == 'oauth/access_token') {
+                if (parameters.any { it.name == 'code' }) return [access_token: 'new-token-from-code', expires: 1000]
+                if (parameters.any {
+                    it.name == 'fb_exchange_token'
+                }) return [access_token: 'new-token-from-code', expires: 1000]
+            }
+        }
+    }
+
+    FacebookGraphClientService factory = Mock() {
+        newClient(*_) >> client
+    }
+
+    FacebookSessionScope scope = Mock()
+
+    FacebookSignedRequest signedRequest = Mock()
+
+    FacebookContextApp facebookContextApp = new FacebookContextApp(
+            id: APP_ID as Long,
+            secret: APP_SECRET
+    )
+
+    GrailsParameterMap grailsParameterMap = Mock()
+
+    GrailsWebRequest grailsWebRequest = Mock() {
+        getParams() >> grailsParameterMap
+    }
+
+    FacebookContext context = Mock() {
+        getFacebookGraphClientService() >> factory
+        getApp() >> facebookContextApp
+        getSession() >> scope
+        getSignedRequest() >> signedRequest
+        getRequest() >> grailsWebRequest
+    }
 
     void setup() {
-        FacebookGraphClient.metaClass.fetchObject = { String object, Map parameters ->
-            switch(object) {
-                case 'oauth/access_token':
-                    if (parameters['code']) return [access_token:'new-token-from-code', expires:1000]
-                    if (parameters['fb_exchange_token']) return [access_token:'new-exchanged-token', expires:1000]
-                    break
-            }
-        }
-        FacebookContextUser.metaClass.getRequest = { ->
-            def requestMock = new GrailsMockHttpServletRequest()
-            requestMock.params = [:]
-            requestMock
-        }
-
-        // Mock context
-        def config = mockConfig('''
-            grails {
-                plugin {
-                    facebooksdk {}
-                }
-            }
-            ''')
-        context = mockFor(FacebookContext, true).createMock()
-        context.grailsApplication = [config: config]
-        context.app = mockFor(FacebookContextApp, true).createMock()
-        context.app.id = APP_ID
-        context.app.secret =  APP_SECRET
+        facebookContextApp.context = context
     }
 
     void "Exchange token"() {
         given:
-        FacebookContextUser user = new FacebookContextUser(
-            context: context
-        )
-        context.metaClass.getSession { ->
-            def sessionScopeMock = mockFor(FacebookSessionScope, true)
-            sessionScopeMock.demand.setData { key, value -> }
-            sessionScopeMock.demand.getData { key, defaultValue -> defaultValue }
-            sessionScopeMock.createMock()
-        }
+            FacebookContextUser user = new FacebookContextUser(
+                    context: context
+            )
 
         when:
-        user._token = 'old-token'
-        user.exchangeToken()
+            user._token = 'old-token'
+            user.exchangeToken()
 
         then:
-        user._token == 'new-exchanged-token'
+            user._token == 'new-exchanged-token'
+
+            1 * client.obtainExtendedAccessToken(
+                    APP_ID,
+                    APP_SECRET,
+                    'old-token'
+            ) >> new FacebookClient.AccessToken(
+                    accessToken: 'new-exchanged-token',
+                    expires: System.currentTimeMillis() + 1000
+            )
     }
 
     void "Get empty token"() {
         given:
-        FacebookContextUser user = new FacebookContextUser(
-                context: context
-        )
-        context.metaClass.getRequest { -> [params: [:]]}
-        context.metaClass.getSession { ->
-            def sessionScopeMock = mockFor(FacebookSessionScope, true)
-            sessionScopeMock.demand.getData { key, defaultValue -> defaultValue }
-            sessionScopeMock.createMock()
-        }
-
+            FacebookContextUser user = new FacebookContextUser(
+                    context: context
+            )
         when:
-        String token = user.token
+            String token = user.token
 
         then:
-        assert token == ''
+            token == ''
+
+            1 * scope.getData(*_) >> { String name, Object defaultValue -> defaultValue }
     }
 
     void "Get token from signed request"() {
         given:
-        FacebookContextUser user = new FacebookContextUser(
-                context: context
-        )
-        context.metaClass.getSession { ->
-            def sessionScopeMock = mockFor(FacebookSessionScope, true)
-            sessionScopeMock.demand.setData { key, value -> }
-            sessionScopeMock.createMock()
-        }
-        context.signedRequest = mockFor(FacebookSignedRequest).createMock()
-
+            FacebookContextUser user = new FacebookContextUser(
+                    context: context
+            )
         when:
-        user.context.signedRequest.accessToken = 'access-token'
-        String token = user.token
+            String token = user.token
 
         then:
-        token == 'access-token'
+            token == 'access-token'
+
+            _ * signedRequest.getAccessToken() >> 'access-token'
     }
 
     void "Get token from signed request code"() {
         given:
-        FacebookContextUser user = new FacebookContextUser(
-                context: context
-        )
-        context.metaClass.getSession { ->
-            def sessionScopeMock = mockFor(FacebookSessionScope, true)
-            sessionScopeMock.demand.getData { key -> 'some-other-code' }
-            sessionScopeMock.demand.setData { key, value -> }
-            sessionScopeMock.createMock()
-        }
-        user.context.signedRequest = mockFor(FacebookSignedRequest).createMock()
+            FacebookContextUser user = new FacebookContextUser(
+                    context: context
+            )
 
         when:
-        user.context.signedRequest.code = 'some-code'
-        String token = user.token
-
+            String token = user.token
         then:
-        token == 'new-token-from-code'
+            token == 'new-token-from-code'
+
+            _ * signedRequest.getCode() >> 'some-code'
+            1 * scope.getData(*_) >> { String name -> 'some-other-code' }
+
+            1 * client.obtainUserAccessToken(
+                    APP_ID,
+                    APP_SECRET,
+                    _,
+                    'some-code'
+            ) >> new FacebookClient.AccessToken(
+                    accessToken: 'new-token-from-code',
+                    expires: System.currentTimeMillis() + 1000
+            )
     }
-
-    /*void testGetTokenFromParamsCode() {
-        // Setup
-        def contextMock = mockFor(FacebookContext)
-        contextMock.demand.getSession(4..4) { ->
-            def sessionScopeMock = mockFor(FacebookAppSessionScope)
-            sessionScopeMock.demand.getData(1..1) { key ->
-                if (key == 'state') 'some-state'
-            }
-            sessionScopeMock.demand.deleteData(1..1) { key -> }
-            sessionScopeMock.demand.getData(1..1) { key ->
-                if (key == 'code') 'some-code'
-                else if (key == 'token') 'existing-token-from-session'
-            }
-            sessionScopeMock.demand.setData(3..3) { key, value -> }
-            sessionScopeMock.createMock()
-        }
-        FacebookUser user = new FacebookUser(
-                context: contextMock.createMock()
-        )
-        user.context.app = mockFacebookApp()
-        FacebookUser.metaClass.getRequest = { ->
-            def requestMock = new defHttpServletRequest()
-            requestMock.params = [
-                    code: 'some-code',
-                    state: 'some-state'
-            ]
-            requestMock
-        }
-
-        // When
-        String token = user.token
-
-        // Then
-        assert token == 'existing-token-from-session'
-    }*/
-
-    /*void testGetUserId() {
-        // To implement
-    }*/
-
 
 
 }

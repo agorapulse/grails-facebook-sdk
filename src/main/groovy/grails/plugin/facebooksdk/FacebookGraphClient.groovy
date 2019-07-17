@@ -11,6 +11,10 @@ import grails.converters.JSON
 import grails.util.Holders
 import groovy.transform.PackageScope
 
+/**
+ * @deprecated use com.restfb.DefaultFacebookClient and FacebookGraphClientService directly instead
+ */
+@Deprecated
 class FacebookGraphClient extends DefaultFacebookGraphClient {
 
     static final int DEFAULT_READ_TIMEOUT_IN_MS = 180000
@@ -40,44 +44,6 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
         this.apiVersionString = apiVersion ?: config.apiVersion ?: DEFAULT_API_VERSION
     }
 
-	boolean isUnsupportedApiVersion() {
-		return apiVersionString && (apiVersionString.startsWith('v3') || apiVersionString.matches(/v2\.1[2-9]/))
-	}
-
-	@Override
-	protected String getFacebookGraphEndpointUrl() {
-		if (isUnsupportedApiVersion()) {
-			return this.@FACEBOOK_GRAPH_ENDPOINT_URL + '/' + apiVersionString
-		}
-		return super.facebookGraphEndpointUrl
-	}
-
-	@Override
-	protected String getFacebookGraphVideoEndpointUrl() {
-		if (isUnsupportedApiVersion()) {
-			return this.@FACEBOOK_GRAPH_VIDEO_ENDPOINT_URL + '/' + apiVersionString
-		}
-		return super.facebookGraphVideoEndpointUrl
-	}
-
-	@Override
-	protected String getFacebookReadOnlyEndpointUrl() {
-		if (isUnsupportedApiVersion()) {
-			return this.@FACEBOOK_READ_ONLY_ENDPOINT_URL + '/' + apiVersionString
-		}
-		return super.facebookReadOnlyEndpointUrl
-	}
-
-	/**
-	 *
-	 * @param object
-	 * @param parameters
-	 * @return
-	 */
-	boolean deleteObject(String object, Map parameters = [:]) {
-		return super.deleteObject(object, buildVariableArgs(parameters))
-	}
-
 	/**
 	 *
 	 * @param connection
@@ -88,18 +54,6 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 						 Map parameters = [:]) {
 		Connection result = super.fetchConnection(connection, JsonObject, buildVariableArgs(parameters))
 		return (result && result.data) ? JSON.parse(result.data.toString()) as List : []
-	}
-
-	/**
-	 *
-	 * @param object
-	 * @param parameters
-	 * @return
-	 */
-	Object fetchObject(String object,
-					Map parameters = [:]) {
-		String result = makeRequest(object, buildVariableArgs(parameters))
-		return parseResult(result)
 	}
 
 	/**

@@ -29,7 +29,7 @@ Declare the plugin dependency in the _build.gradle_ file, as shown here:
 ```groovy
 dependencies {
     ...
-    compile "org.grails.plugins:facebook-sdk:3.0.2"
+    compile "org.grails.plugins:facebook-sdk:4:0.0"
     ...
 }
 ```
@@ -51,7 +51,7 @@ grails:
                 secret: {APP_SECRET}
 ```
 
-By default, latest Graph API v2.9 will be used.
+By default, latest Graph API v3.3 will be used.
 You can override default settings with `apiVersion` setting:
 
 ```yml
@@ -78,20 +78,6 @@ grails:
             customSelector: jQuery
 ```
 
-# Getting started with a demo app
-
-If you want to quickly run the SDK on a demo app, you can download [Facebook SDK Grails - Demo](https://github.com/agorapulse/grails-facebook-sdk-demo).
-
-
-# Documentation
-
-Project documentation is located here :
-
-* [Reference Documentation (Page per chapter)](http://agorapulse.github.io/grails-facebook-sdk/guide)
-* [Reference Documentation (Single page)](http://agorapulse.github.io/grails-facebook-sdk/guide/single.html)
-* [Groovy API docs](http://agorapulse.github.io/grails-facebook-sdk/gapi/)
-
-
 # Bugs
 
 To report any bug, please use the project [Issues](http://github.com/agorapulse/grails-facebook-sdk/issues) section on GitHub.
@@ -103,3 +89,12 @@ The **Grails Facebook SDK** is not an official Facebook SDK such as [Javascript]
 It is developed by [AgoraPulse](http://www.agorapulse.com).
 
 The **Grails Facebook SDK** is licensed under the [Apache Licence, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
+
+# Breaking Changes
+
+## 4.0.0
+
+ * restfb upgrade - see https://github.com/restfb/restfb/blob/master/migrations.md
+   * removed `FacebookRestClient` and `DefaultFacebookRestClient`
+ * `FacebookGraphClient` is now deprecated, use `FacebookGraphClientService` to create instances of `FacebookClient` with similar capabilities
+ * `FacebookExtensions` the most useful methods from `FacebookGraphClient`are now injected using extensions methods to `FacebookClient` interface directly 

@@ -11,6 +11,10 @@ import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.URL;
 
+/**
+ * @deprecated use com.restfb.DefaultFacebookClient directly instead
+ */
+@Deprecated
 public class DefaultFacebookGraphClient extends DefaultFacebookClient {
 
     DefaultFacebookGraphClient(String accessToken, final Integer timeout, final String proxyHost, final Integer proxyPort, final Version version) {

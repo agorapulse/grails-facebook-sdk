@@ -1,7 +1,9 @@
 package grails.plugin.facebooksdk
 
-import org.apache.log4j.Logger
+import com.restfb.FacebookClient
+import groovy.util.logging.Slf4j
 
+@Slf4j
 class FacebookContextApp {
 
     FacebookContext context
@@ -12,7 +14,6 @@ class FacebookContextApp {
     String secret = ''
 
     private _token = null
-    private Logger log = Logger.getLogger(getClass())
 
     /*
      * @description Get application OAuth accessToken
@@ -21,12 +22,8 @@ class FacebookContextApp {
     String getToken(boolean oauthEnabled = false) {
         if (oauthEnabled) {
             if (_token == null) {
-                def result = graphClient.fetchObject('oauth/access_token', [
-                        client_id: id,
-                        client_secret: secret,
-                        grant_type: 'client_credentials'
-                ])
-                if (result['access_token']) _token = result['access_token']
+                FacebookClient.AccessToken result =  context.facebookGraphClientService.newClient(token).obtainAppAccessToken(id as String, secret)
+                if (result?.accessToken) _token = result.accessToken
             }
             return _token
         } else {
@@ -36,18 +33,6 @@ class FacebookContextApp {
 
     String toString() {
         "FacebookApp(id: $id, permissions: $permissions, data: $data)"
-    }
-
-    // PRIVATE
-
-    protected FacebookGraphClient getGraphClient(String token = '') {
-        new FacebookGraphClient(
-                token,
-                context?.config?.apiVersion ?: FacebookGraphClient.DEFAULT_API_VERSION,
-                context?.config?.timeout ?: FacebookGraphClient.DEFAULT_READ_TIMEOUT_IN_MS,
-                context?.config?.proxyHost ?: null,
-                context?.config?.proxyPort ?: null
-        )
     }
 
 }

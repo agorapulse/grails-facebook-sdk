@@ -1,52 +1,45 @@
 package grails.plugin.facebooksdk
 
+import com.restfb.FacebookClient
 import spock.lang.Specification
 
 class FacebookContextAppSpec extends Specification {
 
-    static APP_ID = 123456789
-    static APP_SECRET = 'abcdefghhijkl'
+    private static String APP_ID = '123456789'
+    private static String APP_SECRET = 'abcdefghhijkl'
 
-    FacebookContext context
+    FacebookClient client = Mock()
 
-    void setup() {
-        FacebookGraphClient.metaClass.fetchObject = { String object, Map parameters ->
-            switch(object) {
-                case 'oauth/access_token':
-                    return [access_token:'new-access-token', expires:1000]
-                    break
-            }
-        }
+    FacebookGraphClientService factory = Mock() {
+        newClient(*_) >> client
+    }
 
-        // Mock context
-        def config = mockConfig('''
-            grails {
-                plugin {
-                    facebooksdk {}
-                }
-            }
-            ''')
-        context = mockFor(FacebookContext, true).createMock()
-        context.grailsApplication = [config: config]
+    FacebookContext context = Mock() {
+        getFacebookGraphClientService() >> factory
     }
 
     void "Get token"() {
         when:
-        FacebookContextApp facebookContextApp = new FacebookContextApp(
-                id: APP_ID,
-                context: context,
-                secret: APP_SECRET
-        )
-        String token = facebookContextApp.token
-       
+            FacebookContextApp facebookContextApp = new FacebookContextApp(
+                    id: APP_ID as Long,
+                    context: context,
+                    secret: APP_SECRET
+            )
+            String token = facebookContextApp.token
+
         then:
-        token == "$APP_ID|$APP_SECRET"
+            token == "$APP_ID|$APP_SECRET"
 
         when:
-        token = facebookContextApp.getToken(true)
-        
+            token = facebookContextApp.getToken(true)
+
         then:
-        token == 'new-access-token'
+            token == 'new-access-token'
+
+            1 * client.obtainAppAccessToken(APP_ID, APP_SECRET) >> new FacebookClient.AccessToken(
+                    accessToken: 'new-access-token',
+                    expires: System.currentTimeMillis() + 10000
+            )
     }
 
 }
