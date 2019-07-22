@@ -99,6 +99,6 @@ The **Grails Facebook SDK** is licensed under the [Apache Licence, Version 2.0](
 
  * restfb upgrade - see https://github.com/restfb/restfb/blob/master/migrations.md
    * removed `FacebookRestClient` and `DefaultFacebookRestClient`
+   * avoid using raw `JsonObject` as the class has completely changed i.g. `JsonObject` from restfb 2.x implements own method `asBoolean()` which fails if the value is not `boolean` so you need to do regular `foo != null` check for testing the presense of the returned `JsonObject` value
  * `FacebookGraphClient` is now deprecated, use `FacebookGraphClientService` to create instances of `FacebookClient` with similar capabilities
  * `FacebookExtensions` the most useful methods from `FacebookGraphClient`are now injected using extensions methods to `FacebookClient` interface directly 
- * `JsonObject` from restfb 2.x implements own method `asBoolean()` which fails if the value is not `boolean` so you need to do regular `foo != null` check for testing the presense of the returned `JsonObject` value
