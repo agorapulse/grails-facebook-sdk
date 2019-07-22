@@ -26,7 +26,9 @@ public class FacebookExtensions {
      * @param parameters URL parameters to include in the API call (optional).
      * @return An instance of type {@code objectType} which contains the requested object's data.
      * @throws FacebookException If an error occurs while performing the API call.
+     * @deprecated JsonObject has been completely rewritten and is very Groovy-unfriendly
      */
+    @Deprecated
     public static JsonObject fetchObject(FacebookClient client, String object, Map<String, Object> parameters) {
         return client.fetchObject(object, JsonObject.class, buildVariableArgs(parameters));
     }
