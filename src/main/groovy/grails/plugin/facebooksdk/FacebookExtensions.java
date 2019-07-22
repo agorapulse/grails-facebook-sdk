@@ -5,6 +5,7 @@ import com.restfb.Connection;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
 import com.restfb.exception.FacebookException;
+import com.restfb.json.JsonObject;
 import com.restfb.scope.ScopeBuilder;
 
 import java.util.List;
@@ -19,15 +20,15 @@ public class FacebookExtensions {
 
     /**
      * Fetches a single <a href="http://developers.facebook.com/docs/reference/api/">Graph API object</a>, mapping the
-     * result to an instance of {@code java.util.Map}.
+     * result to an instance of {@code JsonObject}.
      *
      * @param object     ID of the object to fetch, e.g. {@code "me"}.
      * @param parameters URL parameters to include in the API call (optional).
      * @return An instance of type {@code objectType} which contains the requested object's data.
      * @throws FacebookException If an error occurs while performing the API call.
      */
-    public static Map<String, Object> fetchObject(FacebookClient client, String object, Map<String, Object> parameters) {
-        return (Map<String, Object>) client.fetchObject(object, Map.class, buildVariableArgs(parameters));
+    public static JsonObject fetchObject(FacebookClient client, String object, Map<String, Object> parameters) {
+        return client.fetchObject(object, JsonObject.class, buildVariableArgs(parameters));
     }
 
     /**

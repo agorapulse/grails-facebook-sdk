@@ -91,6 +91,9 @@ It is developed by [AgoraPulse](http://www.agorapulse.com).
 The **Grails Facebook SDK** is licensed under the [Apache Licence, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
 
 # Breaking Changes
+## 4.0.1
+
+ * Default return type of `fetchObject` from `FacebookExtensions` is back to `JsonObject` instead of `Map`
 
 ## 4.0.0
 
