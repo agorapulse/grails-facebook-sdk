@@ -48,20 +48,6 @@ class FacebookGraphClientService implements InitializingBean {
                 }
                 return graphVideoEndpoint;
             }
-
-            @Override
-            protected String getFacebookReadOnlyEndpointUrl() {
-                if (!readOnlyEndpoint) {
-                    return super.getFacebookReadOnlyEndpointUrl()
-                }
-                if (this.apiVersion.isUrlElementRequired()) {
-                    return readOnlyEndpoint + '/' + this.apiVersion.getUrlElement();
-                }
-                if (this.isUnsupportedApiVersion()) {
-                    return readOnlyEndpoint + '/' + this.apiVersionString
-                }
-                return readOnlyEndpoint;
-            }
         }
     }
 

@@ -1,7 +1,9 @@
 package grails.plugin.facebooksdk
 
+import spock.lang.Ignore
 import spock.lang.Specification
 
+@Ignore // already fixed and migrated in 4.x
 class FacebookContextAppSpec extends Specification {
 
     static APP_ID = 123456789

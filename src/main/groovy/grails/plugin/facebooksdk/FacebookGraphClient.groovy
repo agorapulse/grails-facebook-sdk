@@ -2,6 +2,7 @@ package grails.plugin.facebooksdk
 
 import com.restfb.BinaryAttachment
 import com.restfb.Connection
+import com.restfb.FacebookEndpoints
 import com.restfb.Parameter
 import com.restfb.Version
 import com.restfb.batch.BatchRequest
@@ -47,7 +48,7 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 	@Override
 	protected String getFacebookGraphEndpointUrl() {
 		if (isUnsupportedApiVersion()) {
-			return this.@FACEBOOK_GRAPH_ENDPOINT_URL + '/' + apiVersionString
+			return FacebookEndpoints.Endpoint.GRAPH.url + '/' + apiVersionString
 		}
 		return super.facebookGraphEndpointUrl
 	}
@@ -55,18 +56,12 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 	@Override
 	protected String getFacebookGraphVideoEndpointUrl() {
 		if (isUnsupportedApiVersion()) {
-			return this.@FACEBOOK_GRAPH_VIDEO_ENDPOINT_URL + '/' + apiVersionString
+			return FacebookEndpoints.Endpoint.GRAPH_VIDEO.url  + '/' + apiVersionString
 		}
 		return super.facebookGraphVideoEndpointUrl
 	}
 
-	@Override
-	protected String getFacebookReadOnlyEndpointUrl() {
-		if (isUnsupportedApiVersion()) {
-			return this.@FACEBOOK_READ_ONLY_ENDPOINT_URL + '/' + apiVersionString
-		}
-		return super.facebookReadOnlyEndpointUrl
-	}
+
 
 	/**
 	 *
