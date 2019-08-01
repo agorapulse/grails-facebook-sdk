@@ -12,7 +12,6 @@ class FacebookGraphClientService implements InitializingBean {
     Integer proxyPort
     String graphEndpoint
     String graphVideoEndpoint
-    String readOnlyEndpoint
 
     GrailsApplication grailsApplication
 
@@ -29,9 +28,6 @@ class FacebookGraphClientService implements InitializingBean {
                 if (this.apiVersion.isUrlElementRequired()) {
                     return graphEndpoint + '/' + this.apiVersion.getUrlElement();
                 }
-                if (this.isUnsupportedApiVersion()) {
-                    return graphEndpoint + '/' + this.apiVersionString
-                }
                 return graphEndpoint;
             }
 
@@ -42,9 +38,6 @@ class FacebookGraphClientService implements InitializingBean {
                 }
                 if (this.apiVersion.isUrlElementRequired()) {
                     return graphVideoEndpoint + '/' + this.apiVersion.getUrlElement();
-                }
-                if (this.isUnsupportedApiVersion()) {
-                    return graphVideoEndpoint + '/' + this.apiVersionString
                 }
                 return graphVideoEndpoint;
             }
@@ -65,9 +58,6 @@ class FacebookGraphClientService implements InitializingBean {
         }
         if (grailsApplication.config.grails.plugin.facebooksdk.graphVideoEndpoint) {
             graphVideoEndpoint = grailsApplication.config.grails.plugin.facebooksdk.graphVideoEndpoint
-        }
-        if (grailsApplication.config.grails.plugin.facebooksdk.readOnlyEndpoint) {
-            readOnlyEndpoint = grailsApplication.config.grails.plugin.facebooksdk.readOnlyEndpoint
         }
     }
 }
