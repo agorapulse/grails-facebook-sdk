@@ -15,7 +15,7 @@ import groovy.transform.PackageScope
 class FacebookGraphClient extends DefaultFacebookGraphClient {
 
     static final int DEFAULT_READ_TIMEOUT_IN_MS = 180000
-    static final String DEFAULT_API_VERSION = 'v3.1'
+    static final String DEFAULT_API_VERSION = Version.LATEST.urlElement
 
 	protected final String apiVersionString
 
@@ -40,28 +40,6 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
         super(accessToken, getAppSecretOrFromConfig(appSecret), timeout, proxyHost, proxyPort, buildVersionFromString(apiVersion))
         this.apiVersionString = apiVersion ?: config.apiVersion ?: DEFAULT_API_VERSION
     }
-
-	boolean isUnsupportedApiVersion() {
-		return apiVersionString && (apiVersionString.startsWith('v3') || apiVersionString.matches(/v2\.1[2-9]/))
-	}
-
-	@Override
-	protected String getFacebookGraphEndpointUrl() {
-		if (isUnsupportedApiVersion()) {
-			return FacebookEndpoints.Endpoint.GRAPH.url + '/' + apiVersionString
-		}
-		return super.facebookGraphEndpointUrl
-	}
-
-	@Override
-	protected String getFacebookGraphVideoEndpointUrl() {
-		if (isUnsupportedApiVersion()) {
-			return FacebookEndpoints.Endpoint.GRAPH_VIDEO.url  + '/' + apiVersionString
-		}
-		return super.facebookGraphVideoEndpointUrl
-	}
-
-
 
 	/**
 	 *
