@@ -99,6 +99,17 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 		return objects
 	}
 
+	public <T> Map<String, T> fetchAll(List<String> ids, Class<T> objectType, Map<String, Object> parameters = [:], int batchSize = 20) {
+		Map<String, T> results = [:]
+		ids.collate(batchSize).each {
+			JsonObject jsonObject = super.fetchObjects(it, JsonObject, buildVariableArgs(parameters))
+			for (JsonObject.Member member in jsonObject) {
+				results.put(member.name, jsonMapper.toJavaObject(member.value.toString(), objectType))
+			}
+		}
+		return results
+	}
+
 	/**
 	 *
 	 * @param connection
@@ -221,6 +232,7 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 	 * @param parameters
 	 * @return
 	 */
+	@Deprecated
 	Object makeRequest(String endPoint,
 					Map parameters = [:]) {
 		Object result = super.makeRequest(endPoint, false, false, null, buildVariableArgs(parameters))
@@ -233,6 +245,7 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 	 * @param parameters
 	 * @return
 	 */
+	@Deprecated
 	Object makePostRequest(String endPoint,
 						Map parameters = [:]) {
 		Object result = super.makeRequest(endPoint, true, false, null, buildVariableArgs(parameters))
@@ -245,6 +258,7 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 	 * @param parameters
 	 * @return
 	 */
+	@Deprecated
 	Object makeDeleteRequest(String endPoint,
 						  Map parameters = [:]) {
 		Object result = super.makeRequest(endPoint, false, true, null, buildVariableArgs(parameters))
