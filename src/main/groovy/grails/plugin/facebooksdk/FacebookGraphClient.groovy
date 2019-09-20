@@ -239,52 +239,7 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
 	}
 	
     private static Version buildVersionFromString(String apiVersion) {
-        if (!apiVersion) {
-            apiVersion = config.apiVersion ?: DEFAULT_API_VERSION
-        }
-        Version version = Version.UNVERSIONED
-        switch (apiVersion) {
-            case 'v1.0':
-                version = Version.VERSION_1_0
-                break
-            case 'v2.0':
-                version = Version.VERSION_2_0
-                break
-            case 'v2.1':
-                version = Version.VERSION_2_1
-                break
-			case 'v2.2':
-				version = Version.VERSION_2_2
-				break
-			case 'v2.3':
-				version = Version.VERSION_2_3
-				break
-            case 'v2.4':
-				version = Version.VERSION_2_4
-				break
-			case 'v2.5':
-				version = Version.VERSION_2_5
-				break
-			case 'v2.6':
-				version = Version.VERSION_2_6
-				break
-			case 'v2.7':
-				version = Version.VERSION_2_7
-				break
-			case 'v2.8':
-				version = Version.VERSION_2_8
-				break
-			case 'v2.9':
-				version = Version.VERSION_2_9
-				break
-            case 'v2.10':
-                version = Version.VERSION_2_10
-                break
-			case 'v2.11':
-				version = Version.VERSION_2_11
-				break
-        }
-        version
+        Version.getVersionFromString(apiVersion ?: config.apiVersion ?: DEFAULT_API_VERSION)
     }
 
 	private static Parameter[] buildVariableArgs(Map parameters) {
