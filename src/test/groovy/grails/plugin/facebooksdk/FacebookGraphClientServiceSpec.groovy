@@ -30,7 +30,6 @@ class FacebookGraphClientServiceSpec extends Specification {
             service.proxyHost == PROXY_HOST
             service.graphEndpoint == GRAPH_ENDPOINT
             service.graphVideoEndpoint == GRAPH_VIDEO_ENDPOINT
-            service.readOnlyEndpoint == READONLY_ENDPOINT
     }
 
 }
