@@ -4,21 +4,24 @@ import com.restfb.BinaryAttachment;
 import com.restfb.Connection;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
+import com.restfb.batch.BatchRequest;
+import com.restfb.batch.BatchResponse;
 import com.restfb.exception.FacebookException;
 import com.restfb.json.JsonObject;
 import com.restfb.scope.ScopeBuilder;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static com.restfb.util.ObjectUtil.verifyParameterPresence;
+import static java.util.Arrays.asList;
 
 /**
  * Extensions for {@link com.restfb.FacebookClient}.
  *
- * For
  */
 public class FacebookExtensions {
+
+    private static final int BATCH_SIZE = 20;
 
     /**
      * Fetches a single <a href="http://developers.facebook.com/docs/reference/api/">Graph API object</a>, mapping the
@@ -27,6 +30,7 @@ public class FacebookExtensions {
      * @param object     ID of the object to fetch, e.g. {@code "me"}.
      * @return An instance of type {@code objectType} which contains the requested object's data.
      * @throws FacebookException If an error occurs while performing the API call.
+     * @deprecated JsonObject has been completely rewritten and is very Groovy-unfriendly
      */
     public static JsonObject fetchObject(FacebookClient client, String object) {
         return client.fetchObject(object, JsonObject.class);
@@ -89,7 +93,9 @@ public class FacebookExtensions {
      * @param parameters URL parameters to include in the API call (optional).
      * @return An instance of type {@code objectType} which contains the requested objects' data.
      * @throws FacebookException If an error occurs while performing the API call.
+     * @deprecated use {@link #fetchAll(FacebookClient, List, Class, Map)} instead
      */
+    @Deprecated
     public static <T> T fetchObjects(FacebookClient client, List<String> ids, Class<T> objectType, Map<String, Object> parameters) {
         return client.fetchObjects(ids, objectType, buildVariableArgs(parameters));
     }
@@ -107,7 +113,9 @@ public class FacebookExtensions {
      * @param objectType Object type token.
      * @return An instance of type {@code objectType} which contains the requested objects' data.
      * @throws FacebookException If an error occurs while performing the API call.
+     * @deprecated use {@link #fetchAll(FacebookClient, List, Class)} instead
      */
+    @Deprecated
     public static <T> T fetchObjects(FacebookClient client, List<String> ids, Class<T> objectType) {
         return client.fetchObjects(ids, objectType);
     }
@@ -127,18 +135,54 @@ public class FacebookExtensions {
      * @throws FacebookException If an error occurs while performing the API call.
      */
     public static <T> Map<String, T> fetchAll(FacebookClient client, List<String> ids, Class<T> objectType, Map<String, Object> parameters) {
-        JsonObject object = client.fetchObjects(ids, JsonObject.class, buildVariableArgs(parameters));
-
-        if (object == null) {
-            return Collections.emptyMap();
-        }
-
         Map<String, T> objects = new LinkedHashMap<>();
-        for (JsonObject.Member member : object) {
-            objects.put(member.getName(), client.getJsonMapper().toJavaObject(member.getValue().toString(), objectType));
+
+        for(List<String> part : collate(ids, BATCH_SIZE)) {
+            JsonObject object = client.fetchObjects(part, JsonObject.class, buildVariableArgs(parameters));
+
+            if (object == null) {
+                return Collections.emptyMap();
+            }
+
+            for (JsonObject.Member member : object) {
+                objects.put(member.getName(), client.getJsonMapper().toJavaObject(member.getValue().toString(), objectType));
+            }
         }
 
         return objects;
+    }
+
+    /**
+     * @see com.restfb.FacebookClient#executeBatch(com.restfb.batch.BatchRequest[])
+     */
+    public static List<BatchResponse> safeBatch(FacebookClient client, BatchRequest... batchRequests) {
+        return safeBatch(client, asList(batchRequests), Collections.emptyList());
+    }
+
+    /**
+     * @see com.restfb.FacebookClient#executeBatch(java.util.List)
+     */
+    public static List<BatchResponse> safeBatch(FacebookClient client, List<BatchRequest> batchRequests) {
+        return safeBatch(client, batchRequests, Collections.emptyList());
+    }
+
+    /**
+     * @see com.restfb.FacebookClient#executeBatch(java.util.List, java.util.List)
+     */
+    public static List<BatchResponse> safeBatch(FacebookClient client, List<BatchRequest> batchRequests, List<BinaryAttachment> binaryAttachments) {
+        verifyParameterPresence("binaryAttachments", binaryAttachments);
+
+        if (batchRequests == null || batchRequests.isEmpty()) {
+            throw new IllegalArgumentException("You must specify at least one batch request.");
+        }
+
+        List<BatchResponse> responses = new ArrayList<>();
+
+        for (List<BatchRequest> requests : collate(batchRequests, BATCH_SIZE)) {
+            responses.addAll(client.executeBatch(requests, binaryAttachments));
+        }
+
+        return responses;
     }
 
     /**
@@ -345,7 +389,7 @@ public class FacebookExtensions {
     }
 
     /**
-     * @deprecated use {@link #fetchConnection(FacebookClient, String, Class)} instead.
+     * @deprecated use {@link FacebookClient#fetchConnection(String, Class, Parameter...)} instead.
      */
     @Deprecated
     public static <T> Connection<T> makeRequest(FacebookClient client, String endPoint, Class<T> connectionType) {
@@ -361,11 +405,11 @@ public class FacebookExtensions {
     }
 
     /**
-     * @deprecated use {@link #publish(FacebookClient, String, Class)} instead.
+     * @deprecated use {@link FacebookClient#publish(String, Class, Parameter...)} instead.
      */
     @Deprecated
     public static <T> T makePostRequest(FacebookClient client, String connection, Class<T> objectType) {
-        return publish(client, connection, objectType);
+        return client.publish(connection, objectType);
     }
 
     /**
@@ -377,11 +421,11 @@ public class FacebookExtensions {
     }
 
     /**
-     * @deprecated use {@link #deleteObject(FacebookClient, String)} instead.
+     * @deprecated use {@link FacebookClient#deleteObject(String, Parameter...)} instead.
      */
     @Deprecated
     public static boolean makeDeleteRequest(FacebookClient client, String endPoint) {
-        return deleteObject(client, endPoint, Collections.emptyMap());
+        return client.deleteObject(endPoint);
     }
 
     private static Parameter[] buildVariableArgs(Map<String, Object> parameters) {
@@ -390,6 +434,29 @@ public class FacebookExtensions {
                 .stream()
                 .map(e -> Parameter.with(e.getKey(), e.getValue()))
                 .toArray(Parameter[]::new);
+    }
+
+    private static <T> List<List<T>> collate(List<T> selfList, int step) {
+        if (selfList == null) {
+            return Collections.singletonList(Collections.emptyList());
+        }
+
+        int size = selfList.size();
+
+        if (size <= step) {
+            return Collections.singletonList(selfList);
+        }
+
+        List<List<T>> answer = new ArrayList<>();
+        if (step <= 0) throw new IllegalArgumentException("step must be greater than zero");
+        for (int pos = 0; pos < size && pos > -1; pos += step) {
+            List<T> element = new ArrayList<>() ;
+            for (int offs = pos; offs < pos + size && offs < size; offs++) {
+                element.add(selfList.get(offs));
+            }
+            answer.add(element) ;
+        }
+        return answer ;
     }
 
 }
