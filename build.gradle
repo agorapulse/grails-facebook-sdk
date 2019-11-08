@@ -77,3 +77,6 @@ grailsPublish {
     portalUser = ""
     portalPassword = ""
 }
+
+findMainClass.dependsOn compileJava
+findMainClass.dependsOn compileGroovy
