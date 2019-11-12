@@ -11,7 +11,7 @@ buildscript {
     }
 }
 
-version "4.0.4"
+version "4.0.5"
 group "org.grails.plugins"
 
 apply plugin:"eclipse"
@@ -52,7 +52,7 @@ dependencies {
     provided "org.grails:grails-plugin-domain-class"
 
     // Latest RestFB lib
-    compile 'com.restfb:restfb:2.25.0'
+    compile 'com.restfb:restfb:2.26.0'
 
     // Tests
     testCompile 'org.grails:grails-web-testing-support:2.0.0'

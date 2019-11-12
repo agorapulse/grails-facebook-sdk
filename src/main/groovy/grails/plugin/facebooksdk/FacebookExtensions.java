@@ -441,22 +441,26 @@ public class FacebookExtensions {
             return Collections.singletonList(Collections.emptyList());
         }
 
-        int size = selfList.size();
-
-        if (size <= step) {
+        int total = selfList.size();
+        if (total <= step) {
             return Collections.singletonList(selfList);
         }
 
-        List<List<T>> answer = new ArrayList<>();
-        if (step <= 0) throw new IllegalArgumentException("step must be greater than zero");
-        for (int pos = 0; pos < size && pos > -1; pos += step) {
-            List<T> element = new ArrayList<>() ;
-            for (int offs = pos; offs < pos + size && offs < size; offs++) {
+        List<List<T>> answer = new ArrayList<List<T>>();
+
+        if (step == 0) {
+            throw new IllegalArgumentException("step cannot be zero");
+        }
+
+        for (int pos = 0; pos < total && pos > -1; pos += step) {
+            List<T> element = new ArrayList<T>();
+            for (int offs = pos; offs < pos + step && offs < total; offs++) {
                 element.add(selfList.get(offs));
             }
-            answer.add(element) ;
+            answer.add(element);
         }
-        return answer ;
+
+        return answer;
     }
 
 }
