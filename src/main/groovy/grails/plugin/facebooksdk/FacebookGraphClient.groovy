@@ -41,10 +41,7 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
     }
 
 	boolean isUnsupportedApiVersion() {
-		boolean newerVersion = ['v3', 'v4', 'v5'].any { version ->
-			this.apiVersionString?.startsWith(version)
-		}
-		return apiVersionString && (newerVersion || apiVersionString.matches(/v2\.1[2-9]/))
+		return apiVersion == Version.UNVERSIONED
 	}
 
 	@Override
