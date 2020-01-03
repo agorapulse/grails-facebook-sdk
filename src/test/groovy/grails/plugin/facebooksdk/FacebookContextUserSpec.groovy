@@ -12,10 +12,10 @@ class FacebookContextUserSpec extends Specification {
 
     void setup() {
         FacebookGraphClient.metaClass.fetchObject = { String object, Map parameters ->
-            switch(object) {
+            switch (object) {
                 case 'oauth/access_token':
-                    if (parameters['code']) return [access_token:'new-token-from-code', expires:1000]
-                    if (parameters['fb_exchange_token']) return [access_token:'new-exchanged-token', expires:1000]
+                    if (parameters['code']) return [access_token: 'new-token-from-code', expires: 1000]
+                    if (parameters['fb_exchange_token']) return [access_token: 'new-exchanged-token', expires: 1000]
                     break
             }
         }
@@ -26,31 +26,35 @@ class FacebookContextUserSpec extends Specification {
         }
 
         // Mock context
-        def config = mockConfig('''
-            grails {
-                plugin {
-                    facebooksdk {}
-                }
+        context = new FacebookContext()
+        context.metaClass.getApp = {
+            new FacebookContextApp(context: context, id: APP_ID, secret: APP_SECRET)
+        }
+
+        def scope = new FacebookSessionScope()
+        scope.metaClass.setData = { key, value -> }
+        scope.metaClass.getData = { key, defaultValue -> defaultValue }
+        scope.metaClass.getRequest = { ->
+            def request = new Object()
+            request.metaClass.getSession = {
+                def session = new Object()
+                session.metaClass.setAttribute = { k, v -> }
+                session.metaClass.getAttribute = { k -> k }
+                session
             }
-            ''')
-        context = mockFor(FacebookContext, true).createMock()
-        context.grailsApplication = [config: config]
-        context.app = mockFor(FacebookContextApp, true).createMock()
-        context.app.id = APP_ID
-        context.app.secret =  APP_SECRET
+            request
+        }
+        context.metaClass.getRequest = { -> [params: [:]] }
+        context.metaClass.getSession { ->
+            scope
+        }
     }
 
     void "Exchange token"() {
         given:
         FacebookContextUser user = new FacebookContextUser(
-            context: context
+                context: context
         )
-        context.metaClass.getSession { ->
-            def sessionScopeMock = mockFor(FacebookSessionScope, true)
-            sessionScopeMock.demand.setData { key, value -> }
-            sessionScopeMock.demand.getData { key, defaultValue -> defaultValue }
-            sessionScopeMock.createMock()
-        }
 
         when:
         user._token = 'old-token'
@@ -65,11 +69,22 @@ class FacebookContextUserSpec extends Specification {
         FacebookContextUser user = new FacebookContextUser(
                 context: context
         )
-        context.metaClass.getRequest { -> [params: [:]]}
+
+        def scope = new FacebookSessionScope()
+
+        scope.metaClass.getRequest = { ->
+            def request = new Object()
+            request.metaClass.getSession = {
+                def session = new Object()
+                session.metaClass.setAttribute = { k, v -> }
+                session.metaClass.getAttribute = { k -> '' }
+                session
+            }
+            request
+        }
+
         context.metaClass.getSession { ->
-            def sessionScopeMock = mockFor(FacebookSessionScope, true)
-            sessionScopeMock.demand.getData { key, defaultValue -> defaultValue }
-            sessionScopeMock.createMock()
+            scope
         }
 
         when:
@@ -84,12 +99,8 @@ class FacebookContextUserSpec extends Specification {
         FacebookContextUser user = new FacebookContextUser(
                 context: context
         )
-        context.metaClass.getSession { ->
-            def sessionScopeMock = mockFor(FacebookSessionScope, true)
-            sessionScopeMock.demand.setData { key, value -> }
-            sessionScopeMock.createMock()
-        }
-        context.signedRequest = mockFor(FacebookSignedRequest).createMock()
+
+        context.signedRequest = new FacebookSignedRequest(accessToken: 'access-token')
 
         when:
         user.context.signedRequest.accessToken = 'access-token'
@@ -104,16 +115,25 @@ class FacebookContextUserSpec extends Specification {
         FacebookContextUser user = new FacebookContextUser(
                 context: context
         )
-        context.metaClass.getSession { ->
-            def sessionScopeMock = mockFor(FacebookSessionScope, true)
-            sessionScopeMock.demand.getData { key -> 'some-other-code' }
-            sessionScopeMock.demand.setData { key, value -> }
-            sessionScopeMock.createMock()
+        def scope = new FacebookSessionScope()
+        scope.metaClass.setData = { key, value -> }
+        scope.metaClass.getData = { key, defaultValue -> defaultValue }
+        scope.metaClass.getRequest = { ->
+            def request = new Object()
+            request.metaClass.getSession = {
+                def session = new Object()
+                session.metaClass.setAttribute = { k, v -> }
+                session.metaClass.getAttribute = { k -> k }
+                session
+            }
+            request
         }
-        user.context.signedRequest = mockFor(FacebookSignedRequest).createMock()
+        context.metaClass.getSession = {
+            scope
+        }
+        user.context.signedRequest = new FacebookSignedRequest(code: 'some-code')
 
         when:
-        user.context.signedRequest.code = 'some-code'
         String token = user.token
 
         then:
@@ -159,7 +179,6 @@ class FacebookContextUserSpec extends Specification {
     /*void testGetUserId() {
         // To implement
     }*/
-
 
 
 }

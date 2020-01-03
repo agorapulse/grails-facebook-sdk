@@ -1,5 +1,7 @@
 package grails.plugin.facebooksdk
 
+import grails.config.Config
+import grails.util.Holders
 import spock.lang.Specification
 
 class FacebookContextAppSpec extends Specification {
@@ -9,6 +11,7 @@ class FacebookContextAppSpec extends Specification {
 
     FacebookContext context
 
+
     void setup() {
         FacebookGraphClient.metaClass.fetchObject = { String object, Map parameters ->
             switch(object) {
@@ -17,17 +20,16 @@ class FacebookContextAppSpec extends Specification {
                     break
             }
         }
+        Holders.metaClass.static.getConfig = { ->
+            [
+                    grails: [
+                            plugin: [facebooksdk: [:]]
+                    ]
+            ]
+        }
 
         // Mock context
-        def config = mockConfig('''
-            grails {
-                plugin {
-                    facebooksdk {}
-                }
-            }
-            ''')
-        context = mockFor(FacebookContext, true).createMock()
-        context.grailsApplication = [config: config]
+        context = Mock(FacebookContext)
     }
 
     void "Get token"() {
