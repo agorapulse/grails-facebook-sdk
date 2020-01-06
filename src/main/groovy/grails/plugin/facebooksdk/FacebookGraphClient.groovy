@@ -41,7 +41,7 @@ class FacebookGraphClient extends DefaultFacebookGraphClient {
     }
 
 	boolean isUnsupportedApiVersion() {
-		return apiVersion == Version.UNVERSIONED
+		return this.@apiVersion == Version.UNVERSIONED
 	}
 
 	@Override
