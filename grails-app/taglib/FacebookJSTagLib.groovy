@@ -1,8 +1,10 @@
 import grails.plugin.facebooksdk.FacebookLocalization
 import grails.core.GrailsApplication
 import grails.web.mapping.LinkGenerator
+import groovy.util.logging.Slf4j
 import org.springframework.web.servlet.support.RequestContextUtils
 
+@Slf4j
 class FacebookJSTagLib {
 
     static final String TYPE_LARGE = 'large'
