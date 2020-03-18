@@ -24,4 +24,4 @@ jobs:
         BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
         BINTRAY_KEY: ${ secrets.BINTRAY_KEY }}
       with:
-        arguments: bintrayUpload -Pversion=${{ steps.version.outputs.tag }} --stacktrace
+        arguments: bintrayUpload -PbintrayKey=$BINTRAY_KEY -PbintrayUser=$BINTRAY_USER -Pversion=${{ steps.version.outputs.tag }} --stacktrace
