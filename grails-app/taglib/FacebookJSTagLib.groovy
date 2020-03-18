@@ -1,3 +1,4 @@
+import com.restfb.Version
 import grails.plugin.facebooksdk.FacebookLocalization
 import grails.core.GrailsApplication
 import grails.web.mapping.LinkGenerator
@@ -37,7 +38,7 @@ class FacebookJSTagLib {
      * @attr locale (Default to server locale)
      * @attr status (Default to false)
      * @attr xfbml (Default to false)
-     * @attr version (Default to v2.7 or apiVersion config settings)
+     * @attr version (Default to latest version or apiVersion config settings)
      */
     def initJS = { attrs, body ->
         if (!attrs.locale) attrs.locale = RequestContextUtils.getLocale(request)
@@ -55,7 +56,7 @@ class FacebookJSTagLib {
                     params: [locale: attrs.locale.toString()]
             )
         }
-        if (!attrs.containsKey('version')) attrs.version = config.apiVersion ?: 'v2.9'
+        if (!attrs.containsKey('version')) attrs.version = config.apiVersion ?: Version.LATEST.urlElement
         Map model = [body:body()]
         attrs.each { key, value ->
             model[key] = value
