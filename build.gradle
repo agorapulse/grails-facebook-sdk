@@ -65,6 +65,11 @@ wrapper {
     gradleVersion = gradleWrapperVersion
 }
 
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+}
+
 grailsPublish {
     userOrg = 'agorapulse'
     githubSlug = 'agorapulse/grails-facebook-sdk'
