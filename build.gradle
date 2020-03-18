@@ -74,6 +74,6 @@ grailsPublish {
     title = "facebook-sdk"
     desc = "Grails Facebook SDK plugin"
     developers = [benorama:"Benoit Hediard"]
-    portalUser = System.getenv('BINTRAY_USER')
-    portalPassword = System.getenv('BINTRAY_KEY')
+    portalUser = ''
+    portalPassword = ''
 }
