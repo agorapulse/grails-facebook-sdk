@@ -12,9 +12,9 @@ class FacebookGraphClientSpec extends Specification {
 
         where:
             version | graphEndpointUrl
-            'v2.11' | 'https://graph.facebook.com/v2.11'
-            'v2.12' | 'https://graph.facebook.com/v2.12'
-            'v3.0'  | 'https://graph.facebook.com/v3.0'
+            'v3.0' | 'https://graph.facebook.com/v3.0'
+            'v4.0' | 'https://graph.facebook.com/v4.0'
+            'v5.0'  | 'https://graph.facebook.com/v5.0'
     }
     
     void 'version #version produces graph video endpoint url #graphEndpointUrl'() {
@@ -23,10 +23,9 @@ class FacebookGraphClientSpec extends Specification {
 
         where:
             version | graphEndpointUrl
-            'v2.11' | 'https://graph-video.facebook.com/v2.11'
-            'v2.12' | 'https://graph-video.facebook.com/v2.12'
-            'v3.0'  | 'https://graph-video.facebook.com/v3.0'
+            'v3.0' | 'https://graph-video.facebook.com/v3.0'
+            'v4.0' | 'https://graph-video.facebook.com/v4.0'
+            'v5.0'  | 'https://graph-video.facebook.com/v5.0'
     }
-
 
 }
