@@ -18,7 +18,7 @@ import groovy.transform.PackageScope
 class FacebookGraphClient extends DefaultFacebookGraphClient {
 
     static final int DEFAULT_READ_TIMEOUT_IN_MS = 180000
-    static final String DEFAULT_API_VERSION = 'v3.1'
+    static final String DEFAULT_API_VERSION = 'v3.2'
 
 	protected final String apiVersionString
 
