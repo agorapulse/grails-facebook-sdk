@@ -1,9 +1,8 @@
 name: Release
 
 on:
-  push:
-    tags:
-    - '*'
+  release:
+    types: [published]
 jobs:
   release:
     name: Release
@@ -25,3 +24,23 @@ jobs:
         BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
       with:
         arguments: bintrayUpload -PbintrayKey=$BINTRAY_KEY -PbintrayUser=$BINTRAY_USER -Pversion=${{ steps.version.outputs.tag }} --stacktrace
+  ping:
+    name: Notify Upstream Repositories
+    runs-on: ubuntu-latest
+    needs: [release]
+    strategy:
+      matrix:
+        repository:
+          - agorapulse/agorapulse-bom
+    steps:
+      - uses: actions/checkout@v1
+      - name: Semantic Version
+        id: version
+        uses: ncipollo/semantic-version-action@v1
+      - name: Dispatch to ${{ matrix.repository }}
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.PERSONAL_TOKEN }}
+          repository: ${{ matrix.repository }}
+          event-type: ap-new-version-released-event
+          client-payload: '{ "group": "com.agorapulse", "module": "notification", "version": "${{ steps.version.outputs.tag }}", "property" : "grails.facebook.sdk.version", "github" : ${{ toJson(github) }} }'
