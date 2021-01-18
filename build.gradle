@@ -51,7 +51,7 @@ dependencies {
     provided "org.grails:grails-plugin-domain-class"
 
     // Latest RestFB lib
-    compile 'com.restfb:restfb:3.7.0'
+    compile 'com.restfb:restfb:3.13.0'
 
     // Tests
     testCompile 'org.grails:grails-web-testing-support:2.0.0'
