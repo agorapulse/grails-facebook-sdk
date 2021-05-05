@@ -16,8 +16,8 @@ group "org.grails.plugins"
 apply plugin:"eclipse"
 apply plugin:"idea"
 apply plugin:"org.grails.grails-plugin"
-apply plugin:"org.grails.grails-plugin-publish"
 apply plugin:"org.grails.grails-gsp"
+apply plugin:"maven-publish"
 
 ext {
     grailsVersion = project.grailsVersion
@@ -64,15 +64,34 @@ wrapper {
     gradleVersion = gradleWrapperVersion
 }
 
-grailsPublish {
-    userOrg = 'agorapulse'
-    githubSlug = 'agorapulse/grails-facebook-sdk'
-    license {
-        name = 'Apache-2.0'
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/agorapulse/grails-facebook-sdk")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+        if (System.getenv('DEPLOYER_PASSWORD')) {
+            maven {
+                name = "JFrog"
+                credentials {
+                    username "deployer"
+                    password System.getenv('DEPLOYER_PASSWORD')
+                }
+                if (project.version.endsWith('-SNAPSHOT')) {
+                    url 'https://agorapulse.jfrog.io/agorapulse/plugins-snapshots-local/'
+                } else {
+                    url 'https://agorapulse.jfrog.io/agorapulse/plugins-releases-local/'
+                }
+            }
+        }
     }
-    title = "facebook-sdk"
-    desc = "Grails Facebook SDK plugin"
-    developers = [benorama:"Benoit Hediard"]
-    portalUser = ''
-    portalPassword = ''
+    publications {
+        gpr(MavenPublication) {
+            from(components.java)
+        }
+    }
 }
