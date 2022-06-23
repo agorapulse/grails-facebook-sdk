@@ -23,7 +23,7 @@ jobs:
         key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}-${{ hashFiles('**/gradle.properties') }}
         restore-keys: |
           ${{ runner.os }}-gradle-
-    - uses: eskatos/gradle-command-action@v1
+    - uses: gradle/gradle-command-action@v2
       with:
         arguments: check --stacktrace
     - name: Show Reports
