@@ -2,7 +2,6 @@ Facebook SDK Grails Plugin
 ==========================
 
 [![Build Status](https://travis-ci.org/agorapulse/grails-facebook-sdk.svg)](https://travis-ci.org/agorapulse/grails-facebook-sdk)
-[![Download](https://api.bintray.com/packages/agorapulse/plugins/facebook-sdk/images/download.svg)](https://bintray.com/agorapulse/plugins/facebook-sdk/_latestVersion)
 
 # Introduction
 
