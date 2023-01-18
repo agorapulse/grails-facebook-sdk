@@ -5,6 +5,11 @@ Facebook SDK Grails Plugin
 
 # Introduction
 
+IMPORTANT: Project retirement
+-------------------------------
+
+**This project is retired. As Micronaut become core of the Grails starting at Grails 4, please, use [Micronaut Facebook SDK](https://agorapulse.github.io/micronaut-facebook-sdk) instead.**
+
 The [Facebook Platform](http://developers.facebook.com/) is a set of APIs that make your application more social. Read more about [integrating Facebook with your web site](http://developers.facebook.com/docs/guides/web) on the Facebook developer site.
 
 This project contains the open source **Grails Facebook SDK Plugin** that allows you to integrate the [Facebook Platform](http://developers.facebook.com/) on a website/app powered by [Grails](http://grails.org).
