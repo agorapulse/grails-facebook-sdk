@@ -95,3 +95,6 @@ publishing {
         }
     }
 }
+
+findMainClass.dependsOn compileJava
+findMainClass.dependsOn compileGroovy
